@@ -3,8 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Play } from "lucide-react";
 import { Separator } from "../ui/separator";
+import useUserStore from "@/store/user";
+import { useEffect } from "react";
 
 export default function HeroSection() {
+  const { user } = useUserStore();
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
   return (
     <section className="relative bg-gradient-to-r from-primary/20 to-secondary/30 py-10 sm:py-20">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center custom-container">
@@ -64,6 +70,11 @@ export default function HeroSection() {
             </div>
           </CardContent>
         </Card>
+        {user && (
+          <p className="text-sm text-text-secondary mt-4">
+            {user?.fullName} {user?.email}
+          </p>
+        )}
       </div>
     </section>
   );
