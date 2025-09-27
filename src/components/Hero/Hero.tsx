@@ -6,7 +6,7 @@ import { Separator } from "../ui/separator";
 
 export default function HeroSection() {
   return (
-    <section className="relative bg-gradient-to-r from-primary/20 to-secondary/30 py-20">
+    <section className="relative bg-gradient-to-r from-primary/20 to-secondary/30 py-10 sm:py-20">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center custom-container">
         {/* Left Content */}
         <div>
@@ -38,7 +38,7 @@ export default function HeroSection() {
         </div>
 
         {/* Right Content - Card */}
-        <Card className="shadow-lg rounded-2xl hover:scale-105 transition-all duration-300 ease-in-out border-none bg-[#fafafa] sm:w-[90%] w-full mx-auto">
+        <Card className="shadow-lg rounded-2xl hover:scale-105 transition-all duration-300 ease-in-out border-none bg-surface sm:w-[90%] w-full mx-auto">
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-white">

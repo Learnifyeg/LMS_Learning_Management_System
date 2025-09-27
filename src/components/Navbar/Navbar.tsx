@@ -42,7 +42,7 @@ const Navbar = () => {
             ))}
           </NavigationMenuList>
         </NavigationMenu>
-        <div className="flex gap-2 ">
+        <div className=" gap-2 flex ">
           <Button
             variant="outline"
             className="bg-transparent cursor-pointer hover:-translate-y-0.25  transition-all duration-300 ease-in-out"
