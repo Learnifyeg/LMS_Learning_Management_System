@@ -1,28 +1,78 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+/* @import "tw-animate-css"; */
 
-@custom-variant dark (&:where(.dark , .dark *) );
+/* Enable custom dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --primary: #49bbbd; 
-  --secondary: #f5f5f5;
+  /* Light Mode */
+  --primary: #2563eb; /* Blue */
+  --secondary: #f97316; /* Orange */
+  --background: #ffffff; /* Page background */
+  --surface: #f9fafb; /* Cards, sections */
+  --text-primary: #111827; /* Headings */
+  --text-secondary: #374151; /* Body text */
+  --footer-bg: #1e3a8a; /* Footer background */
+  --footer-text: #ffffff; /* Footer text */
 }
 
 .dark {
-  --primary: #49bbbd; 
-  --secondary: #f5f5f5;
+  /* Dark Mode */
+  --primary: #3b82f6; /* Lighter blue for contrast */
+  --secondary: #fb923c; /* Brighter orange */
+  --background: #111827; /* Page background */
+  --surface: #1f2937; /* Cards, sections */
+  --text-primary: #f9fafb; /* Headings */
+  --text-secondary: #d1d5db; /* Body text */
+  --footer-bg: #0f172a; /* Footer background */
+  --footer-text: #e5e7eb; /* Footer text */
 }
 
+/* Make variables available as Tailwind theme colors */
 @theme inline {
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-footer-bg: var(--footer-bg);
+  --color-footer-text: var(--footer-text);
 }
 
 @layer base {
+  body {
+    background-color: var(--background);
+    color: var(--text-primary);
+  }
 }
 
 @layer components {
-}
+  .card {
+    background-color: var(--surface);
+    color: var(--text-primary);
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
 
-@layer utilities {
+  .btn-primary {
+    background-color: var(--primary);
+    color: #fff;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+  }
+
+  .btn-secondary {
+    background-color: var(--secondary);
+    color: #fff;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+  }
+  .custom-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
 }
