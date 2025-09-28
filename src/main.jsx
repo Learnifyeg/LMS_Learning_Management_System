@@ -6,6 +6,8 @@ import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router-dom";
 import Login from "./views/Auth/Login";
 import Register from "./views/Auth/Register";
+import ForgetPassword from "./views/Auth/ForgetPassword";
+import Register2 from "./views/Auth/Register2";
 const Landing = lazy(() => import("./views/Landing.jsx"));
 const router = createBrowserRouter([
   {
@@ -14,7 +16,13 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Landing /> },
       { path: "/Login", element: <Login /> },
-      { path: "/Register", element: <Register /> }
+      { path: "/Register", element: <Register /> },
+      { path: "/Register2", element: <Register2 /> },
+      { path: "/ForgetPassword", element: <ForgetPassword/> },
+      {
+        path: "*",
+        Component: () => <Navigate to="/NotFound" />,
+      },
     ],
   },
 ]);

@@ -1,15 +1,31 @@
-import { useForm } from "react-hook-form";
+// Assets
 import LogoBlack from "../../../public/learnify_black.svg";
 import LogoWhite from "../../../public/learnify_white.svg";
+
+// Components
+import { useTheme } from "@/utils/ThemeProvider";
+import useUserStore from "@/store/user";
+import { Input } from "@/components/ui/input";
+
+// React 
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import useUserStore from "@/store/user";
 import { useNavigate } from "react-router";
-import { useTheme } from "@/utils/ThemeProvider";
+import {
+  FaFacebook,
+  FaTwitter,
+  FaGoogle,
+  FaUser,
+  FaEnvelope,
+  FaLock,
+} from "react-icons/fa";
+
 
 const RegisterSchema = z.object({
   fullName: z.string().min(8, "First name must be at least 8 characters"),
   email: z.email("Please enter a valid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 function Register() {
@@ -26,7 +42,7 @@ function Register() {
     // const response = axios.post("http://localhost:8000/api/register", data);
     // if (response.status !== 200) return; //status 200 , message: "success", user : { email: "string", fullName: "string", phoneNumber: "string", role: "string" , token: "string" }
     setUser(data);
-    navigate("/");
+   navigate("/Register2")
   };
 
   return (
@@ -43,46 +59,101 @@ function Register() {
             Welcome to Learnify
           </p>
           <p className="mb-5 text-text-secondary">
-            Register to Your Learnify Account!
+            Sign Up and Start Learning!
           </p>
-          <button className="btn bg-[#3b5998] w-full mb-3 cursor-pointer hover:scale-102">
+          <button className="btn bg-[#3b5998] w-full mb-3 cursor-pointer hover:scale-102 flex items-center justify-center gap-2">
+            <FaFacebook size={20} />
             Continue with Facebook
           </button>
-          <button className="btn bg-[#1da1f2] w-full mb-3 cursor-pointer hover:scale-102">
-            Continue with Twitter
+          <button className="btn bg-[#1da1f2] w-full mb-3 cursor-pointer hover:scale-102 flex items-center justify-center gap-2">
+            <FaTwitter size={20} /> Continue with Twitter
           </button>
-          <button className="btn bg-[#34a853] w-full mb-3 cursor-pointer hover:scale-102">
+          <button className="btn bg-[#34a853] w-full mb-3 cursor-pointer hover:scale-102 flex items-center justify-center gap-2">
+            <FaGoogle size={20} />
             Continue with Google
           </button>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <label>
-              Full Name
-              <input
-                {...register("fullName")}
-                className="border border-black"
-              />
-            </label>
-            <p>{errors.fullName?.message}</p>
-            <label>
-              Email
-              <input {...register("email")} className="border border-black" />
-            </label>
-            <p>{errors.email?.message}</p>
+            <div className="mb-4 text-left">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="relative">
+                  <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                  <Input
+                    {...register("fullName")}
+                    type="text"
+                    placeholder="Enter full name..."
+                    className="bg-input px-10 py-2 "
+                  />
+                </div>
+              </label>
+            </div>
 
-            <button type="submit">Submit</button>
+            <p className="text-red-500 text-sm mt-1">
+              {errors.fullName?.message}
+            </p>
+            <div className="mb-4">
+              <label>
+                <div className="relative">
+                  <FaEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                  <Input
+                    {...register("email")}
+                    type="text"
+                    placeholder="Enter email..."
+                    className="bg-input px-10 py-2"
+                  />{" "}
+                </div>
+              </label>
+            </div>
+            <p className="text-red-500 text-sm mt-1">{errors.email?.message}</p>
+            <label>
+              <div className="relative">
+                <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                <Input
+                  {...register("password")}
+                  type="password"
+                  placeholder="Enter password..."
+                  className="bg-input px-10 py-2"
+                />{" "}
+              </div>
+            </label>
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
+
+            <button
+              className="btn bg-secondary w-full cursor-pointer hover:scale-102 my-5"
+              type="submit"
+             
+            >
+              Next
+            </button>
           </form>
           {/* forget password? */}
           <p className="text-text-secondary">
-            Or{" "}
-            <span className="text-secondary cursor-pointer hover:scale-105">
-              Forgot Password.
+            By signing up, you agree to our{" "}
+            <span
+              className="text-secondary cursor-pointer hover:scale-105 font-bold"
+              onClick={() => navigate("/TermsofUse")}
+            >
+              Terms of Use
+            </span>{" "}
+            and{" "}
+            <span
+              className="text-secondary cursor-pointer hover:scale-105 font-bold"
+              onClick={() => navigate("/PrivacyPolicy")}
+            >
+              Privacy Policy.
             </span>
           </p>
           <hr className="my-5 text-text-secondary" />
           <p className="text-text-secondary">
-            Don't have an account?{" "}
-            <span className="text-secondary cursor-pointer hover:scale-105">
-              Sign Up
+            Already have an account?{" "}
+            <span
+              className="text-secondary cursor-pointer hover:scale-105 font-bold"
+              onClick={() => navigate("/Login")}
+            >
+              Sign In
             </span>
           </p>
         </div>

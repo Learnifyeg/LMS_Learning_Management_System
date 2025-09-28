@@ -7,9 +7,10 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { NavLinks } from "@/assets/Constants/NavLinks";
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <header className="bg-primary/90 py-3  text-white sticky top-0 z-50 ">
       <div className="flex justify-between items-center  custom-container">
@@ -46,12 +47,14 @@ const Navbar = () => {
           <Button
             variant="outline"
             className="bg-transparent cursor-pointer hover:-translate-y-0.25  transition-all duration-300 ease-in-out"
+            onClick={() => (navigate("/Login"))}
           >
             Sign In
           </Button>
           <Button
             variant="secondary"
             className="bg-secondary cursor-pointer hover:-translate-y-0.25  transition-all duration-300 ease-in-out"
+          onClick={() => (navigate("/Register"))}
           >
             Get Started
           </Button>
