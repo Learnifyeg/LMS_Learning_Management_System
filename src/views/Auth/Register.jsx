@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import useUserStore from "@/store/user";
 import { useNavigate } from "react-router";
+import { useTheme } from "@/utils/ThemeProvider";
 
 const RegisterSchema = z.object({
   fullName: z.string().min(8, "First name must be at least 8 characters"),
@@ -13,6 +14,7 @@ const RegisterSchema = z.object({
 
 function Register() {
   const navigate = useNavigate();
+  const { theme } = useTheme();
   const {
     register,
     formState: { errors },
@@ -30,16 +32,13 @@ function Register() {
   return (
     <section>
       <div className="flex flex-col justify-center items-center p-10">
-        <img
-          src={
-            document.documentElement.classList.contains("dark")
-              ? LogoWhite
-              : LogoBlack
-          }
-          alt=""
-          className="w-1/8"
-        />
-        <div className="form bg-background p-10 rounded-lg shadow-lg mt-5 w-full text-center max-w-md">
+        {theme === "dark" ? (
+          <img src={LogoWhite} alt="" className="w-1/8" />
+        ) : (
+          <img src={LogoBlack} alt="" className="w-1/8" />
+        )}
+
+        <div className="form bg-card p-10 rounded-lg shadow-lg mt-5 w-full text-center max-w-md">
           <p className="text-3xl font-bold mb-5 text-primary">
             Welcome to Learnify
           </p>
