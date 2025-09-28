@@ -8,6 +8,7 @@ import Login from "./views/Auth/Login";
 import Register from "./views/Auth/Register";
 import ForgetPassword from "./views/Auth/ForgetPassword";
 import Register2 from "./views/Auth/Register2";
+import Error404 from "./views/Error404";
 const Landing = lazy(() => import("./views/Landing.jsx"));
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
       { path: "/ForgetPassword", element: <ForgetPassword/> },
       {
         path: "*",
-        Component: () => <Navigate to="/NotFound" />,
+       element: <Error404/>,
       },
     ],
   },
