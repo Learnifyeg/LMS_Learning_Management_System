@@ -66,16 +66,16 @@ function Register2() {
 
         <div className="form bg-card p-10 rounded-lg shadow-lg mt-5 w-full text-center max-w-md">
           <Tabs defaultValue="Instructor" className="w-full">
-            <TabsList className="mb-5 w-full bg-input">
+            <TabsList className="mb-5 w-full bg-input flex max-md:flex-col max-md:h-20">
               <TabsTrigger
                 value="Instructor"
-                className="font-bold text-secondary w-1/2"
+                className="font-bold text-secondary w-1/2 max-md:mb-2 max-md:w-full"
               >
                 Instructor Sign Up
               </TabsTrigger>
               <TabsTrigger
                 value="Student"
-                className="font-bold text-secondary w-1/2"
+                className="font-bold text-secondary w-1/2 max-md:mb-2 max-md:w-full"
               >
                 Student Sign Up
               </TabsTrigger>
