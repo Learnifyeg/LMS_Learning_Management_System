@@ -3,7 +3,7 @@ import { lazy, Suspense } from "react";
 
 // Lazy imports
 const Navbar = lazy(() => import("@/components/Navbar/Navbar"));
-const Footer = lazy(() => import("./../../components/Footer/Footer"));
+const Footer = lazy(() => import("../../components/Footer/Footer"));
 
 function MyCertificates() {
   return (

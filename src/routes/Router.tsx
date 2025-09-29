@@ -1,7 +1,12 @@
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "../App.jsx";
-import LandingLayout from "@/components/Landing/LandingLayout/LandingLayout.js";
+
+// Lazy imports
+const LandingLayout = lazy(
+  () => import("@/components/Landing/LandingLayout/LandingLayout.js")
+);
+
 // Landing Views
 const Landing = lazy(() => import("../views/Landing/Landing.jsx"));
 const Courses = lazy(() => import("../views/Landing/Courses.jsx"));
