@@ -21,15 +21,17 @@ const AuthLayout = () => {
             <CardTitle className="text-3xl font-bold text-primary">
               Welcome to Learnify
             </CardTitle>
+            {title !== "ForgetPassword" ?
             <p className="text-muted-foreground mt-2">
-              {title === "Login" ? "Log In" : "Sign Up"} to Your Learnify
+              {title === "Login"  ? "Log In" : "Sign Up"} to Your Learnify
               Account!
-            </p>
+            </p>:""}
           </CardHeader>
 
           <CardContent className="space-y-4">
             {/* Social Buttons */}
-            {SocialButtons.map((item, i) => (
+            
+            {title!== "ForgetPassword" && SocialButtons.map((item, i) => (
               <SocialButton
                 key={i}
                 Icon={item.Icon}
