@@ -9,7 +9,7 @@ import SocialButton from "../SocialButton/SocialButton";
 const AuthLayout = () => {
   const { theme } = useTheme();
   const title = useLocation().pathname.split("/").pop();
-  console.log(title);
+
   return (
     <main className="h-screen bg-surface">
       <div className="flex h-full  mx-0 rounded-md overflow-hidden px-0 border-border shadow-lg">
