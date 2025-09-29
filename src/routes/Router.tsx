@@ -1,25 +1,48 @@
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "../App.jsx";
-import StuDashboard from "@/views/Student/StuDashboard.jsx";
-import StuStudentLayout from "@/views/Student/StudentLayout.jsx";
-import StuCheckout from "@/views/Student/StuCheckout.jsx";
-import StuCourseDetails from "@/views/Student/StuCourseDetails.jsx";
-import StuProfile from "@/views/Student/StuProfile.jsx";
-import StuInvoice from "@/views/Student/StuInvoice.jsx";
-import StuMyCertificates from "@/views/Student/StuMyCertificates.jsx";
-import StuQuizPage from "@/views/Student/StuQuizPage.jsx";
-import StuQuizResult from "@/views/Student/StuQuizResult.jsx";
-import StuSavedCourses from "@/views/Student/StuSavedCourses.jsx";
-import StuShoppingCart from "@/views/Student/StuShoppingCart.jsx";
-import UserLayout from "@/views/Others/UserLayout.jsx";
-import ContactUs from "@/views/Others/ContactUs.jsx";
-import HelpPage from "@/views/Others/HelpPage.jsx";
-import Notifications from "@/views/Others/Notifications.jsx";
-import SearchResults from "@/views/Others/SearchResults.jsx";
-import SendFeedback from "@/views/Others/SendFeedback.jsx";
-import SettingPage from "@/views/Others/SettingPage.jsx";
-import TermsofUse from "@/views/Others/TermsofUse.jsx";
+
+// Student Views
+const StuDashboard = lazy(() => import("@/views/Student/StuDashboard.jsx"));
+const StuStudentLayout = lazy(() =>
+  import("@/views/Student/StudentLayout.jsx")
+);
+const StuCheckout = lazy(() => import("@/views/Student/StuCheckout.jsx"));
+const StuCourseDetails = lazy(() =>
+  import("@/views/Student/StuCourseDetails.jsx")
+);
+const StuProfile = lazy(() => import("@/views/Student/StuProfile.jsx"));
+const StuInvoice = lazy(() => import("@/views/Student/StuInvoice.jsx"));
+const StuMyCertificates = lazy(() =>
+  import("@/views/Student/StuMyCertificates.jsx")
+);
+const StuQuizPage = lazy(() => import("@/views/Student/StuQuizPage.jsx"));
+const StuQuizResult = lazy(() => import("@/views/Student/StuQuizResult.jsx"));
+const StuSavedCourses = lazy(() =>
+  import("@/views/Student/StuSavedCourses.jsx")
+);
+const StuShoppingCart = lazy(() =>
+  import("@/views/Student/StuShoppingCart.jsx")
+);
+
+// Others
+const UserLayout = lazy(() => import("@/views/Others/UserLayout.jsx"));
+const ContactUs = lazy(() => import("@/views/Others/ContactUs.jsx"));
+const HelpPage = lazy(() => import("@/views/Others/HelpPage.jsx"));
+const Notifications = lazy(() =>
+  import("@/views/Others/Notifications.jsx")
+);
+const SearchResults = lazy(() =>
+  import("@/views/Others/SearchResults.jsx")
+);
+const SendFeedback = lazy(() =>
+  import("@/views/Others/SendFeedback.jsx")
+);
+const SettingPage = lazy(() =>
+  import("@/views/Others/SettingPage.jsx")
+);
+const TermsofUse = lazy(() => import("@/views/Others/TermsofUse.jsx"));
+
 
 // Lazy imports
 const LandingLayout = lazy(
