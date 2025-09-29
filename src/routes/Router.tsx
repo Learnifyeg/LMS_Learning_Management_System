@@ -49,7 +49,9 @@ const AuthLayout = lazy(
 const Login = lazy(() => import("../views/Auth/Login.jsx"));
 const Register = lazy(() => import("../views/Auth/Register.jsx"));
 const ForgetPassword = lazy(() => import("../views/Auth/ForgetPassword.jsx"));
-const Register2 = lazy(() => import("../views/Auth/InstructorRegister.jsx"));
+const InstructorRegister = lazy(
+  () => import("../views/Auth/InstructorRegister.jsx")
+);
 
 // Error Views
 const Error404 = lazy(() => import("../views/Error404.jsx"));
@@ -73,11 +75,10 @@ export const router = createBrowserRouter([
         children: [
           { path: "Login", element: <Login /> },
           { path: "Register", element: <Register /> },
-          { path: "Register2", element: <Register2 /> },
+          { path: "InstructorRegister", element: <InstructorRegister /> },
           { path: "ForgetPassword", element: <ForgetPassword /> },
         ],
       },
-      { path: "*", element: <Error404 /> },
       {
         path: "UserLayout",
         element: <UserLayout />,
@@ -107,6 +108,7 @@ export const router = createBrowserRouter([
           { path: "StuShoppingCart", element: <StuShoppingCart /> },
         ],
       },
+      { path: "*", element: <Error404 /> },
     ],
   },
 ]);

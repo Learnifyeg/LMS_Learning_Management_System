@@ -1,9 +1,9 @@
 // Components
-import useUserStore from "@/store/user";
+// import useUserStore from "@/store/user";
 import { Input } from "@/components/ui/input";
 
 // React
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
@@ -16,11 +16,15 @@ import {
   FaLock,
 } from "react-icons/fa";
 import LogoModes from "@/components/ui/LogoTheme/LogoModes";
+import { Button } from "@/components/ui/button";
 
 const RegisterSchema = z.object({
   fullName: z.string().min(8, "First name must be at least 8 characters"),
   email: z.email("Please enter a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
+  policiesCheck: z.boolean().refine((value) => value, {
+    message: "You must accept the terms and conditions",
+  }),
 });
 
 function Register() {
@@ -30,13 +34,14 @@ function Register() {
     formState: { errors },
     handleSubmit,
   } = useForm({ resolver: zodResolver(RegisterSchema) });
-  const { setUser } = useUserStore();
+  // const { setUser } = useUserStore();
   const onSubmit = (data) => {
     console.log("Submitted");
     // const response = axios.post("http://localhost:8000/api/register", data);
     // if (response.status !== 200) return; //status 200 , message: "success", user : { email: "string", fullName: "string", phoneNumber: "string", role: "string" , token: "string" }
-    setUser(data);
-    navigate("/Register2");
+    // setUser(data);
+    console.log(data);
+    // navigate("/User/Login");
   };
 
   return (
@@ -92,28 +97,34 @@ function Register() {
         >
           Next
         </button>
+        {/* forget password? */}
+        <p className="text-text-secondary text-sm">
+          <input
+            {...register("policiesCheck")}
+            type="checkbox"
+            className="mr-2 translate-y-0.5 accent-primary"
+          />
+          By signing up, you agree to our{" "}
+          <span
+            className="text-secondary cursor-pointer hover:scale-105 font-bold"
+            onClick={() => navigate("/TermsofUse")}
+          >
+            Terms of Use
+          </span>{" "}
+          and{" "}
+          <span
+            className="text-secondary cursor-pointer hover:scale-105 font-bold"
+            onClick={() => navigate("/PrivacyPolicy")}
+          >
+            Privacy Policy.
+          </span>
+          {errors.policiesCheck && (
+            <span className="text-red-500 text-sm mt-1 inline-block">
+              {errors.policiesCheck.message}
+            </span>
+          )}
+        </p>
       </form>
-      {/* forget password? */}
-      <p className="text-text-secondary">
-        <input
-          type="checkbox"
-          className="mr-2 translate-y-0.5 accent-primary"
-        />
-        By signing up, you agree to our{" "}
-        <span
-          className="text-secondary cursor-pointer hover:scale-105 font-bold"
-          onClick={() => navigate("/TermsofUse")}
-        >
-          Terms of Use
-        </span>{" "}
-        and{" "}
-        <span
-          className="text-secondary cursor-pointer hover:scale-105 font-bold"
-          onClick={() => navigate("/PrivacyPolicy")}
-        >
-          Privacy Policy.
-        </span>
-      </p>
       <hr className="my-5 text-text-secondary" />
       <p className="text-text-secondary">
         Already have an account?{" "}
@@ -124,6 +135,11 @@ function Register() {
           Sign In
         </span>
       </p>
+      <Link to="/User/InstructorRegister">
+        <Button className="mt-5 w-full cursor-pointer">
+          Instructor Register
+        </Button>
+      </Link>
     </section>
   );
 }

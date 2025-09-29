@@ -81,7 +81,7 @@ function Login() {
           <label className="cursor-pointer">
             <input
               type="checkbox"
-              className="bg-input accent-primary cursor-pointer"
+              className="bg-input accent-primary cursor-pointer translate-y-0.5"
             />{" "}
             <span className="inline-block ">Remember me</span>
           </label>
