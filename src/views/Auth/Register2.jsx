@@ -29,6 +29,7 @@ import {
   FaEnvelope,
   FaLock,
 } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const RegisterSchema = z.object({
   fullName: z.string().min(8, "First name must be at least 8 characters"),

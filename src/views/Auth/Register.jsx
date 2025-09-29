@@ -43,14 +43,14 @@ function Register() {
     <section className="my-5">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4 text-left">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm mb-1">
             <div className="relative">
-              <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+              <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
               <Input
                 {...register("fullName")}
                 type="text"
                 placeholder="Enter full name..."
-                className="bg-input px-10 py-2 "
+                className="px-10 py-2 "
               />
             </div>
           </label>
@@ -60,12 +60,12 @@ function Register() {
         <div className="mb-4">
           <label>
             <div className="relative">
-              <FaEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+              <FaEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
               <Input
                 {...register("email")}
                 type="text"
                 placeholder="Enter email..."
-                className="bg-input px-10 py-2"
+                className="px-10 py-2"
               />{" "}
             </div>
           </label>
@@ -73,12 +73,12 @@ function Register() {
         <p className="text-red-500 text-sm mt-1">{errors.email?.message}</p>
         <label>
           <div className="relative">
-            <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+            <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
             <Input
               {...register("password")}
               type="password"
               placeholder="Enter password..."
-              className="bg-input px-10 py-2"
+              className="px-10 py-2"
             />{" "}
           </div>
         </label>
@@ -95,6 +95,10 @@ function Register() {
       </form>
       {/* forget password? */}
       <p className="text-text-secondary">
+        <input
+          type="checkbox"
+          className="mr-2 translate-y-0.5 accent-primary"
+        />
         By signing up, you agree to our{" "}
         <span
           className="text-secondary cursor-pointer hover:scale-105 font-bold"
@@ -120,12 +124,6 @@ function Register() {
           Sign In
         </span>
       </p>
-      <div className="footer my-10 text-center text-sm text-text-secondary">
-        <p>
-          © 2025 <span className="font-bold">Learnify</span>. All Rights
-          Reserved.
-        </p>
-      </div>
     </section>
   );
 }

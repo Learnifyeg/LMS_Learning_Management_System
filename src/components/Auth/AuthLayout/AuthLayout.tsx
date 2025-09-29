@@ -1,11 +1,11 @@
 import { Outlet, useLocation } from "react-router";
 import authIMG from "@/assets/authIMG.webp";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { FaFacebook, FaTwitter, FaGoogle } from "react-icons/fa";
 import LogoModes from "@/components/ui/LogoTheme/LogoModes";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useTheme } from "@/utils/ThemeProvider";
+import { SocialButtons } from "@/assets/Constants/Features";
+import SocialButton from "../SocialButton/SocialButton";
 const AuthLayout = () => {
   const { theme } = useTheme();
   const title = useLocation().pathname.split("/").pop();
@@ -29,18 +29,14 @@ const AuthLayout = () => {
 
           <CardContent className="space-y-4">
             {/* Social Buttons */}
-            <Button className="w-full flex items-center justify-start pl-30 gap-5 bg-[#3b5998] text-white py-2 rounded-lg hover:scale-105 hover:-traslnnate-y-0.5  transition-all duration-300 ease-in-out">
-              <FaFacebook className="w-5 h-5" />
-              <span>Continue with Facebook</span>
-            </Button>
-            <Button className="w-full flex items-center justify-start pl-30 gap-5 bg-[#1da1f2] text-white py-2 rounded-lg hover:scale-105 hover:-traslnnate-y-0.5  transition-all duration-300 ease-in-out">
-              <FaTwitter className="w-5 h-5" />
-              <span>Continue with Twitter</span>
-            </Button>
-            <Button className="w-full flex items-center justify-start pl-30 gap-2 bg-[#34a853] text-white py-2 rounded-lg hover:scale-105 hover:-traslnnate-y-0.5  transition-all duration-300 ease-in-out">
-              <FaGoogle className="w-5 h-5" />
-              <span>Continue with Google</span>
-            </Button>
+            {SocialButtons.map((item, i) => (
+              <SocialButton
+                key={i}
+                Icon={item.Icon}
+                title={item.title}
+                color={item.color}
+              />
+            ))}
             <Separator />
             <Outlet />
           </CardContent>

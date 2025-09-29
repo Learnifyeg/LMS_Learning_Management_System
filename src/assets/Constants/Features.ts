@@ -10,6 +10,7 @@ import {
   CreditCard,
 } from "lucide-react";
 
+import { FaFacebook, FaTwitter, FaGoogle } from "react-icons/fa";
 export const features = [
   {
     icon: Users,
@@ -189,5 +190,23 @@ export const modules = [
     color: "text-purple-700",
     bgColor: "bg-purple-200",
     Icon: CreditCard,
+  },
+];
+
+export const SocialButtons = [
+  {
+    Icon: FaFacebook,
+    title: "Facebook",
+    color: "bg-[#3b5998]",
+  },
+  {
+    Icon: FaGoogle,
+    title: "Google",
+    color: "bg-[#db4437]",
+  },
+  {
+    Icon: FaTwitter,
+    title: "X",
+    color: "bg-[#1da1f2]",
   },
 ];
