@@ -49,7 +49,7 @@ const AuthLayout = lazy(
 const Login = lazy(() => import("../views/Auth/Login.jsx"));
 const Register = lazy(() => import("../views/Auth/Register.jsx"));
 const ForgetPassword = lazy(() => import("../views/Auth/ForgetPassword.jsx"));
-const Register2 = lazy(() => import("../views/Auth/Register2.jsx"));
+const Register2 = lazy(() => import("../views/Auth/InstructorRegister.jsx"));
 
 // Error Views
 const Error404 = lazy(() => import("../views/Error404.jsx"));
