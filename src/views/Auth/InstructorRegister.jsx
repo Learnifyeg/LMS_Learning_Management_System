@@ -37,7 +37,7 @@ const RegisterSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
-function Register2() {
+function InstructorRegister() {
   const navigate = useNavigate();
 
   const { theme } = useTheme();
@@ -162,4 +162,4 @@ function Register2() {
   );
 }
 
-export default Register2;
+export default InstructorRegister;
