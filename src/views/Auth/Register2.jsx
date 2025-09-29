@@ -145,7 +145,7 @@ function Register2() {
             Already have an account?{" "}
             <span
               className="text-secondary cursor-pointer hover:scale-105 font-bold"
-              onClick={() => navigate("/Login")}
+              onClick={() => navigate("/User/Login")}
             >
               Sign In
             </span>

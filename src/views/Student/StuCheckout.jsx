@@ -1,5 +1,6 @@
 function StuCheckout() {
-  return <></>;
+  return <>
+  </>;
 }
 
 export default StuCheckout;

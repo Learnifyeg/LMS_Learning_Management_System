@@ -79,7 +79,7 @@ function ForgetPassword() {
             Go Back{" "}
             <span
               className="text-secondary cursor-pointer hover:scale-105 font-bold"
-              onClick={() => navigate("/Login")}
+              onClick={() => navigate("/User/Login")}
             >
               Sign In
             </span>
