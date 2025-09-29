@@ -1,15 +1,21 @@
+// React
 import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.jsx";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router-dom";
-import Login from "./views/Auth/Login";
-import Register from "./views/Auth/Register";
-import ForgetPassword from "./views/Auth/ForgetPassword";
-import Register2 from "./views/Auth/Register2";
-import Error404 from "./views/Error404";
+
+// Style
+import "./index.css";
+import App from "./App.jsx";
+
+//  Lazy imports
 const Landing = lazy(() => import("./views/Landing.jsx"));
+const Login = lazy(() => import("./views/Auth/Login"));
+const Register = lazy(() => import("./views/Auth/Register"));
+const ForgetPassword = lazy(() => import("./views/Auth/ForgetPassword"));
+const Register2 = lazy(() => import("./views/Auth/Register2"));
+const Error404 = lazy(() => import("./views/Error404"));
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,14 +25,15 @@ const router = createBrowserRouter([
       { path: "/Login", element: <Login /> },
       { path: "/Register", element: <Register /> },
       { path: "/Register2", element: <Register2 /> },
-      { path: "/ForgetPassword", element: <ForgetPassword/> },
+      { path: "/ForgetPassword", element: <ForgetPassword /> },
       {
         path: "*",
-       element: <Error404/>,
+        element: <Error404 />,
       },
     ],
   },
 ]);
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Suspense fallback={<div>Loading...</div>}>

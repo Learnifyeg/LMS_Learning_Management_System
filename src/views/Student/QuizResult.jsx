@@ -1,9 +1,5 @@
 function QuizResult() {
-    return (
-        <>
-            
-        </>
-    )
+  return <></>;
 }
 
 export default QuizResult;

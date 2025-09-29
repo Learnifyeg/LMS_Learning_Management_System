@@ -1,9 +1,5 @@
 function TermsofUse() {
-    return (
-        <>
-            
-        </>
-    )
+  return <></>;
 }
 
 export default TermsofUse;

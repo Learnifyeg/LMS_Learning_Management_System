@@ -1,9 +1,5 @@
 function QuizPage() {
-    return (
-        <>
-            
-        </>
-    )
+  return <></>;
 }
 
 export default QuizPage;

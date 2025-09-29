@@ -1,9 +1,5 @@
 function SearchResults() {
-    return (
-        <>
-            
-        </>
-    )
+  return <></>;
 }
 
 export default SearchResults;
