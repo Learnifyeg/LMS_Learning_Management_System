@@ -1,7 +1,7 @@
 // Assets
 import { useTheme } from "@/utils/ThemeProvider";
-import LogoWhite from "../../../public/learnify_white.svg";
-import LogoBlack from "../../../public/learnify_black.svg";
+import LogoWhite from "../../../assets/Logo/learnify_white.svg";
+import LogoBlack from "../../../assets/Logo/learnify_black.svg";
 
 const LogoModes = () => {
   const { theme } = useTheme();

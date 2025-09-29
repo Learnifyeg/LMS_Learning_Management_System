@@ -40,14 +40,14 @@ const Navbar = () => {
           <Button
             variant="outline"
             className="bg-transparent cursor-pointer hover:-translate-y-0.25  transition-all duration-300 ease-in-out"
-            onClick={() => navigate("/Login")}
+            onClick={() => navigate("/User/Login")}
           >
             Sign In
           </Button>
           <Button
             variant="secondary"
             className="bg-secondary cursor-pointer hover:-translate-y-0.25  transition-all duration-300 ease-in-out"
-            onClick={() => navigate("/Register")}
+            onClick={() => navigate("/User/Register")}
           >
             Get Started
           </Button>
