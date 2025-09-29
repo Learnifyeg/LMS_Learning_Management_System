@@ -2,6 +2,24 @@ import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "../App.jsx";
 import StuDashboard from "@/views/Student/StuDashboard.jsx";
+import StuStudentLayout from "@/views/Student/StudentLayout.jsx";
+import StuCheckout from "@/views/Student/StuCheckout.jsx";
+import StuCourseDetails from "@/views/Student/StuCourseDetails.jsx";
+import StuProfile from "@/views/Student/StuProfile.jsx";
+import StuInvoice from "@/views/Student/StuInvoice.jsx";
+import StuMyCertificates from "@/views/Student/StuMyCertificates.jsx";
+import StuQuizPage from "@/views/Student/StuQuizPage.jsx";
+import StuQuizResult from "@/views/Student/StuQuizResult.jsx";
+import StuSavedCourses from "@/views/Student/StuSavedCourses.jsx";
+import StuShoppingCart from "@/views/Student/StuShoppingCart.jsx";
+import UserLayout from "@/views/Others/UserLayout.jsx";
+import ContactUs from "@/views/Others/ContactUs.jsx";
+import HelpPage from "@/views/Others/HelpPage.jsx";
+import Notifications from "@/views/Others/Notifications.jsx";
+import SearchResults from "@/views/Others/SearchResults.jsx";
+import SendFeedback from "@/views/Others/SendFeedback.jsx";
+import SettingPage from "@/views/Others/SettingPage.jsx";
+import TermsofUse from "@/views/Others/TermsofUse.jsx";
 
 // Lazy imports
 const LandingLayout = lazy(
@@ -40,7 +58,35 @@ export const router = createBrowserRouter([
       { path: "Register2", element: <Register2 /> },
       { path: "ForgetPassword", element: <ForgetPassword /> },
       { path: "*", element: <Error404 /> },
-      { path: "StuDashboard", element: <StuDashboard /> },
+      {
+        path: "UserLayout",
+        element: <UserLayout />,
+        children: [
+          { path: "ContactUs", element: <ContactUs /> },
+          { path: "HelpPage", element: <HelpPage /> },
+          { path: "Notifications", element: <Notifications /> },
+          { path: "SearchResults", element: <SearchResults /> },
+          { path: "SendFeedback", element: <SendFeedback /> },
+          { path: "SettingPage", element: <SettingPage /> },
+          { path: "TermsofUse", element: <TermsofUse /> },
+        ],
+      },
+      {
+        path: "StudentLayout",
+        element: <StuStudentLayout />,
+        children: [
+          { path: "StuCheckout", element: <StuCheckout /> },
+          { path: "StuCourseDetails", element: <StuCourseDetails /> },
+          { path: "StuProfile", element: <StuProfile /> },
+          { path: "StuDashboard", element: <StuDashboard /> },
+          { path: "StuInvoice", element: <StuInvoice /> },
+          { path: "StuMyCertificates", element: <StuMyCertificates /> },
+          { path: "StuQuizPage", element: <StuQuizPage /> },
+          { path: "StuQuizResult", element: <StuQuizResult /> },
+          { path: "StuSavedCourses", element: <StuSavedCourses /> },
+          { path: "StuShoppingCart", element: <StuShoppingCart /> },
+        ],
+      },
     ],
   },
 ]);

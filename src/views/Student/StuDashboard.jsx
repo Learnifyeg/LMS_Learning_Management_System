@@ -8,7 +8,7 @@ const Footer = lazy(() => import("../../components/Footer/Footer"));
 function StuDashboard() {
   return (
     <>
-      <div className="ml-[250px]">
+      {/* <div className="ml-[250px]"> */}
         <Suspense fallback={null}>
           <Navbar />
         </Suspense>
@@ -16,7 +16,7 @@ function StuDashboard() {
         <Suspense fallback={null}>
           <Footer />
         </Suspense>
-      </div>
+      {/* </div> */}
     </>
   );
 }
