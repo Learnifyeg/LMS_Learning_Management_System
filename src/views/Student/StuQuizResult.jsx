@@ -1,5 +1,5 @@
-function QuizResult() {
+function StuQuizResult() {
   return <></>;
 }
 
-export default QuizResult;
+export default StuQuizResult;

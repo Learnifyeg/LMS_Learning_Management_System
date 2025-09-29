@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "../App.jsx";
+import StuDashboard from "@/views/Student/StuDashboard.jsx";
 
 // Lazy imports
 const LandingLayout = lazy(
@@ -39,6 +40,7 @@ export const router = createBrowserRouter([
       { path: "Register2", element: <Register2 /> },
       { path: "ForgetPassword", element: <ForgetPassword /> },
       { path: "*", element: <Error404 /> },
+      { path: "StuDashboard", element: <StuDashboard /> },
     ],
   },
 ]);

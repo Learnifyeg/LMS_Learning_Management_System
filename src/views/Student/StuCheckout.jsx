@@ -1,5 +1,5 @@
-function Checkout() {
+function StuCheckout() {
   return <></>;
 }
 
-export default Checkout;
+export default StuCheckout;

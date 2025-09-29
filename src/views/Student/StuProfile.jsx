@@ -2,10 +2,10 @@
 import { lazy, Suspense } from "react";
 
 // Lazy imports
-const Navbar = lazy(() => import("@/components/Navbar/Navbar"));
+const Navbar = lazy(() => import("@/components/SideNavbar/Navbar"));
 const Footer = lazy(() => import("../../components/Footer/Footer"));
 
-function Profile() {
+function StuProfile() {
   return (
     <>
       <Suspense fallback={null}>
@@ -21,4 +21,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default StuProfile;

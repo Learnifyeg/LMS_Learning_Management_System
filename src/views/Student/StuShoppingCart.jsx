@@ -1,5 +1,5 @@
-function ShoppingCart() {
+function StuShoppingCart() {
   return <></>;
 }
 
-export default ShoppingCart;
+export default StuShoppingCart;

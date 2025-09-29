@@ -1,5 +1,5 @@
-function QuizPage() {
+function StuQuizPage() {
   return <></>;
 }
 
-export default QuizPage;
+export default StuQuizPage;

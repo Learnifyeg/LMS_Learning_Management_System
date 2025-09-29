@@ -2,23 +2,23 @@
 import { lazy, Suspense } from "react";
 
 // Lazy imports
-const Navbar = lazy(() => import("@/components/Navbar/Navbar"));
+const Navbar = lazy(() => import("@/components/SideNavbar/Navbar"));
 const Footer = lazy(() => import("../../components/Footer/Footer"));
 
-function Dashboard() {
+function StuDashboard() {
   return (
     <>
-      <Suspense fallback={null}>
-        <Navbar />
-      </Suspense>
-
-      {/* Page Content Here */}
-
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
+      <div className="ml-[250px]">
+        <Suspense fallback={null}>
+          <Navbar />
+        </Suspense>
+        {/* Page Content Here */}
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
+      </div>
     </>
   );
 }
 
-export default Dashboard;
+export default StuDashboard;

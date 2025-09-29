@@ -1,5 +1,5 @@
-function Invoice() {
+function StuInvoice() {
   return <></>;
 }
 
-export default Invoice;
+export default StuInvoice;

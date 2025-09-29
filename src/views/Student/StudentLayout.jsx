@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-function StudentLayout() {
+function StuStudentLayout() {
   return (
     <>
       <Outlet />
@@ -7,4 +7,4 @@ function StudentLayout() {
   );
 }
 
-export default StudentLayout;
+export default StuStudentLayout;
