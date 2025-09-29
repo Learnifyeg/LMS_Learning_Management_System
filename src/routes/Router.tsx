@@ -5,7 +5,7 @@ import App from "../App.jsx";
 // Student Views
 const StuDashboard = lazy(() => import("@/views/Student/StuDashboard.jsx"));
 const StuStudentLayout = lazy(
-  () => import("@/views/Student/StudentLayout.jsx")
+  () => import("@/components/StudentLayout.jsx/StudentLayout.jsx")
 );
 const StuCheckout = lazy(() => import("@/views/Student/StuCheckout.jsx"));
 const StuCourseDetails = lazy(
@@ -26,7 +26,7 @@ const StuShoppingCart = lazy(
 );
 
 // Others
-const UserLayout = lazy(() => import("@/views/Others/UserLayout.jsx"));
+const UserLayout = lazy(() => import("@/components/UserLayout.jsx/UserLayout.jsx"));
 const ContactUs = lazy(() => import("@/views/Others/ContactUs.jsx"));
 const HelpPage = lazy(() => import("@/views/Others/HelpPage.jsx"));
 const Notifications = lazy(() => import("@/views/Others/Notifications.jsx"));
