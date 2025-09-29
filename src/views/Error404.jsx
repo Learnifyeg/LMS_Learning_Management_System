@@ -25,6 +25,10 @@ function Error404() {
         © 2025 <span className="text-secondary font-bold">Learnify</span>. All
         Rights Reserved
       </p>
+      <p className="text-md text-gray-400 mt-10">
+        © 2025 <span className="text-secondary font-bold">Learnify</span>. All
+        Rights Reserved
+      </p>
     </div>
   );
 }
