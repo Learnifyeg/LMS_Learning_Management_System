@@ -1,60 +1,53 @@
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import Logo from "../../assets/Logo/logo.svg";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { NavLink, useNavigate } from "react-router-dom";
 import { NavLinks } from "@/assets/Constants/NavLinks";
+import LogoNav from "../../ui/Logo/LogoNav";
 const Navbar = () => {
   const navigate = useNavigate();
   return (
-    <header className="bg-primary/90 py-3  text-white sticky top-0 z-50 ">
+    <header className="bg-primary/90 py-3  text-white sticky top-0 z-50  backdrop-blur-md">
       <div className="flex justify-between items-center  custom-container">
-        <Button variant="link" className="cursor-pointer">
-          <Avatar className="transform scale-200  hover:scale-250 hover:ml-7 transition-all duration-300 ease-in-out">
-            <AvatarImage src={Logo} />
-            <AvatarFallback>Learnify Logo</AvatarFallback>
-          </Avatar>
-        </Button>
+        <LogoNav />
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList className="flex gap-4">
-            {NavLinks.map((link) => (
-              <NavigationMenuItem
-                key={link.name}
-                className="hover:scale-110 transition-all duration-300 ease-in-out"
-              >
-                <NavigationMenuLink asChild>
+            {NavLinks.map((link) => {
+              return (
+                <NavigationMenuItem
+                  key={link.name}
+                  className="hover:-translate-y-0.25 transition-all duration-300 ease-in-out"
+                >
                   <NavLink
                     to={link.path}
                     className={({ isActive }) =>
                       `transition-all hover:text-text-primary duration-300 ease-in-out ${
-                        isActive ? "text-secondary font-semibold" : ""
+                        isActive ? "text-text-primary" : ""
                       }`
                     }
                   >
                     {link.name}
                   </NavLink>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
+                </NavigationMenuItem>
+              );
+            })}
           </NavigationMenuList>
         </NavigationMenu>
         <div className=" gap-2 flex ">
           <Button
             variant="outline"
             className="bg-transparent cursor-pointer hover:-translate-y-0.25  transition-all duration-300 ease-in-out"
-            onClick={() => (navigate("/Login"))}
+            onClick={() => navigate("/Login")}
           >
             Sign In
           </Button>
           <Button
             variant="secondary"
             className="bg-secondary cursor-pointer hover:-translate-y-0.25  transition-all duration-300 ease-in-out"
-          onClick={() => (navigate("/Register"))}
+            onClick={() => navigate("/Register")}
           >
             Get Started
           </Button>

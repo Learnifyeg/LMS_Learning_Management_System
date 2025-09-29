@@ -14,6 +14,7 @@
   --text-secondary: #374151; /* Body text */
   --footer-bg: #1e3a8a; /* Footer background */
   --footer-text: #ffffff; /* Footer text */
+  /* --text-white: #303030; */
   --radius: 0.625rem;
   /* --background: oklch(1 0 0); */
   --foreground: oklch(0.145 0 0);
@@ -46,12 +47,12 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --input : oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
 }
 
 .dark {
   /* Dark Mode */
-  --primary: #3b82f6; /* Lighter blue for contrast */
+  --primary: #2e6ac9; /* Lighter blue for contrast */
   --secondary: #fb923c; /* Brighter orange */
   --background: #111827; /* Page background */
   --surface: #1f2937; /* Cards, sections */
@@ -59,6 +60,7 @@
   --text-secondary: #d1d5db; /* Body text */
   --footer-bg: #0f172a; /* Footer background */
   --footer-text: #e5e7eb; /* Footer text */
+  /* --text-white: #fafafa; */
   /* --background: oklch(0.145 0 0); */
   --foreground: oklch(0.985 0 0);
   --card: #10141e;
@@ -90,7 +92,7 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.439 0 0);
-  --input : oklch(1 0 0 / 15%);
+  --input: oklch(1 0 0 / 15%);
 }
 
 /* Make variables available as Tailwind theme colors */
@@ -101,6 +103,7 @@
   --color-surface: var(--surface);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
+  /* --color-text-white: var(--text-white); */
   --color-footer-bg: var(--footer-bg);
   --color-footer-text: var(--footer-text);
   --color-card: var(--card);
@@ -169,4 +172,16 @@
     margin: 0 auto;
     padding: 0 1.5rem;
   }
+
+  .card-hover {
+    @apply hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-lg duration-300 delay-75 transition-all ease-in-out shadow-md;
+  }
+
+  .btn-hover {
+    @apply hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-lg duration-300 delay-75 transition-all ease-in-out shadow-md;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
 }

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Play } from "lucide-react";
-import { Separator } from "../ui/separator";
+import { Separator } from "../../ui/separator";
 import useUserStore from "@/store/user";
 import { useEffect } from "react";
 
@@ -26,17 +26,17 @@ export default function HeroSection() {
             students, instructors, and administrators.
           </p>
 
-          <div className="mt-8 flex justify-between sm:justify-start gap-4 text-white">
+          <div className="mt-8 flex justify-between md:justify-start gap-4 text-white">
             <Button
               size="lg"
-              className="hover:scale-110 transition-all duration-300 ease-in-out cursor-pointer"
+              className="hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-lg duration-300 delay-75 transition-all ease-in-out shadow-md cursor-pointer"
             >
               Start Learning Today
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="hover:scale-110 transition-all duration-300 ease-in-out cursor-pointer text-text-primary border-gray-400 bg-transparent"
+              className="hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-lg duration-300 delay-75 transition-all ease-in-out shadow-md  cursor-pointer text-text-primary border-gray-400 bg-transparent"
             >
               Learn More
             </Button>
@@ -44,7 +44,7 @@ export default function HeroSection() {
         </div>
 
         {/* Right Content - Card */}
-        <Card className="shadow-lg rounded-2xl hover:scale-105 transition-all duration-300 ease-in-out border-none bg-surface sm:w-[90%] w-full mx-auto">
+        <Card className=" rounded-2xl card-hover border-border bg-surface md:w-[90%] w-full mx-auto">
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-white">
@@ -52,29 +52,28 @@ export default function HeroSection() {
               </div>
               <div className="leading-snug">
                 <p className="font-semibold">SQL Server Programming</p>
-                <p className="text-sm text-gray-500">Instructor: John Smith</p>
+                <p className="text-sm text-muted-foreground">
+                  Instructor: John Smith
+                </p>
               </div>
             </CardTitle>
           </CardHeader>
 
           <CardContent>
             <div className="flex justify-between text-sm mb-2">
-              <span className="text-gray-500">Course Progress</span>
+              <span className="text-muted-foreground">Course Progress</span>
               <span className="text-secondary font-medium">85%</span>
             </div>
             <Progress value={85} className="h-2 bg-muted" />
             <Separator orientation="horizontal" className="my-4 bg-gray-300" />
             <div className="flex justify-between text-sm mt-4">
-              <span className="text-gray-500">Next: Advanced Queries</span>
+              <span className="text-muted-foreground">
+                Next: Advanced Queries
+              </span>
               <span className="text-primary font-medium">2 hours left</span>
             </div>
           </CardContent>
         </Card>
-        {user && (
-          <p className="text-sm text-text-secondary mt-4">
-            {user?.fullName} {user?.email}
-          </p>
-        )}
       </div>
     </section>
   );
