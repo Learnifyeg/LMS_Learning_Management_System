@@ -4,10 +4,16 @@ import { Outlet, useLocation } from "react-router";
 
 // Lazy imports
 const Navbar = lazy(() => import("@/components/SideNavbar/Navbar"));
-const Footer = lazy(() => import("../../components/Footer/Footer"));
-function UserLayout() {
+const Footer = lazy(() => import("../Footer/Footer"));
+function StuStudentLayout() {
   const location = useLocation().pathname.split("/").pop();
-  const hiddenPaths = ["AboutUs", "ContactUs", "SearchResults ", "TermsofUse"];
+  const hiddenPaths = [
+    "StuCheckout",
+    "StuInvoice",
+    "StuQuizResult ",
+    "StuShoppingCart",
+    "StuQuizPage",
+  ];
   const shouldHide = hiddenPaths.includes(location);
   return (
     <>
@@ -28,4 +34,4 @@ function UserLayout() {
   );
 }
 
-export default UserLayout;
+export default StuStudentLayout;

@@ -4,8 +4,8 @@ import { Outlet, useLocation } from "react-router";
 
 // Lazy imports
 const Navbar = lazy(() => import("@/components/SideNavbar/Navbar"));
-const Footer = lazy(() => import("../../components/Footer/Footer"));
-function StuStudentLayout() {
+const Footer = lazy(() => import("../Footer/Footer"));
+function InstructorLayout() {
   const location = useLocation().pathname.split("/").pop();
   const hiddenPaths = [
     "StuCheckout",
@@ -22,9 +22,7 @@ function StuStudentLayout() {
           <Navbar />
         </Suspense>
       )}
-
       <Outlet />
-
       {!shouldHide && (
         <Suspense fallback={null}>
           <Footer />
@@ -34,4 +32,4 @@ function StuStudentLayout() {
   );
 }
 
-export default StuStudentLayout;
+export default InstructorLayout;
