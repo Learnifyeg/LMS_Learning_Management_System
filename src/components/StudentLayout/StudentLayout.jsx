@@ -22,22 +22,26 @@ function StuStudentLayout() {
   const shouldHide = hiddenPaths.includes(location);
   return (
     <>
-      <SidebarProvider>
-        {!shouldHide && (
-          <Suspense fallback={null}>
-            <Navbar />
-          </Suspense>
-        )}
-
-        <div className="ml-56 max-md:ml-5 mt-16">
-          <Outlet />
+      {shouldHide ? (
+        <Outlet />
+      ) : (
+        <SidebarProvider>
           {!shouldHide && (
             <Suspense fallback={null}>
-              <Footer />
+              <Navbar />
             </Suspense>
-          )}{" "}
-        </div>
-      </SidebarProvider>
+          )}
+
+          <div className="ml-56 max-md:ml-5 mt-16">
+            <Outlet />
+            {!shouldHide && (
+              <Suspense fallback={null}>
+                <Footer />
+              </Suspense>
+            )}{" "}
+          </div>
+        </SidebarProvider>
+      )}
     </>
   );
 }
