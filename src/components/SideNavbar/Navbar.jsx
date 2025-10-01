@@ -1,59 +1,69 @@
-import { Button } from "../ui/button";
+import { AppSidebar } from "@/components/AppSidebar/app-sidebar";
 import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import { NavLink, useNavigate } from "react-router-dom";
-import { NavLinks } from "@/assets/Constants/NavLinks";
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/Sidebar/breadcrumb";
+import { Separator } from "@/components/ui/separator";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/Sidebar/sidebar";
+
+import { Input } from "@/components/ui/input";
+import { MenubarDemo } from "../Menubar/MenubarDemo";
 import LogoNav from "../ui/Logo/LogoNav";
-const Navbar = () => {
-  const navigate = useNavigate();
+
+export default function Page() {
   return (
-    <header className="bg-primary/90 py-3  text-white sticky top-0 z-50  backdrop-blur-md">
-      <div className="flex justify-between items-center  custom-container">
-        <LogoNav />
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList className="flex gap-4">
-            {NavLinks.map((link) => {
-              return (
-                <NavigationMenuItem
-                  key={link.name}
-                  className="hover:-translate-y-0.25 transition-all duration-300 ease-in-out"
-                >
-                  <NavLink
-                    to={link.path}
-                    className={({ isActive }) =>
-                      `transition-all hover:text-text-primary duration-300 ease-in-out ${
-                        isActive ? "text-text-primary" : ""
-                      }`
-                    }
-                  >
-                    {link.name}
-                  </NavLink>
-                </NavigationMenuItem>
-              );
-            })}
-          </NavigationMenuList>
-        </NavigationMenu>
-        <div className=" gap-2 flex ">
-          <Button
-            variant="outline"
-            className="bg-transparent cursor-pointer hover:-translate-y-0.25  transition-all duration-300 ease-in-out"
-            onClick={() => navigate("/Login")}
-          >
-            Sign In
-          </Button>
-          <Button
-            variant="secondary"
-            className="bg-secondary cursor-pointer hover:-translate-y-0.25  transition-all duration-300 ease-in-out"
-            onClick={() => navigate("/Register")}
-          >
-            Get Started
-          </Button>
-        </div>
-      </div>
-    </header>
+    // <SidebarProvider>
+    <div>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="fixed w-full z-10 bg-sidebar shadow-md flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 justify-between pr-24">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator
+              orientation="vertical"
+              className="mr-2 data-[orientation=vertical]:h-4"
+            />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="#">
+                    <div className="flex items-center justify-between bg-b gap-24">
+                      <LogoNav />
+                      <Input
+                        type="email"
+                        placeholder="search for your course..."
+                        className="w-96 bg-input"
+                      />
+                    </div>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                {/* <BreadcrumbSeparator className="hidden md:block" /> */}
+                {/* <BreadcrumbItem>
+                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                  </BreadcrumbItem> */}
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+          <MenubarDemo />
+        </header>
+        {/* <div className="flex flex-1 flex-col gap-4 p-4 pt-0 bg-red-300">
+            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+              <div className="bg-muted/50 aspect-video rounded-xl" />
+              <div className="bg-muted/50 aspect-video rounded-xl" />
+              <div className="bg-muted/50 aspect-video rounded-xl" />
+            </div>
+            <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
+          </div> */}
+      </SidebarInset>
+    </div>
+    // </SidebarProvider>
   );
-};
-export default Navbar;
+}
