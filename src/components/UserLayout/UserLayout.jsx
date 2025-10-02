@@ -1,6 +1,7 @@
 // React
 import { lazy, Suspense } from "react";
 import { Outlet, useLocation } from "react-router";
+import { SidebarProvider } from "../ui/Sidebar/sidebar";
 
 // Lazy imports
 const Navbar = lazy(() => import("@/components/SideNavbar/Navbar"));
@@ -11,19 +12,26 @@ function UserLayout() {
   const shouldHide = hiddenPaths.includes(location);
   return (
     <>
-      {!shouldHide && (
-        <Suspense fallback={null}>
-          <Navbar />
-        </Suspense>
-      )}
+      {shouldHide ? (
+        <Outlet />
+      ) : (
+        <SidebarProvider>
+          {!shouldHide && (
+            <Suspense fallback={null}>
+              <Navbar />
+            </Suspense>
+          )}
 
-      <Outlet />
-
-      {!shouldHide && (
-        <Suspense fallback={null}>
-          <Footer />
-        </Suspense>
-      )}
+          <div className="ml-56 max-md:ml-5 mt-16">
+            <Outlet />
+            {!shouldHide && (
+              <Suspense fallback={null}>
+                <Footer />
+              </Suspense>
+            )}{" "}
+          </div>
+        </SidebarProvider>
+      )}igt
     </>
   );
 }

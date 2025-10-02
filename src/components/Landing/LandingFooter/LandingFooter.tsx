@@ -1,7 +1,9 @@
 import { Separator } from "@/components/ui/separator";
 import LogoNav from "../../ui/Logo/LogoNav";
+import { useNavigate } from "react-router";
 
 export default function LandingFooter() {
+  const navigate = useNavigate();
   return (
     <footer className="bg-[#0f172a] text-gray-400">
       <div className="custom-container">
@@ -19,9 +21,11 @@ export default function LandingFooter() {
             <h3 className="text-white font-semibold mb-3">Platform</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-white">
-                  Courses
-                </a>
+                <button onClick={() => navigate("/StudentLayout")}>
+                  <a href="#" className="hover:text-white">
+                    Courses
+                  </a>
+                </button>
               </li>
               <li>
                 <a href="#" className="hover:text-white">

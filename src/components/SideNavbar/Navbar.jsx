@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { MenubarDemo } from "../Menubar/MenubarDemo";
 import LogoNav from "../ui/Logo/LogoNav";
+import LogoModes from "../ui/LogoTheme/LogoModes";
 
 export default function Page() {
   return (
@@ -24,7 +25,7 @@ export default function Page() {
     <div>
       <AppSidebar />
       <SidebarInset>
-        <header className="fixed w-full z-10 bg-sidebar shadow-md flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 justify-between pr-24">
+        <header className="fixed w-full z-10 bg-sidebar shadow-md flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 justify-between pr-32">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator
@@ -36,7 +37,7 @@ export default function Page() {
                 <BreadcrumbItem className="hidden md:block">
                   <BreadcrumbLink href="#">
                     <div className="flex items-center justify-between bg-b gap-24">
-                      <LogoNav />
+                      <div className="mt-5 w-24"><LogoModes/></div>
                       <Input
                         type="email"
                         placeholder="search for your course..."
