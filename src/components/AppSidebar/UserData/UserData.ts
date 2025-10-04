@@ -62,7 +62,7 @@ export const sidebarData = {
       icon: BookOpen,
       items: [
         { title: "My Courses", url: "/StudentLayout/StuSavedCourses" },
-        { title: "Saved Courses", url: "/StudentLayout/StuShoppingCart" },
+        { title: "Saved Courses", url: "/StudentLayout/StuSavedCourses" },
         { title: "Course Details", url: "/StudentLayout/StuCourseDetails" },
       ],
     },

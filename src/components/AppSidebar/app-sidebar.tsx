@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { sidebarData as data } from "@/components/UserData/UserData"
+import { sidebarData as data } from "@/components/AppSidebar/UserData/UserData"
 
 import { NavMain } from "@/components/AppSidebar/nav-main"
 import { NavSetting } from "@/components/AppSidebar/nav-setting"

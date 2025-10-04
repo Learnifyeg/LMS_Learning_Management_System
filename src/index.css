@@ -179,7 +179,7 @@
   }
 
   .card-hover {
-    @apply hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-lg duration-300 delay-75 transition-all ease-in-out shadow-md;
+    @apply hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-lg duration-300 delay-75 transition-all ease-in-out shadow-md  cursor-pointer;
   }
 
   .btn-hover {
