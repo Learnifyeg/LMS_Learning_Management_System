@@ -26,7 +26,7 @@ function StuStudentLayout() {
     <>
       {shouldHide ? (
         <div>
-          <header className="fixed top-0 left-0 w-full h-16 bg-white dark:bg-stone-900 flex items-center justify-between px-6 shadow-sm z-50">
+          <header className="fixed top-0 left-0 w-full h-16 bg-white dark:bg-[#0a0e19] flex items-center justify-between px-6 shadow-sm z-50">
             <button
               className="btn-secondary  btn-hover transition"
               onClick={() => navigate("/StudentLayout/StuDashboard")}
