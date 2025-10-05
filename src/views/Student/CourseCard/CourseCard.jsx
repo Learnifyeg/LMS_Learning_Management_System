@@ -1,6 +1,9 @@
 import React from "react";
 import { Trash2, ShoppingCart } from "lucide-react";
+import { Link, useLocation } from "react-router";
 const CourseCard = ({ course, onRemove, onAddToCart }) => {
+  const location = useLocation().pathname.split("/").pop();
+
   return (
     <div className="flex max-md:flex-col border rounded-lg p-4 w-full max-w-4xl items-center gap-6 card relative card-hover">
       {/* Remove Button */}
@@ -13,7 +16,10 @@ const CourseCard = ({ course, onRemove, onAddToCart }) => {
       </button>
 
       {/* Image Section */}
-      <div className="relative w-72 h-40 overflow-hidden rounded-md  max-md:w-full max-md:h-48">
+      <Link
+        to={`/StudentLayout/StuCourseDetails/${course.id}`}
+        className="relative w-72 h-40 overflow-hidden rounded-md max-md:w-full max-md:h-48 block"
+      >
         <img
           src={course.image}
           alt={course.title}
@@ -32,7 +38,7 @@ const CourseCard = ({ course, onRemove, onAddToCart }) => {
         <span className="absolute bottom-2 right-2 bg-gray-200 text-sm px-3 py-1 rounded mb-2 text-black">
           {course.hours}
         </span>
-      </div>
+      </Link>
 
       <div>
         {/* Content */}
@@ -64,13 +70,15 @@ const CourseCard = ({ course, onRemove, onAddToCart }) => {
             <Trash2 size={16} />
           </button>
 
-          <button
-            onClick={() => onAddToCart(course)}
-            className="flex items-center gap-2  btn-primary card-hover"
-          >
-            <ShoppingCart size={16} />
-            Add to Cart
-          </button>
+          {location !== "StuShoppingCart" && (
+            <button
+              onClick={() => onAddToCart(course)}
+              className="flex items-center gap-2  btn-primary card-hover"
+            >
+              <ShoppingCart size={16} />
+              Add to Cart
+            </button>
+          )}
         </div>
       </div>
     </div>

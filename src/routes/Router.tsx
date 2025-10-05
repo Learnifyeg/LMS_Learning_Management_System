@@ -104,7 +104,7 @@ export const router = createBrowserRouter([
         element: <StuStudentLayout />,
         children: [
           { path: "StuCheckout", element: <StuCheckout /> },
-          { path: "StuCourseDetails", element: <StuCourseDetails /> },
+          { path: "StuCourseDetails/:courseId", element: <StuCourseDetails /> },
           { path: "StuProfile", element: <StuProfile /> },
           { path: "StuDashboard", element: <StuDashboard /> },
           { path: "StuInvoice", element: <StuInvoice /> },

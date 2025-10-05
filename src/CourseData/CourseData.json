@@ -37,5 +37,18 @@
     "price": "$10",
     "tag": "BESTSELLER",
     "image": "/images/authIMG.webp"
+  },
+  {
+    "id": 4,
+    "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
+    "category": "Web Development | Python",
+    "author": "John Doe",
+    "views": "109k views",
+    "posted": "15 days ago",
+    "rating": 4.5,
+    "hours": "25 hours",
+    "price": "$10",
+    "tag": "BESTSELLER",
+    "image": "/images/authIMG.webp"
   }
 ]
