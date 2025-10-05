@@ -17,7 +17,7 @@ function StuStudentLayout() {
   const hiddenPaths = [
     "StuCheckout",
     "StuInvoice",
-    "StuQuizResult ",
+    "StuQuizResult",
     "StuShoppingCart",
     "StuQuizPage",
   ];

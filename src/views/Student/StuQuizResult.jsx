@@ -70,7 +70,6 @@ function CertificateSection({ studentName, courseName }) {
   );
 }
 
-
 function Certification({ name }) {
   return (
     <div className="text-2xl sm:text-3xl md:text-4xl font-bold mt-10 text-center dark:text-white">
@@ -83,32 +82,25 @@ function StuQuizResult() {
   const studentName = "Joginder"; // ممكن تخليه متغير أو من API
 
   return (
-    <div className="w-full flex=grow bg-gray-100 dark:bg-stone-950 flex flex-col">
-      {/* Header */}
-      <header className="fixed top-0 left-0 w-full h-16 bg-white dark:bg-stone-900 flex items-center justify-between px-4 sm:px-6 shadow-sm z-50">
-        <button className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-stone-900 text-gray-700 dark:text-gray-200 text-sm px-3 sm:px-4 py-1 sm:py-2 rounded-full hover:bg-stone-900 hover:text-white transition">
-          Back To Courses
-        </button>
-
-        <a href="">
-          <LogoModes />
-        </a>
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu_Bwn9_9Uvdpq3DYMfWGtIFiKg6jchz2MOw&s"
-          alt="profile"
-          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
-        />
-      </header>
-
+    <div className="w-full flex=grow bg-gray-100 dark:bg-stone-950 flex flex-col pt-16">
       {/* Breadcrumbs + Title */}
-      <div className="w-full bg-white dark:bg-stone-900 shadow-sm ">
+      <div className="w-full bg-white dark:bg-stone-900 shadow-sm px-24 max-lg:px-6 max-md:px-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 sm:px-6 py-2 gap-2 sm:gap-0">
           <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
-            <a href="" className="hover:underline">Home</a> / 
-            <a href="" className="hover:underline"> Certification Center</a> / Test
+            <a href="" className="hover:underline">
+              Home
+            </a>{" "}
+            /
+            <a href="" className="hover:underline">
+              {" "}
+              Certification Center
+            </a>{" "}
+            / Test
           </span>
           <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base mt-1 sm:mt-0">
-            <a href="" className="hover:underline">« Back to Certification Center</a>
+            <a href="" className="hover:underline">
+              « Back to Certification Center
+            </a>
           </span>
         </div>
 
