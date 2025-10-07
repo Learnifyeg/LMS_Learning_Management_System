@@ -1,5 +1,5 @@
 {
-  "users": [
+  "student": [
     {
       "id": 1,
       "name": "Nada Ashraf",
@@ -353,7 +353,7 @@
       "answer": "b"
     }
   ],
-  "useranswers": [
+  "studentanswers": [
     {
       "id": "c6b8",
       "userId": "StudentLayout",
@@ -375,7 +375,7 @@
       "submittedAt": "2025-10-07T19:22:28.787Z"
     }
   ],
-  "UserResults": [
+  "studentResults": [
     {
       "id": 1,
       "quizId": 1,
@@ -426,3 +426,5 @@
     }
   ]
 }
+
+

@@ -86,7 +86,7 @@ export default function StuQuizPage() {
 
   const URL = "http://localhost:3001";
   const QuestionsEndPoint = "questions";
-  const AnswersEndPoint = "useranswers";
+  const AnswersEndPoint = "studentanswers";
 
   // Fetch Questions
   useEffect(() => {

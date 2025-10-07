@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 // API URLs
 const URL = "http://localhost:3001";
-const UserResultsEndPoint = "UserResults"; // 👈 endpoint we’ll use
+const UserResultsEndPoint = "studentResults"; // 👈 endpoint we’ll use
 
 function Count({ shape, num, text }) {
   const bgColor =
