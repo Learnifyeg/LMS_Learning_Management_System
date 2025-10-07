@@ -40,19 +40,19 @@ function CertificateSection({ studentName, courseName }) {
 
       ctx.drawImage(image, 0, 0);
 
-      // 🎨 إعدادات الكتابة
+      //  إعدادات الكتابة
       ctx.fillStyle = "#333";
       ctx.textAlign = "center";
 
-      // 📝 اسم الطالب (وسط السطر الفاضي الأول)
+      //  اسم الطالب (وسط السطر الفاضي الأول)
       ctx.font = "bold 60px Arial";
       ctx.fillText(studentName, canvas.width / 2, canvas.height / 1.5 - 90);
 
-      // 📝 اسم الكورس (وسط السطر الفاضي التاني)
+      //  اسم الكورس (وسط السطر الفاضي التاني)
       ctx.font = "bold 50px Arial";
       ctx.fillText(courseName, canvas.width / 2, canvas.height / 1.5 + 100);
 
-      // ✅ تحميل الصورة
+      //  تحميل الصورة
       const link = document.createElement("a");
       link.download = `${studentName}-certificate.png`;
       link.href = canvas.toDataURL("image/png");
@@ -79,12 +79,12 @@ function Certification({ name }) {
 }
 
 function StuQuizResult() {
-  const studentName = "Joginder"; // ممكن تخليه متغير أو من API
+  const studentName = "Joginder"; 
 
   return (
-    <div className="w-full flex=grow card flex flex-col pt-16">
+    <div className="w-full flex=grow bg-gray-100 dark:bg-stone-950 flex flex-col pt-16">
       {/* Breadcrumbs + Title */}
-      <div className="w-full card shadow-sm px-24 max-lg:px-6 max-md:px-4">
+      <div className="w-full bg-white dark:bg-stone-900 shadow-sm px-24 max-lg:px-6 max-md:px-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 sm:px-6 py-2 gap-2 sm:gap-0">
           <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
             <a href="" className="hover:underline">
@@ -105,11 +105,11 @@ function StuQuizResult() {
         </div>
 
         <h1 className="px-4 sm:px-6 py-3 text-xl sm:text-2xl md:text-3xl font-semibold dark:text-white">
-          Test view
+          Test Result
         </h1>
       </div>
 
-      {/* عرض النتائج */}
+     
       <div className="mt-10 mx-auto flex flex-wrap justify-center items-center gap-4 sm:gap-6">
         <Count shape="✓" num="15" text="Right" />
         <Count shape="✗" num="5" text="Wrong" />
@@ -122,7 +122,7 @@ function StuQuizResult() {
         You are eligible for this certificate
       </h2>
 
-      {/* ✅ نمرر الاسم للجزء بتاع تحميل الشهادة */}
+
       <CertificateSection studentName={studentName} courseName="React Basics" />
     </div>
   );
