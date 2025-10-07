@@ -1,3 +1,4 @@
+// React
 import React from "react";
 import { Trash2, ShoppingCart } from "lucide-react";
 import { Link, useLocation } from "react-router";
