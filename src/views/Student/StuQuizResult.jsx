@@ -61,8 +61,8 @@ function CertificateSection({ studentName, courseName }) {
   };
 
   return (
-    <div className="flex justify-center mt-10 mb-6">
-      <Button variant="default" size="lg" onClick={generateCertificate}>
+    <div className="flex justify-center mt-10 mb-6 ">
+      <Button variant="default" size="lg" onClick={generateCertificate} className="cursor-pointer">
         Download Certificate
       </Button>
       <canvas ref={canvasRef} style={{ display: "none" }} />
@@ -82,9 +82,9 @@ function StuQuizResult() {
   const studentName = "Joginder"; // ممكن تخليه متغير أو من API
 
   return (
-    <div className="w-full flex=grow bg-gray-100 dark:bg-stone-950 flex flex-col pt-16">
+    <div className="w-full flex=grow card flex flex-col pt-16">
       {/* Breadcrumbs + Title */}
-      <div className="w-full bg-white dark:bg-stone-900 shadow-sm px-24 max-lg:px-6 max-md:px-4">
+      <div className="w-full card shadow-sm px-24 max-lg:px-6 max-md:px-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 sm:px-6 py-2 gap-2 sm:gap-0">
           <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
             <a href="" className="hover:underline">

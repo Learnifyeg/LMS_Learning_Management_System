@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import LogoModes from "@/components/ui/LogoTheme/LogoModes";
 
 // Simple countdown timer (receives initialSeconds as prop)
 function Timer({ initialSeconds = 3600 }) {
@@ -16,8 +15,8 @@ function Timer({ initialSeconds = 3600 }) {
   const ss = (secs % 60).toString().padStart(2, "0");
 
   return (
-    <div className="bg-white dark:bg-stone-900 shadow-md rounded-lg p-6 text-center">
-      <h3 className="font-semibold text-lg mb-2 dark:text-white">
+    <div className="card shadow-md rounded-lg p-6 text-center">
+      <h3 className="font-semibold text-lg mb-2 ">
         Time Remaining
       </h3>
       <p className="text-2xl font-bold text-red-600">
@@ -30,8 +29,8 @@ function Timer({ initialSeconds = 3600 }) {
 // Single question card component. Receives question object, selected value and onSelect callback via props
 function QuestionCard({ question, index, selected, onSelect }) {
   return (
-    <div className="bg-white dark:bg-stone-900 shadow-md rounded-lg p-6">
-      <h3 className="font-semibold text-lg mb-2 dark:text-white">
+    <div className="card shadow-md rounded-lg p-6">
+      <h3 className="font-semibold text-lg mb-2 ">
         Question {index + 1}
       </h3>
       <p className="mb-4 dark:text-gray-200">{question.text}</p>
@@ -40,7 +39,7 @@ function QuestionCard({ question, index, selected, onSelect }) {
         {question.options.map((opt) => (
           <label
             key={opt.id}
-            className="flex items-center gap-2 dark:text-gray-200 cursor-pointer p-2 rounded hover:bg-gray-50 dark:hover:bg-stone-800"
+            className="flex items-center gap-2  cursor-pointer p-2 rounded hover:bg-gray-100 dark:hover:bg-stone-700"
           >
             <input
               type="radio"
@@ -207,7 +206,7 @@ export default function StuQuizPage() {
   return (
     <div className="w-full min-h-screen bg-gray-100 dark:bg-stone-950 flex flex-col pt-16">
       {/* Breadcrumbs + Title */}
-      <div className="w-full bg-white dark:bg-stone-900 shadow-sm">
+      <div className="w-full card shadow-sm">
         <div className="flex justify-between items-center px-10 py-3">
           <span className="text-gray-600 dark:text-gray-300 text-sm ml-5">
             <a href="" className="hover:underline">
@@ -237,7 +236,7 @@ export default function StuQuizPage() {
         {/* Left Column (Test Info + Timer) */}
         <div className="col-span-12 lg:col-span-3">
           <div className="sticky top-24 space-y-6">
-            <div className="bg-white dark:bg-stone-900 shadow-md rounded-lg p-6">
+            <div className="card shadow-md rounded-lg p-6">
               <h2 className="text-xl font-semibold mb-2 dark:text-white">
                 PHP Developer Test
               </h2>
@@ -267,7 +266,7 @@ export default function StuQuizPage() {
           <div className="flex justify-center">
             <button
               onClick={handleSubmit}
-              className="px-6 py-2 bg-green-600 text-white font-medium rounded-full hover:bg-green-700 transition"
+              className="px-6 py-2 bg-green-600 text-white font-medium rounded-full hover:bg-green-700 transition cursor-pointer"
             >
               Submit Test
             </button>
