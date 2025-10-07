@@ -1,5 +1,5 @@
 {
-  "student": [
+  "students": [
     {
       "id": 1,
       "name": "Nada Ashraf",
@@ -424,7 +424,85 @@
       "grade": "F",
       "passed": false
     }
+  ],
+
+  "studentDashboard": [
+    {
+      "id": 1,
+      "fullName": "John Doe",
+      "email": "john@example.com",
+      "gpa": 3.75,
+      "department": "Computer Engineering",
+      "stats": {
+        "totalCourses": 102,
+        "completedCourses": 5,
+        "quizzesPassed": {
+          "passed": 8,
+          "total": 10,
+          "successRate": 80
+        },
+        "certificatesEarned": 3
+      },
+      "liveSessions": [
+        {
+          "sessionId": 1,
+          "title": "React Basics",
+          "date": "2025-10-10T10:00:00",
+          "color": "blue"
+        },
+        {
+          "sessionId": 2,
+          "title": "JS Advanced",
+          "date": "2025-10-12T14:00:00",
+          "color": "green"
+        },
+        {
+          "sessionId": 3,
+          "title": "Python Intro",
+          "date": "2025-10-15T16:00:00",
+          "color": "purple"
+        }
+      ],
+      "finalProjects": [
+        {
+          "projectId": 1,
+          "title": "Portfolio Website",
+          "status": "Submitted",
+          "grade": "A"
+        },
+        {
+          "projectId": 2,
+          "title": "E-commerce App",
+          "status": "Pending",
+          "grade": "-"
+        },
+        {
+          "projectId": 3,
+          "title": "Quiz App",
+          "status": "Submitted",
+          "grade": "B+"
+        }
+      ],
+      "notifications": [
+        {
+          "notificationId": 1,
+          "message": "New certificate earned: React Basics",
+          "time": "2 hours ago",
+          "type": "success"
+        },
+        {
+          "notificationId": 2,
+          "message": "Upcoming live session: JS Advanced",
+          "time": "5 hours ago",
+          "type": "info"
+        },
+        {
+          "notificationId": 3,
+          "message": "Final project graded: Portfolio Website",
+          "time": "1 day ago",
+          "type": "success"
+        }
+      ]
+    }
   ]
 }
-
-

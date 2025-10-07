@@ -144,9 +144,9 @@ function StuQuizResult() {
       </div>
 
       {/* Certificate Section */}
-      <Certification name={`User ID: ${userId}`} />
+      <Certification name={`${userId}`} />
 
-      <h2 className="text-gray-600 mt-6 text-center dark:text-gray-300 text-base sm:text-lg">
+      <h2 className="text-gray-600 my-6 text-center dark:text-gray-300 text-base sm:text-lg">
         {result.passed
           ? "You are eligible for this certificate"
           : "You did not pass this time. Try again!"}
