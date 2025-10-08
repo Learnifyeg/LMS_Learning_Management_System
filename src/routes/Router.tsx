@@ -1,11 +1,18 @@
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "../App.jsx";
+const InstructorLayout = lazy(
+  () => import("@/components/InstructorLayout/InstructorLayout.jsx")
+);
+
+const AdminLayout = lazy(
+  () => import("@/components/AdminLayout/AdminLayout.jsx")
+);
 
 // Student Views
 const StuDashboard = lazy(() => import("@/views/Student/StuDashboard.jsx"));
 const StuStudentLayout = lazy(
-  () => import("@/views/Student/StudentLayout.jsx")
+  () => import("@/components/StudentLayout/StudentLayout.jsx")
 );
 const StuCheckout = lazy(() => import("@/views/Student/StuCheckout.jsx"));
 const StuCourseDetails = lazy(
@@ -26,7 +33,7 @@ const StuShoppingCart = lazy(
 );
 
 // Others
-const UserLayout = lazy(() => import("@/views/Others/UserLayout.jsx"));
+const UserLayout = lazy(() => import("@/components/UserLayout/UserLayout.jsx"));
 const ContactUs = lazy(() => import("@/views/Others/ContactUs.jsx"));
 const HelpPage = lazy(() => import("@/views/Others/HelpPage.jsx"));
 const Notifications = lazy(() => import("@/views/Others/Notifications.jsx"));
@@ -107,6 +114,16 @@ export const router = createBrowserRouter([
           { path: "StuSavedCourses", element: <StuSavedCourses /> },
           { path: "StuShoppingCart", element: <StuShoppingCart /> },
         ],
+      },
+      {
+        path: "InstructorLayout",
+        element: <InstructorLayout />,
+        children: [],
+      },
+      {
+        path: "AdminLayout",
+        element: <AdminLayout />,
+        children: [],
       },
       { path: "*", element: <Error404 /> },
     ],
