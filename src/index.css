@@ -171,6 +171,7 @@
     font-weight: 600;
     padding: 0.5rem 1rem;
     border-radius: 0.375rem;
+
   }
   .custom-container {
     max-width: 1200px;
@@ -179,11 +180,11 @@
   }
 
   .card-hover {
-    @apply hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-lg duration-300 delay-75 transition-all ease-in-out shadow-md;
+    @apply hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-lg duration-300 delay-75 transition-all ease-in-out shadow-md  cursor-pointer;
   }
 
   .btn-hover {
-    @apply transition-all duration-300 ease-in-out shadow-md hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-lg;
+    @apply transition-all duration-300 ease-in-out shadow-md hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-lg  cursor-pointer;
   }
 }
 

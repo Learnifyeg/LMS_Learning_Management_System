@@ -1,0 +1,508 @@
+{
+  "students": [
+    {
+      "id": 1,
+      "name": "Nada Ashraf",
+      "email": "nada@example.com",
+      "role": "student"
+    },
+    {
+      "id": 2,
+      "name": "Omar Khaled",
+      "email": "omar@example.com",
+      "role": "student"
+    }
+  ],
+  "SavedCourses": [
+    {
+      "id": 1,
+      "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
+      "category": "Web Development | Python",
+      "author": "John Doe",
+      "views": "109k views",
+      "posted": "15 days ago",
+      "rating": 4.5,
+      "hours": "25 hours",
+      "price": "$10",
+      "tag": "BESTSELLER",
+      "image": "/images/authIMG.webp"
+    },
+    {
+      "id": 2,
+      "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
+      "category": "Web Development | Python",
+      "author": "John Doe",
+      "views": "109k views",
+      "posted": "15 days ago",
+      "rating": 4.5,
+      "hours": "25 hours",
+      "price": "$10",
+      "tag": "BESTSELLER",
+      "image": "/images/authIMG.webp"
+    },
+    {
+      "id": 3,
+      "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
+      "category": "Web Development | Python",
+      "author": "John Doe",
+      "views": "109k views",
+      "posted": "15 days ago",
+      "rating": 4.5,
+      "hours": "25 hours",
+      "price": "$10",
+      "tag": "BESTSELLER",
+      "image": "/images/authIMG.webp"
+    },
+    {
+      "id": 4,
+      "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
+      "category": "Web Development | Python",
+      "author": "John Doe",
+      "views": "109k views",
+      "posted": "15 days ago",
+      "rating": 4.5,
+      "hours": "25 hours",
+      "price": "$10",
+      "tag": "BESTSELLER",
+      "image": "/images/authIMG.webp"
+    }
+  ],
+  "Cart": [
+    {
+      "id": 1,
+      "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
+      "category": "Web Development | Python",
+      "author": "John Doe",
+      "views": "109k views",
+      "posted": "15 days ago",
+      "rating": 4.5,
+      "hours": "25 hours",
+      "price": "$10",
+      "tag": "BESTSELLER",
+      "image": "/images/authIMG.webp"
+    },
+    {
+      "id": 3,
+      "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
+      "category": "Web Development | Python",
+      "author": "John Doe",
+      "views": "109k views",
+      "posted": "15 days ago",
+      "rating": 4.5,
+      "hours": "25 hours",
+      "price": "$10",
+      "tag": "BESTSELLER",
+      "image": "/images/authIMG.webp"
+    },
+    {
+      "id": 2,
+      "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
+      "category": "Web Development | Python",
+      "author": "John Doe",
+      "views": "109k views",
+      "posted": "15 days ago",
+      "rating": 4.5,
+      "hours": "25 hours",
+      "price": "$10",
+      "tag": "BESTSELLER",
+      "image": "/images/authIMG.webp"
+    },
+    {
+      "id": 4,
+      "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
+      "category": "Web Development | Python",
+      "author": "John Doe",
+      "views": "109k views",
+      "posted": "15 days ago",
+      "rating": 4.5,
+      "hours": "25 hours",
+      "price": "$10",
+      "tag": "BESTSELLER",
+      "image": "/images/authIMG.webp"
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "text": "Which of the following is a PHP framework?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Laravel"
+        },
+        {
+          "id": "b",
+          "text": "React"
+        },
+        {
+          "id": "c",
+          "text": "Angular"
+        },
+        {
+          "id": "d",
+          "text": "Django"
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": 2,
+      "text": "Which superglobal variable is used to collect form data in PHP?",
+      "options": [
+        {
+          "id": "a",
+          "text": "$_POST"
+        },
+        {
+          "id": "b",
+          "text": "$_GET"
+        },
+        {
+          "id": "c",
+          "text": "$_REQUEST"
+        },
+        {
+          "id": "d",
+          "text": "$_FORM"
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": 3,
+      "text": "Which of the following is used to start a PHP session?",
+      "options": [
+        {
+          "id": "a",
+          "text": "start_session()"
+        },
+        {
+          "id": "b",
+          "text": "session_start()"
+        },
+        {
+          "id": "c",
+          "text": "begin_session()"
+        },
+        {
+          "id": "d",
+          "text": "init_session()"
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 4,
+      "text": "What does PHP stand for?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Personal Hyper text Processor"
+        },
+        {
+          "id": "b",
+          "text": "PHP: Hyper  Preprocessor"
+        },
+        {
+          "id": "c",
+          "text": "Private Home Page"
+        },
+        {
+          "id": "d",
+          "text": "Programming Hyper Processor"
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 5,
+      "text": "Which of the following is the correct way to connect to MySQL in PHP (mysqli)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "mysqli_connect(host, user, pass, db)"
+        },
+        {
+          "id": "b",
+          "text": "mysql_connect(host, user, pass, db)"
+        },
+        {
+          "id": "c",
+          "text": "pdo_connect(host, user, pass, db)"
+        },
+        {
+          "id": "d",
+          "text": "connect_mysql(host, user, pass, db)"
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": 6,
+      "text": "Which symbol is used to prepend variables in PHP?",
+      "options": [
+        {
+          "id": "a",
+          "text": "%"
+        },
+        {
+          "id": "b",
+          "text": "$"
+        },
+        {
+          "id": "c",
+          "text": "#"
+        },
+        {
+          "id": "d",
+          "text": "&"
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 7,
+      "text": "Which PHP function is used to include another file?",
+      "options": [
+        {
+          "id": "a",
+          "text": "require()"
+        },
+        {
+          "id": "b",
+          "text": "import()"
+        },
+        {
+          "id": "c",
+          "text": "include()"
+        },
+        {
+          "id": "d",
+          "text": "Both A and C"
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": 8,
+      "text": "Which of these is NOT a PHP data type?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Integer"
+        },
+        {
+          "id": "b",
+          "text": "Float"
+        },
+        {
+          "id": "c",
+          "text": "Character"
+        },
+        {
+          "id": "d",
+          "text": "Array"
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": 9,
+      "text": "How do you write a single-line comment in PHP?",
+      "options": [
+        {
+          "id": "a",
+          "text": "// comment"
+        },
+        {
+          "id": "b",
+          "text": "# comment"
+        },
+        {
+          "id": "c",
+          "text": "/* comment */"
+        },
+        {
+          "id": "d",
+          "text": "Both A and B"
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": 10,
+      "text": "Which of the following functions is used to get the length of a string in PHP?",
+      "options": [
+        {
+          "id": "a",
+          "text": "count()"
+        },
+        {
+          "id": "b",
+          "text": "strlen()"
+        },
+        {
+          "id": "c",
+          "text": "strcount()"
+        },
+        {
+          "id": "d",
+          "text": "length()"
+        }
+      ],
+      "answer": "b"
+    }
+  ],
+  "studentanswers": [
+    {
+      "id": "c6b8",
+      "userId": "StudentLayout",
+      "answers": {
+        "1": "b",
+        "2": "c",
+        "3": "b",
+        "4": "b",
+        "5": "b",
+        "6": "b",
+        "7": "b",
+        "8": "c",
+        "9": "c",
+        "10": "a"
+      },
+      "startTime": "2025-10-07T19:22:16.845Z",
+      "endTime": "2025-10-07T19:22:28.787Z",
+      "duration": "0m 11s",
+      "submittedAt": "2025-10-07T19:22:28.787Z"
+    }
+  ],
+  "studentResults": [
+    {
+      "id": 1,
+      "quizId": 1,
+      "userId": 1,
+      "totalQuestions": 10,
+      "correctAnswers": 4,
+      "wrongAnswers": 6,
+      "score": 40,
+      "percentage": 40,
+      "grade": "D",
+      "passed": false
+    },
+    {
+      "id": 2,
+      "quizId": 1,
+      "userId": 1,
+      "totalQuestions": 10,
+      "correctAnswers": 1,
+      "wrongAnswers": 9,
+      "score": 10,
+      "percentage": 10,
+      "grade": "F",
+      "passed": false
+    },
+    {
+      "id": 3,
+      "quizId": 1,
+      "userId": 1,
+      "totalQuestions": 10,
+      "correctAnswers": 6,
+      "wrongAnswers": 4,
+      "score": 60,
+      "percentage": 60,
+      "grade": "D",
+      "passed": false
+    },
+    {
+      "id": 4,
+      "quizId": 1,
+      "userId": "StudentLayout",
+      "totalQuestions": 10,
+      "correctAnswers": 3,
+      "wrongAnswers": 7,
+      "score": 30,
+      "percentage": 30,
+      "grade": "F",
+      "passed": false
+    }
+  ],
+
+  "studentDashboard": [
+    {
+      "id": 1,
+      "fullName": "John Doe",
+      "email": "john@example.com",
+      "gpa": 3.75,
+      "department": "Computer Engineering",
+      "stats": {
+        "totalCourses": 102,
+        "completedCourses": 5,
+        "quizzesPassed": {
+          "passed": 8,
+          "total": 10,
+          "successRate": 80
+        },
+        "certificatesEarned": 3
+      },
+      "liveSessions": [
+        {
+          "sessionId": 1,
+          "title": "React Basics",
+          "date": "2025-10-10T10:00:00",
+          "color": "blue"
+        },
+        {
+          "sessionId": 2,
+          "title": "JS Advanced",
+          "date": "2025-10-12T14:00:00",
+          "color": "green"
+        },
+        {
+          "sessionId": 3,
+          "title": "Python Intro",
+          "date": "2025-10-15T16:00:00",
+          "color": "purple"
+        }
+      ],
+      "finalProjects": [
+        {
+          "projectId": 1,
+          "title": "Portfolio Website",
+          "status": "Submitted",
+          "grade": "A"
+        },
+        {
+          "projectId": 2,
+          "title": "E-commerce App",
+          "status": "Pending",
+          "grade": "-"
+        },
+        {
+          "projectId": 3,
+          "title": "Quiz App",
+          "status": "Submitted",
+          "grade": "B+"
+        }
+      ],
+      "notifications": [
+        {
+          "notificationId": 1,
+          "message": "New certificate earned: React Basics",
+          "time": "2 hours ago",
+          "type": "success"
+        },
+        {
+          "notificationId": 2,
+          "message": "Upcoming live session: JS Advanced",
+          "time": "5 hours ago",
+          "type": "info"
+        },
+        {
+          "notificationId": 3,
+          "message": "Final project graded: Portfolio Website",
+          "time": "1 day ago",
+          "type": "success"
+        }
+      ]
+    }
+  ]
+}
