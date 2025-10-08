@@ -121,9 +121,19 @@
       "image": "/images/authIMG.webp"
     }
   ],
+  "quizzes": [
+    {
+      "id": "php-developer",
+      "title": "PHP Developer Test",
+      "duration": 3600,
+      "passingScore": 70,
+      "totalQuestions": 10,
+      "questionsEndpoint": "questions"
+    }
+  ],
   "questions": [
     {
-      "id": 1,
+      "id": "php-developer",
       "text": "Which of the following is a PHP framework?",
       "options": [
         {
@@ -380,6 +390,8 @@
       "id": 1,
       "quizId": 1,
       "userId": 1,
+      "userName": "StudentLayout",
+      "courseName": "React Basics",
       "totalQuestions": 10,
       "correctAnswers": 4,
       "wrongAnswers": 6,
@@ -392,6 +404,8 @@
       "id": 2,
       "quizId": 1,
       "userId": 1,
+      "userName": "StudentLayout",
+      "courseName": "React Basics",
       "totalQuestions": 10,
       "correctAnswers": 1,
       "wrongAnswers": 9,
@@ -404,6 +418,8 @@
       "id": 3,
       "quizId": 1,
       "userId": 1,
+      "userName": "StudentLayout",
+      "courseName": "React Basics",
       "totalQuestions": 10,
       "correctAnswers": 6,
       "wrongAnswers": 4,
@@ -416,13 +432,15 @@
       "id": 4,
       "quizId": 1,
       "userId": "StudentLayout",
+      "userName": "StudentLayout",
+      "courseName": "React Basics",
       "totalQuestions": 10,
-      "correctAnswers": 3,
-      "wrongAnswers": 7,
-      "score": 30,
-      "percentage": 30,
-      "grade": "F",
-      "passed": false
+      "correctAnswers": 10,
+      "wrongAnswers": 0,
+      "score": 100,
+      "percentage": 100,
+      "grade": "A+",
+      "passed": true
     }
   ],
 
