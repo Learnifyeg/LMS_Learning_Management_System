@@ -1,6 +1,12 @@
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "../App.jsx";
+// Lazy-loaded dashboards
+const InstrDashboard = lazy(
+  () => import("@/views/Instructor/InstrDashboard.jsx")
+);
+
+const AdminDashboard = lazy(() => import("@/views/Admin/AdminDashboard.jsx"));
 const InstructorLayout = lazy(
   () => import("@/components/InstructorLayout/InstructorLayout.jsx")
 );
@@ -118,12 +124,12 @@ export const router = createBrowserRouter([
       {
         path: "InstructorLayout",
         element: <InstructorLayout />,
-        children: [],
+        children: [{ path: "InstrDashboard", element: <InstrDashboard /> }],
       },
       {
         path: "AdminLayout",
         element: <AdminLayout />,
-        children: [],
+        children: [{ path: "AdminDashboard", element: <AdminDashboard /> }],
       },
       { path: "*", element: <Error404 /> },
     ],
