@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // Components
 import useUserStore from "@/store/user";
 import { Input } from "@/components/ui/input";
@@ -5,7 +6,7 @@ import { Input } from "@/components/ui/input";
 // React
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
+import z, { set } from "zod";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import {
@@ -17,6 +18,8 @@ import {
   FaLock,
 } from "react-icons/fa";
 import LogoModes from "@/components/ui/LogoTheme/LogoModes";
+import { useEffect, useState } from "react";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const RegisterSchema = z.object({
   email: z.email("Please enter a valid email address"),
@@ -31,6 +34,7 @@ function Login() {
     handleSubmit,
   } = useForm({ resolver: zodResolver(RegisterSchema) });
   const { setUser } = useUserStore();
+
   const onSubmit = (data) => {
     console.log("Submitted");
     // const response = axios.post("http://localhost:8000/api/register", data);
@@ -41,7 +45,7 @@ function Login() {
   };
 
   return (
-    <section className="my-5">
+    <section className="my-5 space-y-6">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label>
@@ -76,15 +80,6 @@ function Login() {
               {errors.password.message}
             </p>
           )}
-        </div>
-        <div className="flex my-3 text-text-secondary">
-          <label className="cursor-pointer">
-            <input
-              type="checkbox"
-              className="bg-input accent-primary cursor-pointer translate-y-0.5"
-            />{" "}
-            <span className="inline-block ">Remember me</span>
-          </label>
         </div>
         <button
           className="btn bg-secondary w-full cursor-pointer hover:scale-102 my-5"

@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller } from "react-hook-form";
 import z from "zod";
 import {
   FaUser,
@@ -11,8 +12,10 @@ import {
   FaLock,
   FaPhone,
   FaHome,
+  FaUniversity,
   FaGlobe,
   FaBookOpen,
+  FaGraduationCap,
   FaCalendarAlt,
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -23,13 +26,13 @@ import useCountries from "@/hooks/useCountries";
 import Select from "react-select";
 import { customSelectStyles } from "@/utils/SelectStyle";
 
-const InstructorSchema = z.object({
-  // Step 1 - Basic info
+const RegisterSchema = z.object({
+  // Step 1
   fullName: z.string().min(8, "Full name must be at least 8 characters"),
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 
-  // Step 2 - Contact info
+  // Step 2
   phone: z.string().min(8, "Phone number is required"),
   address: z.string().min(5, "Address is required"),
   country: z
@@ -39,35 +42,31 @@ const InstructorSchema = z.object({
     .object({ label: z.string(), value: z.string() })
     .refine((value) => value !== null, "Gender is required"),
 
-  // Step 3 - Instructor details
-  specialization: z.string().min(3, "Specialization is required"),
-  experienceYears: z
-    .string()
-    .min(1, "Years of experience is required")
-    .regex(/^[0-9]+$/, "Must be a number"),
-  bio: z.string().min(10, "Short bio is required"),
+  // Step 3
+  educationLevel: z.string().min(2, "Education level is required"),
+  university: z.string().min(2, "University name is required"),
+  major: z.string().min(2, "Major is required"),
 
   policiesCheck: z.boolean().refine((value) => value, {
     message: "You must accept the terms and conditions",
   }),
 });
 
-function InstructorRegister() {
+function Register() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const { allCountries } = useCountries();
-
-  const [formData, setFormData] = useLocalStorage("instructorSignup", {
+  const [formData, setFormData] = useLocalStorage("studentSignup", {
     fullName: "",
     email: "",
     password: "",
     phone: "",
     address: "",
     country: "",
+    educationLevel: "",
+    university: "",
+    major: "",
     gender: "",
-    specialization: "",
-    experienceYears: "",
-    bio: "",
   });
 
   const {
@@ -79,11 +78,11 @@ function InstructorRegister() {
     reset,
     control,
   } = useForm({
-    resolver: zodResolver(InstructorSchema),
+    resolver: zodResolver(RegisterSchema),
     mode: "onChange",
   });
 
-  // Sync form data with localStorage
+  // Sync with localStorage
   useEffect(() => {
     const subscription = watch((values) => {
       const { password, ...safeValues } = values;
@@ -93,7 +92,9 @@ function InstructorRegister() {
   }, [setFormData, watch]);
 
   useEffect(() => {
-    if (formData) reset(formData);
+    if (formData) {
+      reset(formData);
+    }
   }, [reset]);
 
   const nextStep = async () => {
@@ -106,13 +107,13 @@ function InstructorRegister() {
   const prevStep = () => setStep((prev) => prev - 1);
 
   const onSubmit = (data) => {
-    console.log("✅ Instructor Registration Data:", data);
-    localStorage.removeItem("instructorSignup");
+    console.log("✅ Full Data Submitted:", data);
+    localStorage.removeItem("studentSignup");
     navigate("/User/Login");
   };
 
   return (
-    <section className="my-5 mx-auto">
+    <section className="my-5  mx-auto space-y-6">
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Progress indicator */}
         <div className="flex justify-center mb-4 gap-2">
@@ -129,7 +130,6 @@ function InstructorRegister() {
         {/* STEP 1 - Basic Info */}
         {step === 1 && (
           <>
-            {/* Full Name */}
             <div className="mb-4">
               <div className="relative">
                 <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
@@ -144,7 +144,6 @@ function InstructorRegister() {
               </p>
             </div>
 
-            {/* Email */}
             <div className="mb-4">
               <div className="relative">
                 <FaEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
@@ -159,7 +158,6 @@ function InstructorRegister() {
               </p>
             </div>
 
-            {/* Password */}
             <div className="mb-4">
               <div className="relative">
                 <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
@@ -184,8 +182,7 @@ function InstructorRegister() {
         {/* STEP 2 - Contact Info */}
         {step === 2 && (
           <>
-            {/* Phone */}
-            <div className="mb-4">
+            <div className=" mb-4">
               <Controller
                 name="phone"
                 control={control}
@@ -194,7 +191,7 @@ function InstructorRegister() {
                     {...field}
                     defaultCountry="eg"
                     placeholder="Phone Number"
-                    inputClassName="rounded-md px-3 py-2 w-full"
+                    inputClassName=" rounded-md px-3 py-2 w-full"
                   />
                 )}
               />
@@ -203,8 +200,7 @@ function InstructorRegister() {
               </p>
             </div>
 
-            {/* Address */}
-            <div className="mb-4">
+            <div className=" mb-4">
               <div className="relative">
                 <FaHome className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
                 <Input
@@ -218,7 +214,6 @@ function InstructorRegister() {
               </p>
             </div>
 
-            {/* Country */}
             <div className="mb-4">
               <Controller
                 name="country"
@@ -228,7 +223,7 @@ function InstructorRegister() {
                     {...field}
                     options={allCountries}
                     placeholder="Country"
-                    onChange={(selected) => field.onChange(selected)}
+                    onChange={(selected) => field.onChange(selected)} // important
                     value={field.value}
                     styles={customSelectStyles}
                   />
@@ -236,6 +231,65 @@ function InstructorRegister() {
               />
               <p className="text-red-500 text-sm ml-2">
                 {errors.country?.message}
+              </p>
+            </div>
+
+            <div className="flex justify-between mt-5">
+              <Button type="button" onClick={prevStep} variant="secondary">
+                Back
+              </Button>
+              <Button type="button" onClick={nextStep}>
+                Next
+              </Button>
+            </div>
+          </>
+        )}
+
+        {/* STEP 3 - Education Info */}
+        {step === 3 && (
+          <>
+            {/* University */}
+            <div className="mb-4">
+              <div className="relative">
+                <FaUniversity className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
+                <Input
+                  {...register("university")}
+                  placeholder="University"
+                  className="px-10 py-2"
+                />
+              </div>
+              <p className="text-red-500 text-sm ml-2">
+                {errors.university?.message}
+              </p>
+            </div>
+
+            {/* Major */}
+            <div className="mb-4">
+              <div className="relative">
+                <FaBookOpen className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
+                <Input
+                  {...register("major")}
+                  placeholder="Major (e.g. Software Engineering)"
+                  className="px-10 py-2"
+                />
+              </div>
+              <p className="text-red-500 text-sm ml-2">
+                {errors.major?.message}
+              </p>
+            </div>
+
+            {/* Education Level */}
+            <div className="mb-4">
+              <div className="relative">
+                <FaGraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
+                <Input
+                  {...register("educationLevel")}
+                  placeholder="Education Level (e.g. Undergraduate)"
+                  className="px-10 py-2"
+                />
+              </div>
+              <p className="text-red-500 text-sm ml-2">
+                {errors.educationLevel?.message}
               </p>
             </div>
 
@@ -256,67 +310,11 @@ function InstructorRegister() {
                   />
                 )}
               />
+
               <p className="text-red-500 text-sm ml-2">
-                {errors.gender?.message}
+                {errors.yearOfStudy?.message}
               </p>
             </div>
-
-            <div className="flex justify-between mt-5">
-              <Button type="button" onClick={prevStep} variant="secondary">
-                Back
-              </Button>
-              <Button type="button" onClick={nextStep}>
-                Next
-              </Button>
-            </div>
-          </>
-        )}
-
-        {/* STEP 3 - Instructor Details */}
-        {step === 3 && (
-          <>
-            {/* Specialization */}
-            <div className="mb-4">
-              <div className="relative">
-                <FaBookOpen className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
-                <Input
-                  {...register("specialization")}
-                  placeholder="Specialization (e.g. Web Development)"
-                  className="px-10 py-2"
-                />
-              </div>
-              <p className="text-red-500 text-sm ml-2">
-                {errors.specialization?.message}
-              </p>
-            </div>
-
-            {/* Experience Years */}
-            <div className="mb-4">
-              <div className="relative">
-                <FaCalendarAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
-                <Input
-                  {...register("experienceYears")}
-                  placeholder="Years of Experience"
-                  className="px-10 py-2"
-                />
-              </div>
-              <p className="text-red-500 text-sm ml-2">
-                {errors.experienceYears?.message}
-              </p>
-            </div>
-
-            {/* Bio */}
-            <div className="mb-4">
-              <textarea
-                {...register("bio")}
-                placeholder="Write a short bio about your teaching experience"
-                className="w-full border rounded-md px-3 py-2"
-                rows={4}
-              />
-              <p className="text-red-500 text-sm ml-2">{errors.bio?.message}</p>
-            </div>
-
-            {/* Policies */}
             <label className="text-sm text-text-secondary">
               <input
                 {...register("policiesCheck")}
@@ -364,13 +362,13 @@ function InstructorRegister() {
         </span>
       </p>
 
-      <Link to="/User/Register">
+      <Link to="/User/InstructorRegister">
         <Button className="mt-5 w-full cursor-pointer" variant="secondary">
-          Student Register
+          Instructor Register
         </Button>
       </Link>
     </section>
   );
 }
 
-export default InstructorRegister;
+export default Register;

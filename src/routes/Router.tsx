@@ -60,7 +60,7 @@ const AuthLayout = lazy(
   () => import("@/components/Auth/AuthLayout/AuthLayout.js")
 );
 const Login = lazy(() => import("../views/Auth/Login.jsx"));
-const Register = lazy(() => import("../views/Auth/Register.jsx"));
+const Register = lazy(() => import("../views/Auth/Register/Register.jsx"));
 const ForgetPassword = lazy(() => import("../views/Auth/ForgetPassword.jsx"));
 const InstructorRegister = lazy(
   () => import("../views/Auth/InstructorRegister.jsx")

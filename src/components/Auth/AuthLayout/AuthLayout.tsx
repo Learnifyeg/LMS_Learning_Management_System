@@ -11,8 +11,8 @@ const AuthLayout = () => {
   const title = useLocation().pathname.split("/").pop();
 
   return (
-    <main className="h-screen bg-surface">
-      <div className="flex h-full  mx-0 rounded-md overflow-hidden px-0 border-border shadow-lg">
+    <main className="min-h-dvh overflow-y-auto bg-surface ">
+      <div className="flex min-h-dvh  mx-0 rounded-md px-0 border-border shadow-lg">
         <Card className=" w-full border-none flex-3 px-5">
           <CardHeader className="text-center">
             <div className="mx-auto">
@@ -21,26 +21,32 @@ const AuthLayout = () => {
             <CardTitle className="text-3xl font-bold text-primary">
               Welcome to Learnify
             </CardTitle>
-            {title !== "ForgetPassword" ?
-            <p className="text-muted-foreground mt-2">
-              {title === "Login"  ? "Log In" : "Sign Up"} to Your Learnify
-              Account!
-            </p>:""}
+            {title !== "ForgetPassword" ? (
+              <p className="text-muted-foreground mt-2">
+                {title === "Login" ? "Log In" : "Sign Up"} to Your Learnify
+                Account!
+              </p>
+            ) : (
+              ""
+            )}
           </CardHeader>
 
           <CardContent className="space-y-4">
             {/* Social Buttons */}
-            
-            {title!== "ForgetPassword" && SocialButtons.map((item, i) => (
-              <SocialButton
-                key={i}
-                Icon={item.Icon}
-                title={item.title}
-                color={item.color}
-              />
-            ))}
+
+            {title !== "ForgetPassword" &&
+              SocialButtons.map((item, i) => (
+                <SocialButton
+                  key={i}
+                  Icon={item.Icon}
+                  title={item.title}
+                  color={item.color}
+                />
+              ))}
             <Separator />
-            <Outlet />
+            <main className="mt-4">
+              <Outlet />
+            </main>
           </CardContent>
         </Card>
         <div className="flex-5 rounded-md hidden md:block relative">
