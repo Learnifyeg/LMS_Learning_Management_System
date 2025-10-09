@@ -51,7 +51,7 @@ function Login() {
                 {...register("email")}
                 type="text"
                 placeholder="Enter email..."
-                className="bg-input px-10"
+                className=" px-10"
               />
             </div>
           </label>
@@ -67,7 +67,7 @@ function Login() {
                 {...register("password")}
                 type="password"
                 placeholder="Enter password..."
-                className="bg-input px-10 py-2"
+                className="px-10 py-2"
               />{" "}
             </div>
           </label>

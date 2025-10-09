@@ -268,9 +268,10 @@ const Sidebar = React.forwardRef<
   }
 )
 Sidebar.displayName = "Sidebar"
+///////////////////////////////////////
 
 const SidebarTrigger = React.forwardRef<
-  React.ElementRef<typeof Button>,
+React.ElementRef<typeof Button>,
   React.ComponentProps<typeof Button>
 >(({ className, onClick, ...props }, ref) => {
   const { toggleSidebar } = useSidebar()
@@ -294,6 +295,7 @@ const SidebarTrigger = React.forwardRef<
   )
 })
 SidebarTrigger.displayName = "SidebarTrigger"
+///////////////////////////////////////
 
 const SidebarRail = React.forwardRef<
   HTMLButtonElement,
@@ -453,7 +455,7 @@ const SidebarGroupLabel = React.forwardRef<
         "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
         className
       )}
-      {...props}
+      // {...props}
     />
   )
 })

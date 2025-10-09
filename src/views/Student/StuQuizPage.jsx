@@ -1,7 +1,7 @@
 // React
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // Timer Component
 function Timer({ initialSeconds = 3600 }) {
@@ -74,6 +74,8 @@ function QuestionsList({ questions, answers, onAnswerChange }) {
 
 // ✅ Main Component
 export default function StuQuizPage() {
+  const navigate = useNavigate();
+  const [quizInfo, setQuizInfo] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const [loading, setLoading] = useState(true);
@@ -87,9 +89,16 @@ export default function StuQuizPage() {
   const URL = "http://localhost:3001";
   const QuestionsEndPoint = "questions";
   const AnswersEndPoint = "studentanswers";
+  const QuizEndPoint = "quizzes";
+  const quizId = "php-developer"; // later you can make this dynamic
 
   // Fetch Questions
   useEffect(() => {
+    // Fetch quiz details
+    axios
+      .get(`${URL}/${QuizEndPoint}/${quizId}`)
+      .then((res) => setQuizInfo(res.data))
+      .catch((err) => console.error("Error fetching quiz info:", err));
     axios
       .get(`${URL}/${QuestionsEndPoint}`)
       .then((res) => {
@@ -144,12 +153,18 @@ export default function StuQuizPage() {
     <div className="w-full min-h-screen bg-gray-100 dark:bg-stone-950 flex flex-col pt-16">
       <div className="w-full card shadow-sm">
         <div className="flex justify-between items-center px-10 py-3">
-          <span className="text-gray-600 text-sm ml-5">
-            Home / Certification / Test
+          <span className="text-text-secondary text-sm ml-5">
+            <span
+              onClick={() => navigate("/StudentLayout/StuDashboard")}
+              className="cursor-pointer hover:underline"
+            >
+              Home{" "}
+            </span>{" "}
+            / Test
           </span>
-          <span className="text-gray-600 text-sm mr-5 cursor-pointer hover:underline">
+          {/* <span className="text-gray-600 text-sm mr-5 cursor-pointer hover:underline">
             « Back to Certification Center
-          </span>
+          </span> */}
         </div>
         <h1 className="px-10 py-4 text-[28px] font-semibold dark:text-white ml-5">
           Test View
@@ -161,13 +176,19 @@ export default function StuQuizPage() {
           <div className="sticky top-24 space-y-6">
             <div className="card shadow-md rounded-lg p-6">
               <h2 className="text-xl font-semibold mb-2 dark:text-white">
-                PHP Developer Test
+                {quizInfo?.title || "Loading..."}
               </h2>
-              <p className="text-gray-600 mb-1">{questions.length} Questions</p>
-              <p className="text-gray-600 mb-1">60 Minutes</p>
-              <p className="text-gray-600">Passing Score: 70%</p>
+              <p className="text-text-secondary mb-1">
+                {quizInfo?.totalQuestions} Questions
+              </p>
+              <p className="text-text-secondary mb-1">
+                {quizInfo?.duration / 60} Minutes
+              </p>
+              <p className="text-text-secondary">
+                Passing Score: {quizInfo?.passingScore}%
+              </p>
             </div>
-            <Timer initialSeconds={3600} />
+            {quizInfo && <Timer initialSeconds={quizInfo.duration} />}
           </div>
         </div>
 
