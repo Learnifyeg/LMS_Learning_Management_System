@@ -135,7 +135,7 @@ function Register() {
           Sign In
         </span>
       </p>
-      <Link to="/User/InstructorRegister">
+      <Link to="/User/InstructorRegister" className="flex-1 flex items-end">
         <Button className="mt-5 w-full cursor-pointer">
           Instructor Register
         </Button>
