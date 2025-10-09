@@ -4,6 +4,7 @@ import axios from "axios";
 
 // Components
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router";
 
 // API URLs
 const URL = "http://localhost:3001";
@@ -77,8 +78,10 @@ function Certification({ name }) {
 }
 
 function StuQuizResult() {
+  const navigate = useNavigate();
   const [result, setResult] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [userName, setUserId] = useState(null);
+  const [courseName, setcourseName] = useState(null);
 
   useEffect(() => {
     const fetchUserResult = async () => {
@@ -91,7 +94,9 @@ function StuQuizResult() {
           // ✅ Take the last one as latest result
           const latestResult = allResults[allResults.length - 1];
           setResult(latestResult);
-          setUserId(latestResult.userId); // 👈 Automatically set userId
+          setUserId(latestResult.userName); // 👈 Automatically set userId
+          setcourseName(latestResult.courseName); // 👈 Automatically set userId
+          console.log("courseName",courseName)
         }
       } catch (error) {
         console.error("Error fetching user results:", error);
@@ -101,7 +106,7 @@ function StuQuizResult() {
     fetchUserResult();
   }, []);
 
-  if (!result || !userId) {
+  if (!result || !userName) {
     return (
       <div className="flex justify-center items-center h-screen text-gray-500 dark:text-gray-300">
         Loading result...
@@ -110,25 +115,29 @@ function StuQuizResult() {
   }
 
   return (
-    <div className="w-full flex-grow bg-gray-100 dark:bg-stone-950 flex flex-col pt-16">
+    <div className="w-full flex-grow bg-white dark:bg-gray-800  flex flex-col pt-16">
       {/* Header */}
-      <div className="w-full bg-white dark:bg-stone-900 shadow-sm px-24 max-lg:px-6 max-md:px-4">
+      <div className="w-full bg-white dark:bg-gray-900 shadow-sm px-24 max-lg:px-6 max-md:px-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 sm:px-6 py-2 gap-2 sm:gap-0">
           <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
-            <a href="#" className="hover:underline">
+            <a
+              href="#"
+              className="hover:underline cursor-pointer"
+              onClick={() => navigate("/StudentLayout/StuDashboard")}
+            >
               Home
             </a>{" "}
-            /{" "}
-            <a href="#" className="hover:underline">
+            {/* /{" "} */}
+            {/* <a href="#" className="hover:underline">
               Certification Center
-            </a>{" "}
+            </a>{" "} */}
             / Test
           </span>
-          <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base mt-1 sm:mt-0">
+          {/* <span className="text-gray-600 dark:text-gray-300 text-sm sm:text-base mt-1 sm:mt-0">
             <a href="#" className="hover:underline">
               « Back to Certification Center
             </a>
-          </span>
+          </span> */}
         </div>
 
         <h1 className="px-4 sm:px-6 py-3 text-xl sm:text-2xl md:text-3xl font-semibold dark:text-white">
@@ -140,11 +149,15 @@ function StuQuizResult() {
       <div className="mt-10 mx-auto flex flex-wrap justify-center items-center gap-4 sm:gap-6">
         <Count shape="✓" num={result.correctAnswers} text="Right" />
         <Count shape="✗" num={result.wrongAnswers} text="Wrong" />
-        <Count shape={result.correctAnswers} num={result.totalQuestions} text="Out of" />
+        <Count
+          shape={result.correctAnswers}
+          num={result.totalQuestions}
+          text="Out of"
+        />
       </div>
 
       {/* Certificate Section */}
-      <Certification name={`${userId}`} />
+      <Certification name={`${userName}`} />
 
       <h2 className="text-gray-600 my-6 text-center dark:text-gray-300 text-base sm:text-lg">
         {result.passed
@@ -153,7 +166,10 @@ function StuQuizResult() {
       </h2>
 
       {result.passed && (
-        <CertificateSection studentName={`User ${userId}`} courseName="React Basics" />
+        <CertificateSection
+          studentName={`${userName}`}
+          courseName={`${courseName}`}
+        />
       )}
     </div>
   );

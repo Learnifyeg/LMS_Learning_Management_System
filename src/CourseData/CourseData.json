@@ -121,9 +121,19 @@
       "image": "/images/authIMG.webp"
     }
   ],
+  "quizzes": [
+    {
+      "id": "php-developer",
+      "title": "PHP Developer Test",
+      "duration": 3600,
+      "passingScore": 70,
+      "totalQuestions": 10,
+      "questionsEndpoint": "questions"
+    }
+  ],
   "questions": [
     {
-      "id": 1,
+      "id": "php-developer",
       "text": "Which of the following is a PHP framework?",
       "options": [
         {
@@ -380,6 +390,8 @@
       "id": 1,
       "quizId": 1,
       "userId": 1,
+      "userName": "StudentLayout",
+      "courseName": "React Basics",
       "totalQuestions": 10,
       "correctAnswers": 4,
       "wrongAnswers": 6,
@@ -392,6 +404,8 @@
       "id": 2,
       "quizId": 1,
       "userId": 1,
+      "userName": "StudentLayout",
+      "courseName": "React Basics",
       "totalQuestions": 10,
       "correctAnswers": 1,
       "wrongAnswers": 9,
@@ -404,6 +418,8 @@
       "id": 3,
       "quizId": 1,
       "userId": 1,
+      "userName": "StudentLayout",
+      "courseName": "React Basics",
       "totalQuestions": 10,
       "correctAnswers": 6,
       "wrongAnswers": 4,
@@ -416,22 +432,24 @@
       "id": 4,
       "quizId": 1,
       "userId": "StudentLayout",
+      "userName": "StudentLayout",
+      "courseName": "React Basics",
       "totalQuestions": 10,
-      "correctAnswers": 3,
-      "wrongAnswers": 7,
-      "score": 30,
-      "percentage": 30,
-      "grade": "F",
-      "passed": false
+      "correctAnswers": 10,
+      "wrongAnswers": 0,
+      "score": 100,
+      "percentage": 100,
+      "grade": "A+",
+      "passed": true
     }
   ],
 
-  "studentDashboard": [
+  "dashboards": [
     {
+      "role": "student",
       "id": 1,
       "fullName": "John Doe",
       "email": "john@example.com",
-      "gpa": 3.75,
       "department": "Computer Engineering",
       "stats": {
         "totalCourses": 102,
@@ -500,6 +518,75 @@
           "notificationId": 3,
           "message": "Final project graded: Portfolio Website",
           "time": "1 day ago",
+          "type": "success"
+        }
+      ]
+    },
+
+    {
+      "role": "instructor",
+      "id": 2,
+      "fullName": "Dr. Emily Clark",
+      "email": "emily@university.com",
+      "department": "Computer Science",
+      "stats": {
+        "totalStudents": 120,
+        "coursesCreated": 8,
+        "projectsSupervised": 6,
+        "certificatesIssued": 25
+      },
+      "liveSessions": [
+        {
+          "sessionId": 1,
+          "title": "Data Structures Q&A",
+          "date": "2025-10-11T11:00:00",
+          "color": "red"
+        },
+        {
+          "sessionId": 2,
+          "title": "Machine Learning Lecture",
+          "date": "2025-10-14T09:00:00",
+          "color": "purple"
+        }
+      ],
+      "notifications": [
+        {
+          "notificationId": 1,
+          "message": "New student enrolled in Web Dev course",
+          "time": "3 hours ago",
+          "type": "info"
+        },
+        {
+          "notificationId": 2,
+          "message": "Project submission received from John",
+          "time": "1 day ago",
+          "type": "success"
+        }
+      ]
+    },
+
+    {
+      "role": "admin",
+      "id": 3,
+      "fullName": "System Admin",
+      "email": "admin@university.com",
+      "stats": {
+        "totalStudents": 520,
+        "totalInstructors": 40,
+        "totalCourses": 35,
+        "certificatesIssued": 140
+      },
+      "notifications": [
+        {
+          "notificationId": 1,
+          "message": "New course added: AI Fundamentals",
+          "time": "1 hour ago",
+          "type": "info"
+        },
+        {
+          "notificationId": 2,
+          "message": "System backup completed",
+          "time": "6 hours ago",
           "type": "success"
         }
       ]

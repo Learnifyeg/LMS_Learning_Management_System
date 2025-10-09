@@ -21,7 +21,7 @@ export default function LandingFooter() {
             <h3 className="text-white font-semibold mb-3">Platform</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <button onClick={() => navigate("/StudentLayout/1")}>
+                <button onClick={() => navigate("/StudentLayout")}>
                   <a href="#" className="hover:text-white">
                     Courses
                   </a>
