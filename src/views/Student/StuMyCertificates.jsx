@@ -1,5 +1,6 @@
 function StuMyCertificates() {
-  return <></>;
+  return <>
+  <p>StuMyCertificates</p></>;
 }
 
 export default StuMyCertificates;
