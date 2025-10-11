@@ -5,9 +5,10 @@ import axios from "axios";
 // Components
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
+import api from "@/API/Config";
 
 // API URLs
-const URL = "http://localhost:3001";
+// const URL = "http://localhost:3001";
 const UserResultsEndPoint = "studentResults"; // 👈 endpoint we’ll use
 
 function Count({ shape, num, text }) {
@@ -87,7 +88,7 @@ function StuQuizResult() {
     const fetchUserResult = async () => {
       try {
         // ✅ Get all results
-        const res = await axios.get(`${URL}/${UserResultsEndPoint}`);
+        const res = await api.get(`${UserResultsEndPoint}`);
         const allResults = res.data;
 
         if (allResults.length > 0) {

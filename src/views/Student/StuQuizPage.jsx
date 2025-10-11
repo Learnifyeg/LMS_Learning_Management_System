@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import api from "@/API/Config";
 
 // Timer Component
 function Timer({ initialSeconds = 3600 }) {
@@ -86,7 +87,7 @@ export default function StuQuizPage() {
   // ✅ Track start time
   const [startTime] = useState(new Date());
 
-  const URL = "http://localhost:3001";
+  // const URL = "http://localhost:3001";
   const QuestionsEndPoint = "questions";
   const AnswersEndPoint = "studentanswers";
   const QuizEndPoint = "quizzes";
@@ -95,12 +96,12 @@ export default function StuQuizPage() {
   // Fetch Questions
   useEffect(() => {
     // Fetch quiz details
-    axios
-      .get(`${URL}/${QuizEndPoint}/${quizId}`)
+    api
+      .get(`${QuizEndPoint}/${quizId}`)
       .then((res) => setQuizInfo(res.data))
       .catch((err) => console.error("Error fetching quiz info:", err));
-    axios
-      .get(`${URL}/${QuestionsEndPoint}`)
+    api
+      .get(`${QuestionsEndPoint}`)
       .then((res) => {
         setQuestions(res.data);
         setLoading(false);

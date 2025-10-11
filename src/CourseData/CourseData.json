@@ -79,7 +79,8 @@
       "hours": "25 hours",
       "price": "$10",
       "tag": "BESTSELLER",
-      "image": "/images/authIMG.webp"
+      "image": "/images/authIMG.webp",
+      "studentsEnrolled": 3200
     },
     {
       "id": 3,
@@ -92,7 +93,8 @@
       "hours": "25 hours",
       "price": "$10",
       "tag": "BESTSELLER",
-      "image": "/images/authIMG.webp"
+      "image": "/images/authIMG.webp",
+      "studentsEnrolled": 2800
     },
     {
       "id": 2,
@@ -105,7 +107,8 @@
       "hours": "25 hours",
       "price": "$10",
       "tag": "BESTSELLER",
-      "image": "/images/authIMG.webp"
+      "image": "/images/authIMG.webp",
+      "studentsEnrolled": 1500
     },
     {
       "id": 4,
@@ -118,7 +121,8 @@
       "hours": "25 hours",
       "price": "$10",
       "tag": "BESTSELLER",
-      "image": "/images/authIMG.webp"
+      "image": "/images/authIMG.webp",
+      "studentsEnrolled": 4500
     }
   ],
   "quizzes": [
@@ -590,6 +594,62 @@
           "type": "success"
         }
       ]
+    }
+  ],
+
+  "Users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "phone": "+20 100 123 4567",
+      "email": "john@example.com",
+      "role": "student",
+      "image": "https://randomuser.me/api/portraits/men/32.jpg",
+      "EnrollDate": "2023-01-15",
+      "socialLinks": {
+        "facebook": "https://facebook.com/john",
+        "linkedin": "https://linkedin.com/in/johndoe",
+        "github": "https://github.com/johndoe"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Dr. Emily Clark",
+      "phone": "+20 115 987 6543",
+      "email": "emily@university.com",
+      "role": "instructor",
+      "image": "https://randomuser.me/api/portraits/women/45.jpg",
+      "EnrollDate": "2023-01-15",
+      "socialLinks": {
+        "linkedin": "https://linkedin.com/in/emilyclark",
+        "twitter": "https://twitter.com/emily"
+      }
+    },
+    {
+      "id": 3,
+      "name": "System Admin",
+      "phone": "+20 120 000 1111",
+      "email": "admin@university.com",
+      "role": "admin",
+      "image": "https://randomuser.me/api/portraits/men/1.jpg",
+       "EnrollDate": "2023-01-15",
+      "socialLinks": {
+        "linkedin": "https://linkedin.com/in/admin",
+        "github": "https://github.com/admin"
+      }
+    },
+    {
+      "id": 4,
+      "name": "System Admin",
+      "phone": "+20 120 000 1111",
+      "email": "admin@university.com",
+      "role": "admin",
+      "image": "https://randomuser.me/api/portraits/men/1.jpg",
+       "EnrollDate": "2023-01-15",
+      "socialLinks": {
+        "linkedin": "https://linkedin.com/in/admin",
+        "github": "https://github.com/admin"
+      }
     }
   ]
 }

@@ -12,8 +12,9 @@ import {
   FaUsers,
   FaChalkboardTeacher,
 } from "react-icons/fa";
+import api from "@/API/Config";
 
-const URL = "http://localhost:3001";
+// const URL = "http://localhost:3001";
 const dashboardEndPoint = "dashboards";
 
 function Dashboard({ role }) {
@@ -22,7 +23,7 @@ function Dashboard({ role }) {
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
-        const res = await axios.get(`${URL}/${dashboardEndPoint}`);
+        const res = await api.get(`${dashboardEndPoint}`);
         const data = res.data.find((d) => d.role === role);
         setDashboard(data);
       } catch (err) {

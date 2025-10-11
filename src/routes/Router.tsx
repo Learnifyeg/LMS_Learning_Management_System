@@ -6,13 +6,19 @@ const InstrDashboard = lazy(
   () => import("@/views/Instructor/InstrDashboard.jsx")
 );
 
+// Admin Views
+const UserManagement = lazy(() => import("@/views/Admin/UserManagement.jsx"));
 const AdminDashboard = lazy(() => import("@/views/Admin/AdminDashboard.jsx"));
-const InstructorLayout = lazy(
-  () => import("@/components/InstructorLayout/InstructorLayout.jsx")
+const CourseManagement = lazy(
+  () => import("@/views/Admin/CourseManagement.jsx")
 );
-
 const AdminLayout = lazy(
   () => import("@/components/AdminLayout/AdminLayout.jsx")
+);
+
+// Instructor Views
+const InstructorLayout = lazy(
+  () => import("@/components/InstructorLayout/InstructorLayout.jsx")
 );
 
 // Student Views
@@ -129,7 +135,11 @@ export const router = createBrowserRouter([
       {
         path: "AdminLayout",
         element: <AdminLayout />,
-        children: [{ path: "AdminDashboard", element: <AdminDashboard /> }],
+        children: [
+          { path: "AdminDashboard", element: <AdminDashboard /> },
+          { path: "UserManagement", element: <UserManagement /> },
+          { path: "CourseManagement", element: <CourseManagement /> },
+        ],
       },
       { path: "*", element: <Error404 /> },
     ],
