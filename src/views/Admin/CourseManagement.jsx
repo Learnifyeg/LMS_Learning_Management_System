@@ -82,7 +82,7 @@ function CourseManagement() {
               pageCourses.map((course, idx) => (
                 <tr
                   key={course.id ?? idx}
-                  className="border-t hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                  className="border-t hover:bg-gray-50 dark:hover:bg-gray-700 transition cursor-pointer"
                 >
                   <td className="px-4 py-3">
                     <img
@@ -100,19 +100,19 @@ function CourseManagement() {
                   <td className="px-4 py-3">{course.rating}</td>
                   <td className="px-4 py-3 text-center space-x-2">
                     <button
-                      className="px-2 py-1 text-xs bg-primary text-white rounded-md"
+                      className="px-2 py-1 text-xs bg-primary text-white rounded-md cursor-pointer"
                       onClick={() => handleView(course)}
                     >
                       View
                     </button>
                     <button
-                      className="px-2 py-1 text-xs bg-yellow-500 text-white rounded-md"
+                      className="px-2 py-1 text-xs bg-yellow-500 text-white rounded-md cursor-pointer"
                       onClick={() => handleEdit(course)}
                     >
                       Edit
                     </button>
                     <button
-                      className="px-2 py-1 text-xs bg-secondary text-white rounded-md"
+                      className="px-2 py-1 text-xs bg-secondary text-white rounded-md cursor-pointer"
                       onClick={() => handleDelete(course)}
                     >
                       Delete
@@ -145,19 +145,19 @@ function CourseManagement() {
             </div>
             <div className="flex flex-col gap-1">
               <button
-                className="px-2 py-1 text-xs bg-primary text-white rounded-md"
+                className="px-2 py-1 text-xs bg-primary text-white rounded-md cursor-pointer"
                 onClick={() => handleView(course)}
               >
                 View
               </button>
               <button
-                className="px-2 py-1 text-xs bg-yellow-500 text-white rounded-md"
+                className="px-2 py-1 text-xs bg-yellow-500 text-white rounded-md cursor-pointer "
                 onClick={() => handleEdit(course)}
               >
                 Edit
               </button>
               <button
-                className="px-2 py-1 text-xs bg-secondary text-white rounded-md"
+                className="px-2 py-1 text-xs bg-secondary text-white rounded-md cursor-pointer"
                 onClick={() => handleDelete(course)}
               >
                 Delete

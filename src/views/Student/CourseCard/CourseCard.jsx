@@ -71,7 +71,7 @@ const CourseCard = ({ course, onRemove, onAddToCart }) => {
             <Trash2 size={16} />
           </button>
 
-          {location !== "StuShoppingCart" && (
+          {location !== "StuShoppingCart" && location !== "MyCourses" && (
             <button
               onClick={() => onAddToCart(course)}
               className="flex items-center gap-2  btn-primary card-hover"

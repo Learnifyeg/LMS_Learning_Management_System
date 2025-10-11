@@ -61,7 +61,7 @@ export const sidebarData = {
       url: "#",
       icon: BookOpen,
       items: [
-        { title: "My Courses", url: "/StudentLayout/StuSavedCourses" },
+        { title: "My Courses", url: "/StudentLayout/MyCourses" },
         { title: "Saved Courses", url: "/StudentLayout/StuSavedCourses" },
         { title: "Course Details", url: "/StudentLayout/StuCourseDetails" },
       ],
