@@ -20,9 +20,8 @@ const AdminLayout = lazy(
 const InstructorLayout = lazy(
   () => import("@/components/InstructorLayout/InstructorLayout.jsx")
 );
-const InstCourses = lazy(
-  () => import("@/views/Instructor/InstCourses.jsx")
-);
+const InstCourses = lazy(() => import("@/views/Instructor/InstCourses.jsx"));
+const AllStudents = lazy(() => import("@/views/Instructor/AllStudents.jsx"));
 
 // Student Views
 const StuDashboard = lazy(() => import("@/views/Student/StuDashboard.jsx"));
@@ -46,9 +45,7 @@ const StuSavedCourses = lazy(
 const StuShoppingCart = lazy(
   () => import("@/views/Student/StuShoppingCart.jsx")
 );
-const MyCourses = lazy(
-  () => import("@/views/Student/MyCourses.jsx")
-);
+const MyCourses = lazy(() => import("@/views/Student/MyCourses.jsx"));
 
 // Others
 const UserLayout = lazy(() => import("@/components/UserLayout/UserLayout.jsx"));
@@ -139,7 +136,8 @@ export const router = createBrowserRouter([
         element: <InstructorLayout />,
         children: [
           { path: "InstrDashboard", element: <InstrDashboard /> },
-          { path: "MyCourses", element: <InstCourses /> }
+          { path: "MyCourses", element: <InstCourses /> },
+          { path: "AllStudents", element: <AllStudents /> },
         ],
       },
       {
