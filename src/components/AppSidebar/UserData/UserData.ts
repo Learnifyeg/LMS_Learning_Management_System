@@ -108,8 +108,8 @@ export const sidebarData = {
       email: "m@example.com",
       avatar: "/avatars/shadcn.jpg",
       items: [
-        { title: "Dashboard", url: "/InstructorLayout/StuDashboard" },
-        { title: "Profile", url: "/InstructorLayout/StuProfile" },
+        { title: "Dashboard", url: "/InstructorLayout/InstrDashboard" },
+        { title: "Profile", url: "/InstructorLayout/InstrProfile" },
         { title: "Notifications", url: "/UserLayout/Notifications" },
       ],
     },
@@ -197,8 +197,8 @@ export const sidebarData = {
       email: "m@example.com",
       avatar: "/avatars/shadcn.jpg",
       items: [
-        { title: "Dashboard", url: "/AdminLayout/StuDashboard" },
-        { title: "Profile", url: "/AdminLayout/StuProfile" },
+        { title: "Dashboard", url: "/AdminLayout/AdminDashboard" },
+        { title: "Profile", url: "/AdminLayout/AdminProfile" },
         { title: "Notifications", url: "/UserLayout/Notifications" },
       ],
     },
