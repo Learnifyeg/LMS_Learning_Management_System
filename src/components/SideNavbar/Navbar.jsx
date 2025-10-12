@@ -19,11 +19,11 @@ import { MenubarDemo } from "../Menubar/MenubarDemo";
 import LogoNav from "../ui/Logo/LogoNav";
 import LogoModes from "../ui/LogoTheme/LogoModes";
 
-export default function Page() {
+export default function Page({ role }) {
   return (
     // <SidebarProvider>
     <div>
-      <AppSidebar />
+      <AppSidebar role={role} />
       <SidebarInset>
         <header className="fixed w-full z-10 bg-sidebar shadow-md flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 justify-between pr-32">
           <div className="flex items-center gap-2 px-4">
@@ -53,7 +53,7 @@ export default function Page() {
               </BreadcrumbList>
             </Breadcrumb>
           </div>
-          <MenubarDemo />
+          <MenubarDemo role={role}/>
         </header>
         {/* <div className="flex flex-1 flex-col gap-4 p-4 pt-0 bg-red-300">
             <div className="grid auto-rows-min gap-4 md:grid-cols-3">

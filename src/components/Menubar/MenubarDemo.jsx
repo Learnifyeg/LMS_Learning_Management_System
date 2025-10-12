@@ -13,12 +13,16 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "@/components/ui/menubar"
+import { useNavigate } from "react-router";
 
-export function MenubarDemo() {
+export function MenubarDemo({role}) {
+  const Role = JSON.parse(localStorage.getItem("role")) === "student"?true:false;
+  const navigate = useNavigate();
   return (
     <Menubar>
       <MenubarMenu>
-        <MenubarTrigger><i class="fa-solid fa-cart-shopping text-xl"></i></MenubarTrigger>
+        {Role && 
+        <MenubarTrigger onClick={()=>navigate("/StudentLayout/StuShoppingCart")}><i class="fa-solid fa-cart-shopping text-xl"></i></MenubarTrigger>}
           {/* <MenubarContent>
             <MenubarItem>
               New Tab <MenubarShortcut>⌘T</MenubarShortcut>
@@ -69,7 +73,7 @@ export function MenubarDemo() {
         </MenubarContent>
       </MenubarMenu>
       <MenubarMenu>
-        <MenubarTrigger><i class="fa-solid fa-bell text-xl"></i></MenubarTrigger>
+        <MenubarTrigger onClick={()=> navigate("/UserLayout/Notifications")}><i class="fa-solid fa-bell text-xl"></i></MenubarTrigger>
         <MenubarContent>
           <MenubarCheckboxItem>Always Show Bookmarks Bar</MenubarCheckboxItem>
           <MenubarCheckboxItem checked>

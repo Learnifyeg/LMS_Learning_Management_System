@@ -12,7 +12,7 @@ function LayoutContent({ shouldHide }) {
   return (
     <>
       <Suspense fallback={null}>
-        <Navbar />
+        <Navbar role="student" />
       </Suspense>
 
       <div

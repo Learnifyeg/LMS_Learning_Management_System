@@ -1,4 +1,4 @@
-function InstrProfile() {
+function AdminProfile() {
     return (
         <>
             
@@ -6,4 +6,4 @@ function InstrProfile() {
     )
 }
 
-export default InstrProfile;
+export default AdminProfile;

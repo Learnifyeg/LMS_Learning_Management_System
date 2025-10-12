@@ -15,6 +15,12 @@ const CourseManagement = lazy(
 const AdminLayout = lazy(
   () => import("@/components/AdminLayout/AdminLayout.jsx")
 );
+const AdminProfile = lazy(
+  () => import("@/views/Admin/AdminProfile.jsx")
+);
+const AdminPayments = lazy(
+  () => import("@/views/Admin/AdminPayments.jsx")
+);
 
 // Instructor Views
 const InstructorLayout = lazy(
@@ -22,6 +28,8 @@ const InstructorLayout = lazy(
 );
 const InstCourses = lazy(() => import("@/views/Instructor/InstCourses.jsx"));
 const AllStudents = lazy(() => import("@/views/Instructor/AllStudents.jsx"));
+const AllQuizzes = lazy(() => import("@/views/Instructor/AllQuizzes.jsx"));
+const InstrProfile = lazy(() => import("@/views/Instructor/InstrProfile.jsx"));
 
 // Student Views
 const StuDashboard = lazy(() => import("@/views/Student/StuDashboard.jsx"));
@@ -138,6 +146,8 @@ export const router = createBrowserRouter([
           { path: "InstrDashboard", element: <InstrDashboard /> },
           { path: "MyCourses", element: <InstCourses /> },
           { path: "AllStudents", element: <AllStudents /> },
+          { path: "AllQuizzes", element: <AllQuizzes /> },
+          { path: "InstrProfile", element: <InstrProfile /> },
         ],
       },
       {
@@ -145,8 +155,10 @@ export const router = createBrowserRouter([
         element: <AdminLayout />,
         children: [
           { path: "AdminDashboard", element: <AdminDashboard /> },
+          { path: "AdminProfile", element: <AdminProfile /> },
           { path: "UserManagement", element: <UserManagement /> },
           { path: "CourseManagement", element: <CourseManagement /> },
+          { path: "AdminPayments", element: <AdminPayments /> },
         ],
       },
       { path: "*", element: <Error404 /> },

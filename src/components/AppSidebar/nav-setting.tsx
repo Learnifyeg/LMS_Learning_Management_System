@@ -42,7 +42,8 @@ export function NavSetting({
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Support & Setting</SidebarGroupLabel>
+      {/* <SidebarGroupLabel>Support & Setting</SidebarGroupLabel> */}
+      <hr className="my-2" />
       <SidebarMenu>
         {Setting.map((item) => (
           <SidebarMenuItem key={item.name}>

@@ -14,21 +14,23 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/Sidebar/sidebar"
+export function AppSidebar({ role = "student", ...props }: React.ComponentProps<typeof Sidebar> & { role?: "student" | "instructor" | "admin" }) {
+  const currentData = data[role];
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="mt-16">
-        <TeamSwitcher teams={data.teams} />
+        <TeamSwitcher teams={currentData.teams || []} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavSetting Setting={data.Setting} />
+        <NavMain items={currentData.navMain} />
+        <NavSetting Setting={currentData.Setting} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={currentData.user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }
+
