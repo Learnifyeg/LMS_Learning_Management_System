@@ -1,7 +1,10 @@
 // Courses , InstructorCourses , StudentCourses => For Courses Page for Instructor and Student => http://localhost:5173/InstructorLayout/MyCourses  http://localhost:5173/StudentLayout/MyCourses
 // Cart => For Admin CourseManagement Page and Add to Cart for student
+// Users => For Admin UserManagement Page
 // SavedCourses => For SavedCourses Page
-// dashboards => For Dashboard Page 
+// dashboards => For Dashboard Page
 // profiles => For Profile Page
 // studentcertificates  , incompleteCourses => For Student Certificate Page
 // Notifications => For Notifications Page
+// Lessons => For LessonManagement Page for instructor
+// quizzes => also  For QuizManagement Page for instructor

@@ -132,11 +132,13 @@
   "quizzes": [
     {
       "id": "php-developer",
+      "lessonId": 1,
       "title": "PHP Developer Test",
       "duration": 3600,
       "passingScore": 70,
       "totalQuestions": 10,
-      "questionsEndpoint": "questions"
+      "questionsEndpoint": "questions",
+      "posted": "5 days ago"
     }
   ],
   "questions": [
@@ -905,7 +907,7 @@
           "time": "20 min ago"
         }
       ],
-    
+
       "instructor": [
         {
           "user": "Nada Ashraf",
@@ -924,8 +926,7 @@
           "target": "Full Stack PHP Developer",
           "time": "25 min ago"
         }
-      ]
-   ,
+      ],
       "admin": [
         {
           "type": "system",
@@ -946,5 +947,28 @@
         }
       ]
     }
-  ]
+  ],
+  "Lessons": [
+    {
+      "id": 1,
+      "courseId": 1,
+      "title": "Introduction to Python",
+      "duration": "15 min",
+      "videoUrl": "https://example.com/videos/python-intro.mp4",
+      "isPreview": false,
+      "resources": ["https://example.com/resources/python-cheatsheet.pdf"],
+      "posted": "10 days ago"
+    },
+    {
+      "id": 2,
+      "courseId": 1,
+      "title": "Variables and Data Types",
+      "duration": "20 min",
+      "videoUrl": "https://example.com/videos/python-variables.mp4",
+      "isPreview": false,
+      "resources": [],
+      "posted": "9 days ago"
+    }
+  ],
+  "feedback": []
 }

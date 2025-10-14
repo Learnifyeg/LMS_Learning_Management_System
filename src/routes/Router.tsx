@@ -15,12 +15,8 @@ const CourseManagement = lazy(
 const AdminLayout = lazy(
   () => import("@/components/AdminLayout/AdminLayout.jsx")
 );
-const AdminProfile = lazy(
-  () => import("@/views/Admin/AdminProfile.jsx")
-);
-const AdminPayments = lazy(
-  () => import("@/views/Admin/AdminPayments.jsx")
-);
+const AdminProfile = lazy(() => import("@/views/Admin/AdminProfile.jsx"));
+const AdminPayments = lazy(() => import("@/views/Admin/AdminPayments.jsx"));
 
 // Instructor Views
 const InstructorLayout = lazy(
@@ -28,7 +24,12 @@ const InstructorLayout = lazy(
 );
 const InstCourses = lazy(() => import("@/views/Instructor/InstCourses.jsx"));
 const AllStudents = lazy(() => import("@/views/Instructor/AllStudents.jsx"));
-const AllQuizzes = lazy(() => import("@/views/Instructor/AllQuizzes.jsx"));
+const QuizManagement = lazy(
+  () => import("@/views/Instructor/QuizManagement.jsx")
+);
+const LessonManagement = lazy(
+  () => import("@/views/Instructor/LessonManagement.jsx")
+);
 const InstrProfile = lazy(() => import("@/views/Instructor/InstrProfile.jsx"));
 
 // Student Views
@@ -146,7 +147,8 @@ export const router = createBrowserRouter([
           { path: "InstrDashboard", element: <InstrDashboard /> },
           { path: "MyCourses", element: <InstCourses /> },
           { path: "AllStudents", element: <AllStudents /> },
-          { path: "AllQuizzes", element: <AllQuizzes /> },
+          { path: "QuizManagement", element: <QuizManagement /> },
+          { path: "LessonManagement", element: <LessonManagement /> },
           { path: "InstrProfile", element: <InstrProfile /> },
         ],
       },

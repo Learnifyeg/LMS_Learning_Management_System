@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import StuStudentLayout from "@/components/StudentLayout/StudentLayout.jsx";
 import { MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import api from "@/API/Config";
 
 function SendFeedback() {
   const [email, setEmail] = useState("");
@@ -31,14 +32,28 @@ function SendFeedback() {
       return;
     }
 
-    console.log("📩 Feedback submitted:", { email, message, screenshots });
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("message", message);
+    screenshots.forEach((file) => {
+      formData.append("screenshots", file);
+    });
 
-    setEmail("");
-    setMessage("");
-    setScreenshots([]);
-    setSuccess(true);
+    api
+      .post(formData)
+      .then((response) => {
+        console.log("✅ Feedback sent successfully:", response.data);
 
-    setTimeout(() => setSuccess(false), 3000);
+        setEmail("");
+        setMessage("");
+        setScreenshots([]);
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 3000);
+      })
+      .catch((error) => {
+        console.error("❌ Error sending feedback:", error);
+        alert("Error sending feedback");
+      });
   };
 
   return (

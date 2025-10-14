@@ -142,7 +142,9 @@ export const sidebarData = {
         url: "#",
         icon: BookOpen,
         items: [
-          { title: "My Courses", url: "/InstructorLayout/InstCourses" },
+          { title: "My Courses", url: "/InstructorLayout/MyCourses" },
+          { title: "Lesson Management", url: "/InstructorLayout/LessonManagement" },
+         
           { title: "AllStudents", url: "/InstructorLayout/AllStudents" },
         ],
       },
@@ -151,7 +153,7 @@ export const sidebarData = {
         url: "#",
         icon: Bot,
         items: [
-          { title: "Quizzes", url: "/InstructorLayout/AllQuizzes" },
+           { title: "Quiz Management", url: "/InstructorLayout/QuizManagement" },
           { title: "Create Quiz", url: "/InstructorLayout/StuQuizResult" },
         ],
       },

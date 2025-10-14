@@ -10,11 +10,11 @@ function Notifications() {
       setLoading(true);
       try {
         // Get role from localStorage
-        
+        const role = localStorage.getItem("role") || "student"; // default to student
         const response = await api.get(NotificationsEndpoint); // GET /notifications
-        const data = response.data?.[0]?.instructor || [];
+        const data = response.data?.[0]?.student || [];
         setNotifications(data);
-        console.log(data)
+        console.log(data);
       } catch (error) {
         console.error("Error fetching notifications:", error);
         setNotifications([]);
@@ -31,7 +31,9 @@ function Notifications() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <header className="mb-8">
-          <h1 className="text-3xl font-bold text-text-primary">Notifications</h1>
+          <h1 className="text-3xl font-bold text-text-primary">
+            Notifications
+          </h1>
           <p className="text-text-secondary mt-1">
             {loading
               ? "Loading notifications..."
@@ -87,7 +89,9 @@ function Notifications() {
                         <h3 className="font-semibold text-text-primary mb-1">
                           {notification.title}
                         </h3>
-                        <p className="text-gray-500 text-sm">{notification.time}</p>
+                        <p className="text-gray-500 text-sm">
+                          {notification.time}
+                        </p>
                       </div>
                     </div>
                   ) : notification.type === "purchase" ? (
@@ -109,10 +113,16 @@ function Notifications() {
                       </div>
                       <div className="flex-1">
                         <p className="text-text-primary mb-1">
-                          <span className="font-medium">{notification.action}</span>{" "}
-                          <span className="text-blue-600">{notification.target}</span>
+                          <span className="font-medium">
+                            {notification.action}
+                          </span>{" "}
+                          <span className="text-blue-600">
+                            {notification.target}
+                          </span>
                         </p>
-                        <p className="text-gray-500 text-sm">{notification.time}</p>
+                        <p className="text-gray-500 text-sm">
+                          {notification.time}
+                        </p>
                       </div>
                     </div>
                   ) : (
@@ -127,11 +137,17 @@ function Notifications() {
                       </div>
                       <div className="flex-1">
                         <p className="text-text-primary mb-1">
-                          <span className="font-medium">{notification.user}</span>{" "}
+                          <span className="font-medium">
+                            {notification.user}
+                          </span>{" "}
                           <span>{notification.action}</span>{" "}
-                          <span className="text-blue-600">{notification.target}</span>
+                          <span className="text-blue-600">
+                            {notification.target}
+                          </span>
                         </p>
-                        <p className="text-gray-500 text-sm">{notification.time}</p>
+                        <p className="text-gray-500 text-sm">
+                          {notification.time}
+                        </p>
                       </div>
                     </div>
                   )}
