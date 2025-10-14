@@ -28,14 +28,18 @@ export default function LandingFooter() {
                 </button>
               </li>
               <li>
-                <a href="#" className="hover:text-white">
-                  Instructors
-                </a>
+                <button  onClick={() => navigate("/InstructorLayout")}>
+                  <a href="#" className="hover:text-white">
+                    Instructors
+                  </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="hover:text-white">
-                  Live Sessions
-                </a>
+                <button  onClick={() => navigate("/AdminLayout")}>
+                  <a href="#" className="hover:text-white">
+                    Live Sessions
+                  </a>
+                </button>
               </li>
               <li>
                 <a href="#" className="hover:text-white">

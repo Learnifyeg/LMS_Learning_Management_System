@@ -2,6 +2,7 @@
 import React, {lazy, Suspense ,  useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import api from "@/API/Config";
 
 // Lazy load CourseCard
 const CourseCard = lazy(() => import("../Student/CourseCard/CourseCard"));
@@ -10,12 +11,12 @@ const OrderSummary = lazy(() => import("../Student/CourseCard/OrderSummary"));
 function StuShoppingCart() {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
-  const URL = "http://localhost:3001";
+  // const URL = "http://localhost:3001";
   const CartEndPoint = "Cart";
   useEffect(() => {
     // Get  All Cart
-    axios
-      .get(`${URL}/${CartEndPoint}`)
+    api
+      .get(`${CartEndPoint}`)
       .then((res) => setCourses(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -23,8 +24,8 @@ function StuShoppingCart() {
   // Remove Course
   const handleRemove = async (id) => {
     // delete the data
-    await axios
-      .delete(`${URL}/${CartEndPoint}/${id}`)
+    await api
+      .delete(`${CartEndPoint}/${id}`)
       .then((res) => console.log("Deleted", res.data))
       .catch((err) => console.log(err));
   };

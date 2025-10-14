@@ -1,4 +1,5 @@
 function StuMyCertificates() {
+
   return (
     <div className="bg-gray-50 min-h-screen">
       <div className="container mx-auto px-4 py-8">
@@ -128,6 +129,8 @@ function StuMyCertificates() {
       </div>
     </div>
   );
-}
+
+  return <>
+ 
 
 export default StuMyCertificates;

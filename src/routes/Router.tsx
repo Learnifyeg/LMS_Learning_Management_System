@@ -6,14 +6,30 @@ const InstrDashboard = lazy(
   () => import("@/views/Instructor/InstrDashboard.jsx")
 );
 
+// Admin Views
+const UserManagement = lazy(() => import("@/views/Admin/UserManagement.jsx"));
 const AdminDashboard = lazy(() => import("@/views/Admin/AdminDashboard.jsx"));
-const InstructorLayout = lazy(
-  () => import("@/components/InstructorLayout/InstructorLayout.jsx")
+const CourseManagement = lazy(
+  () => import("@/views/Admin/CourseManagement.jsx")
 );
-
 const AdminLayout = lazy(
   () => import("@/components/AdminLayout/AdminLayout.jsx")
 );
+const AdminProfile = lazy(
+  () => import("@/views/Admin/AdminProfile.jsx")
+);
+const AdminPayments = lazy(
+  () => import("@/views/Admin/AdminPayments.jsx")
+);
+
+// Instructor Views
+const InstructorLayout = lazy(
+  () => import("@/components/InstructorLayout/InstructorLayout.jsx")
+);
+const InstCourses = lazy(() => import("@/views/Instructor/InstCourses.jsx"));
+const AllStudents = lazy(() => import("@/views/Instructor/AllStudents.jsx"));
+const AllQuizzes = lazy(() => import("@/views/Instructor/AllQuizzes.jsx"));
+const InstrProfile = lazy(() => import("@/views/Instructor/InstrProfile.jsx"));
 
 // Student Views
 const StuDashboard = lazy(() => import("@/views/Student/StuDashboard.jsx"));
@@ -37,6 +53,7 @@ const StuSavedCourses = lazy(
 const StuShoppingCart = lazy(
   () => import("@/views/Student/StuShoppingCart.jsx")
 );
+const MyCourses = lazy(() => import("@/views/Student/MyCourses.jsx"));
 
 // Others
 const UserLayout = lazy(() => import("@/components/UserLayout/UserLayout.jsx"));
@@ -119,17 +136,30 @@ export const router = createBrowserRouter([
           { path: "StuQuizResult", element: <StuQuizResult /> },
           { path: "StuSavedCourses", element: <StuSavedCourses /> },
           { path: "StuShoppingCart", element: <StuShoppingCart /> },
+          { path: "MyCourses", element: <MyCourses /> },
         ],
       },
       {
         path: "InstructorLayout",
         element: <InstructorLayout />,
-        children: [{ path: "InstrDashboard", element: <InstrDashboard /> }],
+        children: [
+          { path: "InstrDashboard", element: <InstrDashboard /> },
+          { path: "MyCourses", element: <InstCourses /> },
+          { path: "AllStudents", element: <AllStudents /> },
+          { path: "AllQuizzes", element: <AllQuizzes /> },
+          { path: "InstrProfile", element: <InstrProfile /> },
+        ],
       },
       {
         path: "AdminLayout",
         element: <AdminLayout />,
-        children: [{ path: "AdminDashboard", element: <AdminDashboard /> }],
+        children: [
+          { path: "AdminDashboard", element: <AdminDashboard /> },
+          { path: "AdminProfile", element: <AdminProfile /> },
+          { path: "UserManagement", element: <UserManagement /> },
+          { path: "CourseManagement", element: <CourseManagement /> },
+          { path: "AdminPayments", element: <AdminPayments /> },
+        ],
       },
       { path: "*", element: <Error404 /> },
     ],
