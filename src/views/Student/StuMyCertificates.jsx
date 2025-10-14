@@ -1,49 +1,119 @@
+import React, { useEffect, useState } from "react";
+import api from "@/API/Config"; // <-- This should be your axios instance
+import Pagination from "../Others/Pagination";
+const COURSES_PER_PAGE = 4;
+const CERTIFICATION_PER_PAGE = 4;
+const certificatesEndpoint = "studentcertificates"; // GET /profiles
+const incompleteCoursesEndpoint = "incompleteCourses"; // GET /profiles
 function StuMyCertificates() {
+  const [certificates, setCertificates] = useState([]);
+  const [incompleteCourses, setincompleteCoursess] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Pagination for incomplete courses
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.max(
+    1,
+    Math.ceil(incompleteCourses.length / COURSES_PER_PAGE)
+  );
+  const pageStartIndex = (currentPage - 1) * COURSES_PER_PAGE;
+  const pagecourse = incompleteCourses.slice(
+    pageStartIndex,
+    pageStartIndex + COURSES_PER_PAGE
+  );
+  
+  // Pagination for incomplete courses
+  const [currentPage2, setCurrentPage2] = useState(1);
+  const totalPages2 = Math.max(
+    1,
+    Math.ceil(certificates.length / CERTIFICATION_PER_PAGE)
+  );
+  const pageStartIndex2 = (currentPage2 - 1) * CERTIFICATION_PER_PAGE;
+  const pagecertification = certificates.slice(
+    pageStartIndex2,
+    pageStartIndex2 + CERTIFICATION_PER_PAGE
+  );
+
+  // Fetch certificates from API
+  useEffect(() => {
+    const fetchCertificates = async () => {
+      try {
+        const response = await api.get(certificatesEndpoint); // Example endpoint
+        const response2 = await api.get(incompleteCoursesEndpoint); // Example endpoint
+        setCertificates(response.data);
+        setincompleteCoursess(response2.data);
+      } catch (error) {
+        console.error("Error fetching certificates:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCertificates();
+  }, []);
+
   return (
     <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <header className="mb-8">
-          <h1 className="text-3xl font-bold text-text-primary">My Certificates</h1>
+          <h1 className="text-3xl font-bold text-text-primary">
+            My Certificates
+          </h1>
           <p className="text-text-secondary mt-2">
             Manage and view your certificate achievements
           </p>
         </header>
 
         {/* Jump Into New Certificate Section */}
+        {/* Incomplete Courses Section */}
         <section className="bg-card rounded-lg shadow-sm p-6 mb-8">
           <h2 className="text-xl font-semibold text-text-primary mb-4">
-            Jump Into New Certificate
+            Continue Your Courses to Unlock New Certificates
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
-              <h3 className="font-medium text-indigo-700">Web Development</h3>
-              <p className="text-sm text-gray-600 mt-1">Complete 5 courses</p>
-              <button className="mt-3 text-sm bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition">
-                Start
-              </button>
-            </div>
-            <div className="bg-green-50 p-4 rounded-lg border border-green-100">
-              <h3 className="font-medium text-green-700">Digital Marketing</h3>
-              <p className="text-sm text-gray-600 mt-1">Complete 3 courses</p>
-              <button className="mt-3 text-sm bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition">
-                Start
-              </button>
-            </div>
-            <div className="bg-amber-50 p-4 rounded-lg border border-amber-100">
-              <h3 className="font-medium text-amber-700">Data Science</h3>
-              <p className="text-sm text-gray-600 mt-1">Complete 4 courses</p>
-              <button className="mt-3 text-sm bg-amber-600 text-white px-3 py-1 rounded hover:bg-amber-700 transition">
-                Start
-              </button>
-            </div>
-            <div className="bg-purple-50 p-4 rounded-lg border border-purple-100">
-              <h3 className="font-medium text-purple-700">UI/UX Design</h3>
-              <p className="text-sm text-gray-600 mt-1">Complete 3 courses</p>
-              <button className="mt-3 text-sm bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-700 transition">
-                Start
-              </button>
-            </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
+            {pagecourse.map((course) => (
+              <div
+                key={course.id}
+                className={`p-4 rounded-lg border ${
+                  course.progressPercent < 50
+                    ? "bg-red-50 border-red-100"
+                    : course.progressPercent < 80
+                    ? "bg-yellow-50 border-yellow-100"
+                    : "bg-green-50 border-green-100"
+                }`}
+              >
+                <h3 className="font-medium text-gray-800">{course.title}</h3>
+                <div className="w-full bg-gray-200 h-2 rounded mt-2">
+                  <div
+                    className={`h-2 rounded ${
+                      course.progressPercent < 50
+                        ? "bg-red-500"
+                        : course.progressPercent < 80
+                        ? "bg-yellow-500"
+                        : "bg-green-500"
+                    }`}
+                    style={{ width: `${course.progressPercent}%` }}
+                  ></div>
+                </div>
+                <a
+                  href={course.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-block text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+                >
+                  Continue
+                </a>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 flex items-center justify-end">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
           </div>
         </section>
 
@@ -53,158 +123,91 @@ function StuMyCertificates() {
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-surface">
-                  <th className="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">
-                    Item No.
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">
-                    Title
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">
-                    Marks
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">
-                    Out Of
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">
-                    Upload Date
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">
-                    Certificate
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">
-                    Controls
-                  </th>
+                  <th className="px-6 py-3">Item No.</th>
+                  <th className="px-6 py-3">Title</th>
+                  <th className="px-6 py-3">Marks</th>
+                  <th className="px-6 py-3">Out Of</th>
+                  <th className="px-6 py-3">Upload Date</th>
+                  <th className="px-6 py-3">Certificate</th>
+                  {/* <th className="px-6 py-3">Controls</th> */}
                 </tr>
               </thead>
+
               <tbody className="bg-card divide-y divide-gray-200">
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">
-                    1
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-text-primary">
-                    WordPress Certificate
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-text-primary">
-                    <div className="flex items-center">
-                      <span className="mr-2">15</span>
-                      <div className="w-20 h-2 bg-gray-200 rounded-full">
-                        <div
-                          className="h-2 bg-green-500 rounded-full"
-                          style={{ width: "75%" }}
-                        ></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-text-primary">
-                    20
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-text-primary">
-                    6 April 2019
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    <button className="text-blue-600 hover:text-blue-800 font-medium">
-                      View
-                    </button>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    <input
-                      type="checkbox"
-                      className="h-4 w-4 text-blue-600 rounded"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    2
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    WordPress Pro Certificate
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    <div className="flex items-center">
-                      <span className="mr-2">14</span>
-                      <div className="w-20 h-2 bg-gray-200 rounded-full">
-                        <div
-                          className="h-2 bg-yellow-500 rounded-full"
-                          style={{ width: "70%" }}
-                        ></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    20
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    4 April 2019
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    <button className="text-blue-600 hover:text-blue-800 font-medium">
-                      View
-                    </button>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    <input
-                      type="checkbox"
-                      className="h-4 w-4 text-blue-600 rounded"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    3
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    HTML CSS Certificate
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    <div className="flex items-center">
-                      <span className="mr-2">18</span>
-                      <div className="w-20 h-2 bg-gray-200 rounded-full">
-                        <div
-                          className="h-2 bg-green-500 rounded-full"
-                          style={{ width: "90%" }}
-                        ></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    20
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    3 April 2019
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    <button className="text-blue-600 hover:text-blue-800 font-medium">
-                      View
-                    </button>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    <input
-                      type="checkbox"
-                      className="h-4 w-4 text-blue-600 rounded"
-                    />
-                  </td>
-                </tr>
+                {loading ? (
+                  <tr>
+                    <td
+                      colSpan="7"
+                      className="text-center py-4 text-text-secondary"
+                    >
+                      Loading...
+                    </td>
+                  </tr>
+                ) : pagecertification.length === 0 ? (
+                  <tr className="text-center">
+                    <td
+                      colSpan="7"
+                      className="text-center py-4 text-text-secondary"
+                    >
+                      No certificates found.
+                    </td>
+                  </tr>
+                ) : (
+                  pagecertification.map((item, index) => (
+                    <tr key={item.id || index} className="text-center">
+                      <td className="px-6 py-4">{index + 1}</td>
+                      <td className="px-6 py-4 font-medium text-text-primary">
+                        {item.title}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center">
+                          <span className="mr-2">{item.marks}</span>
+                          <div className="w-20 bg-gray-200 h-2 rounded-full mt-2">
+                            <div
+                              className={`h-2 rounded-full ${
+                                item.progressPercent < 50
+                                  ? "bg-red-500"
+                                  : item.progressPercent < 80
+                                  ? "bg-yellow-500"
+                                  : "bg-green-500"
+                              }`}
+                              style={{ width: `${item.progressPercent || 0}%` }}
+                            ></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">{item.outOf}</td>
+                      <td className="px-6 py-4">{item.date}</td>
+                      <td className="px-6 py-4">
+                        <a
+                          href={item.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-800 font-medium"
+                        >
+                          View
+                        </a>
+                      </td>
+                      {/* <td className="px-6 py-4">
+                        <input
+                          type="checkbox"
+                          className="h-4 w-4 text-blue-600 rounded"
+                        />
+                      </td> */}
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
         </section>
-
-        {/* Footer */}
-        <footer className="mt-8 pt-6 border-t border-gray-200 text-center text-text-primary text-sm">
-          {/* <div className="flex flex-wrap justify-center space-x-6 mb-4">
-            <a href="#" className="hover:text-gray-900">
-              Copyright Policy
-            </a>
-            <a href="#" className="hover:text-gray-900">
-              Terms
-            </a>
-            <a href="#" className="hover:text-gray-900">
-              Privacy Policy
-            </a>
-          </div> */}
-          <p>© 2025 Certificate Management System. All rights reserved.</p>
-        </footer>
+        <div className="mt-4 flex items-center justify-center">
+          <Pagination
+            currentPage={currentPage2}
+            totalPages={totalPages2}
+            onPageChange={setCurrentPage2}
+          />
+        </div>
       </div>
     </div>
   );

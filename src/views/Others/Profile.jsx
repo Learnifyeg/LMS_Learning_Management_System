@@ -46,17 +46,17 @@ function Profile({ role = "student" }) {
   return (
     <div className="min-h-screen bg-[var(--background)] p-8">
       {/* Profile Header */}
-      <div className="card flex items-center justify-between mb-8 p-10">
+      <div className="card flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8 p-6 md:p-10">
         {/* Left: Avatar + Info */}
-        <div className="flex items-center space-x-6">
-          <div className="w-24 h-24 rounded-full overflow-hidden border border-[var(--border)]">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="w-24 h-24 mx-auto sm:mx-0 rounded-full overflow-hidden border border-[var(--border)]">
             <img
               src={user.avatar}
               alt="Profile"
               className="w-full h-full object-cover"
             />
           </div>
-          <div>
+          <div className="text-center sm:text-left ">
             <h2 className="text-3xl font-bold text-[var(--text-primary)]">
               {user.name}
             </h2>
@@ -67,7 +67,7 @@ function Profile({ role = "student" }) {
 
             {/* Social Links */}
             {profile.socialLinks && (
-              <div className="flex space-x-3 mt-2">
+              <div className="flex space-x-3 mt-2 text-sm justify-center sm:justify-start">
                 {Object.entries(profile.socialLinks).map(([platform, link]) => {
                   if (!link) return null;
 
@@ -95,7 +95,7 @@ function Profile({ role = "student" }) {
                       href={link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`w-8 h-8 flex items-center justify-center rounded-full text-white transition ${
+                      className={`w-8 h-8 flex items-center justify-center rounded-full text-white transition text- ${
                         colors[platform.toLowerCase()] ||
                         "bg-gray-500 hover:bg-gray-600"
                       }`}
@@ -110,9 +110,13 @@ function Profile({ role = "student" }) {
         </div>
 
         {/* Right: Action Buttons */}
-        <div className="flex space-x-3">
+        <div className="flex space-x-3 text-center justify-center md:justify-start">
           {profile.actions?.map((action) => (
-            <button key={action} className="btn btn-primary btn-hover" onClick={()=>navigate(`${action.url}`)}>
+            <button
+              key={action}
+              className="btn btn-primary btn-hover"
+              onClick={() => navigate(`${action.url}`)}
+            >
               {action.label}
             </button>
           ))}
@@ -120,7 +124,7 @@ function Profile({ role = "student" }) {
       </div>
 
       {/* Stats Section */}
-      <div className="grid grid-cols-3 md:grid-cols-4 gap-4 mb-8 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {stats.map((stat) => (
           <div key={stat.label} className="card card-hover text-center">
             <div className="text-3xl font-bold text-[var(--text-primary)]">
@@ -135,24 +139,27 @@ function Profile({ role = "student" }) {
 
       {/* Tabs Navigation */}
       <div className="card mb-8">
-        <div className="flex space-x-6 border-b border-[var(--border)] pb-3 overflow-x-auto">
-          {tabs.map((item) => (
-            <button
-              key={item}
-              onClick={() => setActiveTab(item)}
-              className={`pb-2 font-bold transition-colors border-b-2  ${
-                activeTab === item
-                  ? "text-[var(--secondary)] border-[var(--secondary)]"
-                  : "text-[var(--text-secondary)] hover:text-[var(--secondary)] border-transparent hover:border-[var(--secondary)]"
-              }`}
-            >
-              {item}
-            </button>
-          ))}
+        <div className="flex border-b border-[var(--border)] pb-3 overflow-x-auto scrollbar-hide snap-x">
+          <div className="flex flex-col sm:flex-row border-b border-[var(--border)]">
+            {tabs.map((item) => (
+              <button
+                key={item}
+                onClick={() => setActiveTab(item)}
+                className={`px-4 py-2 text-left font-bold transition-colors border-l-4 sm:border-l-0 sm:border-b-2
+        ${
+          activeTab === item
+            ? "text-[var(--secondary)] border-[var(--secondary)]"
+            : "text-[var(--text-secondary)] hover:text-[var(--secondary)] border-transparent hover:border-[var(--secondary)]"
+        }`}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Dynamic Tab Content */}
-        <div className="mt-6">
+        <div className="mt-4 sm:mt-6 lg:mt-8 w-full">
           <TabContent data={tabContent[activeTab]} />
         </div>
       </div>
@@ -174,38 +181,34 @@ function TabContent({ data }) {
   // If content is plain text
   if (typeof data === "string") {
     return (
-      <p className="text-[var(--text-primary)] bg-[var(--card-bg)] p-4  border-[var(--border-color)] shadow-sm">
+      <p className="text-[var(--text-primary)] bg-[var(--card-bg)] p-4 border-[var(--border-color)] shadow-sm">
         {data}
       </p>
     );
   }
 
-  // If content is an array → list items
+  // If content is an array → leave layout to parent grid
   if (Array.isArray(data)) {
-    return (
-      <div className="space-y-4">
-        {data.map((item, index) => (
-          <div
-            key={index}
-            className="bg-[var(--card-bg)] p-4 -[var(--border-color)] shadow-md hover:shadow-lg transition"
-          >
-            {Object.entries(item).map(([key, value]) => (
-              <p key={key} className="text-[var(--text-primary)] mb-1">
-                <span className="font-semibold capitalize text-[var(--primary)]">
-                  {key}:{" "}
-                </span>
-                {value}
-              </p>
-            ))}
-          </div>
+    return data.map((item, index) => (
+      <div
+        key={index}
+        className="bg-[var(--card-bg)] p-4 border-[var(--border-color)] shadow-md hover:shadow-lg transition rounded-md"
+      >
+        {Object.entries(item).map(([key, value]) => (
+          <p key={key} className="text-[var(--text-primary)] mb-1">
+            <span className="font-semibold capitalize text-[var(--primary)]">
+              {key}:{" "}
+            </span>
+            {value}
+          </p>
         ))}
       </div>
-    );
+    ));
   }
 
-  // If content is an object → key/value block
+  // If content is an object → single block
   return (
-    <div className="bg-[var(--card-bg)] p-4 border-[var(--border-color)] shadow-md">
+    <div className="bg-[var(--card-bg)] p-4 border-[var(--border-color)] shadow-md rounded-md">
       {Object.entries(data).map(([key, value]) => (
         <p key={key} className="text-[var(--text-primary)] mb-1">
           <span className="font-semibold capitalize text-[var(--primary)]">

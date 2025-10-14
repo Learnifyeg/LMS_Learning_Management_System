@@ -708,7 +708,7 @@
         "linkedin": "https://facebook.com/john",
         "youtube": "https://facebook.com/john"
       },
-       "actions": [
+      "actions": [
         { "label": "Edit Profile", "url": "/StudentLayout" },
         { "label": "Settings", "url": "/StudentLayout" }
       ],
@@ -803,6 +803,79 @@
         "Reports": [{ "type": "Monthly Analytics", "generated": "2024-02-01" }],
         "System Logs": [{ "event": "User Login", "time": "1h ago" }]
       }
+    }
+  ],
+  "studentcertificates": [
+    {
+      "id": 1,
+      "title": "WordPress Certificate",
+      "marks": 15,
+      "outOf": 20,
+      "date": "6 April 2019",
+      "progressPercent": 75,
+      "link": "https://example.com/html-css-cert.pdf"
+    },
+    {
+      "id": 2,
+      "title": "WordPress Pro Certificate",
+      "marks": 14,
+      "outOf": 20,
+      "date": "4 April 2019",
+      "progressPercent": 70,
+      "link": "https://example.com/html-css-cert.pdf"
+    },
+    {
+      "id": 3,
+      "title": "HTML CSS Certificate",
+      "marks": 18,
+      "outOf": 20,
+      "date": "3 April 2019",
+      "progressPercent": 90,
+      "link": "https://example.com/html-css-cert.pdf"
+    },
+    {
+      "id": 4,
+      "title": "HTML CSS Certificate",
+      "marks": 18,
+      "outOf": 20,
+      "date": "3 April 2019",
+      "progressPercent": 90,
+      "link": "https://example.com/html-css-cert.pdf"
+    },
+    {
+      "id": 5,
+      "title": "HTML CSS Certificate",
+      "marks": 18,
+      "outOf": 20,
+      "date": "3 April 2019",
+      "progressPercent": 90,
+      "link": "https://example.com/html-css-cert.pdf"
+    }
+  ],
+  "incompleteCourses": [
+    {
+      "id": 1,
+      "title": "React Basics",
+      "progressPercent": 40,
+      "link": "https://example.com/react-basics.pdf"
+    },
+    {
+      "id": 2,
+      "title": "Node.js Fundamentals",
+      "progressPercent": 60,
+      "link": "https://example.com/nodejs-fundamentals.pdf"
+    },
+    {
+      "id": 3,
+      "title": "Python Intermediate",
+      "progressPercent": 25,
+      "link": "https://example.com/python-intermediate.pdf"
+    },
+    {
+      "id": 4,
+      "title": "Python Intermediate",
+      "progressPercent": 95,
+      "link": "https://example.com/python-intermediate.pdf"
     }
   ]
 }
