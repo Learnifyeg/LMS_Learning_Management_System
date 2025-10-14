@@ -120,6 +120,44 @@ function LessonManagement() {
         </table>
       </div>
 
+      {/* Mobile Cards */}
+      <div className="sm:hidden space-y-4">
+        {pageLessons.map((lesson, idx) => (
+          <div
+            key={lesson.id ?? idx}
+            className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center justify-between"
+          >
+            <div className="flex items-center gap-3">
+              <div>
+                <p className="font-semibold mb-2">{lesson.title}</p>
+                <p className="text-xs mb-2">Duration : {lesson.duration}</p>
+                <p className="text-xs">{lesson.posted} </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-1">
+              <button
+                className="px-2 py-1 text-xs bg-primary text-white rounded-md cursor-pointer"
+                onClick={() => handleView(lesson)}
+              >
+                View
+              </button>
+              <button
+                className="px-2 py-1 text-xs bg-yellow-500 text-white rounded-md cursor-pointer "
+                onClick={() => handleEdit(lesson)}
+              >
+                Edit
+              </button>
+              <button
+                className="px-2 py-1 text-xs bg-secondary text-white rounded-md cursor-pointer"
+                onClick={() => handleDelete(lesson)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {/* Pagination */}
       <div className="mt-4 flex items-center justify-center">
         <Pagination

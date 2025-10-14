@@ -60,7 +60,7 @@ function QuizManagement() {
       <h2 className="text-2xl font-semibold mb-4">Quizzes Management</h2>
 
       {/* Desktop Table */}
-      <div className="hidden sm:block overflow-x-auto bg-white dark:bg-gray-800 shadow-md rounded-lg">
+      <div className="hidden sm:block overflow-x-auto bg-white dark:bg-gray-800 shadow-md rounded-lg ">
         <table className="min-w-full text-sm">
           <thead className="bg-gray-100 dark:bg-gray-700">
             <tr>
@@ -115,6 +115,46 @@ function QuizManagement() {
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile Cards */}
+      <div className="sm:hidden space-y-4">
+        {pageQuizzes.map((quiz, idx) => (
+          <div
+            key={quiz.id ?? idx}
+            className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center justify-between"
+          >
+            <div className="flex items-center gap-3">
+              <div>
+                <p className="font-semibold mb-2">{quiz.title}</p>
+                <p className="text-xs mb-2">
+                  Total Question : {quiz.totalQuestions}
+                </p>
+                <p className="text-xs">{quiz.posted} </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-1">
+              <button
+                className="px-2 py-1 text-xs bg-primary text-white rounded-md cursor-pointer"
+                onClick={() => handleView(quiz)}
+              >
+                View
+              </button>
+              <button
+                className="px-2 py-1 text-xs bg-yellow-500 text-white rounded-md cursor-pointer "
+                onClick={() => handleEdit(quiz)}
+              >
+                Edit
+              </button>
+              <button
+                className="px-2 py-1 text-xs bg-secondary text-white rounded-md cursor-pointer"
+                onClick={() => handleDelete(quiz)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Pagination */}
