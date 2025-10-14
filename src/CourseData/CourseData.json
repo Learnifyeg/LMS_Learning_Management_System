@@ -877,5 +877,74 @@
       "progressPercent": 95,
       "link": "https://example.com/python-intermediate.pdf"
     }
+  ],
+  "Notifications": [
+    {
+      "student": [
+        {
+          "user": "Rock William",
+          "action": "Like Your Comment On Video",
+          "target": "How to create sidebar menu.",
+          "time": "2 min ago"
+        },
+        {
+          "user": "Jassica Smith",
+          "action": "Added New Review In Video",
+          "target": "Full Stack PHP Developer.",
+          "time": "12 min ago"
+        },
+        {
+          "type": "system",
+          "title": "Your Membership Activated.",
+          "time": "20 min ago"
+        },
+        {
+          "type": "purchase",
+          "action": "You bought a new course.",
+          "target": "How to create sidebar menu.",
+          "time": "20 min ago"
+        }
+      ],
+    
+      "instructor": [
+        {
+          "user": "Nada Ashraf",
+          "action": "Submitted Assignment",
+          "target": "React Project",
+          "time": "5 min ago"
+        },
+        {
+          "type": "system",
+          "title": "New Platform Update",
+          "time": "15 min ago"
+        },
+        {
+          "type": "purchase",
+          "action": "New Enrollment In Your Course",
+          "target": "Full Stack PHP Developer",
+          "time": "25 min ago"
+        }
+      ]
+   ,
+      "admin": [
+        {
+          "type": "system",
+          "title": "Server Maintenance Scheduled",
+          "time": "10 min ago"
+        },
+        {
+          "user": "John Doe",
+          "action": "Reported an Issue",
+          "target": "Payment Gateway",
+          "time": "20 min ago"
+        },
+        {
+          "type": "purchase",
+          "action": "New Course Purchased",
+          "target": "UI/UX Design",
+          "time": "30 min ago"
+        }
+      ]
+    }
   ]
 }
