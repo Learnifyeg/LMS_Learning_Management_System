@@ -82,7 +82,7 @@ export function MenubarDemo({ role }) {
         <MenubarTrigger onClick={() => navigate("/UserLayout/Notifications")}>
           <i class="fa-solid fa-bell text-xl"></i>
         </MenubarTrigger>
-        <MenubarContent>
+        {/* <MenubarContent>
           <MenubarCheckboxItem>Always Show Bookmarks Bar</MenubarCheckboxItem>
           <MenubarCheckboxItem checked>
             Always Show Full URLs
@@ -98,7 +98,7 @@ export function MenubarDemo({ role }) {
           <MenubarItem inset>Toggle Fullscreen</MenubarItem>
           <MenubarSeparator />
           <MenubarItem inset>Hide Sidebar</MenubarItem>
-        </MenubarContent>
+        </MenubarContent> */}
       </MenubarMenu>
       {/* <MenubarMenu>
         <MenubarTrigger>Profiles</MenubarTrigger>

@@ -26,26 +26,26 @@ function Notifications() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-background py-8">
       <div className="container mx-auto px-4">
         {/* Header */}
         <header className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Notifications</h1>
+          <h1 className="text-3xl font-bold text-text-primary">Notifications</h1>
         </header>
 
         <div className="max-w-4xl mx-auto">
           {/* Notification Setting Header */}
-          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Notification Setting</h2>
-            <p className="text-gray-600">Manage your notification preferences</p>
+          <div className="bg-card rounded-lg shadow-sm p-6 mb-6">
+            <h2 className="text-xl font-semibold text-text-primary mb-2">Notification Setting</h2>
+            <p className="text-text-secondary">Manage your notification preferences</p>
           </div>
 
           {/* Notifications List */}
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+          <div className="bg-card rounded-lg shadow-sm overflow-hidden">
             {notifications.map((notification, index) => (
               <div 
                 key={index} 
-                className={`p-6 border-b border-gray-100 hover:bg-gray-50 transition-colors ${
+                className={`p-6 border-b border-gray-100  transition-colors ${
                   index === notifications.length - 1 ? 'border-b-0' : ''
                 }`}
               >
@@ -58,7 +58,7 @@ function Notifications() {
                       </svg>
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-800 mb-1">{notification.title}</h3>
+                      <h3 className="font-semibold text-text-primary mb-1">{notification.title}</h3>
                       <p className="text-gray-500 text-sm">{notification.time}</p>
                     </div>
                   </div>
@@ -71,7 +71,7 @@ function Notifications() {
                       </svg>
                     </div>
                     <div className="flex-1">
-                      <p className="text-gray-800 mb-1">
+                      <p className="text-text-primary mb-1">
                         <span className="font-medium">{notification.action}</span>{" "}
                         <span className="text-blue-600">{notification.target}</span>
                       </p>
@@ -87,7 +87,7 @@ function Notifications() {
                       </span>
                     </div>
                     <div className="flex-1">
-                      <p className="text-gray-800 mb-1">
+                      <p className="text-text-primary mb-1">
                         <span className="font-medium">{notification.user}</span>{" "}
                         <span>{notification.action}</span>{" "}
                         <span className="text-blue-600">{notification.target}</span>
@@ -102,12 +102,12 @@ function Notifications() {
         </div>
 
         {/* Footer */}
-        <footer className="mt-8 pt-6 border-t border-gray-200 text-center text-gray-600 text-sm">
-          <div className="flex flex-wrap justify-center space-x-6 mb-4">
+        <footer className="mt-8 pt-6 border-t border-gray-200 text-center text-text-secondary text-sm">
+          {/* <div className="flex flex-wrap justify-center space-x-6 mb-4">
             <a href="#" className="hover:text-gray-900">Copyright Policy</a>
             <a href="#" className="hover:text-gray-900">Terms</a>
             <a href="#" className="hover:text-gray-900">Privacy Policy</a>
-          </div>
+          </div> */}
           <p>© 2025 Learnify. All rights reserved.</p>
         </footer>
       </div>

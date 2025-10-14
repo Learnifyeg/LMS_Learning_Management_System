@@ -1,26 +1,29 @@
+import { useNavigate } from "react-router";
+
 function ContactUs() {
+  const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-background py-8 mt-16">
       <div className="container mx-auto px-4">
         {/* Header */}
         <header className="mb-8">
-          <div className="flex items-center text-sm text-gray-600 mb-4">
-            <a href="#" className="hover:text-blue-600">Home</a>
+          <div className="flex items-center text-sm text-text-secondary mb-4">
+            <a href="#" className="hover:text-blue-600" onClick={()=>navigate("/UserLayout")}>Home</a>
             <span className="mx-2">/</span>
-            <span className="text-gray-800">Contact Us</span>
+            <span className="text-text-secondary">Contact Us</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-800">Back To Learnify</h1>
+          <h1 className="text-3xl font-bold text-text-primary">Contact Us</h1>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Left Side - Quick Links */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-semibold text-gray-800 mb-6">Contact Us</h2>
+            <div className="bg-card rounded-lg shadow-sm p-6">
+              <h2 className="text-xl font-semibold text-text-primary mb-6">Contact Us</h2>
               <ul className="space-y-4">
                 {['Help Center', 'Blog', 'Careers', 'Developer Area'].map((item) => (
                   <li key={item}>
-                    <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors block py-2 border-b border-gray-100">
+                    <a href="#" className="text-text-secondary hover:text-blue-600 transition-colors block py-2 border-b border-gray-100">
                       {item}
                     </a>
                   </li>
@@ -31,26 +34,26 @@ function ContactUs() {
 
           {/* Right Side - Contact Information */}
           <div className="lg:col-span-3">
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-semibold text-gray-800 mb-6">Contact Information</h2>
+            <div className="bg-card rounded-lg shadow-sm p-6">
+              <h2 className="text-xl font-semibold text-text-primary mb-6">Contact Information</h2>
               
               {/* Main Contact Info */}
               <div className="mb-8">
                 <div className="space-y-4">
                   <div>
-                    <h3 className="font-medium text-gray-700 mb-2">Main Address:</h3>
-                    <p className="text-gray-600">
+                    <h3 className="font-medium text-text-primary mb-2">Main Address:</h3>
+                    <p className="text-text-secondary">
                       #1235 Sks Nagar St No. 8 Phase 3,<br />
                       Pakhowal Road, 141001, LDH, Punjab, India
                     </p>
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-700 mb-2">Email Address:</h3>
-                    <p className="text-gray-600">info@learnify@gmail.com</p>
+                    <h3 className="font-medium text-text-primary mb-2">Email Address:</h3>
+                    <p className="text-text-secondary">info@learnify@gmail.com</p>
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-700 mb-2">Phone Number:</h3>
-                    <p className="text-gray-600">+911234567890, 01610000000</p>
+                    <h3 className="font-medium text-text-primary mb-2">Phone Number:</h3>
+                    <p className="text-text-secondary">+911234567890, 01610000000</p>
                   </div>
                 </div>
               </div>
@@ -75,12 +78,12 @@ function ContactUs() {
         </div>
 
         {/* Footer */}
-        <footer className="mt-8 pt-6 border-t border-gray-200 text-center text-gray-600 text-sm">
-          <div className="flex flex-wrap justify-center space-x-6 mb-4">
+        <footer className="mt-8 pt-6 border-t border-gray-200 text-center text-text-secondary text-sm">
+          {/* <div className="flex flex-wrap justify-center space-x-6 mb-4">
             <a href="#" className="hover:text-gray-900">Copyright Policy</a>
             <a href="#" className="hover:text-gray-900">Terms</a>
             <a href="#" className="hover:text-gray-900">Privacy Policy</a>
-          </div>
+          </div> */}
           <p>© 2025 Learnify. All rights reserved.</p>
         </footer>
       </div>

@@ -691,5 +691,118 @@
       "studentsEnrolled": 3200,
       "status": "Published"
     }
+  ],
+
+  "profiles": [
+    {
+      "id": 1,
+      "role": "student",
+      "user": {
+        "name": "John Doe",
+        "roleTitle": "Junior Graphic Developer",
+        "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
+      },
+      "socialLinks": {
+        "facebook": "https://facebook.com/john",
+        "twitter": "https://facebook.com/john",
+        "linkedin": "https://facebook.com/john",
+        "youtube": "https://facebook.com/john"
+      },
+       "actions": [
+        { "label": "Edit Profile", "url": "/StudentLayout" },
+        { "label": "Settings", "url": "/StudentLayout" }
+      ],
+      "stats": [
+        { "label": "Purchased", "value": "4" },
+        { "label": "My Reviews", "value": "4" },
+        { "label": "Certificates", "value": "2" }
+      ],
+      "tabs": ["About Me", "Purchased Courses", "Discussion", "Certificates"],
+      "tabContent": {
+        "About Me": "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+        "Purchased Courses": [
+          { "title": "UI Design Masterclass", "date": "2024-02-12" },
+          { "title": "JavaScript Zero to Hero", "date": "2024-01-15" }
+        ],
+        "Discussion": [
+          { "message": "I really enjoy this course!", "time": "2h ago" },
+          { "message": "Can someone explain Lesson 4?", "time": "5h ago" }
+        ],
+        "Certificates": [
+          { "name": "UI Design Certification", "issued": "2023-08-10" }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "role": "instructor",
+      "user": {
+        "name": "Sarah Lee",
+        "roleTitle": "Course Author & Trainer",
+        "avatar": "https://images.unsplash.com/photo-1599566150163-29194dcaad36"
+      },
+      "socialLinks": {
+        "facebook": "https://facebook.com/john",
+        "twitter": "https://facebook.com/john",
+        "linkedin": "https://facebook.com/john",
+        "youtube": "https://facebook.com/john"
+      },
+      "actions": [
+        { "label": "Edit Profile", "url": "/InstructorLayout" },
+        { "label": "Settings", "url": "/InstructorLayout" }
+      ],
+      "stats": [
+        { "label": "Courses", "value": "12" },
+        { "label": "Students", "value": "1.2K" },
+        { "label": "Earnings", "value": "$24K" }
+      ],
+      "tabs": ["About Me", "My Courses", "Earnings", "Students"],
+      "tabContent": {
+        "About Me": "Passionate instructor specializing in digital design and UX...",
+        "My Courses": [
+          { "title": "Advanced UX Design", "students": 540 },
+          { "title": "Web Animation Masterclass", "students": 320 }
+        ],
+        "Earnings": {
+          "monthly": "$2,500",
+          "total": "$24,000"
+        },
+        "Students": [
+          { "name": "John Doe", "progress": "80%" },
+          { "name": "Emma Brown", "progress": "65%" }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "role": "admin",
+      "user": {
+        "name": "Michael Scott",
+        "roleTitle": "Platform Administrator",
+        "avatar": "https://images.unsplash.com/photo-1511367461989-f85a21fda167"
+      },
+      "socialLinks": {
+        "facebook": "https://facebook.com/john",
+        "twitter": "https://facebook.com/john",
+        "linkedin": "https://facebook.com/john",
+        "youtube": "https://facebook.com/john"
+      },
+      "actions": [
+        { "label": "Edit Profile", "url": "/AdminLayout" },
+        { "label": "Settings", "url": "/AdminLayout" }
+      ],
+      "stats": [
+        { "label": "Users", "value": "5.6K" },
+        { "label": "Courses", "value": "320" },
+        { "label": "Reports", "value": "42" }
+      ],
+      "tabs": ["About Me", "User Management", "Reports", "System Logs"],
+      "tabContent": {
+        "About Me": "Ensuring the platform runs smoothly and securely...",
+        "User Management": [{ "totalStudents": 4200, "totalInstructors": 300 }],
+        "Reports": [{ "type": "Monthly Analytics", "generated": "2024-02-01" }],
+        "System Logs": [{ "event": "User Login", "time": "1h ago" }]
+      }
+    }
   ]
 }
