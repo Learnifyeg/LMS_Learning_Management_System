@@ -21,7 +21,7 @@ function StuMyCertificates() {
     pageStartIndex,
     pageStartIndex + COURSES_PER_PAGE
   );
-  
+
   // Pagination for incomplete courses
   const [currentPage2, setCurrentPage2] = useState(1);
   const totalPages2 = Math.max(
@@ -120,16 +120,25 @@ function StuMyCertificates() {
         {/* Certificates Table */}
         <section className="bg-card rounded-lg shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="bg-surface">
-                  <th className="px-6 py-3">Item No.</th>
-                  <th className="px-6 py-3">Title</th>
-                  <th className="px-6 py-3">Marks</th>
-                  <th className="px-6 py-3">Out Of</th>
-                  <th className="px-6 py-3">Upload Date</th>
-                  <th className="px-6 py-3">Certificate</th>
-                  {/* <th className="px-6 py-3">Controls</th> */}
+            <table className="min-w-full border-collapse">
+              <thead className="bg-surface">
+                <tr>
+                  <th className="px-4 py-2 text-left text-sm font-medium">#</th>
+                  <th className="px-4 py-2 text-left text-sm font-medium">
+                    Title
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-medium">
+                    Marks
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-medium">
+                    Out Of
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-medium">
+                    Upload Date
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-medium">
+                    Certificate
+                  </th>
                 </tr>
               </thead>
 
@@ -137,16 +146,16 @@ function StuMyCertificates() {
                 {loading ? (
                   <tr>
                     <td
-                      colSpan="7"
+                      colSpan="6"
                       className="text-center py-4 text-text-secondary"
                     >
                       Loading...
                     </td>
                   </tr>
                 ) : pagecertification.length === 0 ? (
-                  <tr className="text-center">
+                  <tr>
                     <td
-                      colSpan="7"
+                      colSpan="6"
                       className="text-center py-4 text-text-secondary"
                     >
                       No certificates found.
@@ -154,15 +163,15 @@ function StuMyCertificates() {
                   </tr>
                 ) : (
                   pagecertification.map((item, index) => (
-                    <tr key={item.id || index} className="text-center">
-                      <td className="px-6 py-4">{index + 1}</td>
-                      <td className="px-6 py-4 font-medium text-text-primary">
+                    <tr key={item.id || index} className="text-sm md:text-base">
+                      <td className="px-4 py-2">{index + 1}</td>
+                      <td className="px-4 py-2 font-medium text-text-primary">
                         {item.title}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 py-2">
                         <div className="flex items-center">
                           <span className="mr-2">{item.marks}</span>
-                          <div className="w-20 bg-gray-200 h-2 rounded-full mt-2">
+                          <div className="flex-1 bg-gray-200 h-2 rounded-full">
                             <div
                               className={`h-2 rounded-full ${
                                 item.progressPercent < 50
@@ -176,9 +185,9 @@ function StuMyCertificates() {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4">{item.outOf}</td>
-                      <td className="px-6 py-4">{item.date}</td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 py-2">{item.outOf}</td>
+                      <td className="px-4 py-2">{item.date}</td>
+                      <td className="px-4 py-2">
                         <a
                           href={item.link}
                           target="_blank"
@@ -188,12 +197,6 @@ function StuMyCertificates() {
                           View
                         </a>
                       </td>
-                      {/* <td className="px-6 py-4">
-                        <input
-                          type="checkbox"
-                          className="h-4 w-4 text-blue-600 rounded"
-                        />
-                      </td> */}
                     </tr>
                   ))
                 )}
@@ -201,6 +204,7 @@ function StuMyCertificates() {
             </table>
           </div>
         </section>
+
         <div className="mt-4 flex items-center justify-center">
           <Pagination
             currentPage={currentPage2}
