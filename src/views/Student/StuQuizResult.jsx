@@ -1,6 +1,5 @@
 // React
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 // Components
 import { Button } from "@/components/ui/button";
