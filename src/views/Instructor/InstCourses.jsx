@@ -1,19 +1,28 @@
-import api from "@/API/Config";
+// React
 import { useEffect, useState } from "react";
+
+// Components
+import api from "@/API/Config";
 import CourseCard from "../Student/CourseCard/CourseCard";
+
+// Endpoints and constants
+const CoursesEndPoint = "Courses";
+const InstructorCoursesEndPoint = "InstructorCourses";
 function InstCourses() {
   const [allCourses, setAllCourses] = useState([]);
   const [instructorCourses, setInstructorCourses] = useState([]);
 
-  const CoursesEndPoint = "Courses";
-  const InstructorCoursesEndPoint = "InstructorCourses";
   const currentInstructorId = 101; // ← replace with logged in instructor
 
   useEffect(() => {
     api.get(CoursesEndPoint).then((res) => setAllCourses(res.data));
-    api.get(InstructorCoursesEndPoint).then((res) =>
-      setInstructorCourses(res.data.filter((c) => c.instructorId === currentInstructorId))
-    );
+    api
+      .get(InstructorCoursesEndPoint)
+      .then((res) =>
+        setInstructorCourses(
+          res.data.filter((c) => c.instructorId === currentInstructorId)
+        )
+      );
   }, []);
 
   const createdCoursesList = allCourses.filter((course) =>
@@ -30,7 +39,7 @@ function InstCourses() {
             key={course.id}
             course={course}
             onRemove={() => console.log("Delete Logic Here")}
-            onAddToCart={null}   // Disable cart for instructor
+            onAddToCart={null} // Disable cart for instructor
           />
         ))
       ) : (

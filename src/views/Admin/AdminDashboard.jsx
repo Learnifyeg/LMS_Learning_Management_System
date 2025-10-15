@@ -1,3 +1,4 @@
+// Components
 import Dashboard from "../Others/Dashboard";
 
 function AdminDashboard() {

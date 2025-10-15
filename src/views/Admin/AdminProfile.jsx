@@ -1,3 +1,4 @@
+// Components
 import Profile from "../Others/Profile";
 
 function AdminProfile() {

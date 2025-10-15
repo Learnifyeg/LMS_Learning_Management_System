@@ -1,10 +1,16 @@
+// React
 import React, { useEffect, useState } from "react";
+
+// Components
 import api from "@/API/Config"; // <-- This should be your axios instance
 import Pagination from "../Others/Pagination";
+
+// Endpoints and constants
 const COURSES_PER_PAGE = 4;
 const CERTIFICATION_PER_PAGE = 4;
 const certificatesEndpoint = "studentcertificates"; // GET /profiles
 const incompleteCoursesEndpoint = "incompleteCourses"; // GET /profiles
+
 function StuMyCertificates() {
   const [certificates, setCertificates] = useState([]);
   const [incompleteCourses, setincompleteCoursess] = useState([]);

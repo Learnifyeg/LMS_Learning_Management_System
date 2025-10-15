@@ -1,20 +1,26 @@
-import api from "@/API/Config";
+// React
 import { useEffect, useState } from "react";
+
+// Components
+import api from "@/API/Config";
 import CourseCard from "./CourseCard/CourseCard";
 
+// Endpoints and constants
+const CoursesEndPoint = "Courses";
+const StudentCoursesEndPoint = "StudentCourses";
 function MyCourses() {
   const [allCourses, setAllCourses] = useState([]);
   const [studentCourses, setStudentCourses] = useState([]);
 
-  const CoursesEndPoint = "Courses";
-  const StudentCoursesEndPoint = "StudentCourses";
   const currentUserId = 501; // ← replace with auth user
 
   useEffect(() => {
     api.get(CoursesEndPoint).then((res) => setAllCourses(res.data));
-    api.get(StudentCoursesEndPoint).then((res) =>
-      setStudentCourses(res.data.filter((c) => c.userId === currentUserId))
-    );
+    api
+      .get(StudentCoursesEndPoint)
+      .then((res) =>
+        setStudentCourses(res.data.filter((c) => c.userId === currentUserId))
+      );
   }, []);
 
   const enrolledCourseList = allCourses.filter((course) =>
@@ -30,8 +36,8 @@ function MyCourses() {
           <CourseCard
             key={course.id}
             course={course}
-            onRemove={null}      // Disable delete
-            onAddToCart={null}   // Disable add to cart
+            onRemove={null} // Disable delete
+            onAddToCart={null} // Disable add to cart
           />
         ))
       ) : (

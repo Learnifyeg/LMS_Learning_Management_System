@@ -1,6 +1,9 @@
+// React
 import React, { useState, useRef } from "react";
-import StuStudentLayout from "@/components/StudentLayout/StudentLayout.jsx";
 import { MessageSquare } from "lucide-react";
+
+// Components
+import StuStudentLayout from "@/components/StudentLayout/StudentLayout.jsx";
 import { Button } from "@/components/ui/button";
 import api from "@/API/Config";
 

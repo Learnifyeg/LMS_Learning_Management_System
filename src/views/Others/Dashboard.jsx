@@ -1,5 +1,5 @@
+// React
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import {
   FaBook,
   FaCheckCircle,
@@ -12,9 +12,11 @@ import {
   FaUsers,
   FaChalkboardTeacher,
 } from "react-icons/fa";
+
+// Components
 import api from "@/API/Config";
 
-// const URL = "http://localhost:3001";
+// Endpoints and constants
 const dashboardEndPoint = "dashboards";
 
 function Dashboard({ role }) {

@@ -1,16 +1,124 @@
 {
   "students": [
     {
-      "id": 1,
-      "name": "Nada Ashraf",
-      "email": "nada@example.com",
-      "role": "student"
+      "image": "https://cdn-icons-png.flaticon.com/512/4140/4140048.png",
+      "name": "Ahmed Samir",
+      "title": "Full Stack Web Student",
+      "university": "Cairo University",
+      "country": "Egypt",
+      "email": "ahmed.samir@cu.edu.eg",
+      "linkedin": "https://linkedin.com/in",
+      "github": "https://github.com",
+      "facebook": "https://facebook.com",
+      "twitter": "https://twitter.com"
     },
     {
-      "id": 2,
-      "name": "Omar Khaled",
-      "email": "omar@example.com",
-      "role": "student"
+      "image": "https://cdn-icons-png.flaticon.com/512/4140/4140037.png",
+      "name": "Omar Mostafa",
+      "title": "React & UI Designer",
+      "university": "Ain Shams University",
+      "country": "Egypt",
+      "email": "omar.mostafa@asu.edu.eg",
+      "linkedin": "https://linkedin.com/in",
+      "github": "https://github.com",
+      "facebook": "https://facebook.com",
+      "twitter": "https://twitter.com"
+    },
+    {
+      "image": "https://cdn-icons-png.flaticon.com/512/4202/4202832.png",
+      "name": "Sara Khaled",
+      "title": "Backend Developer (Node.js)",
+      "university": "Helwan University",
+      "country": "Egypt",
+      "email": "sara.khaled@hu.edu.eg",
+      "linkedin": "https://linkedin.com/in",
+      "github": "https://github.com",
+      "facebook": "https://facebook.com",
+      "twitter": "https://twitter.com"
+    },
+    {
+      "image": "https://cdn-icons-png.flaticon.com/512/4140/4140051.png",
+      "name": "Mona Ali",
+      "title": "Frontend React Student",
+      "university": "Alexandria University",
+      "country": "Egypt",
+      "email": "mona.ali@alex.edu.eg",
+      "linkedin": "https://linkedin.com/in",
+      "github": "https://github.com",
+      "facebook": "https://facebook.com",
+      "twitter": "https://twitter.com"
+    },
+    {
+      "image": "https://cdn-icons-png.flaticon.com/512/4202/4202832.png",
+      "name": "Sara Khaled",
+      "title": "Backend Developer (Node.js)",
+      "university": "Helwan University",
+      "country": "Egypt",
+      "email": "sara.khaled@hu.edu.eg",
+      "linkedin": "https://linkedin.com/in",
+      "github": "https://github.com",
+      "facebook": "https://facebook.com",
+      "twitter": "https://twitter.com"
+    },
+    {
+      "image": "https://cdn-icons-png.flaticon.com/512/4140/4140051.png",
+      "name": "Mona Ali",
+      "title": "Frontend React Student",
+      "university": "Alexandria University",
+      "country": "Egypt",
+      "email": "mona.ali@alex.edu.eg",
+      "linkedin": "https://linkedin.com/in",
+      "github": "https://github.com",
+      "facebook": "https://facebook.com",
+      "twitter": "https://twitter.com"
+    },
+    {
+      "image": "https://cdn-icons-png.flaticon.com/512/4140/4140048.png",
+      "name": "Ahmed Samir",
+      "title": "Full Stack Web Student",
+      "university": "Cairo University",
+      "country": "Egypt",
+      "email": "ahmed.samir@cu.edu.eg",
+      "linkedin": "https://linkedin.com/in",
+      "github": "https://github.com",
+      "facebook": "https://facebook.com",
+      "twitter": "https://twitter.com"
+    },
+    {
+      "image": "https://cdn-icons-png.flaticon.com/512/4140/4140037.png",
+      "name": "Omar Mostafa",
+      "title": "React & UI Designer",
+      "university": "Ain Shams University",
+      "country": "Egypt",
+      "email": "omar.mostafa@asu.edu.eg",
+      "linkedin": "https://linkedin.com/in",
+      "github": "https://github.com",
+      "facebook": "https://facebook.com",
+      "twitter": "https://twitter.com"
+    },
+    {
+      "image": "https://cdn-icons-png.flaticon.com/512/4140/4140048.png",
+      "name": "Ahmed Samir",
+      "title": "Full Stack Web Student",
+      "university": "Cairo University",
+      "country": "Egypt",
+      "email": "ahmed.samir@cu.edu.eg",
+      "linkedin": "https://linkedin.com/in",
+      "github": "https://github.com",
+      "facebook": "https://facebook.com",
+      "twitter": "https://twitter.com"
+    },
+    {
+      "image": "https://cdn-icons-png.flaticon.com/512/4140/4140037.png",
+      "name": "Omar Mostafa",
+      "title": "React & UI Designer",
+      "university": "Ain Shams University",
+      "country": "Egypt",
+      "email": "omar.mostafa@asu.edu.eg",
+      "linkedin": "https://linkedin.com/in",
+      "github": "https://github.com",
+      "facebook": "https://facebook.com",
+      "twitter": "https://twitter.com"
     }
   ],
   "SavedCourses": [

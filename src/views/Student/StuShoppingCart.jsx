@@ -1,18 +1,21 @@
 // React
-import React, {lazy, Suspense ,  useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import axios from "axios";
+
+// Components
 import api from "@/API/Config";
 
 // Lazy load CourseCard
 const CourseCard = lazy(() => import("../Student/CourseCard/CourseCard"));
 const OrderSummary = lazy(() => import("../Student/CourseCard/OrderSummary"));
 
+// Endpoints and constants
+const CartEndPoint = "Cart";
+
 function StuShoppingCart() {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
-  // const URL = "http://localhost:3001";
-  const CartEndPoint = "Cart";
+
   useEffect(() => {
     // Get  All Cart
     api

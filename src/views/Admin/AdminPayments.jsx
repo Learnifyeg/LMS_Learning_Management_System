@@ -1,9 +1,5 @@
 function AdminPayments() {
-    return (
-        <>
-            
-        </>
-    )
+  return <></>;
 }
 
 export default AdminPayments;

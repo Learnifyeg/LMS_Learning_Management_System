@@ -1,15 +1,18 @@
-import api from "@/API/Config";
+// React
 import { useEffect, useState, useMemo } from "react";
+
+// Components
+import api from "@/API/Config";
 import Pagination from "../Others/Pagination";
 
+// Endpoints and constants
 const COURSES_PER_PAGE = 10;
+const CoursesEndPoint = "Cart"; // ✅ Your endpoint
 
 function CourseManagement() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const CoursesEndPoint = "Cart"; // ✅ Your endpoint
 
   useEffect(() => {
     setLoading(true);

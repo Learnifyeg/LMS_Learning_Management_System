@@ -1,16 +1,20 @@
 // React
 import React, { lazy, Suspense, useEffect, useState } from "react";
-import axios from "axios";
+
+// Components
 import api from "@/API/Config";
 
 // Lazy load CourseCard
 const CourseCard = lazy(() => import("../Student/CourseCard/CourseCard"));
+
+// Endpoints and constants
+const CoursesEndPoint = "SavedCourses";
+const CartEndPoint = "Cart";
+
 function StuSavedCourses() {
   const [courses, setCourses] = useState({});
   const [cart, setCart] = useState([]);
-  // const URL = "http://localhost:3001";
-  const CoursesEndPoint = "SavedCourses";
-  const CartEndPoint = "Cart";
+
   useEffect(() => {
     // Get  All SavedCourses
     api

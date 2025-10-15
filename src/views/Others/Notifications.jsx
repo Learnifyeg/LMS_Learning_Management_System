@@ -1,6 +1,12 @@
+// React
 import React, { useEffect, useState } from "react";
+
+// Components
 import api from "@/API/Config"; // your axios instance
+
+// Endpoints and constants
 const NotificationsEndpoint = "Notifications"; // GET /profiles
+
 function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);

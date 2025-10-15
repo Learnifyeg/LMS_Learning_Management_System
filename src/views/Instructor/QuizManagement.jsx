@@ -1,15 +1,19 @@
-import api from "@/API/Config";
+// React
 import { useEffect, useState } from "react";
+
+// Components
+import api from "@/API/Config";
 import Pagination from "../Others/Pagination";
 
+// Endpoints and constants
 const QUIZZES_PER_PAGE = 10;
+const QuizzesEndPoint = "quizzes"; // API endpoint
 
 function QuizManagement() {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const QuizzesEndPoint = "quizzes"; // API endpoint
 
   useEffect(() => {
     setLoading(true);

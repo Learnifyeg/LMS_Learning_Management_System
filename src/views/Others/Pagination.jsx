@@ -1,4 +1,3 @@
-// src/components/Pagination.jsx
 function Pagination({ currentPage, totalPages, onPageChange }) {
   const handlePrevious = () => {
     onPageChange(Math.max(1, currentPage - 1));

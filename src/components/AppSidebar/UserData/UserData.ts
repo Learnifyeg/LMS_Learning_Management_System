@@ -145,7 +145,7 @@ export const sidebarData = {
           { title: "My Courses", url: "/InstructorLayout/MyCourses" },
           { title: "Lesson Management", url: "/InstructorLayout/LessonManagement" },
          
-          { title: "AllStudents", url: "/InstructorLayout/AllStudents" },
+          { title: "All Students", url: "/InstructorLayout/AllStudents" },
         ],
       },
       {

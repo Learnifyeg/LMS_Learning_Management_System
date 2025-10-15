@@ -1,15 +1,19 @@
-import api from "@/API/Config";
+// React
 import { useEffect, useState } from "react";
+
+// Components
+import api from "@/API/Config";
 import Pagination from "../Others/Pagination";
 
+
+// Endpoints and constants
 const LESSONS_PER_PAGE = 10;
+const LessonsEndPoint = "Lessons"; // API endpoint
 
 function LessonManagement() {
   const [lessons, setLessons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const LessonsEndPoint = "Lessons"; // API endpoint
 
   useEffect(() => {
     setLoading(true);

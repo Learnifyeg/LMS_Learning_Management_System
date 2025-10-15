@@ -1,9 +1,13 @@
-import api from "@/API/Config";
+// React
 import { useEffect, useMemo, useState } from "react";
+
+// Components
+import api from "@/API/Config";
 import Pagination from "../Others/Pagination";
 
+// Endpoints and constants
 const USERS_PER_PAGE = 10;
-
+const UsersEndPoint = "Users";
 function UserManagement() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,8 +16,6 @@ function UserManagement() {
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("all"); // all | student | instructor | admin
   const [currentPage, setCurrentPage] = useState(1);
-
-  const UsersEndPoint = "Users";
 
   useEffect(() => {
     setLoading(true);
@@ -228,7 +230,9 @@ function UserManagement() {
                   <p className="font-semibold">{user.name || "-"}</p>
                   <p className="text-xs text-gray-500">{user.email || "-"}</p>
                   <p className="text-xs capitalize">{user.role || "-"}</p>
-                  <p className="text-xs text-gray-500">{user.EnrollDate || "-"}</p>
+                  <p className="text-xs text-gray-500">
+                    {user.EnrollDate || "-"}
+                  </p>
                 </div>
               </div>
               <div className="flex flex-col gap-1">

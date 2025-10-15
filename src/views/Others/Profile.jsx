@@ -1,5 +1,5 @@
+// React
 import React, { useEffect, useState } from "react";
-import api from "@/API/Config";
 import {
   FaFacebookF,
   FaTwitter,
@@ -10,6 +10,10 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router";
 
+// components
+import api from "@/API/Config";
+
+// Endpoints and constants
 const profileEndpoint = "profiles"; // GET /profiles
 
 function Profile({ role = "student" }) {

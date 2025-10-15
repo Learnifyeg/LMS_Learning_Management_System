@@ -1,8 +1,15 @@
 // React
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+
+// Components
 import api from "@/API/Config";
+
+// Endpoints and constants
+const QuestionsEndPoint = "questions";
+const AnswersEndPoint = "studentanswers";
+const QuizEndPoint = "quizzes";
+const quizId = "php-developer"; // later you can make this dynamic
 
 // Timer Component
 function Timer({ initialSeconds = 3600 }) {
@@ -86,12 +93,6 @@ export default function StuQuizPage() {
 
   // ✅ Track start time
   const [startTime] = useState(new Date());
-
-  // const URL = "http://localhost:3001";
-  const QuestionsEndPoint = "questions";
-  const AnswersEndPoint = "studentanswers";
-  const QuizEndPoint = "quizzes";
-  const quizId = "php-developer"; // later you can make this dynamic
 
   // Fetch Questions
   useEffect(() => {
