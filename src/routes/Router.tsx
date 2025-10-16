@@ -128,7 +128,7 @@ export const router = createBrowserRouter([
         element: <StuStudentLayout />,
         children: [
           { path: "StuCheckout", element: <StuCheckout /> },
-          { path: "StuCourseDetails/:courseId", element: <StuCourseDetails /> },
+          { path: "StuCourseDetails", element: <StuCourseDetails /> },
           { path: "StuProfile", element: <StuProfile /> },
           { path: "StuDashboard", element: <StuDashboard /> },
           { path: "StuInvoice", element: <StuInvoice /> },
