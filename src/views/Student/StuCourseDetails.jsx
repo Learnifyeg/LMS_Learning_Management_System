@@ -1,5 +1,13 @@
 function StuCourseDetails() {
-  return <> </>;
+  return <> 
+  
+  <p>
+    hello
+  </p>
+  
+  
+  
+  </>;
 }
 
 export default StuCourseDetails;
