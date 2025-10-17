@@ -99,8 +99,8 @@ export default function StuCourseDetails() {
                     onClick={() => setCurrentTab("about")}
                     className={`pb-2 font-semibold ${
                       currentTab === "about"
-                        ? "text-[var(--secondary)] border-[var(--secondary)]"
-                        : "text-[var(--text-secondary)] hover:text-[var(--secondary)] border-transparent hover:border-[var(--secondary)]"
+                        ? "text-[var(--color-secondary)] border-b-2 border-[var(--secondary)]"
+                        : "text-[var(--color-text-secondary)]"
                     }`}
                   >
                     About
@@ -109,8 +109,8 @@ export default function StuCourseDetails() {
                     onClick={() => setCurrentTab("details")}
                     className={`pb-2 font-semibold ${
                       currentTab === "details"
-                        ? "text-[var(--secondary)] border-[var(--secondary)]"
-                        : "text-[var(--text-secondary)] hover:text-[var(--secondary)] border-transparent hover:border-[var(--secondary)]"
+                        ? "text-[var(--color-secondary)] border-b-2 border-[var(--secondary)]"
+                        : "text-[var(--color-text-secondary)]"
                     }`}
                   >
                     Course Details
@@ -119,8 +119,8 @@ export default function StuCourseDetails() {
                     onClick={() => setCurrentTab("content")}
                     className={`pb-2 font-semibold ${
                       currentTab === "content"
-                        ? "text-[var(--secondary)] border-[var(--secondary)]"
-                        : "text-[var(--text-secondary)] hover:text-[var(--secondary)] border-transparent hover:border-[var(--secondary)]"
+                        ? "text-[var(--color-secondary)] border-b-2 border-[var(--secondary)]"
+                        : "text-[var(--color-text-secondary)]"
                     }`}
                   >
                     Course Content
@@ -132,9 +132,9 @@ export default function StuCourseDetails() {
                     <div className="space-y-6">
                       {/* Requirements */}
                       <div>
-                        <h2 className="text-xl font-semibold mb-2">
+                        <p className="text-xl font-semibold mb-2 text-text-primary">
                           Requirements
-                        </h2>
+                        </p>
                         <ul className="list-disc pl-5 text-text-secondary space-y-1">
                           {course.requirements?.length ? (
                             course.requirements.map((r, i) => (
@@ -148,10 +148,10 @@ export default function StuCourseDetails() {
 
                       {/* Description */}
                       <div className="prose max-w-none">
-                        <h2 className="text-xl font-semibold mb-2">
+                        <p className="text-xl font-semibold mb-2 text-text-primary">
                           Description
-                        </h2>
-                        <p>
+                        </p>
+                        <p className="text-text-secondary">
                           {course.description ||
                             course.subtitle ||
                             "No description available."}
@@ -161,8 +161,10 @@ export default function StuCourseDetails() {
                   )}
 
                   {currentTab === "details" && (
-                    <div className="bg-surface border border-border rounded-lg p-6 shadow-sm">
-                      <h2 className="text-xl font-bold mb-4">Course Details</h2>
+                    <div className="bg-surface border border-border rounded-lg p-6 shadow-sm ">
+                      <p className="text-xl font-bold mb-4 text-text-primary ">
+                        Course Details
+                      </p>
                       <ul className="space-y-2 text-text-secondary">
                         <li className="flex justify-between">
                           <span className="font-medium text-text-primary">
@@ -208,7 +210,9 @@ export default function StuCourseDetails() {
 
                   {currentTab === "content" && (
                     <div className="course-content mt-8">
-                      <h2 className="text-xl font-bold mb-4">Course Content</h2>
+                      <p className="text-xl font-bold mb-4  text-text-primary">
+                        Course Content
+                      </p>
 
                       {course.curriculum?.length ? (
                         <div className="space-y-3">
@@ -296,7 +300,7 @@ export default function StuCourseDetails() {
               </div>
 
               <div className="mt-4 grid grid-cols-2 gap-2">
-                <button className="btn btn-primary">Subscribe</button>
+                <button className="btn btn-primary">View Profile</button>
                 <button className="btn btn-secondary">Message</button>
               </div>
 

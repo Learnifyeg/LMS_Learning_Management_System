@@ -1160,6 +1160,7 @@
   "CourseDetails": [
     {
       "id": 1,
+      "description": "This is a comprehensive course designed to take you from a beginner to a proficient user of the subject matter. Throughout the course, you'll engage with practical examples, hands-on exercises, and real-world applications to solidify your understanding.",
       "title": "Backup Course Title",
       "subtitle": "Fallback subtitle",
       "image": "/fallback.jpg",
