@@ -10,7 +10,8 @@
       "linkedin": "https://linkedin.com/in",
       "github": "https://github.com",
       "facebook": "https://facebook.com",
-      "twitter": "https://twitter.com"
+      "twitter": "https://twitter.com",
+      "id": "6da7"
     },
     {
       "image": "https://cdn-icons-png.flaticon.com/512/4140/4140037.png",
@@ -22,7 +23,8 @@
       "linkedin": "https://linkedin.com/in",
       "github": "https://github.com",
       "facebook": "https://facebook.com",
-      "twitter": "https://twitter.com"
+      "twitter": "https://twitter.com",
+      "id": "96bf"
     },
     {
       "image": "https://cdn-icons-png.flaticon.com/512/4202/4202832.png",
@@ -34,7 +36,8 @@
       "linkedin": "https://linkedin.com/in",
       "github": "https://github.com",
       "facebook": "https://facebook.com",
-      "twitter": "https://twitter.com"
+      "twitter": "https://twitter.com",
+      "id": "ecf9"
     },
     {
       "image": "https://cdn-icons-png.flaticon.com/512/4140/4140051.png",
@@ -46,7 +49,8 @@
       "linkedin": "https://linkedin.com/in",
       "github": "https://github.com",
       "facebook": "https://facebook.com",
-      "twitter": "https://twitter.com"
+      "twitter": "https://twitter.com",
+      "id": "fc10"
     },
     {
       "image": "https://cdn-icons-png.flaticon.com/512/4202/4202832.png",
@@ -58,7 +62,8 @@
       "linkedin": "https://linkedin.com/in",
       "github": "https://github.com",
       "facebook": "https://facebook.com",
-      "twitter": "https://twitter.com"
+      "twitter": "https://twitter.com",
+      "id": "a8bf"
     },
     {
       "image": "https://cdn-icons-png.flaticon.com/512/4140/4140051.png",
@@ -70,7 +75,8 @@
       "linkedin": "https://linkedin.com/in",
       "github": "https://github.com",
       "facebook": "https://facebook.com",
-      "twitter": "https://twitter.com"
+      "twitter": "https://twitter.com",
+      "id": "c77b"
     },
     {
       "image": "https://cdn-icons-png.flaticon.com/512/4140/4140048.png",
@@ -82,7 +88,8 @@
       "linkedin": "https://linkedin.com/in",
       "github": "https://github.com",
       "facebook": "https://facebook.com",
-      "twitter": "https://twitter.com"
+      "twitter": "https://twitter.com",
+      "id": "30f2"
     },
     {
       "image": "https://cdn-icons-png.flaticon.com/512/4140/4140037.png",
@@ -94,7 +101,8 @@
       "linkedin": "https://linkedin.com/in",
       "github": "https://github.com",
       "facebook": "https://facebook.com",
-      "twitter": "https://twitter.com"
+      "twitter": "https://twitter.com",
+      "id": "6b33"
     },
     {
       "image": "https://cdn-icons-png.flaticon.com/512/4140/4140048.png",
@@ -106,7 +114,8 @@
       "linkedin": "https://linkedin.com/in",
       "github": "https://github.com",
       "facebook": "https://facebook.com",
-      "twitter": "https://twitter.com"
+      "twitter": "https://twitter.com",
+      "id": "f07d"
     },
     {
       "image": "https://cdn-icons-png.flaticon.com/512/4140/4140037.png",
@@ -118,12 +127,13 @@
       "linkedin": "https://linkedin.com/in",
       "github": "https://github.com",
       "facebook": "https://facebook.com",
-      "twitter": "https://twitter.com"
+      "twitter": "https://twitter.com",
+      "id": "ea60"
     }
   ],
   "SavedCourses": [
     {
-      "id": 1,
+      "id": "2",
       "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
       "category": "Web Development | Python",
       "author": "John Doe",
@@ -137,7 +147,7 @@
       "isEnrolled": true
     },
     {
-      "id": 2,
+      "id": "3",
       "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
       "category": "Web Development | Python",
       "author": "John Doe",
@@ -151,21 +161,7 @@
       "isEnrolled": true
     },
     {
-      "id": 3,
-      "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
-      "category": "Web Development | Python",
-      "author": "John Doe",
-      "views": "109k views",
-      "posted": "15 days ago",
-      "rating": 4.5,
-      "hours": "25 hours",
-      "price": "$10",
-      "tag": "BESTSELLER",
-      "image": "/images/authIMG.webp",
-      "isEnrolled": true
-    },
-    {
-      "id": 4,
+      "id": "4",
       "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
       "category": "Web Development | Python",
       "author": "John Doe",
@@ -181,7 +177,7 @@
   ],
   "Cart": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
       "category": "Web Development | Python",
       "author": "John Doe",
@@ -195,7 +191,7 @@
       "studentsEnrolled": 3200
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
       "category": "Web Development | Python",
       "author": "John Doe",
@@ -209,7 +205,7 @@
       "studentsEnrolled": 2800
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
       "category": "Web Development | Python",
       "author": "John Doe",
@@ -223,7 +219,7 @@
       "studentsEnrolled": 1500
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
       "category": "Web Development | Python",
       "author": "John Doe",
@@ -274,7 +270,7 @@
       "answer": "a"
     },
     {
-      "id": 2,
+      "id": "2",
       "text": "Which superglobal variable is used to collect form data in PHP?",
       "options": [
         {
@@ -297,7 +293,7 @@
       "answer": "a"
     },
     {
-      "id": 3,
+      "id": "3",
       "text": "Which of the following is used to start a PHP session?",
       "options": [
         {
@@ -320,7 +316,7 @@
       "answer": "b"
     },
     {
-      "id": 4,
+      "id": "4",
       "text": "What does PHP stand for?",
       "options": [
         {
@@ -343,7 +339,7 @@
       "answer": "b"
     },
     {
-      "id": 5,
+      "id": "5",
       "text": "Which of the following is the correct way to connect to MySQL in PHP (mysqli)?",
       "options": [
         {
@@ -366,7 +362,7 @@
       "answer": "a"
     },
     {
-      "id": 6,
+      "id": "6",
       "text": "Which symbol is used to prepend variables in PHP?",
       "options": [
         {
@@ -389,7 +385,7 @@
       "answer": "b"
     },
     {
-      "id": 7,
+      "id": "7",
       "text": "Which PHP function is used to include another file?",
       "options": [
         {
@@ -412,7 +408,7 @@
       "answer": "d"
     },
     {
-      "id": 8,
+      "id": "8",
       "text": "Which of these is NOT a PHP data type?",
       "options": [
         {
@@ -435,7 +431,7 @@
       "answer": "c"
     },
     {
-      "id": 9,
+      "id": "9",
       "text": "How do you write a single-line comment in PHP?",
       "options": [
         {
@@ -458,7 +454,7 @@
       "answer": "d"
     },
     {
-      "id": 10,
+      "id": "10",
       "text": "Which of the following functions is used to get the length of a string in PHP?",
       "options": [
         {
@@ -505,7 +501,7 @@
   ],
   "studentResults": [
     {
-      "id": 1,
+      "id": "1",
       "quizId": 1,
       "userId": 1,
       "userName": "StudentLayout",
@@ -519,7 +515,7 @@
       "passed": false
     },
     {
-      "id": 2,
+      "id": "2",
       "quizId": 1,
       "userId": 1,
       "userName": "StudentLayout",
@@ -533,7 +529,7 @@
       "passed": false
     },
     {
-      "id": 3,
+      "id": "3",
       "quizId": 1,
       "userId": 1,
       "userName": "StudentLayout",
@@ -547,7 +543,7 @@
       "passed": false
     },
     {
-      "id": 4,
+      "id": "4",
       "quizId": 1,
       "userId": "StudentLayout",
       "userName": "StudentLayout",
@@ -561,11 +557,10 @@
       "passed": true
     }
   ],
-
   "dashboards": [
     {
       "role": "student",
-      "id": 1,
+      "id": "1",
       "fullName": "John Doe",
       "email": "john@example.com",
       "department": "Computer Engineering",
@@ -640,10 +635,9 @@
         }
       ]
     },
-
     {
       "role": "instructor",
-      "id": 2,
+      "id": "2",
       "fullName": "Dr. Emily Clark",
       "email": "emily@university.com",
       "department": "Computer Science",
@@ -682,10 +676,9 @@
         }
       ]
     },
-
     {
       "role": "admin",
-      "id": 3,
+      "id": "3",
       "fullName": "System Admin",
       "email": "admin@university.com",
       "stats": {
@@ -710,10 +703,9 @@
       ]
     }
   ],
-
   "Users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "John Doe",
       "phone": "+20 100 123 4567",
       "email": "john@example.com",
@@ -727,7 +719,7 @@
       }
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Dr. Emily Clark",
       "phone": "+20 115 987 6543",
       "email": "emily@university.com",
@@ -740,7 +732,7 @@
       }
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "System Admin",
       "phone": "+20 120 000 1111",
       "email": "admin@university.com",
@@ -753,7 +745,7 @@
       }
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "System Admin",
       "phone": "+20 120 000 1111",
       "email": "admin@university.com",
@@ -768,7 +760,7 @@
   ],
   "Courses": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Complete Python Bootcamp: Go from zero to hero in Python 3",
       "category": "Web Development | Python",
       "author": "John Doe",
@@ -783,29 +775,28 @@
       "studentsEnrolled": 3200
     }
   ],
-
   "StudentCourses": [
     {
       "userId": 501,
       "courseId": 1,
       "progress": "45%",
       "isCompleted": false,
-      "enrolledDate": "2025-01-05"
+      "enrolledDate": "2025-01-05",
+      "id": "dfee"
     }
   ],
-
   "InstructorCourses": [
     {
       "instructorId": 101,
       "courseId": 1,
       "studentsEnrolled": 3200,
-      "status": "Published"
+      "status": "Published",
+      "id": "b6fc"
     }
   ],
-
   "profiles": [
     {
-      "id": 1,
+      "id": "1",
       "role": "student",
       "user": {
         "name": "John Doe",
@@ -819,32 +810,62 @@
         "youtube": "https://facebook.com/john"
       },
       "actions": [
-        { "label": "Edit Profile", "url": "/StudentLayout" },
-        { "label": "Settings", "url": "/StudentLayout" }
+        {
+          "label": "Edit Profile",
+          "url": "/StudentLayout"
+        },
+        {
+          "label": "Settings",
+          "url": "/StudentLayout"
+        }
       ],
       "stats": [
-        { "label": "Purchased", "value": "4" },
-        { "label": "My Reviews", "value": "4" },
-        { "label": "Certificates", "value": "2" }
+        {
+          "label": "Purchased",
+          "value": "4"
+        },
+        {
+          "label": "My Reviews",
+          "value": "4"
+        },
+        {
+          "label": "Certificates",
+          "value": "2"
+        }
       ],
       "tabs": ["About Me", "Purchased Courses", "Discussion", "Certificates"],
       "tabContent": {
         "About Me": "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
         "Purchased Courses": [
-          { "title": "UI Design Masterclass", "date": "2024-02-12" },
-          { "title": "JavaScript Zero to Hero", "date": "2024-01-15" }
+          {
+            "title": "UI Design Masterclass",
+            "date": "2024-02-12"
+          },
+          {
+            "title": "JavaScript Zero to Hero",
+            "date": "2024-01-15"
+          }
         ],
         "Discussion": [
-          { "message": "I really enjoy this course!", "time": "2h ago" },
-          { "message": "Can someone explain Lesson 4?", "time": "5h ago" }
+          {
+            "message": "I really enjoy this course!",
+            "time": "2h ago"
+          },
+          {
+            "message": "Can someone explain Lesson 4?",
+            "time": "5h ago"
+          }
         ],
         "Certificates": [
-          { "name": "UI Design Certification", "issued": "2023-08-10" }
+          {
+            "name": "UI Design Certification",
+            "issued": "2023-08-10"
+          }
         ]
       }
     },
     {
-      "id": 2,
+      "id": "2",
       "role": "instructor",
       "user": {
         "name": "Sarah Lee",
@@ -858,33 +879,60 @@
         "youtube": "https://facebook.com/john"
       },
       "actions": [
-        { "label": "Edit Profile", "url": "/InstructorLayout" },
-        { "label": "Settings", "url": "/InstructorLayout" }
+        {
+          "label": "Edit Profile",
+          "url": "/InstructorLayout"
+        },
+        {
+          "label": "Settings",
+          "url": "/InstructorLayout"
+        }
       ],
       "stats": [
-        { "label": "Courses", "value": "12" },
-        { "label": "Students", "value": "1.2K" },
-        { "label": "Earnings", "value": "$24K" }
+        {
+          "label": "Courses",
+          "value": "12"
+        },
+        {
+          "label": "Students",
+          "value": "1.2K"
+        },
+        {
+          "label": "Earnings",
+          "value": "$24K"
+        }
       ],
       "tabs": ["About Me", "My Courses", "Earnings", "Students"],
       "tabContent": {
         "About Me": "Passionate instructor specializing in digital design and UX...",
         "My Courses": [
-          { "title": "Advanced UX Design", "students": 540 },
-          { "title": "Web Animation Masterclass", "students": 320 }
+          {
+            "title": "Advanced UX Design",
+            "students": 540
+          },
+          {
+            "title": "Web Animation Masterclass",
+            "students": 320
+          }
         ],
         "Earnings": {
           "monthly": "$2,500",
           "total": "$24,000"
         },
         "Students": [
-          { "name": "John Doe", "progress": "80%" },
-          { "name": "Emma Brown", "progress": "65%" }
+          {
+            "name": "John Doe",
+            "progress": "80%"
+          },
+          {
+            "name": "Emma Brown",
+            "progress": "65%"
+          }
         ]
       }
     },
     {
-      "id": 3,
+      "id": "3",
       "role": "admin",
       "user": {
         "name": "Michael Scott",
@@ -898,26 +946,56 @@
         "youtube": "https://facebook.com/john"
       },
       "actions": [
-        { "label": "Edit Profile", "url": "/AdminLayout" },
-        { "label": "Settings", "url": "/AdminLayout" }
+        {
+          "label": "Edit Profile",
+          "url": "/AdminLayout"
+        },
+        {
+          "label": "Settings",
+          "url": "/AdminLayout"
+        }
       ],
       "stats": [
-        { "label": "Users", "value": "5.6K" },
-        { "label": "Courses", "value": "320" },
-        { "label": "Reports", "value": "42" }
+        {
+          "label": "Users",
+          "value": "5.6K"
+        },
+        {
+          "label": "Courses",
+          "value": "320"
+        },
+        {
+          "label": "Reports",
+          "value": "42"
+        }
       ],
       "tabs": ["About Me", "User Management", "Reports", "System Logs"],
       "tabContent": {
         "About Me": "Ensuring the platform runs smoothly and securely...",
-        "User Management": [{ "totalStudents": 4200, "totalInstructors": 300 }],
-        "Reports": [{ "type": "Monthly Analytics", "generated": "2024-02-01" }],
-        "System Logs": [{ "event": "User Login", "time": "1h ago" }]
+        "User Management": [
+          {
+            "totalStudents": 4200,
+            "totalInstructors": 300
+          }
+        ],
+        "Reports": [
+          {
+            "type": "Monthly Analytics",
+            "generated": "2024-02-01"
+          }
+        ],
+        "System Logs": [
+          {
+            "event": "User Login",
+            "time": "1h ago"
+          }
+        ]
       }
     }
   ],
   "studentcertificates": [
     {
-      "id": 1,
+      "id": "1",
       "title": "WordPress Certificate",
       "marks": 15,
       "outOf": 20,
@@ -926,7 +1004,7 @@
       "link": "https://example.com/html-css-cert.pdf"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "WordPress Pro Certificate",
       "marks": 14,
       "outOf": 20,
@@ -935,7 +1013,7 @@
       "link": "https://example.com/html-css-cert.pdf"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "HTML CSS Certificate",
       "marks": 18,
       "outOf": 20,
@@ -944,7 +1022,7 @@
       "link": "https://example.com/html-css-cert.pdf"
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "HTML CSS Certificate",
       "marks": 18,
       "outOf": 20,
@@ -953,7 +1031,7 @@
       "link": "https://example.com/html-css-cert.pdf"
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "HTML CSS Certificate",
       "marks": 18,
       "outOf": 20,
@@ -964,25 +1042,25 @@
   ],
   "incompleteCourses": [
     {
-      "id": 1,
+      "id": "1",
       "title": "React Basics",
       "progressPercent": 40,
       "link": "https://example.com/react-basics.pdf"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Node.js Fundamentals",
       "progressPercent": 60,
       "link": "https://example.com/nodejs-fundamentals.pdf"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "Python Intermediate",
       "progressPercent": 25,
       "link": "https://example.com/python-intermediate.pdf"
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "Python Intermediate",
       "progressPercent": 95,
       "link": "https://example.com/python-intermediate.pdf"
@@ -1015,7 +1093,6 @@
           "time": "20 min ago"
         }
       ],
-
       "instructor": [
         {
           "user": "Nada Ashraf",
@@ -1053,12 +1130,13 @@
           "target": "UI/UX Design",
           "time": "30 min ago"
         }
-      ]
+      ],
+      "id": "fa89"
     }
   ],
   "Lessons": [
     {
-      "id": 1,
+      "id": "1",
       "courseId": 1,
       "title": "Introduction to Python",
       "duration": "15 min",
@@ -1068,7 +1146,7 @@
       "posted": "10 days ago"
     },
     {
-      "id": 2,
+      "id": "2",
       "courseId": 1,
       "title": "Variables and Data Types",
       "duration": "20 min",
@@ -1078,5 +1156,101 @@
       "posted": "9 days ago"
     }
   ],
-  "feedback": []
+  "feedback": [],
+  "CourseDetails": [
+    {
+      "id": 1,
+      "title": "Backup Course Title",
+      "subtitle": "Fallback subtitle",
+      "image": "/fallback.jpg",
+      "rating": 4.5,
+      "ratingsCount": 100,
+      "enrolled": 500,
+      "languages": ["English", "Spanish", "French"],
+      "lastUpdated": "2024-01",
+      "price": 19.99,
+      "instructor": {
+        "name": "Fallback Instructor",
+        "avatar": "/avatar.jpg",
+        "bio": "Backup bio"
+      },
+      "stats": { "views": 100, "likes": 10, "dislikes": 1, "shares": 2 },
+      "requirements": ["Just be ready"],
+      "curriculum": [
+        {
+          "id": 1,
+          "title": "Introduction & Basics",
+          "lessons": [
+            {
+              "title": "Welcome & Course Overview",
+              "link": "/course/lesson/welcome",
+              "duration": "3:45",
+              "description": "Overview of what you’ll learn and how to navigate the course."
+            },
+            {
+              "title": "What You Need Before Starting",
+              "link": "/course/lesson/prerequisites",
+              "duration": "5:20",
+              "description": "Required tools, software, or knowledge before proceeding."
+            },
+            {
+              "title": "How to Get Help",
+              "link": "/course/lesson/support",
+              "duration": "4:10",
+              "description": "Where to ask questions and find course resources."
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Core Concepts",
+          "lessons": [
+            {
+              "title": "Understanding the Main Concept",
+              "link": "/course/lesson/concept-intro",
+              "duration": "8:30",
+              "description": "Simple explanation of the core topic with visuals."
+            },
+            {
+              "title": "Real-World Examples",
+              "link": "/course/lesson/examples",
+              "duration": "10:15",
+              "description": "How this concept is applied in real life."
+            },
+            {
+              "title": "Hands-On Practice",
+              "link": "/course/lesson/practice",
+              "duration": "12:00",
+              "description": "Step-by-step guided exercise to reinforce learning."
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Advanced Topics",
+          "lessons": [
+            {
+              "title": "Optimization Techniques",
+              "link": "/course/lesson/optimization",
+              "duration": "9:45",
+              "description": "Improve performance and efficiency with proven strategies."
+            },
+            {
+              "title": "Common Mistakes & How to Avoid Them",
+              "link": "/course/lesson/mistakes",
+              "duration": "7:50",
+              "description": "Learn from typical pitfalls to save time and effort."
+            },
+            {
+              "title": "Final Recap & Next Steps",
+              "link": "/course/lesson/final-recap",
+              "duration": "6:30",
+              "description": "Summary of key points and suggestions for further learning."
+            }
+          ]
+        }
+      ],
+      "reviews": [{ "user": "Test User", "rating": 5, "comment": "Nice!" }]
+    }
+  ]
 }

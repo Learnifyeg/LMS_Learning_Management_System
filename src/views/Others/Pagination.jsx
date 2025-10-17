@@ -16,7 +16,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         className={`px-3 py-1 rounded-md border ${
           currentPage === 1
             ? "opacity-50 cursor-not-allowed"
-            : "hover:bg-gray-50"
+            : "hover:bg-gray-50 dark:hover:bg-gray-700"
         }`}
       >
         Previous
@@ -33,7 +33,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
               className={`px-3 py-1 rounded-md border ${
                 pageNum === currentPage
                   ? "bg-primary text-white"
-                  : "hover:bg-gray-50"
+                  : "hover:bg-gray-50 dark:hover:bg-gray-700"
               }`}
             >
               {pageNum}
@@ -49,7 +49,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         className={`px-3 py-1 rounded-md border ${
           currentPage === totalPages
             ? "opacity-50 cursor-not-allowed"
-            : "hover:bg-gray-50"
+            : "hover:bg-gray-50 dark:hover:bg-gray-700"
         }`}
       >
         Next
