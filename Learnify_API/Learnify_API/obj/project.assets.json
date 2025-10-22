@@ -5164,11 +5164,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Desktop\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
+      "projectUniqueName": "D:\\Desktop\\Learnify\\Front\\DEPI_Final\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
       "projectName": "Learnify_API",
-      "projectPath": "D:\\Desktop\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
+      "projectPath": "D:\\Desktop\\Learnify\\Front\\DEPI_Final\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
       "packagesPath": "C:\\Users\\W.I\\.nuget\\packages\\",
-      "outputPath": "D:\\Desktop\\Learnify_API\\Learnify_API\\obj\\",
+      "outputPath": "D:\\Desktop\\Learnify\\Front\\DEPI_Final\\Learnify_API\\Learnify_API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
