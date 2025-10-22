@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace API_Learnify.Migrations
+namespace Learnify_API.Migrations
 {
     /// <inheritdoc />
     public partial class addTables : Migration

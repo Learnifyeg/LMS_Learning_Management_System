@@ -3,7 +3,7 @@ using API_Learnify.Data;
 using API_Learnify.Data.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace API_Learnify
+namespace Learnify_API
 {
     public class Program
     {

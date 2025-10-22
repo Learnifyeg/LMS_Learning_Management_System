@@ -1,4 +1,4 @@
-@Learnify_API_HostAddress = http://localhost:5282
+@Learnify_API_HostAddress = http://localhost:5023
 
 GET {{Learnify_API_HostAddress}}/weatherforecast/
 Accept: application/json

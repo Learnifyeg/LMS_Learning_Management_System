@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API_Learnify.Migrations
+namespace Learnify_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251022182653_addTables")]
+    [Migration("20251022211042_addTables")]
     partial class addTables
     {
         /// <inheritdoc />
