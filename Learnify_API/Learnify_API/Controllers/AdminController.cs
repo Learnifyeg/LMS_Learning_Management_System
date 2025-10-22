@@ -7,7 +7,7 @@ namespace API_Learnify.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-       
+       ///
         public AdminController(AdminService adminService)
         {
             _adminService = adminService;
