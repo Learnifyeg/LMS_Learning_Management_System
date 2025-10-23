@@ -1,5 +1,4 @@
-
-using API_Learnify.Data;
+﻿using API_Learnify.Data;
 using API_Learnify.Data.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,16 +11,25 @@ namespace Learnify_API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
-            builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("conString")));
+            builder.Services.AddDbContext<AppDbContext>(option =>
+                option.UseSqlServer(builder.Configuration.GetConnectionString("conString")));
 
-            // Services for Swagger
+            //  Add CORS Policy
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowReactApp",
+                    builder => builder
+                        .WithOrigins("http://localhost:5173") // Your React app URL
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+            });
+
+            // Add services for Swagger
             builder.Services.AddScoped<StudentService>();
             builder.Services.AddScoped<InstructorService>();
             builder.Services.AddScoped<AdminService>();
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -36,8 +44,10 @@ namespace Learnify_API
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            // Use CORS before authorization
+            app.UseCors("AllowReactApp");
 
+            app.UseAuthorization();
 
             app.MapControllers();
 

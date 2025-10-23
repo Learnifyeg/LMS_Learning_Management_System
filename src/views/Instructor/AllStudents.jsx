@@ -8,7 +8,7 @@ import Pagination from "../Others/Pagination";
 
 // Endpoints and constants
 const STUDENT_PER_PAGE = 8;
-const StudentsEndPoint = "students"; // API endpoint
+const StudentsEndPoint = "get-students"; // API endpoint
 
 function AllStudents() {
   const [students, setstudents] = useState([]);
@@ -25,6 +25,7 @@ function AllStudents() {
       .finally(() => setLoading(false));
   }, []);
 
+
   const filteredStudents = students.filter((student) =>
     student.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -38,6 +39,7 @@ function AllStudents() {
     pageStartIndex + STUDENT_PER_PAGE
   );
 
+  console.log(students)
   if (loading) {
     return (
       <div className="flex items-center justify-center h-48 text-gray-500">
