@@ -1,8 +1,8 @@
-﻿using API_Learnify.Data.Models;
+﻿using Learnify_API.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace API_Learnify.Data
+namespace Learnify_API.Data
 {
 
     public class AppDbContext : DbContext

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API_Learnify.Data.Models
+namespace Learnify_API.Data.Models
 {
     public class User
     {
@@ -31,5 +31,14 @@ namespace API_Learnify.Data.Models
         public Admin? Admin { get; set; }
         public ICollection<Notification>? Notifications { get; set; }
         public ICollection<Log>? Logs { get; set; }
+
+
+        public bool IsEmailVerified { get; set; } = false;
+        public string? VerificationCode { get; set; }
+        public DateTime? VerificationExpiresAt { get; set; }
+        public string? PasswordResetCode { get; set; }
+        public DateTime? PasswordResetExpiresAt { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiresAt { get; set; }
     }
 }

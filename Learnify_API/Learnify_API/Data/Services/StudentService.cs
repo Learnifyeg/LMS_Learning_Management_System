@@ -1,8 +1,8 @@
-﻿using API_Learnify.Data.Models;
-using API_Learnify.Data.ViewModels;
+﻿using Learnify_API.Data.Models;
+using Learnify_API.Data.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace API_Learnify.Data.Services
+namespace Learnify_API.Data.Services
 {
     public class StudentService
     {

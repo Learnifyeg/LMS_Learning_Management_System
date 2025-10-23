@@ -1,4 +1,4 @@
-﻿namespace API_Learnify.Data.Services
+﻿namespace Learnify_API.Data.Services
 {
     public class AdminService
     {

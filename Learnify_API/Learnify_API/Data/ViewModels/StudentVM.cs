@@ -1,4 +1,4 @@
-﻿namespace API_Learnify.Data.ViewModels
+﻿namespace Learnify_API.Data.ViewModels
 {
     public class StudentVM
     {

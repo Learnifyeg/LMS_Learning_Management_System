@@ -1,6 +1,6 @@
 [
   {
-    "ContainingType": "API_Learnify.Controllers.StudentController",
+    "ContainingType": "Learnify_API.Controllers.StudentController",
     "Method": "AddStudent",
     "RelativePath": "add-student",
     "HttpMethod": "POST",
@@ -9,14 +9,94 @@
     "Parameters": [
       {
         "Name": "studentVM",
-        "Type": "API_Learnify.Data.ViewModels.StudentVM",
+        "Type": "Learnify_API.Data.ViewModels.StudentVM",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "API_Learnify.Controllers.StudentController",
+    "ContainingType": "Learnify_API.Controllers.AuthController",
+    "Method": "ForgotPassword",
+    "RelativePath": "Auth/forgot-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Learnify_API.Data.DTO.ForgotPasswordRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "Auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Learnify_API.Data.DTO.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.AuthController",
+    "Method": "Register",
+    "RelativePath": "Auth/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Learnify_API.Data.DTO.RegisterRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.AuthController",
+    "Method": "ResetPassword",
+    "RelativePath": "Auth/reset-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Learnify_API.Data.DTO.ResetPasswordRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.AuthController",
+    "Method": "VerifyEmail",
+    "RelativePath": "Auth/verify-email",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Learnify_API.Data.DTO.VerifyEmailRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
     "Method": "GetAllStudents",
     "RelativePath": "get-students",
     "HttpMethod": "GET",

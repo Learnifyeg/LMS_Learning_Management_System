@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace API_Learnify.Data.Models
+namespace Learnify_API.Data.Models
 {
     public class Log
     {

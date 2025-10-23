@@ -341,3 +341,5 @@ D:\Desktop\Learnify_DEPI\Learnify_API\Learnify_API\obj\Debug\net8.0\refint\Learn
 D:\Desktop\Learnify_DEPI\Learnify_API\Learnify_API\obj\Debug\net8.0\Learnify_API.pdb
 D:\Desktop\Learnify_DEPI\Learnify_API\Learnify_API\obj\Debug\net8.0\Learnify_API.genruntimeconfig.cache
 D:\Desktop\Learnify_DEPI\Learnify_API\Learnify_API\obj\Debug\net8.0\ref\Learnify_API.dll
+D:\Desktop\Learnify_DEPI\Learnify_API\Learnify_API\bin\Debug\net8.0\BCrypt.Net-Next.dll
+D:\Desktop\Learnify_DEPI\Learnify_API\Learnify_API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

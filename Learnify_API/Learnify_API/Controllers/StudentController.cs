@@ -1,8 +1,8 @@
-﻿using API_Learnify.Data.Services;
-using API_Learnify.Data.ViewModels;
+﻿using Learnify_API.Data.Services;
+using Learnify_API.Data.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API_Learnify.Controllers
+namespace Learnify_API.Controllers
 {
     [Route("")]
     [ApiController]
