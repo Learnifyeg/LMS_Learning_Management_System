@@ -55,6 +55,7 @@ const StuShoppingCart = lazy(
   () => import("@/views/Student/StuShoppingCart.jsx")
 );
 const MyCourses = lazy(() => import("@/views/Student/MyCourses.jsx"));
+const StudentLessonPage = lazy(() => import("@/views/Student/StudentLessonPage.jsx"));
 
 // Others
 const UserLayout = lazy(() => import("@/components/UserLayout/UserLayout.jsx"));
@@ -138,6 +139,7 @@ export const router = createBrowserRouter([
           { path: "StuSavedCourses", element: <StuSavedCourses /> },
           { path: "StuShoppingCart", element: <StuShoppingCart /> },
           { path: "MyCourses", element: <MyCourses /> },
+          { path: "StudentLessonPage", element: <StudentLessonPage /> },
         ],
       },
       {

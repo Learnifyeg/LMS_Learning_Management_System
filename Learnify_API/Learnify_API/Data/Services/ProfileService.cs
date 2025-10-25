@@ -14,14 +14,14 @@ namespace Learnify_API.Data.Services
 
         public async Task<Profile> AddProfileAsync(ProfileVM vM)
         {
-           
+
             var profile = new Profile
             {
                 Role = vM.Role,
-                User = vM.,
+                User = vM.User,
                 SocialLinks = vM.SocialLinks,
                 About = vM.About,
-               
+
             };
 
             _context.profiles.Add(profile);

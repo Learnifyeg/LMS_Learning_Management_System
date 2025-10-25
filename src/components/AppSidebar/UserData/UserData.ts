@@ -55,6 +55,7 @@ export const sidebarData = {
           { title: "My Courses", url: "/StudentLayout/MyCourses" },
           { title: "Saved Courses", url: "/StudentLayout/StuSavedCourses" },
           { title: "Course Details", url: "/StudentLayout/StuCourseDetails" },
+          { title: "Lesson Page", url: "/StudentLayout/StudentLessonPage" },
         ],
       },
       {
