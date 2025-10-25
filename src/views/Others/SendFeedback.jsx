@@ -6,6 +6,7 @@ import { MessageSquare } from "lucide-react";
 import StuStudentLayout from "@/components/StudentLayout/StudentLayout.jsx";
 import { Button } from "@/components/ui/button";
 import api from "@/API/Config";
+const FEEDBACK_API_URL = "/api/Others/Add-Feedback";
 
 function SendFeedback() {
   const [email, setEmail] = useState("");
@@ -36,27 +37,30 @@ function SendFeedback() {
     }
 
     const formData = new FormData();
-    formData.append("email", email);
-    formData.append("message", message);
-    screenshots.forEach((file) => {
-      formData.append("screenshots", file);
-    });
+formData.append("email", email);
+formData.append("massage", message); // خليها massage مش message
+screenshots.forEach((file) => {
+  formData.append("image", file); // خليها image مش screenshots
+});
 
-    api
-      .post(formData)
-      .then((response) => {
-        console.log("✅ Feedback sent successfully:", response.data);
 
-        setEmail("");
-        setMessage("");
-        setScreenshots([]);
-        setSuccess(true);
-        setTimeout(() => setSuccess(false), 3000);
-      })
-      .catch((error) => {
-        console.error("❌ Error sending feedback:", error);
-        alert("Error sending feedback");
-      });
+   api
+  .post(FEEDBACK_API_URL, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  })
+  .then((response) => {
+    console.log("✅ Feedback sent successfully:", response.data);
+    setEmail("");
+    setMessage("");
+    setScreenshots([]);
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 3000);
+  })
+  .catch((error) => {
+    console.error("❌ Error sending feedback:", error);
+    alert("Error sending feedback");
+  });
+
   };
 
   return (

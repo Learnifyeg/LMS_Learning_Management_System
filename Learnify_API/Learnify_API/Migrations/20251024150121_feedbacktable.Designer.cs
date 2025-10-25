@@ -4,6 +4,7 @@ using Learnify_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Learnify_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251024150121_feedbacktable")]
+    partial class feedbacktable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -328,27 +331,6 @@ namespace Learnify_API.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("Learnify_API.Data.Models.Profile", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("About")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("profiles");
-                });
-
             modelBuilder.Entity("Learnify_API.Data.Models.Question", b =>
                 {
                     b.Property<int>("QuestionId")
@@ -660,68 +642,6 @@ namespace Learnify_API.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Learnify_API.Data.Models.Profile", b =>
-                {
-                    b.OwnsOne("Learnify_API.Data.Models.SocialLinks", "SocialLinks", b1 =>
-                        {
-                            b1.Property<int>("ProfileId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Facebook")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Github")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("LinkedIn")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Twitter")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("ProfileId");
-
-                            b1.ToTable("profiles");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProfileId");
-                        });
-
-                    b.OwnsOne("Learnify_API.Data.Models.UserInfo", "User", b1 =>
-                        {
-                            b1.Property<int>("ProfileId")
-                                .HasColumnType("int");
-
-                            b1.Property<byte[]>("Avatar")
-                                .HasColumnType("varbinary(max)");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("RoleTitle")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("ProfileId");
-
-                            b1.ToTable("profiles");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProfileId");
-                        });
-
-                    b.Navigation("SocialLinks")
-                        .IsRequired();
-
-                    b.Navigation("User")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.Question", b =>

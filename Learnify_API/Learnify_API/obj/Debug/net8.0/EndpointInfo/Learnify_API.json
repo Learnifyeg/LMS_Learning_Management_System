@@ -160,6 +160,184 @@
         }
       }
     },
+    "/api/Others/Add-Feedback": {
+      "post": {
+        "tags": [
+          "Others"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Email": {
+                    "type": "string"
+                  },
+                  "Massage": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Email": {
+                  "style": "form"
+                },
+                "Massage": {
+                  "style": "form"
+                },
+                "image": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Others/get-all-feedbacks": {
+      "get": {
+        "tags": [
+          "Others"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ProStudent": {
+      "post": {
+        "tags": [
+          "ProStudent"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Role": {
+                    "type": "string"
+                  },
+                  "User.Name": {
+                    "type": "string"
+                  },
+                  "User.Avatar": {
+                    "type": "string",
+                    "format": "byte"
+                  },
+                  "User.RoleTitle": {
+                    "type": "string"
+                  },
+                  "SocialLinks.Facebook": {
+                    "type": "string"
+                  },
+                  "SocialLinks.Twitter": {
+                    "type": "string"
+                  },
+                  "SocialLinks.LinkedIn": {
+                    "type": "string"
+                  },
+                  "SocialLinks.Github": {
+                    "type": "string"
+                  },
+                  "Stats": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Stat"
+                    }
+                  },
+                  "About": {
+                    "type": "string"
+                  },
+                  "TabContent.Courses": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/CourseTab"
+                    }
+                  },
+                  "TabContent.Projects": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ProjectTab"
+                    }
+                  },
+                  "TabContent.Certificates": {
+                    "type": "string"
+                  },
+                  "Actions": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ActionButton"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "Role": {
+                  "style": "form"
+                },
+                "User.Name": {
+                  "style": "form"
+                },
+                "User.Avatar": {
+                  "style": "form"
+                },
+                "User.RoleTitle": {
+                  "style": "form"
+                },
+                "SocialLinks.Facebook": {
+                  "style": "form"
+                },
+                "SocialLinks.Twitter": {
+                  "style": "form"
+                },
+                "SocialLinks.LinkedIn": {
+                  "style": "form"
+                },
+                "SocialLinks.Github": {
+                  "style": "form"
+                },
+                "Stats": {
+                  "style": "form"
+                },
+                "About": {
+                  "style": "form"
+                },
+                "TabContent.Courses": {
+                  "style": "form"
+                },
+                "TabContent.Projects": {
+                  "style": "form"
+                },
+                "TabContent.Certificates": {
+                  "style": "form"
+                },
+                "Actions": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/add-student": {
       "post": {
         "tags": [
@@ -206,6 +384,38 @@
   },
   "components": {
     "schemas": {
+      "ActionButton": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "label": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CourseTab": {
+        "type": "object",
+        "properties": {
+          "courseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "progress": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ForgotPasswordRequest": {
         "type": "object",
         "properties": {
@@ -224,6 +434,20 @@
             "nullable": true
           },
           "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectTab": {
+        "type": "object",
+        "properties": {
+          "projectName": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
             "type": "string",
             "nullable": true
           }
@@ -266,6 +490,20 @@
           "newPassword": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Stat": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

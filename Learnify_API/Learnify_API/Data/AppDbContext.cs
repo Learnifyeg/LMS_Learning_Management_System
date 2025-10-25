@@ -28,6 +28,8 @@ namespace Learnify_API.Data
         public DbSet<InstructorPayout> InstructorPayouts { get; set; }
         public DbSet<Log> Logs { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<FeedBack> feedBacks { get; set; }
+        public DbSet<Profile> profiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -84,6 +86,8 @@ namespace Learnify_API.Data
                 .WithMany()
                 .HasForeignKey(c => c.CourseId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Profile>().OwnsOne(p => p.User);
+            modelBuilder.Entity<Profile>().OwnsOne(p => p.SocialLinks);
 
             base.OnModelCreating(modelBuilder);
         }

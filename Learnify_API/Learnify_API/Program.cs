@@ -18,16 +18,19 @@ namespace Learnify_API
             builder.Services.AddControllers();
             builder.Services.AddDbContext<AppDbContext>(option =>
                 option.UseSqlServer(builder.Configuration.GetConnectionString("conString")));
-
+            builder.Services.AddTransient<FeedbackService>();
             //  Add CORS Policy
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowReactApp",
-                    builder => builder
-                        .WithOrigins("http://localhost:5173") // Your React app URL
-                        .AllowAnyHeader()
-                        .AllowAnyMethod());
-            });
+           builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy =>
+        {
+            policy
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
             // Add services for Swagger
             builder.Services.AddScoped<StudentService>();
@@ -99,6 +102,8 @@ namespace Learnify_API
             // --------------------------------- Swagger Security Setup --------------------------------------------
 
             var app = builder.Build();
+            app.UseCors("AllowAll");
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -108,6 +113,7 @@ namespace Learnify_API
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             // Use CORS before authorization
             app.UseCors("AllowReactApp");
