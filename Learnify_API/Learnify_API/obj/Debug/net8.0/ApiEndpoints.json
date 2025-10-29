@@ -79,42 +79,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Learnify_API.Controllers.OthersController",
-    "Method": "AddFeedBack",
-    "RelativePath": "api/Others/Add-Feedback",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Massage",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "image",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Learnify_API.Controllers.OthersController",
-    "Method": "getallFeedBacks",
-    "RelativePath": "api/Others/get-all-feedbacks",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "Learnify_API.Controllers.ProStudentController",
     "Method": "AddProfile",
     "RelativePath": "api/ProStudent",
@@ -295,6 +259,42 @@
     "ContainingType": "Learnify_API.Controllers.StudentController",
     "Method": "GetAllStudents",
     "RelativePath": "get-students",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.OthersController",
+    "Method": "AddFeedBack",
+    "RelativePath": "Others/Add-Feedback",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Massage",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "image",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.OthersController",
+    "Method": "getallFeedBacks",
+    "RelativePath": "Others/get-all-feedbacks",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

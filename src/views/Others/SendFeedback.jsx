@@ -7,7 +7,9 @@ import StuStudentLayout from "@/components/StudentLayout/StudentLayout.jsx";
 import { Button } from "@/components/ui/button";
 import api from "@/API/Config";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
-const FEEDBACK_API_URL = "api/Others/Add-Feedback";
+import toast, { Toaster } from "react-hot-toast";
+
+const FEEDBACK_API_URL = "Others/Add-Feedback";
 
 function SendFeedback() {
   const [email, setEmail] = useState("");
@@ -33,20 +35,26 @@ function SendFeedback() {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
-      alert("Please enter a valid email address");
+      toast.error("Invalid email address", {
+        description: "Please enter a valid email before submitting feedback.",
+      });
       return;
     }
 
     const formData = new FormData();
-    formData.append("email", email);
-    formData.append("massage", message); // خليها massage مش message
+    formData.append("Email", email);
+    formData.append("Massage", message); // خليها massage مش message
     screenshots.forEach((file) => {
       formData.append("image", file); // خليها image مش screenshots
     });
 
+    console.log("Sending feedback:", formData);
     api
-      .post(FEEDBACK_API_URL, formData, )
+      .post(FEEDBACK_API_URL, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
       .then((response) => {
+        toast.success("Feedback sent successfully");
         console.log("✅ Feedback sent successfully:", response.data);
         setEmail("");
         setMessage("");
@@ -55,20 +63,21 @@ function SendFeedback() {
         setTimeout(() => setSuccess(false), 3000);
       })
       .catch((error) => {
-        console.error("❌ Error sending feedback:", error);
+        console.error("Error sending feedback:", error);
         alert("Error sending feedback");
       });
   };
 
   return (
     <div className="w-full bg-gray-100 dark:bg-gray-800 flex flex-col lg:flex-row pt-10 px-4 sm:px-8 min-h-screen">
+      <Toaster position="top-center" reverseOrder={false} />
       <form
         onSubmit={handleSubmit}
         className="w-full lg:w-2/3 max-w-lg bg-transparent mx-auto lg:mx-0 px-4 sm:px-8"
       >
         <div className="flex items-center gap-2 text-xl sm:text-2xl font-semibold dark:text-white mb-6">
-          <MessageSquare className="w-6 h-6 text-blue-500" />
-           <LandingHeading header="Send Feedback" />
+          {/* <MessageSquare className="w-6 h-6 text-blue-500" /> */}
+          <LandingHeading header="Send Feedback" />
         </div>
 
         <input

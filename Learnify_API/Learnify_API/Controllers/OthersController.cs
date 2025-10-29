@@ -1,17 +1,17 @@
 ﻿using Learnify_API.Data.Services;
 using Learnify_API.Data.ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Learnify_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class OthersController : ControllerBase
     {
-        public OthersController(FeedbackService service) {
-        
-            _service=service;
+        public OthersController(FeedbackService service)
+        {
+
+            _service = service;
         }
         private readonly FeedbackService _service;
 

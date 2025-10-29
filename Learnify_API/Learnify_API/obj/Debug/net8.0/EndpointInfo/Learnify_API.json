@@ -291,7 +291,7 @@
         }
       }
     },
-    "/api/Others/Add-Feedback": {
+    "/Others/Add-Feedback": {
       "post": {
         "tags": [
           "Others"
@@ -335,7 +335,7 @@
         }
       }
     },
-    "/api/Others/get-all-feedbacks": {
+    "/Others/get-all-feedbacks": {
       "get": {
         "tags": [
           "Others"
