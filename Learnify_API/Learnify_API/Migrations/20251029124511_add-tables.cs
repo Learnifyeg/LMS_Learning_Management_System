@@ -6,11 +6,47 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Learnify_API.Migrations
 {
     /// <inheritdoc />
-    public partial class addTables : Migration
+    public partial class addtables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "feedBacks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Massage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    image = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_feedBacks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "profiles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    User_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    User_Avatar = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    User_RoleTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SocialLinks_Facebook = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SocialLinks_Twitter = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SocialLinks_LinkedIn = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SocialLinks_Github = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    About = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_profiles", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -23,7 +59,14 @@ namespace Learnify_API.Migrations
                     Role = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     ProfileImage = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsEmailVerified = table.Column<bool>(type: "bit", nullable: false),
+                    VerificationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VerificationExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PasswordResetCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PasswordResetExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefreshTokenExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -195,8 +238,7 @@ namespace Learnify_API.Migrations
                 name: "Certificates",
                 columns: table => new
                 {
-                    CertificateId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CertificateId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false),
                     CertificateUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
@@ -409,6 +451,9 @@ namespace Learnify_API.Migrations
                 name: "Enrollments");
 
             migrationBuilder.DropTable(
+                name: "feedBacks");
+
+            migrationBuilder.DropTable(
                 name: "InstructorPayouts");
 
             migrationBuilder.DropTable(
@@ -419,6 +464,9 @@ namespace Learnify_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Notifications");
+
+            migrationBuilder.DropTable(
+                name: "profiles");
 
             migrationBuilder.DropTable(
                 name: "Questions");

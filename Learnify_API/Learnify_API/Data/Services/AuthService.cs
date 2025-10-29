@@ -1,5 +1,6 @@
 ﻿using Learnify_API.Data.DTO;
 using Learnify_API.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 //using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -14,46 +15,126 @@ namespace Learnify_API.Data.Services
         private readonly AppDbContext _context;
         private readonly IConfiguration _config;
         private readonly EmailService _emailService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public AuthService(AppDbContext context, IConfiguration config, EmailService emailService)
+        public AuthService(AppDbContext context, IConfiguration config, EmailService emailService, UserManager<AppUser> userManager)
         {
             _context = context;
             _config = config;
             _emailService = emailService;
+            _userManager = userManager;
         }
 
-        // 1️⃣ REGISTER
-        public async Task<string> RegisterAsync(RegisterRequest req)
+        // 1️ Instructor Register
+        public async Task<string> InstructorRegisterAsync(InstructorRegisterRequest req)
         {
             if (await _context.Users.AnyAsync(u => u.Email == req.Email))
                 return "Email already registered.";
 
             var verificationCode = new Random().Next(100000, 999999).ToString();
+            var App_User = new AppUser
+            {
+                UserName = req.FullName,
+                Email = req.Email,
+                Role = req.Role
+            };
+            //IdentityResult result = await _userManager.CreateAsync(App_User, req.Password);
+            //if (!result.Succeeded)
+            //{
+            //    return "User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description));
+            //}
+            //else
+            //{
 
-            var user = new User
+            var instructor_user = new User
             {
                 FullName = req.FullName,
                 Email = req.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
                 Role = req.Role,
+                ProfileImage = req.ProfileImage,
                 VerificationCode = verificationCode,
                 VerificationExpiresAt = DateTime.Now.AddMinutes(10)
             };
 
-            _context.Users.Add(user);
+            _context.Users.Add(instructor_user);
             await _context.SaveChangesAsync();
-
-            if (req.Role == "Student")
-                _context.Students.Add(new Student { StudentId = user.UserId, EnrollmentNo = "ENR" + user.UserId });
-            else if (req.Role == "Instructor")
-                _context.Instructors.Add(new Instructor { InstructorId = user.UserId, Experience = 0 });
-
+            _context.Instructors.Add(new Instructor
+            {
+                InstructorId = instructor_user.UserId,
+                Specialization = req.Specialization,
+                Phone = req.Phone,
+                Address = req.Address,
+                Country = req.Country,
+                Gender = req.Gender,
+                Experience = req.Years_Of_Experience,
+                Bio = req.BIO
+            }
+                );
             await _context.SaveChangesAsync();
-
-            await _emailService.SendEmailAsync(req.Email, "Learnify Verification Code",
-                $"<h3>Your Learnify verification code is:</h3><h2>{verificationCode}</h2>");
+            //await _emailService.SendEmailAsync(req.Email, "Learnify Verification Code",
+            //    $"<h3>Your Learnify verification code is:</h3><h2>{verificationCode}</h2>");
 
             return "Verification code sent to email.";
+            //}
+        }
+
+
+        // 2 Student Register
+        public async Task<string> StudentRegisterAsync(StudentRegisterRequest req)
+        {
+            if (await _context.Users.AnyAsync(u => u.Email == req.Email))
+                return "Email already registered.";
+
+            var verificationCode = new Random().Next(100000, 999999).ToString();
+            var App_User = new AppUser
+            {
+                UserName = req.FullName,
+                Email = req.Email,
+                Role = req.Role
+            };
+            //IdentityResult result = await _userManager.CreateAsync(App_User, req.Password);
+            //if (!result.Succeeded)
+            //{
+            //    return "User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description));
+            //}
+            //else
+            //{
+
+            var student_user = new User
+            {
+                FullName = req.FullName,
+                Email = req.Email,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
+                Role = req.Role,
+                ProfileImage = req.ProfileImage,
+                VerificationCode = verificationCode,
+                VerificationExpiresAt = DateTime.Now.AddMinutes(10)
+            };
+
+            _context.Users.Add(student_user);
+            await _context.SaveChangesAsync();
+
+            _context.Students.Add(new Student
+            {
+                StudentId = student_user.UserId,
+                EnrollmentNo = "ENR" + new Random().Next(1000, 9999).ToString(),
+                Phone = req.Phone,
+                Address = req.Address,
+                Country = req.Country,
+                Gender = req.Gender,
+                University = req.University,
+                Major = req.Major,
+                EducationLevel = req.EducationLevel,
+
+            }
+            );
+            await _context.SaveChangesAsync();
+            //await _emailService.SendEmailAsync(req.Email, "Learnify Verification Code",
+            //        $"<h3>Your Learnify verification code is:</h3><h2>{verificationCode}</h2>");
+
+            return "Verification code sent to email.";
+            //}
         }
 
         // 2️⃣ VERIFY EMAIL
@@ -128,7 +209,7 @@ namespace Learnify_API.Data.Services
             return "Password updated successfully.";
         }
 
-        // 🧩 Helper — Generate JWT
+        // Helper — Generate JWT
         private string GenerateJwtToken(User user)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));

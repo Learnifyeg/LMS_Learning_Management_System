@@ -3,6 +3,7 @@ import React, { lazy, Suspense, useEffect, useState } from "react";
 
 // Components
 import api from "@/API/Config";
+import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 
 // Lazy load CourseCard
 const CourseCard = lazy(() => import("../Student/CourseCard/CourseCard"));
@@ -56,7 +57,7 @@ function StuSavedCourses() {
     <>
       <div className="p-6 flex flex-col items-center gap-4">
         <div className="w-full flex justify-start">
-          <p className="text-2xl font-semibold">Saved Courses</p>
+           <LandingHeading header="Saved Courses" />
         </div>
 
         {courses.length > 0 ? (

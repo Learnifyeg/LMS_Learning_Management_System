@@ -1,6 +1,8 @@
 ﻿using Learnify_API.Data;
+using Learnify_API.Data.Models;
 using Learnify_API.Data.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -20,17 +22,17 @@ namespace Learnify_API
                 option.UseSqlServer(builder.Configuration.GetConnectionString("conString")));
             builder.Services.AddTransient<FeedbackService>();
             //  Add CORS Policy
-           builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll",
-        policy =>
-        {
-            policy
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
+            builder.Services.AddCors(options =>
+             {
+                 options.AddPolicy("AllowAll",
+                     policy =>
+                     {
+                         policy
+                             .AllowAnyOrigin()
+                             .AllowAnyHeader()
+                             .AllowAnyMethod();
+                     });
+             });
 
             // Add services for Swagger
             builder.Services.AddScoped<StudentService>();
@@ -40,6 +42,12 @@ namespace Learnify_API
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // --------------------------------- Identity --------------------------------------------
+            builder.Services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>();
+            // --------------------------------- Identity --------------------------------------------
+
 
 
             // --------------------------------- JWT Configuration --------------------------------------------
@@ -101,8 +109,20 @@ namespace Learnify_API
 
             // --------------------------------- Swagger Security Setup --------------------------------------------
 
+            // -------------------------------- CORS Configuration AllowFrontend --------------------------------------------
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend",
+                    builder => builder
+                        .WithOrigins("http://localhost:5173") // your React app's URL
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+            });
+            //app.UseCors("AllowFrontend");
             var app = builder.Build();
             app.UseCors("AllowAll");
+
+
 
 
             // Configure the HTTP request pipeline.

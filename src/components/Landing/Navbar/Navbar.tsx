@@ -19,13 +19,13 @@ const Navbar = () => {
               return (
                 <NavigationMenuItem
                   key={link.name}
-                  className="hover:-translate-y-0.25 transition-all duration-300 ease-in-out"
+                  className="hover:-translate-y-0.25 transition-all duration-300 ease-in-out font-bold"
                 >
                   <NavLink
                     to={link.path}
                     className={({ isActive }) =>
                       `transition-all hover:text-text-primary duration-300 ease-in-out ${
-                        isActive ? "text-text-primary" : ""
+                        isActive ? "text-text-primary bg-primary/90 rounded-md px-3 py-2  " : ""
                       }`
                     }
                   >

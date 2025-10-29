@@ -6,6 +6,7 @@ import { MessageSquare } from "lucide-react";
 import StuStudentLayout from "@/components/StudentLayout/StudentLayout.jsx";
 import { Button } from "@/components/ui/button";
 import api from "@/API/Config";
+import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 const FEEDBACK_API_URL = "api/Others/Add-Feedback";
 
 function SendFeedback() {
@@ -67,7 +68,7 @@ function SendFeedback() {
       >
         <div className="flex items-center gap-2 text-xl sm:text-2xl font-semibold dark:text-white mb-6">
           <MessageSquare className="w-6 h-6 text-blue-500" />
-          <span>Send Feedback</span>
+           <LandingHeading header="Send Feedback" />
         </div>
 
         <input

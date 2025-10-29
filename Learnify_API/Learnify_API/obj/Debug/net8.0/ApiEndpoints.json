@@ -71,7 +71,7 @@
       },
       {
         "Name": "User.Avatar",
-        "Type": "System.Byte[]",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
         "IsRequired": false
       },
       {
@@ -150,6 +150,22 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.AuthController",
+    "Method": "InstructorRegister",
+    "RelativePath": "Auth/instructor-register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Learnify_API.Data.DTO.InstructorRegisterRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "Auth/login",
     "HttpMethod": "POST",
@@ -166,22 +182,6 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.AuthController",
-    "Method": "Register",
-    "RelativePath": "Auth/register",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "req",
-        "Type": "Learnify_API.Data.DTO.RegisterRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Learnify_API.Controllers.AuthController",
     "Method": "ResetPassword",
     "RelativePath": "Auth/reset-password",
     "HttpMethod": "POST",
@@ -191,6 +191,22 @@
       {
         "Name": "req",
         "Type": "Learnify_API.Data.DTO.ResetPasswordRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.AuthController",
+    "Method": "StudentRegister",
+    "RelativePath": "Auth/student-register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Learnify_API.Data.DTO.StudentRegisterRequest",
         "IsRequired": true
       }
     ],

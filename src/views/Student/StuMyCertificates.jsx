@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 // Components
 import api from "@/API/Config"; // <-- This should be your axios instance
 import Pagination from "../Others/Pagination";
+import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 
 // Endpoints and constants
 const COURSES_PER_PAGE = 4;
@@ -62,13 +63,11 @@ function StuMyCertificates() {
     <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold text-text-primary">
-            My Certificates
-          </h1>
-          <p className="text-text-secondary mt-2">
-            Manage and view your certificate achievements
-          </p>
+        <header className="mb-8 text-left">
+          <LandingHeading
+            header=" My Certificates"
+            subHeader=" Manage and view your certificate achievements"
+          />
         </header>
 
         {/* Jump Into New Certificate Section */}

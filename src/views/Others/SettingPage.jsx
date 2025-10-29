@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 
 /*
   SettingPage.jsx
@@ -77,7 +78,7 @@ export default function SettingPage() {
           <svg className="w-6 h-6 text-[var(--color-primary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M12 4v4M6 7v4m12-4v4M3 13h18" />
           </svg>
-          <h2 className="text-xl font-semibold">Setting</h2>
+           <LandingHeading header="Setting" />
         </div>
 
         <div className="grid grid-cols-12 gap-6">

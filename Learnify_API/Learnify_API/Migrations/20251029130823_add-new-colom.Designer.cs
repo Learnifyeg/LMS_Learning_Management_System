@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Learnify_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251022211042_addTables")]
-    partial class addTables
+    [Migration("20251029130823_add-new-colom")]
+    partial class addnewcolom
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Learnify_API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Admin", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Admin", b =>
                 {
                     b.Property<int>("AdminId")
                         .HasColumnType("int");
@@ -44,13 +44,79 @@ namespace Learnify_API.Migrations
                     b.ToTable("Admins");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Certificate", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.AppUser", b =>
                 {
-                    b.Property<int>("CertificateId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CertificateId"));
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Learnify_API.Data.Models.Certificate", b =>
+                {
+                    b.Property<string>("CertificateId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CertificateUrl")
                         .IsRequired()
@@ -85,7 +151,7 @@ namespace Learnify_API.Migrations
                     b.ToTable("Certificates");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Course", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Course", b =>
                 {
                     b.Property<int>("CourseId")
                         .ValueGeneratedOnAdd()
@@ -124,7 +190,7 @@ namespace Learnify_API.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Enrollment", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Enrollment", b =>
                 {
                     b.Property<int>("EnrollmentId")
                         .ValueGeneratedOnAdd()
@@ -156,7 +222,31 @@ namespace Learnify_API.Migrations
                     b.ToTable("Enrollments");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Instructor", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.FeedBack", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Massage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("image")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("feedBacks");
+                });
+
+            modelBuilder.Entity("Learnify_API.Data.Models.Instructor", b =>
                 {
                     b.Property<int>("InstructorId")
                         .HasColumnType("int");
@@ -176,7 +266,7 @@ namespace Learnify_API.Migrations
                     b.ToTable("Instructors");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.InstructorPayout", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.InstructorPayout", b =>
                 {
                     b.Property<int>("PayoutId")
                         .ValueGeneratedOnAdd()
@@ -209,7 +299,7 @@ namespace Learnify_API.Migrations
                     b.ToTable("InstructorPayouts");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Lesson", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Lesson", b =>
                 {
                     b.Property<int>("LessonId")
                         .ValueGeneratedOnAdd()
@@ -242,7 +332,7 @@ namespace Learnify_API.Migrations
                     b.ToTable("Lessons");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Log", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Log", b =>
                 {
                     b.Property<int>("LogId")
                         .ValueGeneratedOnAdd()
@@ -268,7 +358,7 @@ namespace Learnify_API.Migrations
                     b.ToTable("Logs");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Notification", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Notification", b =>
                 {
                     b.Property<int>("NotificationId")
                         .ValueGeneratedOnAdd()
@@ -307,7 +397,28 @@ namespace Learnify_API.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Question", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Profile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("About")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("profiles");
+                });
+
+            modelBuilder.Entity("Learnify_API.Data.Models.Question", b =>
                 {
                     b.Property<int>("QuestionId")
                         .ValueGeneratedOnAdd()
@@ -349,7 +460,7 @@ namespace Learnify_API.Migrations
                     b.ToTable("Questions");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Quiz", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Quiz", b =>
                 {
                     b.Property<int>("QuizId")
                         .ValueGeneratedOnAdd()
@@ -378,7 +489,7 @@ namespace Learnify_API.Migrations
                     b.ToTable("Quizzes");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Student", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Student", b =>
                 {
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -433,7 +544,7 @@ namespace Learnify_API.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.User", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -454,14 +565,29 @@ namespace Learnify_API.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("PasswordResetCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PasswordResetExpiresAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ProfileImage")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RefreshTokenExpiresAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -471,41 +597,180 @@ namespace Learnify_API.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("VerificationCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("VerificationExpiresAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Admin", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
-                    b.HasOne("API_Learnify.Data.Models.User", "User")
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Learnify_API.Data.Models.Admin", b =>
+                {
+                    b.HasOne("Learnify_API.Data.Models.User", "User")
                         .WithOne("Admin")
-                        .HasForeignKey("API_Learnify.Data.Models.Admin", "AdminId")
+                        .HasForeignKey("Learnify_API.Data.Models.Admin", "AdminId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Certificate", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Certificate", b =>
                 {
-                    b.HasOne("API_Learnify.Data.Models.Course", "Course")
+                    b.HasOne("Learnify_API.Data.Models.Course", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("API_Learnify.Data.Models.Course", null)
+                    b.HasOne("Learnify_API.Data.Models.Course", null)
                         .WithMany("Certificates")
                         .HasForeignKey("CourseId1");
 
-                    b.HasOne("API_Learnify.Data.Models.Student", "Student")
+                    b.HasOne("Learnify_API.Data.Models.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("API_Learnify.Data.Models.Student", null)
+                    b.HasOne("Learnify_API.Data.Models.Student", null)
                         .WithMany("Certificates")
                         .HasForeignKey("StudentId1");
 
@@ -514,9 +779,9 @@ namespace Learnify_API.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Course", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Course", b =>
                 {
-                    b.HasOne("API_Learnify.Data.Models.Instructor", "Instructor")
+                    b.HasOne("Learnify_API.Data.Models.Instructor", "Instructor")
                         .WithMany("Courses")
                         .HasForeignKey("InstructorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -525,15 +790,15 @@ namespace Learnify_API.Migrations
                     b.Navigation("Instructor");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Enrollment", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Enrollment", b =>
                 {
-                    b.HasOne("API_Learnify.Data.Models.Course", "Course")
+                    b.HasOne("Learnify_API.Data.Models.Course", "Course")
                         .WithMany("Enrollments")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("API_Learnify.Data.Models.Student", "Student")
+                    b.HasOne("Learnify_API.Data.Models.Student", "Student")
                         .WithMany("Enrollments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -544,20 +809,20 @@ namespace Learnify_API.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Instructor", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Instructor", b =>
                 {
-                    b.HasOne("API_Learnify.Data.Models.User", "User")
+                    b.HasOne("Learnify_API.Data.Models.User", "User")
                         .WithOne("Instructor")
-                        .HasForeignKey("API_Learnify.Data.Models.Instructor", "InstructorId")
+                        .HasForeignKey("Learnify_API.Data.Models.Instructor", "InstructorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.InstructorPayout", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.InstructorPayout", b =>
                 {
-                    b.HasOne("API_Learnify.Data.Models.Instructor", "Instructor")
+                    b.HasOne("Learnify_API.Data.Models.Instructor", "Instructor")
                         .WithMany("InstructorPayouts")
                         .HasForeignKey("InstructorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -566,9 +831,9 @@ namespace Learnify_API.Migrations
                     b.Navigation("Instructor");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Lesson", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Lesson", b =>
                 {
-                    b.HasOne("API_Learnify.Data.Models.Course", "Course")
+                    b.HasOne("Learnify_API.Data.Models.Course", "Course")
                         .WithMany("Lessons")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -577,9 +842,9 @@ namespace Learnify_API.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Log", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Log", b =>
                 {
-                    b.HasOne("API_Learnify.Data.Models.User", "User")
+                    b.HasOne("Learnify_API.Data.Models.User", "User")
                         .WithMany("Logs")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -588,9 +853,9 @@ namespace Learnify_API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Notification", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Notification", b =>
                 {
-                    b.HasOne("API_Learnify.Data.Models.User", "User")
+                    b.HasOne("Learnify_API.Data.Models.User", "User")
                         .WithMany("Notifications")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -599,9 +864,71 @@ namespace Learnify_API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Question", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Profile", b =>
                 {
-                    b.HasOne("API_Learnify.Data.Models.Quiz", "Quiz")
+                    b.OwnsOne("Learnify_API.Data.Models.SocialLinks", "SocialLinks", b1 =>
+                        {
+                            b1.Property<int>("ProfileId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Facebook")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Github")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("LinkedIn")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Twitter")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ProfileId");
+
+                            b1.ToTable("profiles");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ProfileId");
+                        });
+
+                    b.OwnsOne("Learnify_API.Data.Models.UserInfo", "User", b1 =>
+                        {
+                            b1.Property<int>("ProfileId")
+                                .HasColumnType("int");
+
+                            b1.Property<byte[]>("Avatar")
+                                .HasColumnType("varbinary(max)");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("RoleTitle")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ProfileId");
+
+                            b1.ToTable("profiles");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ProfileId");
+                        });
+
+                    b.Navigation("SocialLinks")
+                        .IsRequired();
+
+                    b.Navigation("User")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Learnify_API.Data.Models.Question", b =>
+                {
+                    b.HasOne("Learnify_API.Data.Models.Quiz", "Quiz")
                         .WithMany("Questions")
                         .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -610,9 +937,9 @@ namespace Learnify_API.Migrations
                     b.Navigation("Quiz");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Quiz", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Quiz", b =>
                 {
-                    b.HasOne("API_Learnify.Data.Models.Course", "Course")
+                    b.HasOne("Learnify_API.Data.Models.Course", "Course")
                         .WithMany("Quizzes")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -621,18 +948,69 @@ namespace Learnify_API.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Student", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Student", b =>
                 {
-                    b.HasOne("API_Learnify.Data.Models.User", "User")
+                    b.HasOne("Learnify_API.Data.Models.User", "User")
                         .WithOne("Student")
-                        .HasForeignKey("API_Learnify.Data.Models.Student", "StudentId")
+                        .HasForeignKey("Learnify_API.Data.Models.Student", "StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Course", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Learnify_API.Data.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Learnify_API.Data.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Learnify_API.Data.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Learnify_API.Data.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Learnify_API.Data.Models.Course", b =>
                 {
                     b.Navigation("Certificates");
 
@@ -643,26 +1021,26 @@ namespace Learnify_API.Migrations
                     b.Navigation("Quizzes");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Instructor", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Instructor", b =>
                 {
                     b.Navigation("Courses");
 
                     b.Navigation("InstructorPayouts");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Quiz", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Quiz", b =>
                 {
                     b.Navigation("Questions");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.Student", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.Student", b =>
                 {
                     b.Navigation("Certificates");
 
                     b.Navigation("Enrollments");
                 });
 
-            modelBuilder.Entity("API_Learnify.Data.Models.User", b =>
+            modelBuilder.Entity("Learnify_API.Data.Models.User", b =>
                 {
                     b.Navigation("Admin");
 

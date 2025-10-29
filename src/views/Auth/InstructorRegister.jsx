@@ -22,6 +22,9 @@ import "react-international-phone/style.css";
 import useCountries from "@/hooks/useCountries";
 import Select from "react-select";
 import { customSelectStyles } from "@/utils/SelectStyle";
+import api from "@/API/Config";
+
+const InstructorRegisterEndPoint = "Auth/instructor-register";
 
 const InstructorSchema = z.object({
   // Step 1 - Basic info
@@ -106,9 +109,32 @@ function InstructorRegister() {
   const prevStep = () => setStep((prev) => prev - 1);
 
   const onSubmit = (data) => {
-    console.log("✅ Instructor Registration Data:", data);
-    localStorage.removeItem("instructorSignup");
-    navigate("/User/Login");
+    const formattedData = {
+      fullName: data.fullName,
+      email: data.email,
+      password: data.password,
+      phone: data.phone,
+      address: data.address,
+      country: data.country.value,
+      gender: data.gender.value,
+      specialization: data.specialization,
+      years_Of_Experience: data.experienceYears,
+      bio: data.major,
+      role: "Instructor",
+    };
+
+    //  console.log("Success: User registered successfully", data);
+    api
+      .post(InstructorRegisterEndPoint, formattedData)
+      .then(() => {
+        localStorage.removeItem("instructorSignup");
+        console.log("Success: User registered successfully");
+        navigate("/User/Login");
+      })
+      .catch((error) => {
+        console.error("Error:", error.response?.data || error.message);
+        navigate("/");
+      });
   };
 
   return (
@@ -374,3 +400,4 @@ function InstructorRegister() {
 }
 
 export default InstructorRegister;
+

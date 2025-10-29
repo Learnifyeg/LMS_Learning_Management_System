@@ -18,7 +18,7 @@ namespace Learnify_API.Data.Services
             var profile = new Profile
             {
                 Role = vM.Role,
-                User = vM.User,
+                //User = vM.User,
                 SocialLinks = vM.SocialLinks,
                 About = vM.About,
 

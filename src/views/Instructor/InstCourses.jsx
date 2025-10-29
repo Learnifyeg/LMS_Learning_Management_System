@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 // Components
 import api from "@/API/Config";
 import CourseCard from "../Student/CourseCard/CourseCard";
+import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 
 // Endpoints and constants
 const CoursesEndPoint = "Courses";
@@ -31,7 +32,7 @@ function InstCourses() {
 
   return (
     <div className="p-6 flex flex-col items-center gap-4">
-      <p className="text-2xl font-semibold">My Created Courses</p>
+      <LandingHeading header="My Created Courses" />
 
       {createdCoursesList.length > 0 ? (
         createdCoursesList.map((course) => (

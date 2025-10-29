@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 
 // Components
 import api from "@/API/Config";
+import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 
 // Lazy load CourseCard
 const CourseCard = lazy(() => import("../Student/CourseCard/CourseCard"));
@@ -47,7 +48,7 @@ function StuShoppingCart() {
     <>
       <div className="flex flex-col gap-4 pt-24 px-24 max-xl:px-4 max-lg:px-6 max-md:px-4 items-center">
         <div className="w-full flex justify-start">
-          <p className="text-2xl font-semibold">Shopping Cart</p>
+            <LandingHeading  header="Shopping Cart" />
         </div>
         <div className="flex flex-col lg:flex-row gap-6 items-start ">
           <div className="space-y-4">

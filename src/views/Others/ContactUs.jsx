@@ -1,4 +1,5 @@
 // React
+import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import { useNavigate } from "react-router";
 
 function ContactUs() {
@@ -13,7 +14,7 @@ function ContactUs() {
             <span className="mx-2">/</span>
             <span className="text-text-secondary">Contact Us</span>
           </div>
-          <h1 className="text-3xl font-bold text-text-primary">Contact Us</h1>
+           <LandingHeading header="Contact Us" />
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">

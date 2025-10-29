@@ -10,8 +10,12 @@ namespace Learnify_API.Data.Models
 
         [MaxLength(100)]
         public string? Specialization { get; set; }
+        public string? Phone { get; set; } = null;
+        public string? Address { get; set; }
+        public string? Country { get; set; }
+        public string? Gender { get; set; }
 
-        public int Experience { get; set; }
+        public int? Experience { get; set; } = 0;
 
         public string? Bio { get; set; }
 

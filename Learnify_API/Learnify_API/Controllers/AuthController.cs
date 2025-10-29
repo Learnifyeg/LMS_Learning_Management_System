@@ -1,5 +1,7 @@
 ﻿using Learnify_API.Data.DTO;
+using Learnify_API.Data.Models;
 using Learnify_API.Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Learnify_API.Controllers
@@ -9,17 +11,26 @@ namespace Learnify_API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly AuthService _authService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public AuthController(AuthService authService)
+        public AuthController(AuthService authService, UserManager<AppUser> userManager)
         {
             _authService = authService;
+            _userManager = userManager;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterRequest req)
+        [HttpPost("instructor-register")]
+        public async Task<IActionResult> InstructorRegister(InstructorRegisterRequest req)
         {
-            var message = await _authService.RegisterAsync(req);
-            return Ok(new { message });
+            var new_instructor = await _authService.InstructorRegisterAsync(req);
+            return Ok(new { new_instructor });
+        }
+
+        [HttpPost("student-register")]
+        public async Task<IActionResult> StudentRegister(StudentRegisterRequest req)
+        {
+            var new_student = await _authService.StudentRegisterAsync(req);
+            return Ok(new { new_student });
         }
 
         [HttpPost("verify-email")]

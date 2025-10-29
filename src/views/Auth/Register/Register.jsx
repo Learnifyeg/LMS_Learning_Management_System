@@ -25,6 +25,9 @@ import "react-international-phone/style.css";
 import useCountries from "@/hooks/useCountries";
 import Select from "react-select";
 import { customSelectStyles } from "@/utils/SelectStyle";
+import api from "@/API/Config";
+
+const StudentRegisterEndPoint = "Auth/student-register";
 
 const RegisterSchema = z.object({
   // Step 1
@@ -57,16 +60,16 @@ function Register() {
   const [step, setStep] = useState(1);
   const { allCountries } = useCountries();
   const [formData, setFormData] = useLocalStorage("studentSignup", {
-    fullName: "",
-    email: "",
-    password: "",
-    phone: "",
-    address: "",
-    country: "",
-    educationLevel: "",
-    university: "",
-    major: "",
-    gender: "",
+    FullName: "",
+    Email: "",
+    Password: "",
+    Phone: "",
+    Address: "",
+    Country: "",
+    EducationLevel: "",
+    University: "",
+    Major: "",
+    Gender: "",
   });
 
   const {
@@ -107,9 +110,30 @@ function Register() {
   const prevStep = () => setStep((prev) => prev - 1);
 
   const onSubmit = (data) => {
-    console.log("✅ Full Data Submitted:", data);
-    localStorage.removeItem("studentSignup");
-    navigate("/User/Login");
+    const formattedData = {
+      fullName: data.fullName,
+      email: data.email,
+      password: data.password,
+      phone: data.phone,
+      address: data.address,
+      country: data.country.value,
+      gender: data.gender.value,
+      educationLevel: data.educationLevel,
+      university: data.university,
+      major: data.major,
+      role: "Student",
+    };
+
+    api
+      .post(StudentRegisterEndPoint, formattedData)
+      .then(() => {
+        localStorage.removeItem("studentSignup");
+        console.log("Success: User registered successfully");
+        navigate("/User/Login");
+      })
+      .catch((error) => {
+        console.error("Error:", error.response?.data || error.message);
+      });
   };
 
   return (
