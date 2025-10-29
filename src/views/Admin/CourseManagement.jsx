@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 // Components
 import api from "@/API/Config";
 import Pagination from "../Others/Pagination";
+import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 
 // Endpoints and constants
 const COURSES_PER_PAGE = 10;
@@ -57,7 +58,7 @@ function CourseManagement() {
   };
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-semibold mb-4">Courses Management</h2>
+      <LandingHeading header="Courses Management" />
 
       {/* Desktop Table */}
       <div className="hidden sm:block overflow-x-auto bg-white dark:bg-gray-800 shadow-md rounded-lg">

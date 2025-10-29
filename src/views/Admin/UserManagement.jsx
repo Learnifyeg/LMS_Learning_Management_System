@@ -4,10 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 // Components
 import api from "@/API/Config";
 import Pagination from "../Others/Pagination";
+import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
+import toast, { Toaster } from "react-hot-toast";
 
 // Endpoints and constants
 const USERS_PER_PAGE = 10;
-const UsersEndPoint = "Users";
+const UsersEndPoint = "Admin/get-all-user";
+const DeleteUsersEndPoint = "Admin/delete-user-by";
+const UpdateUsersEndPoint = "Admin/update-user-by";
 function UserManagement() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,10 +24,12 @@ function UserManagement() {
   useEffect(() => {
     setLoading(true);
     api
-      .get(`${UsersEndPoint}`)
+      .get(UsersEndPoint)
       .then((res) => {
         // assume res.data is an array of user objects
-        setUsers(Array.isArray(res.data) ? res.data : []);
+        setUsers(Array.isArray(res.data.users) ? res.data.users : res.data);
+        console.log("Fetched users:", users);
+        console.log("Fetched users:", res.data.users);
       })
       .catch((err) => {
         console.error("Error fetching users:", err);
@@ -85,8 +91,44 @@ function UserManagement() {
   };
 
   const handleDelete = (user) => {
-    console.log("Delete user", user);
-    // placeholder - implement confirmation & delete later
+    toast.custom((t) => (
+      <div
+        className={`${
+          t.visible ? "animate-enter" : "animate-leave"
+        } bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex flex-col gap-3`}
+      >
+        <p className="text-gray-800 dark:text-gray-200">
+          Are you sure you want to delete <b>{user.name}</b>?
+        </p>
+        <div className="flex justify-end gap-2">
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
+            }}
+            className="px-3 py-1 text-sm rounded-md bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
+              api
+                .delete(`${DeleteUsersEndPoint}/${user.id}`)
+                .then(() => {
+                  setUsers((prev) => prev.filter((u) => u.id !== user.id));
+                  toast.success(`Deleted ${user.name}`);
+                })
+                .catch(() => {
+                  toast.error("Failed to delete user. Try again.");
+                });
+            }}
+            className="px-3 py-1 text-sm rounded-md bg-red-500 text-white hover:bg-red-600"
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    ));
   };
 
   if (loading) {
@@ -99,7 +141,8 @@ function UserManagement() {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-semibold mb-4">User Management</h2>
+      <Toaster position="top-center" reverseOrder={false} />
+      <LandingHeading header="User Management" />
 
       {/* Search and Filter Row */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
@@ -172,11 +215,16 @@ function UserManagement() {
                       className="w-10 h-10 rounded-full object-cover"
                     />
                   </td>
-                  <td className="px-4 py-3">{user.name || "-"}</td>
+                  <td className="px-4 py-3">{user.fullName || "-"}</td>
                   <td className="px-4 py-3">{user.email || "-"}</td>
                   <td className="px-4 py-3 capitalize">{user.role || "-"}</td>
                   <td className="px-4 py-3">{user.phone || "-"}</td>
-                  <td className="px-4 py-3">{user.EnrollDate || "-"}</td>
+                  <td className="px-4 py-3">
+                    {user.createdAt
+                      ? new Date(user.createdAt).toISOString().split("T")[0]
+                      : "-"}
+                  </td>
+
                   <td className="px-4 py-3 text-center space-x-2">
                     <button
                       className="px-2 py-1 text-xs bg-primary text-white rounded-md hover:bg-blue-600 cursor-pointer "
