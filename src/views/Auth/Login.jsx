@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z, { set } from "zod";
 import { useNavigate } from "react-router";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import {
   FaFacebook,
   FaTwitter,
@@ -20,32 +20,40 @@ import {
 import LogoModes from "@/components/ui/LogoTheme/LogoModes";
 import { useEffect, useState } from "react";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import useTokenStore from "@/store/user";
+import api from "@/API/Config";
 
 const RegisterSchema = z.object({
   email: z.email("Please enter a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
+const LoginEndpoint = "Auth/login";
 function Login() {
   const navigate = useNavigate();
+  const { setToken } = useTokenStore();
   const {
     register,
-    formState: { errors },
     handleSubmit,
+    formState: { errors },
   } = useForm({ resolver: zodResolver(RegisterSchema) });
-  const { setUser } = useUserStore();
-
-  const onSubmit = (data) => {
-    console.log("Submitted");
-    // const response = axios.post("http://localhost:8000/api/register", data);
-    // if (response.status !== 200) return; //status 200 , message: "success", user : { email: "string", fullName: "string", phoneNumber: "string", role: "string" , token: "string" }
-    setUser(data);
-    toast.success("Logged in successfully!");
-    navigate("/");
+  const onSubmit = async (data) => {
+    try {
+      const response = await api.post(LoginEndpoint, data);
+      const { token } = response.data;
+      setToken(token); // save only token
+      toast.success("Logged in successfully!");
+      // navigate("/");
+    } catch (err) {
+      console.error(err.response?.data);
+      toast.error(err.response?.data?.message || "Login failed");
+    }
   };
+  // localStorage.clear();
 
   return (
     <section className="my-5 space-y-6">
+      <Toaster position="top-center" reverseOrder={false} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label>

@@ -1,39 +1,21 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface IUser {
-  email: string;
-  fullName: string;
-  phoneNumber?: string;
-  role?: string;
-  token?: string; // JWT
+interface ITokenStore {
+  token: string | null;
+  setToken: (token: string) => void;
+  clearToken: () => void;
 }
 
-interface IUserStore {
-  user: IUser;
-  setUser: (user: IUser) => void;
-  clearUser: () => void;
-}
-
-const useUserStore = create<IUserStore>()(
+const useTokenStore = create<ITokenStore>()(
   persist(
     (set) => ({
-      user: {
-        email: "",
-        fullName: "",
-        phoneNumber: "",
-        role: "",
-      },
-      setUser: (user) => set({ user }),
-      clearUser: () =>
-        set({
-          user: { email: "", fullName: "", phoneNumber: "", role: "" },
-        }),
+      token: null,
+      setToken: (token) => set({ token }),
+      clearToken: () => set({ token: null }),
     }),
-    {
-      name: "user-storage", // key in localStorage
-    }
+    { name: "token-storage" }
   )
 );
 
-export default useUserStore;
+export default useTokenStore;

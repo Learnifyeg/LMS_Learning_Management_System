@@ -1,6 +1,7 @@
 ﻿using Learnify_API.Data;
 using Learnify_API.Data.Models;
 using Learnify_API.Data.Services;
+using Learnify_API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,8 @@ namespace Learnify_API
             builder.Services.AddScoped<InstructorService>();
             builder.Services.AddScoped<AdminService>();
             builder.Services.AddScoped<AuthService>();
+            builder.Services.AddScoped<INotificationService, NotificationService>();
+
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -52,23 +55,26 @@ namespace Learnify_API
 
             // --------------------------------- JWT Configuration --------------------------------------------
 
-            var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+             .AddJwtBearer(options =>
+             {
+                 options.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuer = true,
+                     ValidateAudience = true,
+                     ValidateLifetime = true,
+                     ValidateIssuerSigningKey = true,
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                        ValidAudience = builder.Configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(key)
-                    };
-                });
-
+                     ValidIssuer = builder.Configuration["JWT:Issuer"],
+                     ValidAudience = builder.Configuration["JWT:Audience"],
+                     IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+                 };
+             });
             builder.Services.AddAuthorization();
             builder.Services.AddScoped<EmailService>();
 
@@ -121,7 +127,7 @@ namespace Learnify_API
             //app.UseCors("AllowFrontend");
             var app = builder.Build();
             app.UseCors("AllowAll");
-
+            // -------------------------------- CORS Configuration AllowFrontend --------------------------------------------
 
 
 
@@ -138,6 +144,7 @@ namespace Learnify_API
             // Use CORS before authorization
             app.UseCors("AllowReactApp");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

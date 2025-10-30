@@ -91,6 +91,22 @@ namespace Learnify_API.Data
             modelBuilder.Entity<Profile>().OwnsOne(p => p.SocialLinks);
 
             base.OnModelCreating(modelBuilder);
+
+
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Notification>()
+                .HasOne(n => n.Receiver)
+                .WithMany()
+                .HasForeignKey(n => n.ReceiverId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Notification>()
+                .HasOne(n => n.Sender)
+                .WithMany()
+                .HasForeignKey(n => n.SenderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
 
 

@@ -5,32 +5,31 @@ import React, { useEffect, useState } from "react";
 import api from "@/API/Config"; // your axios instance
 
 // Endpoints and constants
-const NotificationsEndpoint = "Notifications"; // GET /profiles
+const NotificationsEndpoint = "Notification/user-receive"; // GET /profiles
 
 function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      setLoading(true);
-      try {
-        // Get role from localStorage
-        const role = localStorage.getItem("role") || "student"; // default to student
-        const response = await api.get(NotificationsEndpoint); // GET /notifications
-        const data = response.data?.[0]?.student || [];
-        setNotifications(data);
-        console.log(data);
-      } catch (error) {
-        console.error("Error fetching notifications:", error);
-        setNotifications([]);
-      } finally {
-        setLoading(false);
-      }
-    };
+ useEffect(() => {
+  const fetchNotifications = async () => {
+    setLoading(true);
+    try {
+      const userId = localStorage.getItem("userId") || 6; // current logged user
+      const response = await api.get(`${NotificationsEndpoint}/${userId}`);
+      setNotifications(response.data || []);
+      console.log("Notifications:", response.data);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+      setNotifications([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchNotifications();
-  }, []);
+  fetchNotifications();
+}, []);
+
 
   return (
     <div className="min-h-screen bg-background py-8">
@@ -134,12 +133,12 @@ function Notifications() {
                   ) : (
                     <div className="flex items-start space-x-4">
                       <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-purple-600 font-semibold text-sm">
+                        {/* <span className="text-purple-600 font-semibold text-sm">
                           {notification.user
                             .split(" ")
                             .map((n) => n[0])
                             .join("")}
-                        </span>
+                        </span> */}
                       </div>
                       <div className="flex-1">
                         <p className="text-text-primary mb-1">

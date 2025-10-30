@@ -157,22 +157,33 @@ namespace Learnify_API.Data.Services
         // 3️⃣ LOGIN
         public async Task<AuthResponse?> LoginAsync(LoginRequest req)
         {
+            // 🔍 Step 1: Check if user exists
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == req.Email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(req.Password, user.PasswordHash))
                 return null;
 
-            if (!user.IsEmailVerified)
-                throw new Exception("Please verify your email first.");
+            //// Step 2: Check email verification
+            //if (!user.IsEmailVerified)
+            //    throw new Exception("Please verify your email first.");
 
+            // Step 3: Generate JWT token
             var token = GenerateJwtToken(user);
 
+            // Step 4: Return the full response
             return new AuthResponse
             {
                 Token = token,
-                ExpiresIn = 3600,
-                User = new { user.UserId, user.FullName, user.Email, user.Role }
+                ExpiresIn = 3600, // 1 hour
+                User = new
+                {
+                    userId = user.UserId,
+                    fullName = user.FullName,
+                    email = user.Email,
+                    role = user.Role
+                }
             };
         }
+
 
         // 4️⃣ FORGOT PASSWORD
         public async Task<string> ForgotPasswordAsync(ForgotPasswordRequest req)
@@ -209,28 +220,34 @@ namespace Learnify_API.Data.Services
             return "Password updated successfully.";
         }
 
-        // Helper — Generate JWT
         private string GenerateJwtToken(User user)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            // 1️⃣ Create the secret key
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SecretKey"]));
+
+            // 2️⃣ Define the signing algorithm
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+            // 3️⃣ Add claims — user data inside token
             var claims = new[]
-            {
+             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim("userId", user.UserId.ToString()),
                 new Claim(ClaimTypes.Role, user.Role)
             };
 
+            // 4️⃣ Create the token
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
+                issuer: _config["JWT:Issuer"],
+                audience: _config["JWT:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(double.Parse(_config["Jwt:ExpiresInMinutes"])),
+                expires: DateTime.Now.AddMinutes(double.Parse(_config["JWT:ExpiresInMinutes"])),
                 signingCredentials: creds
             );
 
+            // 5️⃣ Serialize token to string
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
     }
 }

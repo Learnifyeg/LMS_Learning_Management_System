@@ -16,12 +16,16 @@ import {
 // Components
 import api from "@/API/Config";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
+import useAuth from "@/store/useAuth";
 
 // Endpoints and constants
 const dashboardEndPoint = "dashboards";
 
 function Dashboard({ role }) {
   const [dashboard, setDashboard] = useState(null);
+  const { token, user } = useAuth();
+
+  console.log("User Info from Token:", user);
 
   useEffect(() => {
     const fetchDashboard = async () => {
