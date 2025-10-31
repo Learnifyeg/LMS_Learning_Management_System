@@ -15,11 +15,11 @@ namespace Learnify_API.Controllers
             _notificationService = notificationService;
         }
 
-        // ✅ Send a notification from one user to another
+        // Send a notification from one user to another
         [HttpPost("user-send")]
         public async Task<IActionResult> SendNotification([FromBody] NotificationCreateDTO dto)
         {
-            if (dto.SenderId == 0 || dto.ReceiverId == 0)
+            if (dto.SenderId == 0 || string.IsNullOrWhiteSpace(dto.ReceiverEmail))
                 return BadRequest("SenderId and ReceiverId are required.");
 
             var result = await _notificationService.CreateNotificationAsync(dto);
@@ -31,10 +31,10 @@ namespace Learnify_API.Controllers
         }
 
         // ✅ Get all notifications for a specific user
-        [HttpGet("user-receive/{receiverId}")]
-        public async Task<IActionResult> GetNotificationsByUser(int receiverId)
+        [HttpGet("user-receive/{receiverEmail}")]
+        public async Task<IActionResult> GetNotificationsByUser(string receiverEmail)
         {
-            var notifications = await _notificationService.GetUserNotificationsAsync(receiverId);
+            var notifications = await _notificationService.GetUserNotificationsAsync(receiverEmail);
 
             if (notifications == null || !notifications.Any())
                 return NotFound("No notifications found for this user.");
@@ -52,5 +52,17 @@ namespace Learnify_API.Controllers
 
             return Ok(new { message = "Notification marked as read." });
         }
+
+        // DELETE /Notification/{id}
+        [HttpDelete("user-delete/{id}")]
+        public async Task<IActionResult> DeleteNotification(int id)
+        {
+            var result = await _notificationService.DeleteNotificationAsync(id);
+            if (!result)
+                return NotFound("Notification not found.");
+
+            return Ok(new { message = "Notification deleted successfully." });
+        }
+
     }
 }

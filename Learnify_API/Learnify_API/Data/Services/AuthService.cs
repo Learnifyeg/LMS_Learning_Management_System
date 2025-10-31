@@ -91,7 +91,7 @@ namespace Learnify_API.Data.Services
             {
                 UserName = req.FullName,
                 Email = req.Email,
-                Role = "admin"
+                Role = "student"
             };
             //IdentityResult result = await _userManager.CreateAsync(App_User, req.Password);
             //if (!result.Succeeded)
@@ -106,7 +106,7 @@ namespace Learnify_API.Data.Services
                 FullName = req.FullName,
                 Email = req.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
-                Role = "admin",
+                Role = "student",
                 ProfileImage = req.ProfileImage,
                 VerificationCode = verificationCode,
                 VerificationExpiresAt = DateTime.Now.AddMinutes(10)
@@ -165,24 +165,36 @@ namespace Learnify_API.Data.Services
             // Step 2: Generate new JWT
             var token = GenerateJwtToken(user);
 
-            // Step 3: Always generate and update refresh token
+            // Step 3: Generate and update refresh token
             var refreshToken = GenerateRefreshToken();
             user.RefreshToken = refreshToken;
             user.RefreshTokenExpiresAt = DateTime.UtcNow.AddMinutes(
                 double.Parse(_config["Jwt:RefreshTokenValidityMins"])
             );
+            await _context.SaveChangesAsync();
 
-            await _context.SaveChangesAsync(); // no need for .Update()
+            // ✅ Step 4: Count notifications
+            var notificationCount = await _context.Notifications
+                .CountAsync(n => n.ReceiverEmail == user.Email);
 
-            // Step 4: Return result
+            // Step 5: Return response
             var expiresInMinutes = double.Parse(_config["Jwt:TokenValidityMins"]);
             return new AuthResponse
             {
                 Token = token,
                 ExpiresIn = (int)(expiresInMinutes * 60),
-                RefreshToken = refreshToken
+                RefreshToken = refreshToken,
+                User = new
+                {
+                    user.UserId,
+                    user.FullName,
+                    user.Email,
+                    user.Role,
+                    NotificationCount = notificationCount   // ✅ Added
+                }
             };
         }
+
 
 
 

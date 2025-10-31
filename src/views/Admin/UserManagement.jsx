@@ -6,6 +6,7 @@ import api from "@/API/Config";
 import Pagination from "../Others/Pagination";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import toast, { Toaster } from "react-hot-toast";
+import ConfirmToast from "@/utils/ConfirmToast";
 
 // Endpoints and constants
 const USERS_PER_PAGE = 10;
@@ -91,42 +92,23 @@ function UserManagement() {
 
   const handleDelete = (user) => {
     toast.custom((t) => (
-      <div
-        className={`${
-          t.visible ? "animate-enter" : "animate-leave"
-        } bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex flex-col gap-3`}
-      >
-        <p className="text-gray-800 dark:text-gray-200">
-          Are you sure you want to delete <b>{user.name}</b>?
-        </p>
-        <div className="flex justify-end gap-2">
-          <button
-            onClick={() => {
-              toast.dismiss(t.id);
-            }}
-            className="px-3 py-1 text-sm rounded-md bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={() => {
-              toast.dismiss(t.id);
-              api
-                .delete(`${DeleteUsersEndPoint}/${user.id}`)
-                .then(() => {
-                  setUsers((prev) => prev.filter((u) => u.id !== user.id));
-                  toast.success(`Deleted ${user.name}`);
-                })
-                .catch(() => {
-                  toast.error("Failed to delete user. Try again.");
-                });
-            }}
-            className="px-3 py-1 text-sm rounded-md bg-red-500 text-white hover:bg-red-600"
-          >
-            Confirm
-          </button>
-        </div>
-      </div>
+      <ConfirmToast
+        message={`Are you sure you want to delete ${user.name}?`}
+        onConfirm={() => {
+          api
+            .delete(`${DeleteUsersEndPoint}/${user.id}`)
+            .then(() => {
+              setUsers((prev) => prev.filter((u) => u.id !== user.id));
+              toast.success(`Deleted ${user.name}`);
+            })
+            .catch(() => {
+              toast.error("Failed to delete user. Try again.");
+            });
+        }}
+        onCancel={() => {
+          toast.dismiss(t.id); // optional, already handled in ConfirmToast
+        }}
+      />
     ));
   };
 

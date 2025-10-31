@@ -334,14 +334,36 @@
         }
       }
     },
-    "/Notification/user-receive/{receiverId}": {
+    "/Notification/user-receive/{receiverEmail}": {
       "get": {
         "tags": [
           "Notification"
         ],
         "parameters": [
           {
-            "name": "receiverId",
+            "name": "receiverEmail",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Notification/user-read/{id}": {
+      "put": {
+        "tags": [
+          "Notification"
+        ],
+        "parameters": [
+          {
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -357,8 +379,8 @@
         }
       }
     },
-    "/Notification/user-read/{id}": {
-      "put": {
+    "/Notification/user-delete/{id}": {
+      "delete": {
         "tags": [
           "Notification"
         ],
@@ -724,9 +746,9 @@
             "type": "integer",
             "format": "int32"
           },
-          "receiverId": {
-            "type": "integer",
-            "format": "int32"
+          "receiverEmail": {
+            "type": "string",
+            "nullable": true
           },
           "title": {
             "type": "string",

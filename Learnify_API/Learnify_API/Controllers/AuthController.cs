@@ -68,7 +68,8 @@ namespace Learnify_API.Controllers
             {
                 Token = result.Token,
                 ExpiresIn = result.ExpiresIn,
-                RefreshToken = result.RefreshToken
+                RefreshToken = result.RefreshToken,
+                User = result.User
             });
         }
 

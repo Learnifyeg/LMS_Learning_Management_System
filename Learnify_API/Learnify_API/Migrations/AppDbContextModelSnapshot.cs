@@ -387,8 +387,10 @@ namespace Learnify_API.Migrations
                     b.Property<DateTime?>("ReadAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ReceiverId")
-                        .HasColumnType("int");
+                    b.Property<string>("ReceiverEmail")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("SenderId")
                         .HasColumnType("int");
@@ -406,8 +408,6 @@ namespace Learnify_API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("NotificationId");
-
-                    b.HasIndex("ReceiverId");
 
                     b.HasIndex("SenderId");
 
@@ -634,6 +634,9 @@ namespace Learnify_API.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -885,12 +888,6 @@ namespace Learnify_API.Migrations
 
             modelBuilder.Entity("Learnify_API.Data.Models.Notification", b =>
                 {
-                    b.HasOne("Learnify_API.Data.Models.User", "Receiver")
-                        .WithMany()
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Learnify_API.Data.Models.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
@@ -899,8 +896,6 @@ namespace Learnify_API.Migrations
                     b.HasOne("Learnify_API.Data.Models.User", null)
                         .WithMany("Notifications")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Receiver");
 
                     b.Navigation("Sender");
                 });

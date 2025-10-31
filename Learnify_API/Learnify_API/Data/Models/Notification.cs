@@ -8,14 +8,9 @@ namespace Learnify_API.Data.Models
         [Key]
         public int NotificationId { get; set; }
 
-        //  The user who receives the notification
-        [Required]
-        public int ReceiverId { get; set; }
+        [Required, EmailAddress, MaxLength(100)]
+        public string ReceiverEmail { get; set; } = string.Empty;
 
-        [ForeignKey(nameof(ReceiverId))]
-        public User Receiver { get; set; } = null!;
-
-        //  The user who sent the notification (optional)
         public int? SenderId { get; set; }
 
         [ForeignKey(nameof(SenderId))]

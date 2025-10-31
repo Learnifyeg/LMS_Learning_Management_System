@@ -277,6 +277,22 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.NotificationController",
+    "Method": "DeleteNotification",
+    "RelativePath": "Notification/user-delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.NotificationController",
     "Method": "MarkAsRead",
     "RelativePath": "Notification/user-read/{id}",
     "HttpMethod": "PUT",
@@ -294,14 +310,14 @@
   {
     "ContainingType": "Learnify_API.Controllers.NotificationController",
     "Method": "GetNotificationsByUser",
-    "RelativePath": "Notification/user-receive/{receiverId}",
+    "RelativePath": "Notification/user-receive/{receiverEmail}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "receiverId",
-        "Type": "System.Int32",
+        "Name": "receiverEmail",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

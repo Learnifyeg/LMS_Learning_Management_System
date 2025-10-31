@@ -3,7 +3,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
-  withCredentials: true, // ✅ important for sending cookies
+  withCredentials: true, // important for sending cookies
   headers: {
     "Content-Type": "application/json",
   },
@@ -49,7 +49,7 @@ api.interceptors.response.use(
 
         // Clear stored token and redirect to login page
         useTokenStore.setState({ token: null });
-        window.location.href = "/User/Login"; // ✅ direct redirect (safe outside React)
+        window.location.href = "/User/Login"; // direct redirect (safe outside React)
 
         return Promise.reject(err);
       }

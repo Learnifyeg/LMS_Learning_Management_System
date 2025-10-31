@@ -95,11 +95,16 @@ namespace Learnify_API.Data
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Notification>()
-                .HasOne(n => n.Receiver)
-                .WithMany()
-                .HasForeignKey(n => n.ReceiverId)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique(); // ensure unique emails (required for principal key)
+
+            //modelBuilder.Entity<Notification>()
+            //    .HasOne(n => n.Receiver)
+            //    .WithMany()
+            //    .HasPrincipalKey(u => u.Email)   // 👈 target Email instead of UserId
+            //    .HasForeignKey(n => n.ReceiverEmail)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.Sender)
