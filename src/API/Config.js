@@ -1,47 +1,56 @@
-// import { refreshAccessToken } from "@/store/RefreshAccessToken";
 import useTokenStore from "@/store/user";
 import axios from "axios";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
-  withCredentials: true, // ✅ important to send cookies
+  withCredentials: true, // ✅ important for sending cookies
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 const RefreshTokenEndpoint = "Auth/refresh-token";
+
+// Request Interceptor
 api.interceptors.request.use((config) => {
   const token = useTokenStore.getState().token;
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  else console.log("no token available");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    console.log("no token available");
+  }
   return config;
 });
-console.log("from token")
+
+// Response Interceptor
 api.interceptors.response.use(
-  (response) => {
-    // ✅ this runs for successful responses
-    return response;
-  },
+  (response) => response,
   async (error) => {
     console.log("from response error interceptor", error);
 
     if (error.response?.status === 401) {
-      console.log("error.response?.statukkks", error.response?.status);
       try {
-        // const res = await api.post(RefreshTokenEndpoint,{}); // cookie sent automatically
-        const res = await api.post("Auth/refresh-token", null, { withCredentials: true });
-        console.log("from refresh token the new access token 777is", res);
+        // Try refreshing the token
+        const res = await api.post(RefreshTokenEndpoint, null, {
+          withCredentials: true,
+        });
 
+        console.log("New token received:", res.data.token);
         const newToken = res.data.token;
-        useTokenStore.getState().setToken(newToken);
 
-        // retry original request with new token
+        // Update Zustand store
+        useTokenStore.setState({ token: newToken });
+
+        // Retry the original request with new token
         error.config.headers["Authorization"] = `Bearer ${newToken}`;
         return api.request(error.config);
       } catch (err) {
-        console.log("from refresh token the new access token is failed", err);
-        useTokenStore.getState().clearToken();
+        console.log("Refresh token failed:", err);
+
+        // Clear stored token and redirect to login page
+        useTokenStore.setState({ token: null });
+        window.location.href = "/User/Login"; // ✅ direct redirect (safe outside React)
+
         return Promise.reject(err);
       }
     }
@@ -49,6 +58,5 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
 
 export default api;

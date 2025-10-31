@@ -17,7 +17,7 @@ function useAuth() {
 
   useEffect(() => {
     if (token) {
-      console.log("Token:", token);
+      console.log("Token:", token); 
       try {
         const decoded = (jwt_decode as any).default(token);
         console.log("Decoded Token:", decoded);
