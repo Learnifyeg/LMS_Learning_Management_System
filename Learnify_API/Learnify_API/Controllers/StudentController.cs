@@ -1,5 +1,6 @@
 ﻿using Learnify_API.Data.Services;
 using Learnify_API.Data.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Learnify_API.Controllers
@@ -28,6 +29,7 @@ namespace Learnify_API.Controllers
         }
 
         // ----------- Get All Students -----------
+        [Authorize(Roles = "admin, instructor")]
         [HttpGet("get-students")]
         public async Task<IActionResult> GetAllStudents()
         {

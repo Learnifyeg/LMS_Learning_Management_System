@@ -291,6 +291,18 @@
         }
       }
     },
+    "/Auth/refresh-token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Notification/user-send": {
       "post": {
         "tags": [
@@ -655,10 +667,6 @@
             "minLength": 8,
             "type": "string"
           },
-          "role": {
-            "type": "string",
-            "nullable": true
-          },
           "profileImage": {
             "type": "string",
             "nullable": true
@@ -801,10 +809,6 @@
           "password": {
             "minLength": 8,
             "type": "string"
-          },
-          "role": {
-            "type": "string",
-            "nullable": true
           },
           "profileImage": {
             "type": "string",

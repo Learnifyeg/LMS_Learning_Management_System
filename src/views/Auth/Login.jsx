@@ -41,9 +41,10 @@ function Login() {
     try {
       const response = await api.post(LoginEndpoint, data);
       const { token } = response.data;
-      setToken(token); // save only token
+      localStorage.setItem("token-storage", token);
+      console.log("token after login", token);
+      setToken(token); // save access token only
       toast.success("Logged in successfully!");
-      // navigate("/");
     } catch (err) {
       console.error(err.response?.data);
       toast.error(err.response?.data?.message || "Login failed");
@@ -51,7 +52,7 @@ function Login() {
   };
   // localStorage.clear();
 
-  return (
+  return ( 
     <section className="my-5 space-y-6">
       <Toaster position="top-center" reverseOrder={false} />
       <form onSubmit={handleSubmit(onSubmit)}>

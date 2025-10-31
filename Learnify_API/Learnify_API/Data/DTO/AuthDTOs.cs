@@ -13,7 +13,7 @@ namespace Learnify_API.Data.DTO
         [Required, MinLength(8)]
         public string Password { get; set; } = string.Empty;
 
-        public string Role { get; set; } = "Instructor";
+        //public string Role { get; set; } = "Instructor";
 
         // ✅ New fields for Instructor
         public string? ProfileImage { get; set; }
@@ -38,7 +38,7 @@ namespace Learnify_API.Data.DTO
         [Required, MinLength(8)]
         public string Password { get; set; } = string.Empty;
 
-        public string Role { get; set; } = "Student";
+        //public string Role { get; set; } = "Student";
 
         // New fields for Student
         public string? ProfileImage { get; set; }
@@ -77,11 +77,17 @@ namespace Learnify_API.Data.DTO
         public string NewPassword { get; set; } = string.Empty;
     }
 
+    // For refresh access token
     public class AuthResponse
     {
+        public object? User { get; set; }
         public string Token { get; set; } = string.Empty;
         public int ExpiresIn { get; set; }
         public string? RefreshToken { get; set; }
-        public object? User { get; set; }
+    }
+
+    public class RefreshTokenRequest
+    {
+        public string Token { get; set; } = string.Empty;
     }
 }

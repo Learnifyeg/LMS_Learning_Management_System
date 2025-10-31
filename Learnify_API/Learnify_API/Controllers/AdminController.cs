@@ -1,5 +1,6 @@
 ﻿using Learnify_API.Data.Services;
 using Learnify_API.Data.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Learnify_API.Controllers
@@ -15,6 +16,7 @@ namespace Learnify_API.Controllers
         public readonly AdminService _adminService;
 
         // GET: api/user
+        [Authorize(Roles = "admin")]
         [HttpGet("get-all-user")]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -23,6 +25,7 @@ namespace Learnify_API.Controllers
         }
 
         //  GET: api/user/5
+        [Authorize(Roles = "admin")]
         [HttpGet("get-user-by/{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
@@ -34,6 +37,7 @@ namespace Learnify_API.Controllers
         }
 
         // PUT: api/user/5
+        [Authorize(Roles = "admin")]
         [HttpPut("update-user-by/{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserVM model)
         {
@@ -45,6 +49,7 @@ namespace Learnify_API.Controllers
         }
 
         // DELETE: api/user/5
+        [Authorize(Roles = "admin")]
         [HttpDelete("delete-user-by/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {

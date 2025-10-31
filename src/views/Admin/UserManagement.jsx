@@ -21,15 +21,6 @@ function UserManagement() {
   const [roleFilter, setRoleFilter] = useState("all"); // all | student | instructor | admin
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.max(
-    1,
-    Math.ceil(filteredUsers.length / USERS_PER_PAGE)
-  );
-  const pageStartIndex = (currentPage - 1) * USERS_PER_PAGE;
-  const pageUsers = filteredUsers.slice(
-    pageStartIndex,
-    pageStartIndex + USERS_PER_PAGE
-  );
   useEffect(() => {
     setLoading(true);
     api
@@ -78,6 +69,15 @@ function UserManagement() {
     });
   }, [users, search, roleFilter]);
 
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredUsers.length / USERS_PER_PAGE)
+  );
+  const pageStartIndex = (currentPage - 1) * USERS_PER_PAGE;
+  const pageUsers = filteredUsers.slice(
+    pageStartIndex,
+    pageStartIndex + USERS_PER_PAGE
+  );
   // Placeholder action handlers
   const handleView = (user) => {
     console.log("View user", user);

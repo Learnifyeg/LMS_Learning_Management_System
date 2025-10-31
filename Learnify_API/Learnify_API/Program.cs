@@ -59,18 +59,21 @@ namespace Learnify_API
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
              .AddJwtBearer(options =>
              {
+                 options.RequireHttpsMetadata = false;
+                 options.SaveToken = true;
                  options.TokenValidationParameters = new TokenValidationParameters
                  {
                      ValidateIssuer = true,
                      ValidateAudience = true,
                      ValidateLifetime = true,
                      ValidateIssuerSigningKey = true,
-
-                     ValidIssuer = builder.Configuration["JWT:Issuer"],
-                     ValidAudience = builder.Configuration["JWT:Audience"],
+                     ClockSkew = TimeSpan.Zero, // ⬅️ add this
+                     ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                     ValidAudience = builder.Configuration["Jwt:Audience"],
                      IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
                  };
@@ -118,18 +121,22 @@ namespace Learnify_API
             // -------------------------------- CORS Configuration AllowFrontend --------------------------------------------
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowFrontend",
-                    builder => builder
-                        .WithOrigins("http://localhost:5173") // your React app's URL
-                        .AllowAnyHeader()
-                        .AllowAnyMethod());
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173") // React app URL
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials(); // Important for sending cookies
+                });
             });
             //app.UseCors("AllowFrontend");
             var app = builder.Build();
-            app.UseCors("AllowAll");
+            //app.UseCors("AllowAll");
             // -------------------------------- CORS Configuration AllowFrontend --------------------------------------------
 
 
+
+            // Configure the HTTP request pipeline.
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -142,7 +149,10 @@ namespace Learnify_API
             app.UseStaticFiles();
 
             // Use CORS before authorization
-            app.UseCors("AllowReactApp");
+            //app.UseCors("AllowReactApp");
+
+
+            app.UseCors("AllowFrontend"); //  Must come before authentication
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -36,7 +36,7 @@ namespace Learnify_API.Data.Services
             {
                 UserName = req.FullName,
                 Email = req.Email,
-                Role = req.Role
+                Role = "instructor"
             };
             //IdentityResult result = await _userManager.CreateAsync(App_User, req.Password);
             //if (!result.Succeeded)
@@ -51,7 +51,7 @@ namespace Learnify_API.Data.Services
                 FullName = req.FullName,
                 Email = req.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
-                Role = req.Role,
+                Role = "instructor",
                 ProfileImage = req.ProfileImage,
                 VerificationCode = verificationCode,
                 VerificationExpiresAt = DateTime.Now.AddMinutes(10)
@@ -91,7 +91,7 @@ namespace Learnify_API.Data.Services
             {
                 UserName = req.FullName,
                 Email = req.Email,
-                Role = req.Role
+                Role = "admin"
             };
             //IdentityResult result = await _userManager.CreateAsync(App_User, req.Password);
             //if (!result.Succeeded)
@@ -106,7 +106,7 @@ namespace Learnify_API.Data.Services
                 FullName = req.FullName,
                 Email = req.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
-                Role = req.Role,
+                Role = "admin",
                 ProfileImage = req.ProfileImage,
                 VerificationCode = verificationCode,
                 VerificationExpiresAt = DateTime.Now.AddMinutes(10)
@@ -157,32 +157,33 @@ namespace Learnify_API.Data.Services
         // 3️⃣ LOGIN
         public async Task<AuthResponse?> LoginAsync(LoginRequest req)
         {
-            // 🔍 Step 1: Check if user exists
+            // Step 1: Find user and verify password
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == req.Email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(req.Password, user.PasswordHash))
                 return null;
 
-            //// Step 2: Check email verification
-            //if (!user.IsEmailVerified)
-            //    throw new Exception("Please verify your email first.");
-
-            // Step 3: Generate JWT token
+            // Step 2: Generate new JWT
             var token = GenerateJwtToken(user);
 
-            // Step 4: Return the full response
+            // Step 3: Always generate and update refresh token
+            var refreshToken = GenerateRefreshToken();
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiresAt = DateTime.UtcNow.AddMinutes(
+                double.Parse(_config["Jwt:RefreshTokenValidityMins"])
+            );
+
+            await _context.SaveChangesAsync(); // no need for .Update()
+
+            // Step 4: Return result
+            var expiresInMinutes = double.Parse(_config["Jwt:TokenValidityMins"]);
             return new AuthResponse
             {
                 Token = token,
-                ExpiresIn = 3600, // 1 hour
-                User = new
-                {
-                    userId = user.UserId,
-                    fullName = user.FullName,
-                    email = user.Email,
-                    role = user.Role
-                }
+                ExpiresIn = (int)(expiresInMinutes * 60),
+                RefreshToken = refreshToken
             };
         }
+
 
 
         // 4️⃣ FORGOT PASSWORD
@@ -220,34 +221,80 @@ namespace Learnify_API.Data.Services
             return "Password updated successfully.";
         }
 
+
+        //  GenerateJwtToken
         private string GenerateJwtToken(User user)
         {
             // 1️⃣ Create the secret key
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SecretKey"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SecretKey"]));
 
             // 2️⃣ Define the signing algorithm
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             // 3️⃣ Add claims — user data inside token
             var claims = new[]
-             {
+            {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim("userId", user.UserId.ToString()),
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim("role", user.Role)
             };
 
             // 4️⃣ Create the token
             var token = new JwtSecurityToken(
-                issuer: _config["JWT:Issuer"],
-                audience: _config["JWT:Audience"],
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(double.Parse(_config["JWT:ExpiresInMinutes"])),
+                expires: DateTime.UtcNow.AddMinutes(double.Parse(_config["Jwt:TokenValidityMins"])), // ✅ use UTC
                 signingCredentials: creds
             );
 
             // 5️⃣ Serialize token to string
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        //GenerateRefreshToken
+        private string GenerateRefreshToken()
+        {
+            var randomBytes = new byte[64];
+            using (var rng = System.Security.Cryptography.RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomBytes);
+                return Convert.ToBase64String(randomBytes);
+            }
+        }
+
+
+        // RefreshAccessTokenAsync  
+        public async Task<AuthResponse?> RefreshAccessTokenAsync(string refreshToken)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
+
+            if (user == null || user.RefreshTokenExpiresAt < DateTime.UtcNow)
+                return null;
+
+            // Generate new access token
+            var newToken = GenerateJwtToken(user);
+
+            // Generate new refresh token (rotating)
+            var newRefreshToken = GenerateRefreshToken();
+            //user.RefreshToken = newRefreshToken;
+            //user.RefreshTokenExpiresAt = DateTime.UtcNow.AddMinutes(
+            //        double.Parse(_config["Jwt:RefreshTokenValidityMins"])
+            //    );
+            await _context.SaveChangesAsync();
+
+            var expiresInMinutes = double.Parse(_config["Jwt:TokenValidityMins"]);
+
+            return new AuthResponse
+            {
+                Token = newToken,
+                ExpiresIn = (int)(expiresInMinutes * 60),
+                RefreshToken = newRefreshToken
+            };
+        }
+
+
+
 
     }
 }

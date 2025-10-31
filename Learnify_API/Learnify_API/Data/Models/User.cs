@@ -38,6 +38,8 @@ namespace Learnify_API.Data.Models
         public DateTime? VerificationExpiresAt { get; set; }
         public string? PasswordResetCode { get; set; }
         public DateTime? PasswordResetExpiresAt { get; set; }
+
+        // New refresh token fields
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiresAt { get; set; }
     }
