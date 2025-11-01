@@ -42,15 +42,16 @@ function Login() {
       const response = await api.post(LoginEndpoint, data);
       const { token } = response.data;
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
+      // localStorage.setItem("refreshToken", response.data.refreshToken);
       localStorage.setItem("useremail", response.data.user.email); //  Save email
       localStorage.setItem("username", response.data.user.fullName);
       localStorage.setItem("userid", response.data.user.userId);
-      localStorage.setItem("notificationCount", response.data.user.notificationCount);
+      localStorage.setItem("Role", response.data.user.role);
       // localStorage.setItem("token-storage", token);
       // console.log("token after login", token);
       setToken(token); // save access token only
       toast.success("Logged in successfully!");
+      navigate("/");
     } catch (err) {
       console.error(err.response?.data);
       toast.error(err.response?.data?.message || "Login failed");

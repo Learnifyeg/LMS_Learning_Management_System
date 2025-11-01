@@ -65,6 +65,13 @@ namespace Learnify_API.Data.DTO
         public string Password { get; set; } = string.Empty;
     }
 
+
+    public class ServiceResponse<T>
+    {
+        public bool Success { get; set; } = true;   // default success
+        public T? Data { get; set; } = default;
+        public string? ErrorMessage { get; set; } = null;
+    }
     public class ForgotPasswordRequest
     {
         public string Email { get; set; } = string.Empty;

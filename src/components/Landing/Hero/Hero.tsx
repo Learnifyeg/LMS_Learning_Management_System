@@ -3,14 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Play } from "lucide-react";
 import { Separator } from "../../ui/separator";
-import useUserStore from "@/store/user";
 import { useEffect } from "react";
+import useTokenStore from "@/store/user";
 
 export default function HeroSection() {
-  const { user } = useUserStore();
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  // const { token } = useTokenStore(); // get token
+  // useEffect(() => {
+  //   console.log(token);
+  // }, [token]);
   return (
       <section className="relative bg-[url('https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80')] bg-cover bg-center bg-no-repeat py-16 sm:py-28 overflow-hidden">
     {/* <section className="relative bg-[url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80')] bg-cover bg-center bg-no-repeat py-16 sm:py-28 overflow-hidden"> */}

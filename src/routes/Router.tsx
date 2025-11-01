@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "../App.jsx";
+
 // Lazy-loaded dashboards
 const InstrDashboard = lazy(
   () => import("@/views/Instructor/InstrDashboard.jsx")
@@ -81,6 +82,7 @@ const AuthLayout = lazy(
 const Login = lazy(() => import("../views/Auth/Login.jsx"));
 const Register = lazy(() => import("../views/Auth/Register/Register.jsx"));
 const ForgetPassword = lazy(() => import("../views/Auth/ForgetPassword.jsx"));
+const ResetPassword = lazy(() => import("../views/Auth/ResetPassword.jsx"));
 const InstructorRegister = lazy(
   () => import("../views/Auth/InstructorRegister.jsx")
 );
@@ -109,6 +111,7 @@ export const router = createBrowserRouter([
           { path: "Register", element: <Register /> },
           { path: "InstructorRegister", element: <InstructorRegister /> },
           { path: "ForgetPassword", element: <ForgetPassword /> },
+          { path: "ResetPassword", element: <ResetPassword /> },
         ],
       },
       {

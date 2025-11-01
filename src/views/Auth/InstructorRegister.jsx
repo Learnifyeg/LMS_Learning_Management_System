@@ -23,6 +23,7 @@ import useCountries from "@/hooks/useCountries";
 import Select from "react-select";
 import { customSelectStyles } from "@/utils/SelectStyle";
 import api from "@/API/Config";
+import toast, { Toaster } from "react-hot-toast";
 
 const InstructorRegisterEndPoint = "Auth/instructor-register";
 
@@ -123,22 +124,21 @@ function InstructorRegister() {
       role: "Instructor",
     };
 
-    //  console.log("Success: User registered successfully", data);
     api
       .post(InstructorRegisterEndPoint, formattedData)
-      .then(() => {
-        localStorage.removeItem("instructorSignup");
-        console.log("Success: User registered successfully");
+      .then((response) => {
+        // localStorage.setItem("Role", "instructor");
         navigate("/User/Login");
       })
       .catch((error) => {
-        console.error("Error:", error.response?.data || error.message);
-        navigate("/");
+        const errMsg = error.response?.data?.message || "Something went wrong";
+        toast.error(errMsg);
       });
   };
 
   return (
     <section className="my-5 mx-auto">
+      <Toaster position="top-center" reverseOrder={false} />
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Progress indicator */}
         <div className="flex justify-center mb-4 gap-2">
@@ -400,4 +400,3 @@ function InstructorRegister() {
 }
 
 export default InstructorRegister;
-

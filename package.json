@@ -11,6 +11,7 @@
     "start": "json-server -w src/CourseData/CourseData.json -p 3001"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-collapsible": "^1.1.12",

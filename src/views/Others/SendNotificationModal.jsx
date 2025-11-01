@@ -48,12 +48,12 @@ const SendNotificationModal = ({
         Type: formData.type,
       });
 
-      toast.success("✅ Notification sent successfully!");
+      toast.success("Notification sent successfully!");
       console.log("Notification sent:", response.data);
       onClose();
     } catch (error) {
       console.error("Error sending notification:", error);
-      toast.error("❌ Failed to send notification.");
+      toast.error(" Failed to send notification.");
     }
   };
 

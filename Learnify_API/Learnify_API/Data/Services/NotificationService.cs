@@ -48,7 +48,7 @@ namespace Learnify_API.Services
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync();
 
-            // ✅ 4. Return DTO including sender info
+            //  4. Return DTO including sender info
             return new NotificationReadDTO
             {
                 NotificationId = notification.NotificationId,
@@ -65,11 +65,15 @@ namespace Learnify_API.Services
             };
         }
 
-
-        //  Get notifications for one user
-        public async Task<IEnumerable<NotificationReadDTO>> GetUserNotificationsAsync(string receiverEmail)
+        // Get notifications for one user
+        public async Task<(IEnumerable<NotificationReadDTO> Notifications, int UnreadCount)> GetUserNotificationsAsync(string receiverEmail)
         {
-            return await _context.Notifications
+            //  Count unread notifications
+            var unreadNotificationCount = await _context.Notifications
+                .CountAsync(n => n.ReceiverEmail == receiverEmail && n.IsRead == false);
+
+            //  Get all notifications for the user
+            var notifications = await _context.Notifications
                 .Where(n => n.ReceiverEmail == receiverEmail)
                 .OrderByDescending(n => n.CreatedAt)
                 .Select(n => new NotificationReadDTO
@@ -89,8 +93,10 @@ namespace Learnify_API.Services
                     SenderEmail = n.Sender != null ? n.Sender.Email : "system@learnify.com"
                 })
                 .ToListAsync();
-        }
 
+            // ✅ Return both notifications and unread count
+            return (notifications, unreadNotificationCount);
+        }
 
         // Mark notification as read
         public async Task<bool> MarkAsReadAsync(int notificationId)

@@ -7,8 +7,9 @@ namespace Learnify_API.Services
         // Create a new notification
         Task<NotificationReadDTO> CreateNotificationAsync(NotificationCreateDTO dto);
 
-        //  Changed parameter type from int to string
-        Task<IEnumerable<NotificationReadDTO>> GetUserNotificationsAsync(string receiverEmail);
+        // Get all notifications AND unread count for a user
+        Task<(IEnumerable<NotificationReadDTO> Notifications, int UnreadCount)> GetUserNotificationsAsync(string receiverEmail);
+
 
         // Mark notification as read
         Task<bool> MarkAsReadAsync(int notificationId);

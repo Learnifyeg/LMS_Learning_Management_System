@@ -20,42 +20,50 @@ namespace Learnify_API.Controllers
             _userManager = userManager;
             _config = config;
         }
-
         [HttpPost("instructor-register")]
         public async Task<IActionResult> InstructorRegister(InstructorRegisterRequest req)
         {
-            var new_instructor = await _authService.InstructorRegisterAsync(req);
-            return Ok(new { new_instructor });
-        }
+            var result = await _authService.InstructorRegisterAsync(req);
+            if (!result.Success)
+                return BadRequest(new { message = result.ErrorMessage });
 
+            return Ok(new { message = result.Data });
+        }
         [HttpPost("student-register")]
         public async Task<IActionResult> StudentRegister(StudentRegisterRequest req)
         {
-            var new_student = await _authService.StudentRegisterAsync(req);
-            return Ok(new { new_student });
+            var result = await _authService.StudentRegisterAsync(req);
+            if (!result.Success)
+                return BadRequest(new { message = result.ErrorMessage });
+
+            return Ok(new { message = result.Data });
         }
+
 
         [HttpPost("verify-email")]
         public async Task<IActionResult> VerifyEmail(VerifyEmailRequest req)
         {
-            var message = await _authService.VerifyEmailAsync(req);
-            return Ok(new { message });
-        }
+            var result = await _authService.VerifyEmailAsync(req);
+            if (!result.Success)
+                return BadRequest(new { message = result.ErrorMessage });
 
+            return Ok(new { message = result.Data });
+        }
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest req)
         {
             var result = await _authService.LoginAsync(req);
-            if (result == null)
-                return Unauthorized("Invalid credentials.");
+
+            if (!result.Success) // check for errors
+                return BadRequest(new { message = result.ErrorMessage });
 
             var refreshTokenExpiryMinutes = double.Parse(_config["Jwt:RefreshTokenValidityMins"]);
 
-            //  Clear old cookie first
+            // Clear old cookie first
             Response.Cookies.Delete("refreshToken");
 
-            //  Then add new one
-            Response.Cookies.Append("refreshToken", result.RefreshToken, new CookieOptions
+            // Add new refresh token cookie
+            Response.Cookies.Append("refreshToken", result.Data.RefreshToken, new CookieOptions
             {
                 HttpOnly = true,
                 Secure = false,
@@ -64,13 +72,7 @@ namespace Learnify_API.Controllers
                 Expires = DateTime.UtcNow.AddMinutes(refreshTokenExpiryMinutes)
             });
 
-            return Ok(new AuthResponse
-            {
-                Token = result.Token,
-                ExpiresIn = result.ExpiresIn,
-                RefreshToken = result.RefreshToken,
-                User = result.User
-            });
+            return Ok(result.Data);
         }
 
 

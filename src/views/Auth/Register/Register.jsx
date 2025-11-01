@@ -26,6 +26,7 @@ import useCountries from "@/hooks/useCountries";
 import Select from "react-select";
 import { customSelectStyles } from "@/utils/SelectStyle";
 import api from "@/API/Config";
+import toast, { Toaster } from "react-hot-toast";
 
 const StudentRegisterEndPoint = "Auth/student-register";
 
@@ -126,18 +127,20 @@ function Register() {
 
     api
       .post(StudentRegisterEndPoint, formattedData)
-      .then(() => {
-        localStorage.removeItem("studentSignup");
-        console.log("Success: User registered successfully");
+      .then((response) => {
+        // localStorage.setItem("Role", "student");
         navigate("/User/Login");
       })
       .catch((error) => {
-        console.error("Error:", error.response?.data || error.message);
+        const errMsg = error.response?.data?.message || "Something went wrong";
+
+        toast.error(errMsg);
       });
   };
 
   return (
     <section className="my-5  mx-auto space-y-6">
+      <Toaster position="top-center" reverseOrder={false} />
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Progress indicator */}
         <div className="flex justify-center mb-4 gap-2">

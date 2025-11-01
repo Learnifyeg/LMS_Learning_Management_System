@@ -4,6 +4,11 @@ import toast, { Toaster } from "react-hot-toast";
 import SendNotificationModal from "./SendNotificationModal";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import ConfirmToast from "@/utils/ConfirmToast";
+import {
+  ArrowPathIcon,
+  CheckBadgeIcon,
+  TrashIcon,
+} from "@heroicons/react/24/solid";
 
 const ReceiveNotificationsEndpoint = "Notification/user-receive";
 const MarkAsReadEndpoint = "Notification/user-read"; // example endpoint for marking read
@@ -26,8 +31,16 @@ function Notifications() {
         const response = await api.get(
           `${ReceiveNotificationsEndpoint}/${userEmail}`
         );
-        console.log(response.data);
-        setNotifications(response.data || []);
+
+        // response.data should now have { Notifications, UnreadCount }
+        const notifications = response.data.notifications || [];
+        const unreadCount = response.data.unreadCount || 0;
+
+        // Store unread count in localStorage
+        localStorage.setItem("notificationCount", unreadCount);
+
+        // Update state
+        setNotifications(notifications);
       } catch (error) {
         console.error("Error fetching notifications:", error);
         toast.error("Failed to load notifications");
@@ -197,27 +210,30 @@ function Notifications() {
                     <div className="flex max-sm:flex-col items-end gap-2 ml-4">
                       {!notification.isRead && (
                         <button
+                          title="Mark as Read"
                           onClick={() =>
                             handleMarkAsRead(notification.notificationId)
                           }
-                          className="text-xs bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+                          className="btn btn-hover bg-green-600 hover:bg-green-700 p-2 flex items-center justify-center"
                         >
-                          Mark as Read
+                          <CheckBadgeIcon className="w-5 h-5 text-white" />
                         </button>
                       )}
 
                       <button
+                        title="Reply"
                         onClick={() => handleReply(notification)}
-                        className="text-xs bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                        className="btn btn-primary btn-hover p-2 flex items-center justify-center"
                       >
-                        Reply
+                        <ArrowPathIcon className="w-5 h-5 text-white" />
                       </button>
                       {/* Delete button */}
                       <button
+                        title="Delete"
                         onClick={() => handleDelete(notification)}
-                        className="text-xs bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                        className="bg-red-600 text-white p-2 rounded hover:bg-red-700 flex items-center justify-center"
                       >
-                        Delete
+                        <TrashIcon className="w-5 h-5" />
                       </button>
                     </div>
                   </div>
@@ -305,9 +321,10 @@ function Notifications() {
                       isRead: true,
                     });
                   }}
-                  className="btn btn-hover bg-green-600 hover:bg-green-700"
+                  title="Mark as Read"
+                  className="btn btn-hover bg-green-600 hover:bg-green-700 p-2 flex items-center justify-center"
                 >
-                  Mark as Read
+                  <CheckBadgeIcon className="w-5 h-5 text-white" />
                 </button>
               )}
 
@@ -316,15 +333,17 @@ function Notifications() {
                   handleReply(selectedNotificationDetail);
                   setSelectedNotificationDetail(null);
                 }}
-                className="btn btn-primary btn-hover"
+                className="btn btn-primary btn-hover p-2 flex items-center justify-center"
+                title="Reply"
               >
-                Reply
+                <ArrowPathIcon className="w-5 h-5 text-white" />
               </button>
               <button
                 onClick={() => handleDelete(selectedNotificationDetail)}
-                className="text-xs bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                className="bg-red-600 text-white p-2 rounded hover:bg-red-700 flex items-center justify-center"
+                title="Delete"
               >
-                Delete
+                <TrashIcon className="w-5 h-5" />
               </button>
             </div>
           </div>

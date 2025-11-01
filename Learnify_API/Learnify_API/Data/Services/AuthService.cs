@@ -26,174 +26,211 @@ namespace Learnify_API.Data.Services
         }
 
         // 1️ Instructor Register
-        public async Task<string> InstructorRegisterAsync(InstructorRegisterRequest req)
+        public async Task<ServiceResponse<string>> InstructorRegisterAsync(InstructorRegisterRequest req)
         {
-            if (await _context.Users.AnyAsync(u => u.Email == req.Email))
-                return "Email already registered.";
+            var response = new ServiceResponse<string>();
 
-            var verificationCode = new Random().Next(100000, 999999).ToString();
-            var App_User = new AppUser
+            try
             {
-                UserName = req.FullName,
-                Email = req.Email,
-                Role = "instructor"
-            };
-            //IdentityResult result = await _userManager.CreateAsync(App_User, req.Password);
-            //if (!result.Succeeded)
-            //{
-            //    return "User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description));
-            //}
-            //else
-            //{
+                if (await _context.Users.AnyAsync(u => u.Email == req.Email))
+                {
+                    response.Success = false;
+                    response.ErrorMessage = "Email already registered.";
+                    return response;
+                }
 
-            var instructor_user = new User
-            {
-                FullName = req.FullName,
-                Email = req.Email,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
-                Role = "instructor",
-                ProfileImage = req.ProfileImage,
-                VerificationCode = verificationCode,
-                VerificationExpiresAt = DateTime.Now.AddMinutes(10)
-            };
+                var verificationCode = new Random().Next(100000, 999999).ToString();
 
-            _context.Users.Add(instructor_user);
-            await _context.SaveChangesAsync();
-            _context.Instructors.Add(new Instructor
-            {
-                InstructorId = instructor_user.UserId,
-                Specialization = req.Specialization,
-                Phone = req.Phone,
-                Address = req.Address,
-                Country = req.Country,
-                Gender = req.Gender,
-                Experience = req.Years_Of_Experience,
-                Bio = req.BIO
+                var instructor_user = new User
+                {
+                    FullName = req.FullName,
+                    Email = req.Email,
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
+                    Role = "instructor",
+                    ProfileImage = req.ProfileImage,
+                    VerificationCode = verificationCode,
+                    VerificationExpiresAt = DateTime.Now.AddMinutes(10)
+                };
+
+                _context.Users.Add(instructor_user);
+                await _context.SaveChangesAsync();
+
+                _context.Instructors.Add(new Instructor
+                {
+                    InstructorId = instructor_user.UserId,
+                    Specialization = req.Specialization,
+                    Phone = req.Phone,
+                    Address = req.Address,
+                    Country = req.Country,
+                    Gender = req.Gender,
+                    Experience = req.Years_Of_Experience,
+                    Bio = req.BIO
+                });
+
+                await _context.SaveChangesAsync();
+
+                // Optional: send email
+                // await _emailService.SendEmailAsync(req.Email, "Learnify Verification Code", 
+                //   $"<h3>Your Learnify verification code is:</h3><h2>{verificationCode}</h2>");
+
+                response.Data = "Verification code sent to email.";
+                return response;
             }
-                );
-            await _context.SaveChangesAsync();
-            //await _emailService.SendEmailAsync(req.Email, "Learnify Verification Code",
-            //    $"<h3>Your Learnify verification code is:</h3><h2>{verificationCode}</h2>");
-
-            return "Verification code sent to email.";
-            //}
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.ErrorMessage = ex.Message;
+                return response;
+            }
         }
 
 
         // 2 Student Register
-        public async Task<string> StudentRegisterAsync(StudentRegisterRequest req)
+        public async Task<ServiceResponse<string>> StudentRegisterAsync(StudentRegisterRequest req)
         {
-            if (await _context.Users.AnyAsync(u => u.Email == req.Email))
-                return "Email already registered.";
+            var response = new ServiceResponse<string>();
 
-            var verificationCode = new Random().Next(100000, 999999).ToString();
-            var App_User = new AppUser
+            try
             {
-                UserName = req.FullName,
-                Email = req.Email,
-                Role = "student"
-            };
-            //IdentityResult result = await _userManager.CreateAsync(App_User, req.Password);
-            //if (!result.Succeeded)
-            //{
-            //    return "User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description));
-            //}
-            //else
-            //{
+                if (await _context.Users.AnyAsync(u => u.Email == req.Email))
+                {
+                    response.Success = false;
+                    response.ErrorMessage = "Email already registered.";
+                    return response;
+                }
 
-            var student_user = new User
-            {
-                FullName = req.FullName,
-                Email = req.Email,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
-                Role = "student",
-                ProfileImage = req.ProfileImage,
-                VerificationCode = verificationCode,
-                VerificationExpiresAt = DateTime.Now.AddMinutes(10)
-            };
+                var verificationCode = new Random().Next(100000, 999999).ToString();
 
-            _context.Users.Add(student_user);
-            await _context.SaveChangesAsync();
+                var student_user = new User
+                {
+                    FullName = req.FullName,
+                    Email = req.Email,
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
+                    Role = "student",
+                    ProfileImage = req.ProfileImage,
+                    VerificationCode = verificationCode,
+                    VerificationExpiresAt = DateTime.Now.AddMinutes(10)
+                };
 
-            _context.Students.Add(new Student
-            {
-                StudentId = student_user.UserId,
-                EnrollmentNo = "ENR" + new Random().Next(1000, 9999).ToString(),
-                Phone = req.Phone,
-                Address = req.Address,
-                Country = req.Country,
-                Gender = req.Gender,
-                University = req.University,
-                Major = req.Major,
-                EducationLevel = req.EducationLevel,
+                _context.Users.Add(student_user);
+                await _context.SaveChangesAsync();
 
+                _context.Students.Add(new Student
+                {
+                    StudentId = student_user.UserId,
+                    EnrollmentNo = "ENR" + new Random().Next(1000, 9999),
+                    Phone = req.Phone,
+                    Address = req.Address,
+                    Country = req.Country,
+                    Gender = req.Gender,
+                    University = req.University,
+                    Major = req.Major,
+                    EducationLevel = req.EducationLevel
+                });
+
+                await _context.SaveChangesAsync();
+
+                response.Data = "Verification code sent to email.";
+                return response;
             }
-            );
-            await _context.SaveChangesAsync();
-            //await _emailService.SendEmailAsync(req.Email, "Learnify Verification Code",
-            //        $"<h3>Your Learnify verification code is:</h3><h2>{verificationCode}</h2>");
-
-            return "Verification code sent to email.";
-            //}
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.ErrorMessage = ex.Message;
+                return response;
+            }
         }
+
 
         // 2️⃣ VERIFY EMAIL
-        public async Task<string> VerifyEmailAsync(VerifyEmailRequest req)
+        public async Task<ServiceResponse<string>> VerifyEmailAsync(VerifyEmailRequest req)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == req.Email);
-            if (user == null) return "User not found.";
+            var response = new ServiceResponse<string>();
 
-            if (user.VerificationCode != req.Code || user.VerificationExpiresAt < DateTime.Now)
-                return "Invalid or expired code.";
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == req.Email);
+                if (user == null)
+                {
+                    response.Success = false;
+                    response.ErrorMessage = "User not found.";
+                    return response;
+                }
 
-            user.IsEmailVerified = true;
-            user.VerificationCode = null;
-            user.VerificationExpiresAt = null;
-            await _context.SaveChangesAsync();
+                if (user.VerificationCode != req.Code || user.VerificationExpiresAt < DateTime.Now)
+                {
+                    response.Success = false;
+                    response.ErrorMessage = "Invalid or expired code.";
+                    return response;
+                }
 
-            return "Email verified successfully!";
+                user.IsEmailVerified = true;
+                user.VerificationCode = null;
+                user.VerificationExpiresAt = null;
+                await _context.SaveChangesAsync();
+
+                response.Data = "Email verified successfully!";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.ErrorMessage = ex.Message;
+                return response;
+            }
         }
+
 
         // 3️⃣ LOGIN
-        public async Task<AuthResponse?> LoginAsync(LoginRequest req)
+        public async Task<ServiceResponse<AuthResponse>> LoginAsync(LoginRequest req)
         {
-            // Step 1: Find user and verify password
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == req.Email);
-            if (user == null || !BCrypt.Net.BCrypt.Verify(req.Password, user.PasswordHash))
-                return null;
-
-            // Step 2: Generate new JWT
-            var token = GenerateJwtToken(user);
-
-            // Step 3: Generate and update refresh token
-            var refreshToken = GenerateRefreshToken();
-            user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiresAt = DateTime.UtcNow.AddMinutes(
-                double.Parse(_config["Jwt:RefreshTokenValidityMins"])
-            );
-            await _context.SaveChangesAsync();
-
-            // ✅ Step 4: Count notifications
-            var notificationCount = await _context.Notifications
-                .CountAsync(n => n.ReceiverEmail == user.Email);
-
-            // Step 5: Return response
-            var expiresInMinutes = double.Parse(_config["Jwt:TokenValidityMins"]);
-            return new AuthResponse
+            var response = new ServiceResponse<AuthResponse>();
+            try
             {
-                Token = token,
-                ExpiresIn = (int)(expiresInMinutes * 60),
-                RefreshToken = refreshToken,
-                User = new
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == req.Email);
+                if (user == null || !BCrypt.Net.BCrypt.Verify(req.Password, user.PasswordHash))
                 {
-                    user.UserId,
-                    user.FullName,
-                    user.Email,
-                    user.Role,
-                    NotificationCount = notificationCount   // ✅ Added
+                    response.Success = false;
+                    response.ErrorMessage = "Invalid email or password.";
+                    return response;
                 }
-            };
+
+                var token = GenerateJwtToken(user);
+                var refreshToken = GenerateRefreshToken();
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenExpiresAt = DateTime.UtcNow.AddMinutes(double.Parse(_config["Jwt:RefreshTokenValidityMins"]));
+                await _context.SaveChangesAsync();
+
+                var unreadNotificationCount = await _context.Notifications
+                    .CountAsync(n => n.ReceiverEmail == user.Email && !n.IsRead);
+
+                var expiresInMinutes = double.Parse(_config["Jwt:TokenValidityMins"]);
+
+                response.Data = new AuthResponse
+                {
+                    Token = token,
+                    ExpiresIn = (int)(expiresInMinutes * 60),
+                    RefreshToken = refreshToken,
+                    User = new
+                    {
+                        user.UserId,
+                        user.FullName,
+                        user.Email,
+                        user.Role,
+                        NotificationCount = unreadNotificationCount
+                    }
+                };
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.ErrorMessage = ex.Message;
+                return response;
+            }
         }
+
 
 
 

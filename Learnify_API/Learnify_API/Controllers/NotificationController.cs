@@ -30,19 +30,25 @@ namespace Learnify_API.Controllers
             });
         }
 
-        // ✅ Get all notifications for a specific user
+        // Get all notifications for a specific user, including unread count
         [HttpGet("user-receive/{receiverEmail}")]
         public async Task<IActionResult> GetNotificationsByUser(string receiverEmail)
         {
-            var notifications = await _notificationService.GetUserNotificationsAsync(receiverEmail);
+            var (notifications, unreadCount) = await _notificationService.GetUserNotificationsAsync(receiverEmail);
 
             if (notifications == null || !notifications.Any())
                 return NotFound("No notifications found for this user.");
 
-            return Ok(notifications);
+            // Return both notifications and unread count
+            return Ok(new
+            {
+                Notifications = notifications,
+                UnreadCount = unreadCount
+            });
         }
 
-        // ✅ Mark a notification as read
+
+        //  Mark a notification as read
         [HttpPut("user-read/{id}")]
         public async Task<IActionResult> MarkAsRead(int id)
         {
