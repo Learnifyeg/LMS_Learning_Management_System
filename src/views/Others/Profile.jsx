@@ -13,24 +13,34 @@ import { useNavigate } from "react-router";
 // components
 import api from "@/API/Config";
 
-// Endpoints and constants
-const profileEndpoint = "profiles"; // GET /profiles
-
 function Profile({ role = "student" }) {
+  const navigate = useNavigate();
+  let ProfileEndpoint;
+  if (role === "student") {
+    ProfileEndpoint = "Profile/student"; // Replace with dynamic ID if needed
+  } else if (role === "instructor") {
+    ProfileEndpoint = "Profile/instructor"; // Replace with dynamic ID if needed
+  } else if (role === "admin") {
+    ProfileEndpoint = "Profile/admin"; // Replace with dynamic ID if needed
+  }
   const [profile, setProfile] = useState(null);
   const [activeTab, setActiveTab] = useState("");
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await api.get(profileEndpoint);
-        const data = res.data.find((p) => p.role === role);
+        const userId = localStorage.getItem("userid");
+        const res = await api.get(`${ProfileEndpoint}/${userId}`);
+        const data = res.data;
+
+        // Optional: provide default values if some fields are null
+        if (!data.user.avatar) data.user.avatar = "/default-avatar.png";
+        if (!data.tabContent) data.tabContent = { about: "No content" };
+
         setProfile(data);
-        setActiveTab(Object.keys(data.tabContent)[0]); // Set first tab by default
+        setActiveTab(Object.keys(data.tabContent)[0] || ""); // First tab default
       } catch (err) {
-        console.error("Error fetching profile:", err);
+        console.log("Error fetching profile:", err);
       }
     };
     fetchProfile();
@@ -44,7 +54,7 @@ function Profile({ role = "student" }) {
     );
   }
 
-  const { user, stats, about, tabContent } = profile;
+  const { user, stats, tabContent, socialLinks, actions } = profile;
   const tabs = Object.keys(tabContent);
 
   return (
@@ -60,7 +70,7 @@ function Profile({ role = "student" }) {
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="text-center sm:text-left ">
+          <div className="text-center sm:text-left">
             <h2 className="text-3xl font-bold text-[var(--text-primary)]">
               {user.name}
             </h2>
@@ -70,9 +80,9 @@ function Profile({ role = "student" }) {
             </p>
 
             {/* Social Links */}
-            {profile.socialLinks && (
+            {socialLinks && (
               <div className="flex space-x-3 mt-2 text-sm justify-center sm:justify-start">
-                {Object.entries(profile.socialLinks).map(([platform, link]) => {
+                {Object.entries(socialLinks).map(([platform, link]) => {
                   if (!link) return null;
 
                   const icons = {
@@ -99,7 +109,7 @@ function Profile({ role = "student" }) {
                       href={link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`w-8 h-8 flex items-center justify-center rounded-full text-white transition text- ${
+                      className={`w-8 h-8 flex items-center justify-center rounded-full text-white transition ${
                         colors[platform.toLowerCase()] ||
                         "bg-gray-500 hover:bg-gray-600"
                       }`}
@@ -115,11 +125,11 @@ function Profile({ role = "student" }) {
 
         {/* Right: Action Buttons */}
         <div className="flex space-x-3 text-center justify-center md:justify-start">
-          {profile.actions?.map((action) => (
+          {actions?.map((action) => (
             <button
-              key={action}
+              key={action.id}
               className="btn btn-primary btn-hover"
-              onClick={() => navigate(`${action.url}`)}
+              onClick={() => navigate(action.url)}
             >
               {action.label}
             </button>
@@ -141,6 +151,16 @@ function Profile({ role = "student" }) {
         ))}
       </div>
 
+      {/* About Section */}
+      {profile.about && (
+        <div className="card mb-8 p-4 border-[var(--border-color)] shadow-sm">
+          <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">
+            About
+          </h3>
+          <p className="text-[var(--text-secondary)]">{profile.about}</p>
+        </div>
+      )}
+
       {/* Tabs Navigation */}
       <div className="card mb-8">
         <div className="flex border-b border-[var(--border)] pb-3 overflow-x-auto scrollbar-hide snap-x">
@@ -149,12 +169,11 @@ function Profile({ role = "student" }) {
               <button
                 key={item}
                 onClick={() => setActiveTab(item)}
-                className={`px-4 py-2 text-left font-bold transition-colors border-l-4 sm:border-l-0 sm:border-b-2
-        ${
-          activeTab === item
-            ? "text-[var(--secondary)] border-[var(--secondary)]"
-            : "text-[var(--text-secondary)] hover:text-[var(--secondary)] border-transparent hover:border-[var(--secondary)]"
-        }`}
+                className={`px-4 py-2 text-left font-bold transition-colors border-l-4 sm:border-l-0 sm:border-b-2 ${
+                  activeTab === item
+                    ? "text-[var(--secondary)] border-[var(--secondary)]"
+                    : "text-[var(--text-secondary)] hover:text-[var(--secondary)] border-transparent hover:border-[var(--secondary)]"
+                }`}
               >
                 {item}
               </button>
@@ -173,7 +192,7 @@ function Profile({ role = "student" }) {
 
 export default Profile;
 
-/* Smart Tab Content Renderer */
+// Smart Tab Content Renderer
 function TabContent({ data }) {
   if (!data)
     return (
@@ -182,7 +201,6 @@ function TabContent({ data }) {
       </p>
     );
 
-  // If content is plain text
   if (typeof data === "string") {
     return (
       <p className="text-[var(--text-primary)] bg-[var(--card-bg)] p-4 border-[var(--border-color)] shadow-sm">
@@ -191,8 +209,15 @@ function TabContent({ data }) {
     );
   }
 
-  // If content is an array → leave layout to parent grid
   if (Array.isArray(data)) {
+    if (data.length === 0) {
+      return (
+        <p className="text-[var(--text-secondary)] italic py-2">
+          No data available.
+        </p>
+      );
+    }
+
     return data.map((item, index) => (
       <div
         key={index}
@@ -210,7 +235,6 @@ function TabContent({ data }) {
     ));
   }
 
-  // If content is an object → single block
   return (
     <div className="bg-[var(--card-bg)] p-4 border-[var(--border-color)] shadow-md rounded-md">
       {Object.entries(data).map(([key, value]) => (

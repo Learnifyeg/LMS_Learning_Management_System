@@ -32,6 +32,7 @@ namespace Learnify_API.Data.Services
 
             try
             {
+                //  Check if email exists
                 if (await _context.Users.AnyAsync(u => u.Email == req.Email))
                 {
                     response.Success = false;
@@ -39,8 +40,10 @@ namespace Learnify_API.Data.Services
                     return response;
                 }
 
+                // Generate verification code
                 var verificationCode = new Random().Next(100000, 999999).ToString();
 
+                // Create user
                 var instructor_user = new User
                 {
                     FullName = req.FullName,
@@ -55,6 +58,7 @@ namespace Learnify_API.Data.Services
                 _context.Users.Add(instructor_user);
                 await _context.SaveChangesAsync();
 
+                // 🧩 Create Instructor record
                 _context.Instructors.Add(new Instructor
                 {
                     InstructorId = instructor_user.UserId,
@@ -67,13 +71,54 @@ namespace Learnify_API.Data.Services
                     Bio = req.BIO
                 });
 
+                //  Create Instructor Tab Content
+                var instructorTabContent = new InstructorTabContent
+                {
+                    AboutMe = req.BIO ?? "Passionate about sharing knowledge and empowering learners.",
+                    Courses = new List<CourseTab>
+                        {
+                            new CourseTab { CourseName = "None yet", Progress = "0%" }
+                        },
+                    Earnings = new List<EarningTab>
+                        {
+                            new EarningTab { monthly = 0, total = 0 }
+                        },
+                    Students = new List<StudentTab>
+                        {
+                            new StudentTab { name = "None yet", progress = 0 }
+                        },
+                    Certificates = ""
+                };
+
+                //  Create Profile
+                var profile = new Profile
+                {
+                    UserId = instructor_user.UserId,
+                    Role = "instructor",
+                    User = new UserInfo
+                    {
+                        Name = instructor_user.FullName,
+                        RoleTitle = "Instructor",
+                        Avatar = req.ProfileImage ?? null
+                    },
+                    SocialLinks = new SocialLinks
+                    {
+                        Facebook = "",
+                        Twitter = "",
+                        LinkedIn = "",
+                        Github = ""
+                    },
+                    About = req.BIO ?? "Welcome to Learnify! Start teaching and inspiring students.",
+                    InstructorTabContent = instructorTabContent // ✅ attach instructor tabs
+                };
+
+                _context.profiles.Add(profile);
                 await _context.SaveChangesAsync();
 
-                // Optional: send email
-                // await _emailService.SendEmailAsync(req.Email, "Learnify Verification Code", 
-                //   $"<h3>Your Learnify verification code is:</h3><h2>{verificationCode}</h2>");
+                // ✅ You can later send an email with the verification code
+                // await _emailService.SendEmailAsync(req.Email, "Learnify Verification Code", $"<h3>Your code is:</h3><h2>{verificationCode}</h2>");
 
-                response.Data = "Verification code sent to email.";
+                response.Data = "Instructor registered successfully. Verification code sent to email.";
                 return response;
             }
             catch (Exception ex)
@@ -92,6 +137,7 @@ namespace Learnify_API.Data.Services
 
             try
             {
+                //  Check if email exists
                 if (await _context.Users.AnyAsync(u => u.Email == req.Email))
                 {
                     response.Success = false;
@@ -99,8 +145,10 @@ namespace Learnify_API.Data.Services
                     return response;
                 }
 
+                //  Generate verification code
                 var verificationCode = new Random().Next(100000, 999999).ToString();
 
+                //  Create user
                 var student_user = new User
                 {
                     FullName = req.FullName,
@@ -115,6 +163,7 @@ namespace Learnify_API.Data.Services
                 _context.Users.Add(student_user);
                 await _context.SaveChangesAsync();
 
+                //  Create Student record
                 _context.Students.Add(new Student
                 {
                     StudentId = student_user.UserId,
@@ -128,9 +177,146 @@ namespace Learnify_API.Data.Services
                     EducationLevel = req.EducationLevel
                 });
 
+                //  Create Student Tab Content
+                var studentTabContent = new StudentTabContent
+                {
+                    AboutMe = req.About ?? "Passionate student eager to learn and explore new technologies.",
+                    Enrollments = new List<EnrollmentTab>
+            {
+                new EnrollmentTab { CourseCount = 0, LastCourseJoined = "None" }
+            },
+                    Progress = new List<ProgressTab>
+            {
+                new ProgressTab { CompletedCourses = 0, OngoingCourses = 0 }
+            },
+                    Achievements = new List<AchievementTab>
+            {
+                new AchievementTab { Title = "Account Created", Date = DateTime.Now.ToString("yyyy-MM-dd") }
+            }
+                };
+
+                //  Create Profile
+                var profile = new Profile
+                {
+                    UserId = student_user.UserId,
+                    Role = "student",
+                    User = new UserInfo
+                    {
+                        Name = student_user.FullName,
+                        RoleTitle = "Student",
+                        Avatar = req.ProfileImage ?? null
+                    },
+                    SocialLinks = new SocialLinks
+                    {
+                        Facebook = "",
+                        Twitter = "",
+                        LinkedIn = "",
+                        Github = ""
+                    },
+                    About = req.About ?? "Welcome to Learnify! Start exploring new courses today.",
+                    StudentTabContent = studentTabContent // ✅ link student tab content
+                };
+
+                _context.profiles.Add(profile);
                 await _context.SaveChangesAsync();
 
-                response.Data = "Verification code sent to email.";
+                //  Optional: send verification code via email here
+
+                response.Data = "Student registered successfully. Verification code sent to email.";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.ErrorMessage = ex.Message;
+                return response;
+            }
+        }
+        // 3 Admi Register
+        public async Task<ServiceResponse<string>> AdminRegisterAsync(AdminRegisterRequest req)
+        {
+            var response = new ServiceResponse<string>();
+
+            try
+            {
+                // 1️⃣ Check if email already exists
+                if (await _context.Users.AnyAsync(u => u.Email == req.Email))
+                {
+                    response.Success = false;
+                    response.ErrorMessage = "Email already exists.";
+                    return response;
+                }
+
+                // 2️⃣ Create User
+                var user = new User
+                {
+                    FullName = req.FullName,
+                    Email = req.Email,
+                    Role = "admin", // keep lowercase for consistency
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
+                    CreatedAt = DateTime.Now
+                };
+
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync(); // Save to get UserId
+
+                // 3️⃣ Create Admin record
+                var admin = new Admin
+                {
+                    AdminId = user.UserId, // FK = UserId
+                    Department = req.Department,
+                    RoleLevel = req.RoleLevel ?? "Moderator",
+                    User = user
+                };
+
+                await _context.Admins.AddAsync(admin);
+                await _context.SaveChangesAsync(); // ✅ Save before creating profile
+
+                // 4️⃣ Create Admin Profile with initial tab data
+                var tabContent = new AdminTabContent
+                {
+                    AboutMe = req.About ?? "Ensuring the platform runs smoothly and securely...",
+                    UserManagement = new List<UserManagementTab>
+                    {
+                        new UserManagementTab { TotalStudents = 0, TotalInstructors = 0 }
+                    },
+                    Reports = new List<ReportTab>
+                    {
+                        new ReportTab { Type = "Monthly Analytics", Generated = DateTime.Now.ToString("yyyy-MM-dd") }
+                    },
+                    SystemLogs = new List<SystemLogTab>
+                    {
+                        new SystemLogTab { Event = "Account Created", Time = "Just now" }
+                    }
+                };
+
+                var profile = new Profile
+                {
+                    UserId = user.UserId,
+                    Role = "admin",
+                    User = new UserInfo
+                    {
+                        Name = user.FullName,
+                        RoleTitle = "Platform Administrator",
+                        //Avatar = req.ProfileImage ?? null
+                    },
+                    SocialLinks = new SocialLinks
+                    {
+                        Facebook = req.Facebook ?? "",
+                        Twitter = req.Twitter ?? "",
+                        LinkedIn = req.LinkedIn ?? "",
+                        Github = req.GitHub ?? ""
+                    },
+                    About = req.About ?? "Admin account created successfully.",
+                    AdminTabContent = tabContent // ✅ link admin tab content
+                };
+
+                await _context.profiles.AddAsync(profile);
+                await _context.SaveChangesAsync();
+
+                // 5️⃣ Success response
+                response.Success = true;
+                response.Data = "Admin registered successfully!";
                 return response;
             }
             catch (Exception ex)

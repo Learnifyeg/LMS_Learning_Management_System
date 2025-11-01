@@ -42,6 +42,8 @@ namespace Learnify_API.Data.DTO
 
         // New fields for Student
         public string? ProfileImage { get; set; }
+
+        public string? About { get; set; }
         public string? Phone { get; set; }
         public string? Address { get; set; }
         public string? Country { get; set; }
@@ -52,6 +54,24 @@ namespace Learnify_API.Data.DTO
 
     }
 
+    public class AdminRegisterRequest
+    {
+        [Required] public string FullName { get; set; }
+        [Required, EmailAddress] public string Email { get; set; }
+        [Required] public string Password { get; set; }
+
+        // Admin-specific
+        public string? Department { get; set; }
+        public string? RoleLevel { get; set; } // Moderator / SuperAdmin
+
+        // Social links
+        public string? Facebook { get; set; }
+        public string? Twitter { get; set; }
+        public string? LinkedIn { get; set; }
+        public string? GitHub { get; set; }
+
+        public string? About { get; set; }
+    }
 
     public class VerifyEmailRequest
     {

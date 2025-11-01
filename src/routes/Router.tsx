@@ -67,6 +67,8 @@ const SearchResults = lazy(() => import("@/views/Others/SearchResults.jsx"));
 const SendFeedback = lazy(() => import("@/views/Others/SendFeedback.jsx"));
 const SettingPage = lazy(() => import("@/views/Others/SettingPage.jsx"));
 const TermsofUse = lazy(() => import("@/views/Others/TermsofUse.jsx"));
+const EditProfile = lazy(() => import("@/views/Others/EditProfile.jsx"));
+
 
 // Landing Views
 const LandingLayout = lazy(
@@ -125,6 +127,7 @@ export const router = createBrowserRouter([
           { path: "SendFeedback", element: <SendFeedback /> },
           { path: "SettingPage", element: <SettingPage /> },
           { path: "TermsofUse", element: <TermsofUse /> },
+          { path: "EditProfile", element: <EditProfile /> },
         ],
       },
       {

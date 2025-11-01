@@ -167,6 +167,37 @@
         }
       }
     },
+    "/Auth/admin-register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminRegisterRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminRegisterRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminRegisterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Auth/verify-email": {
       "post": {
         "tags": [
@@ -458,10 +489,21 @@
         }
       }
     },
-    "/api/ProStudent": {
-      "post": {
+    "/Profile/edit-student/{Id}": {
+      "put": {
         "tags": [
-          "ProStudent"
+          "Profile"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "requestBody": {
           "content": {
@@ -469,110 +511,404 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "Role": {
+                  "Name": {
                     "type": "string"
                   },
-                  "User.Name": {
-                    "type": "string"
-                  },
-                  "User.Avatar": {
+                  "Avatar": {
                     "type": "string",
                     "format": "binary"
                   },
-                  "User.RoleTitle": {
+                  "RoleTitle": {
                     "type": "string"
-                  },
-                  "SocialLinks.Facebook": {
-                    "type": "string"
-                  },
-                  "SocialLinks.Twitter": {
-                    "type": "string"
-                  },
-                  "SocialLinks.LinkedIn": {
-                    "type": "string"
-                  },
-                  "SocialLinks.Github": {
-                    "type": "string"
-                  },
-                  "Stats": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Stat"
-                    }
                   },
                   "About": {
                     "type": "string"
                   },
-                  "TabContent.Courses": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/CourseTab"
-                    }
-                  },
-                  "TabContent.Projects": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/ProjectTab"
-                    }
-                  },
-                  "TabContent.Certificates": {
+                  "Phone": {
                     "type": "string"
                   },
-                  "Actions": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/ActionButton"
-                    }
+                  "Address": {
+                    "type": "string"
+                  },
+                  "Gender": {
+                    "type": "string"
+                  },
+                  "University": {
+                    "type": "string"
+                  },
+                  "Country": {
+                    "type": "string"
+                  },
+                  "LinkedIn": {
+                    "type": "string"
+                  },
+                  "GitHub": {
+                    "type": "string"
+                  },
+                  "Facebook": {
+                    "type": "string"
+                  },
+                  "Twitter": {
+                    "type": "string"
+                  },
+                  "Image": {
+                    "type": "string"
+                  },
+                  "EducationLevel": {
+                    "type": "string"
+                  },
+                  "Major": {
+                    "type": "string"
+                  },
+                  "GPA": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Department": {
+                    "type": "string"
                   }
                 }
               },
               "encoding": {
-                "Role": {
+                "Name": {
                   "style": "form"
                 },
-                "User.Name": {
+                "Avatar": {
                   "style": "form"
                 },
-                "User.Avatar": {
-                  "style": "form"
-                },
-                "User.RoleTitle": {
-                  "style": "form"
-                },
-                "SocialLinks.Facebook": {
-                  "style": "form"
-                },
-                "SocialLinks.Twitter": {
-                  "style": "form"
-                },
-                "SocialLinks.LinkedIn": {
-                  "style": "form"
-                },
-                "SocialLinks.Github": {
-                  "style": "form"
-                },
-                "Stats": {
+                "RoleTitle": {
                   "style": "form"
                 },
                 "About": {
                   "style": "form"
                 },
-                "TabContent.Courses": {
+                "Phone": {
                   "style": "form"
                 },
-                "TabContent.Projects": {
+                "Address": {
                   "style": "form"
                 },
-                "TabContent.Certificates": {
+                "Gender": {
                   "style": "form"
                 },
-                "Actions": {
+                "University": {
+                  "style": "form"
+                },
+                "Country": {
+                  "style": "form"
+                },
+                "LinkedIn": {
+                  "style": "form"
+                },
+                "GitHub": {
+                  "style": "form"
+                },
+                "Facebook": {
+                  "style": "form"
+                },
+                "Twitter": {
+                  "style": "form"
+                },
+                "Image": {
+                  "style": "form"
+                },
+                "EducationLevel": {
+                  "style": "form"
+                },
+                "Major": {
+                  "style": "form"
+                },
+                "GPA": {
+                  "style": "form"
+                },
+                "Department": {
                   "style": "form"
                 }
               }
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Profile/edit-instructor/{Id}": {
+      "put": {
+        "tags": [
+          "Profile"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "RoleTitle": {
+                    "type": "string"
+                  },
+                  "About": {
+                    "type": "string"
+                  },
+                  "Phone": {
+                    "type": "string"
+                  },
+                  "Address": {
+                    "type": "string"
+                  },
+                  "Gender": {
+                    "type": "string"
+                  },
+                  "Country": {
+                    "type": "string"
+                  },
+                  "Specialization": {
+                    "type": "string"
+                  },
+                  "LinkedIn": {
+                    "type": "string"
+                  },
+                  "GitHub": {
+                    "type": "string"
+                  },
+                  "Facebook": {
+                    "type": "string"
+                  },
+                  "Twitter": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "Avatar": {
+                  "style": "form"
+                },
+                "RoleTitle": {
+                  "style": "form"
+                },
+                "About": {
+                  "style": "form"
+                },
+                "Phone": {
+                  "style": "form"
+                },
+                "Address": {
+                  "style": "form"
+                },
+                "Gender": {
+                  "style": "form"
+                },
+                "Country": {
+                  "style": "form"
+                },
+                "Specialization": {
+                  "style": "form"
+                },
+                "LinkedIn": {
+                  "style": "form"
+                },
+                "GitHub": {
+                  "style": "form"
+                },
+                "Facebook": {
+                  "style": "form"
+                },
+                "Twitter": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Profile/edit-admin/{id}": {
+      "put": {
+        "tags": [
+          "Profile"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "RoleTitle": {
+                    "type": "string"
+                  },
+                  "About": {
+                    "type": "string"
+                  },
+                  "Department": {
+                    "type": "string"
+                  },
+                  "RoleLevel": {
+                    "type": "string"
+                  },
+                  "Facebook": {
+                    "type": "string"
+                  },
+                  "Twitter": {
+                    "type": "string"
+                  },
+                  "LinkedIn": {
+                    "type": "string"
+                  },
+                  "YouTube": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "Avatar": {
+                  "style": "form"
+                },
+                "RoleTitle": {
+                  "style": "form"
+                },
+                "About": {
+                  "style": "form"
+                },
+                "Department": {
+                  "style": "form"
+                },
+                "RoleLevel": {
+                  "style": "form"
+                },
+                "Facebook": {
+                  "style": "form"
+                },
+                "Twitter": {
+                  "style": "form"
+                },
+                "LinkedIn": {
+                  "style": "form"
+                },
+                "YouTube": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Profile/instructor/{Id}": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Profile/student/{Id}": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Profile/admin/{id}": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -626,32 +962,52 @@
   },
   "components": {
     "schemas": {
-      "ActionButton": {
+      "AdminRegisterRequest": {
+        "required": [
+          "email",
+          "fullName",
+          "password"
+        ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
+          "fullName": {
+            "minLength": 1,
+            "type": "string"
           },
-          "label": {
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "department": {
             "type": "string",
             "nullable": true
           },
-          "url": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CourseTab": {
-        "type": "object",
-        "properties": {
-          "courseName": {
+          "roleLevel": {
             "type": "string",
             "nullable": true
           },
-          "progress": {
+          "facebook": {
+            "type": "string",
+            "nullable": true
+          },
+          "twitter": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkedIn": {
+            "type": "string",
+            "nullable": true
+          },
+          "gitHub": {
+            "type": "string",
+            "nullable": true
+          },
+          "about": {
             "type": "string",
             "nullable": true
           }
@@ -765,20 +1121,6 @@
         },
         "additionalProperties": false
       },
-      "ProjectTab": {
-        "type": "object",
-        "properties": {
-          "projectName": {
-            "type": "string",
-            "nullable": true
-          },
-          "status": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "ResetPasswordRequest": {
         "type": "object",
         "properties": {
@@ -793,20 +1135,6 @@
           "newPassword": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Stat": {
-        "type": "object",
-        "properties": {
-          "label": {
-            "type": "string",
-            "nullable": true
-          },
-          "value": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -833,6 +1161,10 @@
             "type": "string"
           },
           "profileImage": {
+            "type": "string",
+            "nullable": true
+          },
+          "about": {
             "type": "string",
             "nullable": true
           },

@@ -16,7 +16,7 @@ namespace Learnify_API.Data.Models
         [MaxLength(50)]
         public string? Department { get; set; }
 
-        //// 🆕 Added Columns
+        ////  Added Columns
         //[MaxLength(255)]
         //public string? Title { get; set; }
         public string? Phone { get; set; }

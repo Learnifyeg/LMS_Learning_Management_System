@@ -39,7 +39,16 @@ namespace Learnify_API.Controllers
             return Ok(new { message = result.Data });
         }
 
+        [HttpPost("admin-register")]
+        public async Task<IActionResult> AdminRegister(AdminRegisterRequest req)
+        {
+            var result = await _authService.AdminRegisterAsync(req); // make sure you have this service method
 
+            if (!result.Success)
+                return BadRequest(new { message = result.ErrorMessage });
+
+            return Ok(new { message = result.Data });
+        }
         [HttpPost("verify-email")]
         public async Task<IActionResult> VerifyEmail(VerifyEmailRequest req)
         {

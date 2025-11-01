@@ -14,8 +14,11 @@ const Navbar = () => {
   const handleAccountClick = () => {
     if (userRole === "student") {
       navigate("/StudentLayout");
-    } else if (userRole === "instructor") {
+    } 
+    else if (userRole === "instructor") {
       navigate("/InstructorLayout");
+    } else if (userRole === "admin") {
+      navigate("/AdminLayout");
     }
   };
    const handleLogout = () => {

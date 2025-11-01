@@ -93,13 +93,13 @@ function UserManagement() {
   const handleDelete = (user) => {
     toast.custom((t) => (
       <ConfirmToast
-        message={`Are you sure you want to delete ${user.name}?`}
+        message={`Are you sure you want to delete ${user.fullName}?`}
         onConfirm={() => {
           api
             .delete(`${DeleteUsersEndPoint}/${user.id}`)
             .then(() => {
               setUsers((prev) => prev.filter((u) => u.id !== user.id));
-              toast.success(`Deleted ${user.name}`);
+              toast.success(`Deleted ${user.fullName}`);
             })
             .catch(() => {
               toast.error("Failed to delete user. Try again.");
