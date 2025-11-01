@@ -45,6 +45,7 @@ function Login() {
       // localStorage.setItem("refreshToken", response.data.refreshToken);
       localStorage.setItem("useremail", response.data.user.email); //  Save email
       localStorage.setItem("username", response.data.user.fullName);
+      localStorage.setItem("userimage", response.data.user.fullName);
       localStorage.setItem("userid", response.data.user.userId);
       localStorage.setItem("Role", response.data.user.role);
       // localStorage.setItem("token-storage", token);

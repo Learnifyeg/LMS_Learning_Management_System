@@ -1,5 +1,4 @@
 ﻿using Learnify_API.Data.Services;
-using Learnify_API.Data.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,17 +35,6 @@ namespace Learnify_API.Controllers
             return Ok(user);
         }
 
-        // PUT: api/user/5
-        [Authorize(Roles = "admin")]
-        [HttpPut("update-user-by/{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserVM model)
-        {
-            var success = await _adminService.UpdateUserAsync(id, model);
-            if (!success)
-                return NotFound(new { Message = "User not found" });
-
-            return Ok(new { Message = "User updated successfully" });
-        }
 
         // DELETE: api/user/5
         [Authorize(Roles = "admin")]
@@ -58,6 +46,17 @@ namespace Learnify_API.Controllers
                 return NotFound(new { Message = "User not found" });
 
             return Ok(new { Message = "User deleted successfully" });
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPut("approve-user-by/{id}")]
+        public async Task<IActionResult> ApproveUserById(int id)
+        {
+            var success = await _adminService.ApproveUserAsync(id);
+            if (!success)
+                return NotFound(new { message = "User not found" });
+
+            return Ok(new { message = "User approved successfully" });
         }
     }
 }

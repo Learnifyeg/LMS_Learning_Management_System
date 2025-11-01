@@ -9,6 +9,7 @@ import {
   FaGithub,
 } from "react-icons/fa";
 import { useNavigate } from "react-router";
+import DefaultImage from "../../../public/images/default-avatar.png";
 
 // components
 import api from "@/API/Config";
@@ -32,13 +33,14 @@ function Profile({ role = "student" }) {
         const userId = localStorage.getItem("userid");
         const res = await api.get(`${ProfileEndpoint}/${userId}`);
         const data = res.data;
+        //  Handle tabContent dynamically depending on role
+        const UserRole = localStorage.getItem("Role")?.toLowerCase();
+        const tabContent = data[`${UserRole}TabContent`];
+        //  Fallbacks
+        if (!data.user.avatar) data.user.avatar = localStorage.getItem("userimage") || DefaultImage;
 
-        // Optional: provide default values if some fields are null
-        if (!data.user.avatar) data.user.avatar = "/default-avatar.png";
-        if (!data.tabContent) data.tabContent = { about: "No content" };
-
-        setProfile(data);
-        setActiveTab(Object.keys(data.tabContent)[0] || ""); // First tab default
+        setProfile({ ...data, tabContent });
+        setActiveTab(Object.keys(tabContent || {})[0] || "");
       } catch (err) {
         console.log("Error fetching profile:", err);
       }
@@ -55,7 +57,7 @@ function Profile({ role = "student" }) {
   }
 
   const { user, stats, tabContent, socialLinks, actions } = profile;
-  const tabs = Object.keys(tabContent);
+  const tabs = Object.keys(tabContent || {});
 
   return (
     <div className="min-h-screen bg-[var(--background)] p-8">
@@ -175,7 +177,7 @@ function Profile({ role = "student" }) {
                     : "text-[var(--text-secondary)] hover:text-[var(--secondary)] border-transparent hover:border-[var(--secondary)]"
                 }`}
               >
-                {item}
+                {item.toUpperCase()}
               </button>
             ))}
           </div>

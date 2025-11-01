@@ -5,6 +5,9 @@ import { SidebarProvider, useSidebar } from "@/components/ui/Sidebar/sidebar";
 const Navbar = lazy(() => import("@/components/SideNavbar/Navbar"));
 const Footer = lazy(() => import("../Footer/Footer"));
 import LogoModes from "../ui/LogoTheme/LogoModes";
+import DefaultImage from "../../../public/images/default-avatar.png";
+
+const Image = localStorage.getItem("userimage") || DefaultImage;
 
 function LayoutContent({ shouldHide }) {
   const { open } = useSidebar(); // ✅ Now it's inside the provider
@@ -60,7 +63,7 @@ function InstructorLayout() {
             </div>
 
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu_Bwn9_9Uvdpq3DYMfWGtIFiKg6jchz2MOw&s"
+              src={Image}
               alt="profile"
               className="w-10 h-10 rounded-full object-cover cursor-pointer"
               onClick={() => navigate("/InstructorLayout/InstrProfile")}

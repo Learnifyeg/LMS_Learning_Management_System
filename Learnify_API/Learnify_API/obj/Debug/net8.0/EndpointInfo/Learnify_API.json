@@ -40,8 +40,8 @@
         }
       }
     },
-    "/Admin/update-user-by/{id}": {
-      "put": {
+    "/Admin/delete-user-by/{id}": {
+      "delete": {
         "tags": [
           "Admin"
         ],
@@ -56,25 +56,6 @@
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserVM"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserVM"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserVM"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
@@ -82,8 +63,8 @@
         }
       }
     },
-    "/Admin/delete-user-by/{id}": {
-      "delete": {
+    "/Admin/approve-user-by/{id}": {
+      "put": {
         "tags": [
           "Admin"
         ],
@@ -1243,65 +1224,6 @@
             "nullable": true
           },
           "id": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UserVM": {
-        "required": [
-          "email",
-          "fullName",
-          "role"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "fullName": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "email": {
-            "minLength": 1,
-            "type": "string",
-            "format": "email"
-          },
-          "role": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true
-          },
-          "profileImage": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "isEmailVerified": {
-            "type": "boolean"
-          },
-          "facebook": {
-            "type": "string",
-            "nullable": true
-          },
-          "linkedIn": {
-            "type": "string",
-            "nullable": true
-          },
-          "gitHub": {
-            "type": "string",
-            "nullable": true
-          },
-          "twitter": {
             "type": "string",
             "nullable": true
           }

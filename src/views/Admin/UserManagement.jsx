@@ -7,15 +7,21 @@ import Pagination from "../Others/Pagination";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import toast, { Toaster } from "react-hot-toast";
 import ConfirmToast from "@/utils/ConfirmToast";
+import DefaultImage from "../../../public/images/default-avatar.png";
+
+const Image = localStorage.getItem("userimage") || DefaultImage;
 
 // Endpoints and constants
 const USERS_PER_PAGE = 10;
 const UsersEndPoint = "Admin/get-all-user";
 const DeleteUsersEndPoint = "Admin/delete-user-by";
 const UpdateUsersEndPoint = "Admin/update-user-by";
+const ApproveUserEndPoint = "Admin/approve-user-by";
 function UserManagement() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  // View Modal state
+  const [selectedUser, setSelectedUser] = useState(null);
 
   // UI state
   const [search, setSearch] = useState("");
@@ -79,15 +85,36 @@ function UserManagement() {
     pageStartIndex,
     pageStartIndex + USERS_PER_PAGE
   );
+
   // Placeholder action handlers
   const handleView = (user) => {
+    setSelectedUser(user);
     console.log("View user", user);
-    // placeholder - implement modal / route later
   };
 
-  const handleEdit = (user) => {
-    console.log("Edit user", user);
-    // placeholder - implement navigation later
+  const closeModal = () => setSelectedUser(null);
+  const handleApprove = (user) => {
+    toast.custom((t) => (
+      <ConfirmToast
+        message={`Approve ${user.fullName}'s account?`}
+        onConfirm={() => {
+          api
+            .put(`${ApproveUserEndPoint}/${user.id}`)
+            .then(() => {
+              setUsers((prev) =>
+                prev.map((u) =>
+                  u.id === user.id ? { ...u, isApproved: true } : u
+                )
+              );
+              toast.success(`${user.fullName} has been approved`);
+            })
+            .catch(() => {
+              toast.error("Failed to approve user. Try again.");
+            });
+        }}
+        onCancel={() => toast.dismiss(t.id)}
+      />
+    ));
   };
 
   const handleDelete = (user) => {
@@ -187,12 +214,7 @@ function UserManagement() {
                 >
                   <td className="px-4 py-3">
                     <img
-                      src={
-                        user.image ||
-                        `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                          user.name || "User"
-                        )}`
-                      }
+                      src={Image}
                       className="w-10 h-10 rounded-full object-cover"
                     />
                   </td>
@@ -214,10 +236,15 @@ function UserManagement() {
                       View
                     </button>
                     <button
-                      className="px-2 py-1 text-xs bg-yellow-500 text-white rounded-md hover:bg-yellow-600 cursor-pointer"
-                      onClick={() => handleEdit(user)}
+                      className={`px-2 py-1 text-xs rounded-md text-white ${
+                        user.isApproved
+                          ? "bg-green-600 cursor-default"
+                          : "bg-yellow-500 hover:bg-yellow-600"
+                      }`}
+                      onClick={() => !user.isApproved && handleApprove(user)}
+                      disabled={user.isApproved}
                     >
-                      Edit
+                      {user.isApproved ? "Approved" : "Approve"}
                     </button>
                     <button
                       className="px-2 py-1 text-xs bg-secondary text-white rounded-md hover:bg-red-600 cursor-pointer"
@@ -247,12 +274,7 @@ function UserManagement() {
             >
               <div className="flex items-center gap-3">
                 <img
-                  src={
-                    user.image ||
-                    `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                      user.name || "User"
-                    )}`
-                  }
+                  src={Image}
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div>
@@ -272,10 +294,15 @@ function UserManagement() {
                   View
                 </button>
                 <button
-                  className="px-2 py-1 text-xs bg-yellow-500 text-white rounded-md cursor-pointer"
-                  onClick={() => handleEdit(user)}
+                  className={`px-2 py-1 text-xs rounded-md text-white ${
+                    user.isApproved
+                      ? "bg-green-600 cursor-default"
+                      : "bg-yellow-500 hover:bg-yellow-600"
+                  }`}
+                  onClick={() => !user.isApproved && handleApprove(user)}
+                  disabled={user.isApproved}
                 >
-                  Edit
+                  {user.isApproved ? "Approved" : "Approve"}
                 </button>
                 <button
                   className="px-2 py-1 text-xs bg-secondary text-white rounded-md cursor-pointer"
@@ -289,6 +316,77 @@ function UserManagement() {
         )}
       </div>
 
+      {/* View Modal */}
+      {selectedUser && (
+        <div
+          className="fixed inset-0  bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm"
+          onClick={closeModal}
+        >
+          <div
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-[400px] p-6 relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="absolute top-3 right-4 text-gray-600 hover:text-red-500"
+              onClick={closeModal}
+            >
+              ✕
+            </button>
+
+            <div className="text-center">
+              <img
+                src={Image}
+                className="w-24 h-24 rounded-full mx-auto mb-3"
+                alt={selectedUser.fullName}
+              />
+              <h2 className="text-lg font-semibold">{selectedUser.fullName}</h2>
+              <p className="text-blue-600 capitalize">{selectedUser.role}</p>
+            </div>
+
+            <div className="mt-4 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+              <p>
+                <strong>Email:</strong> {selectedUser.email || "-"}
+              </p>
+              <p>
+                <strong>Phone:</strong> {selectedUser.phone || "-"}
+              </p>
+              <p>
+                <strong>Joined:</strong>{" "}
+                {selectedUser.createdAt
+                  ? new Date(selectedUser.createdAt).toLocaleDateString()
+                  : "-"}
+              </p>
+              <p>
+                <strong>About:</strong>{" "}
+                {selectedUser.about || "No description."}
+              </p>
+            </div>
+
+            <div className="flex justify-end mt-6">
+              <button
+                onClick={closeModal}
+                className="px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 mr-2"
+              >
+                Close
+              </button>
+              <button
+                className={`px-2 py-1 text-xs rounded-md text-white ${
+                  selectedUser.isApproved
+                    ? "bg-green-600 cursor-default"
+                    : "bg-yellow-500 hover:bg-yellow-600"
+                }`}
+                onClick={() => {
+                  !selectedUser.isApproved && handleApprove(selectedUser);
+                  closeModal();
+                }}
+                disabled={selectedUser.isApproved}
+              >
+                {selectedUser.isApproved ? "Approved" : "Approve"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Pagination */}
       <div className="mt-4 flex items-center justify-center">
         <Pagination

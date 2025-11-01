@@ -18,6 +18,7 @@ namespace Learnify_API.Data.ViewModels
         public string? Phone { get; set; }
         public string? ProfileImage { get; set; }
         public DateTime CreatedAt { get; set; }
+        public bool IsApproved { get; set; } = false;
         public bool IsEmailVerified { get; set; }
 
         public string? Facebook { get; set; }

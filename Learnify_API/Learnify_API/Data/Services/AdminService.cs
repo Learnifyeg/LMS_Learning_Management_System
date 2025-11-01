@@ -25,7 +25,8 @@ namespace Learnify_API.Data.Services
                 Role = u.Role,
                 ProfileImage = u.ProfileImage,
                 CreatedAt = u.CreatedAt,
-                IsEmailVerified = u.IsEmailVerified
+                IsEmailVerified = u.IsEmailVerified,
+                IsApproved = u.IsApproved //  include this
             });
         }
 
@@ -47,23 +48,6 @@ namespace Learnify_API.Data.Services
             };
         }
 
-        // Update User Info (Profile)
-        public async Task<bool> UpdateUserAsync(int id, UserVM model)
-        {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null) return false;
-
-            user.FullName = model.FullName;
-            user.Email = model.Email;
-            user.Role = model.Role;
-            user.ProfileImage = model.ProfileImage;
-            user.UpdatedAt = DateTime.Now;
-
-            _context.Users.Update(user);
-            await _context.SaveChangesAsync();
-            return true;
-        }
-
         // Delete User
         public async Task<bool> DeleteUserAsync(int id)
         {
@@ -71,6 +55,17 @@ namespace Learnify_API.Data.Services
             if (user == null) return false;
 
             _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        // Approve User
+        public async Task<bool> ApproveUserAsync(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null) return false;
+
+            user.IsApproved = true;
             await _context.SaveChangesAsync();
             return true;
         }

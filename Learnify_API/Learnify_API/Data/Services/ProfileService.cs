@@ -186,10 +186,10 @@ namespace Learnify_API.Data.Services
                 About = profile.About,
                 InstructorTabContent = tabContent,
                 Actions = new List<ActionButton>
-        {
-            new ActionButton { Label = "Edit Profile", Url = "/UserLayout/EditProfile" },
-            new ActionButton { Label = "Settings", Url = "/UserLayout/SettingPage" }
-        }
+            {
+                new ActionButton { Label = "Edit Profile", Url = "/UserLayout/EditProfile" },
+                new ActionButton { Label = "Settings", Url = "/UserLayout/SettingPage" }
+            }
             };
         }
 

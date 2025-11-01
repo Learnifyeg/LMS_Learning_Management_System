@@ -108,7 +108,6 @@ function InstructorRegister() {
   };
 
   const prevStep = () => setStep((prev) => prev - 1);
-
   const onSubmit = (data) => {
     const formattedData = {
       fullName: data.fullName,
@@ -120,18 +119,23 @@ function InstructorRegister() {
       gender: data.gender.value,
       specialization: data.specialization,
       years_Of_Experience: data.experienceYears,
-      bio: data.major,
+      bio: data.bio,
       role: "Instructor",
     };
 
     api
       .post(InstructorRegisterEndPoint, formattedData)
-      .then((response) => {
-        // localStorage.setItem("Role", "instructor");
-        navigate("/User/Login");
+      .then(() => {
+        toast.info(
+          "Registration submitted! Please wait for admin approval before you can log in."
+        );
+        navigate("/"); // go back to homepage immediately
       })
       .catch((error) => {
-        const errMsg = error.response?.data?.message || "Something went wrong";
+        const errMsg =
+          error.response?.data?.message ||
+          error.response?.data?.errorMessage ||
+          "Something went wrong.";
         toast.error(errMsg);
       });
   };

@@ -32,7 +32,7 @@ namespace Learnify_API.Data.Models
         public ICollection<Notification>? Notifications { get; set; }
         public ICollection<Log>? Logs { get; set; }
 
-
+        public bool IsApproved { get; set; } = false;
         public bool IsEmailVerified { get; set; } = false;
         public string? VerificationCode { get; set; }
         public DateTime? VerificationExpiresAt { get; set; }

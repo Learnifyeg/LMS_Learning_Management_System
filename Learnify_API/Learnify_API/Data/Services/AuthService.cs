@@ -52,7 +52,8 @@ namespace Learnify_API.Data.Services
                     Role = "instructor",
                     ProfileImage = req.ProfileImage,
                     VerificationCode = verificationCode,
-                    VerificationExpiresAt = DateTime.Now.AddMinutes(10)
+                    VerificationExpiresAt = DateTime.Now.AddMinutes(10),
+                    IsApproved = false // ⛔ must wait for admin approval
                 };
 
                 _context.Users.Add(instructor_user);
@@ -109,7 +110,7 @@ namespace Learnify_API.Data.Services
                         Github = ""
                     },
                     About = req.BIO ?? "Welcome to Learnify! Start teaching and inspiring students.",
-                    InstructorTabContent = instructorTabContent // ✅ attach instructor tabs
+                    InstructorTabContent = instructorTabContent // attach instructor tabs
                 };
 
                 _context.profiles.Add(profile);
@@ -118,7 +119,7 @@ namespace Learnify_API.Data.Services
                 // ✅ You can later send an email with the verification code
                 // await _emailService.SendEmailAsync(req.Email, "Learnify Verification Code", $"<h3>Your code is:</h3><h2>{verificationCode}</h2>");
 
-                response.Data = "Instructor registered successfully. Verification code sent to email.";
+                response.Data = "Instructor registered successfully. Please wait for admin approval before logging in.";
                 return response;
             }
             catch (Exception ex)
@@ -157,7 +158,8 @@ namespace Learnify_API.Data.Services
                     Role = "student",
                     ProfileImage = req.ProfileImage,
                     VerificationCode = verificationCode,
-                    VerificationExpiresAt = DateTime.Now.AddMinutes(10)
+                    VerificationExpiresAt = DateTime.Now.AddMinutes(10),
+                    IsApproved = true //  students are auto-approved
                 };
 
                 _context.Users.Add(student_user);
@@ -214,7 +216,7 @@ namespace Learnify_API.Data.Services
                         Github = ""
                     },
                     About = req.About ?? "Welcome to Learnify! Start exploring new courses today.",
-                    StudentTabContent = studentTabContent // ✅ link student tab content
+                    StudentTabContent = studentTabContent //  link student tab content
                 };
 
                 _context.profiles.Add(profile);
@@ -254,7 +256,8 @@ namespace Learnify_API.Data.Services
                     Email = req.Email,
                     Role = "admin", // keep lowercase for consistency
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
-                    CreatedAt = DateTime.Now
+                    CreatedAt = DateTime.Now,
+                    IsApproved = true //  students are auto-approved
                 };
 
                 await _context.Users.AddAsync(user);
@@ -378,6 +381,12 @@ namespace Learnify_API.Data.Services
                 {
                     response.Success = false;
                     response.ErrorMessage = "Invalid email or password.";
+                    return response;
+                }
+                if (!user.IsApproved)
+                {
+                    response.Success = false;
+                    response.ErrorMessage = "Your account is awaiting admin approval.";
                     return response;
                 }
 

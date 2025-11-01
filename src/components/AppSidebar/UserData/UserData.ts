@@ -11,11 +11,13 @@ import {
   SquareTerminal,
 } from "lucide-react";
 
+const UserName = localStorage.getItem("username") || "shadcn";
+const userEmail = localStorage.getItem("useremail") || "m@example.com";
 export const sidebarData = {
   student: {
     user: {
-      name: "shadcn",
-      email: "m@example.com",
+      name: UserName,
+      email:userEmail,
       avatar: "/avatars/shadcn.jpg",
       items: [
         { title: "Dashboard", url: "/StudentLayout/StuDashboard" },
@@ -105,8 +107,8 @@ export const sidebarData = {
 
   instructor: {
     user: {
-      name: "shadcn",
-      email: "m@example.com",
+      name: UserName,
+      email: userEmail,
       avatar: "/avatars/shadcn.jpg",
       items: [
         { title: "Dashboard", url: "/InstructorLayout/InstrDashboard" },
@@ -196,8 +198,8 @@ export const sidebarData = {
 
   admin: {
     user: {
-      name: "shadcn",
-      email: "m@example.com",
+      name: UserName,
+      email: userEmail,
       avatar: "/avatars/shadcn.jpg",
       items: [
         { title: "Dashboard", url: "/AdminLayout/AdminDashboard" },
@@ -207,7 +209,7 @@ export const sidebarData = {
     },
     teams: [
       {
-        name: "shadcn",
+        name: UserName,
         logo: GalleryVerticalEnd,
         role: "Admin",
       },
