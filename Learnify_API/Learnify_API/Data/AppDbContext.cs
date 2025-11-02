@@ -32,6 +32,7 @@ namespace Learnify_API.Data
         public DbSet<FeedBack> feedBacks { get; set; }
         public DbSet<Profile> profiles { get; set; }
 
+        public DbSet<LessonProgress> LessonProgresses { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<Course>()

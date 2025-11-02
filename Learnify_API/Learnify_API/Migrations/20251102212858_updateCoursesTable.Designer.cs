@@ -4,6 +4,7 @@ using Learnify_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Learnify_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251102212858_updateCoursesTable")]
+    partial class updateCoursesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -369,33 +372,6 @@ namespace Learnify_API.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("Lessons");
-                });
-
-            modelBuilder.Entity("Learnify_API.Data.Models.LessonProgress", b =>
-                {
-                    b.Property<int>("ProgressId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProgressId"));
-
-                    b.Property<DateTime?>("CompletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("LessonId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProgressId");
-
-                    b.HasIndex("LessonId");
-
-                    b.ToTable("LessonProgresses");
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.Log", b =>
@@ -940,17 +916,6 @@ namespace Learnify_API.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("Learnify_API.Data.Models.LessonProgress", b =>
-                {
-                    b.HasOne("Learnify_API.Data.Models.Lesson", "Lesson")
-                        .WithMany("LessonProgresses")
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lesson");
-                });
-
             modelBuilder.Entity("Learnify_API.Data.Models.Log", b =>
                 {
                     b.HasOne("Learnify_API.Data.Models.User", "User")
@@ -1146,11 +1111,6 @@ namespace Learnify_API.Migrations
                     b.Navigation("Courses");
 
                     b.Navigation("InstructorPayouts");
-                });
-
-            modelBuilder.Entity("Learnify_API.Data.Models.Lesson", b =>
-                {
-                    b.Navigation("LessonProgresses");
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.Quiz", b =>
