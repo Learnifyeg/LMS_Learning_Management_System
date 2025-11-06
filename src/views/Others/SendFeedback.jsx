@@ -16,7 +16,7 @@ function SendFeedback() {
   const [message, setMessage] = useState("");
   const [screenshots, setScreenshots] = useState([]);
   const [success, setSuccess] = useState(false);
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef(null);  
 
   // رفع الملفات
   const handleFileChange = (e) => {

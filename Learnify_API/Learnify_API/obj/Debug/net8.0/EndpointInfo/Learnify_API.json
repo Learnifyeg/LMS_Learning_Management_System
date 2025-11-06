@@ -609,7 +609,7 @@
         }
       }
     },
-    "/Lesson/complete/{lessonId}/{studentId}": {
+    "/Lesson/complete/{lessonId}": {
       "post": {
         "tags": [
           "Lesson"
@@ -617,15 +617,6 @@
         "parameters": [
           {
             "name": "lessonId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "studentId",
             "in": "path",
             "required": true,
             "schema": {
@@ -641,7 +632,7 @@
         }
       }
     },
-    "/Lesson/progress/{courseId}/{studentId}": {
+    "/Lesson/progress/{courseId}": {
       "get": {
         "tags": [
           "Lesson"
@@ -649,15 +640,6 @@
         "parameters": [
           {
             "name": "courseId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "studentId",
             "in": "path",
             "required": true,
             "schema": {

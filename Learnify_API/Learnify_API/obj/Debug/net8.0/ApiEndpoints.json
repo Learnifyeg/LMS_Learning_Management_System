@@ -360,18 +360,13 @@
   {
     "ContainingType": "Learnify_API.Controllers.LessonController",
     "Method": "MarkLessonCompleted",
-    "RelativePath": "Lesson/complete/{lessonId}/{studentId}",
+    "RelativePath": "Lesson/complete/{lessonId}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "lessonId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "studentId",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -397,18 +392,13 @@
   {
     "ContainingType": "Learnify_API.Controllers.LessonController",
     "Method": "GetProgressByCourse",
-    "RelativePath": "Lesson/progress/{courseId}/{studentId}",
+    "RelativePath": "Lesson/progress/{courseId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "courseId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "studentId",
         "Type": "System.Int32",
         "IsRequired": true
       }
