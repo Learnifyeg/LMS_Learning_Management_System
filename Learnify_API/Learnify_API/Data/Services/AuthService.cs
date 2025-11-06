@@ -273,7 +273,7 @@ namespace Learnify_API.Data.Services
                 };
 
                 await _context.Admins.AddAsync(admin);
-                await _context.SaveChangesAsync(); // ✅ Save before creating profile
+                await _context.SaveChangesAsync(); //  Save before creating profile
 
                 // 4️⃣ Create Admin Profile with initial tab data
                 var tabContent = new AdminTabContent
@@ -537,6 +537,28 @@ namespace Learnify_API.Data.Services
             };
         }
 
+        // Get current logged-in user info from JWT
+        public async Task<AuthUserInfoDTO?> GetUserProfileAsync(ClaimsPrincipal userClaims)
+        {
+            var userId = userClaims.FindFirst("userId")?.Value;
+            if (userId == null) return null;
+
+            var user = await _context.Users.FirstOrDefaultAsync(u =>
+                u.UserId.ToString() == userId);
+
+            if (user == null) return null;
+
+            var dto = new AuthUserInfoDTO
+            {
+                Id = user.UserId.ToString(),
+                FullName = user.FullName ?? "",
+                Email = user.Email,
+                Role = user.Role,
+                Image = user.ProfileImage ?? ""
+            };
+
+            return dto;
+        }
 
 
 

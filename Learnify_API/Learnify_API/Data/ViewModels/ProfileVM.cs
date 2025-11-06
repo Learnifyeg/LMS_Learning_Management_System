@@ -1,5 +1,6 @@
 ﻿using Learnify_API.Data.Models;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Learnify_API.Data.ViewModels
 {
@@ -11,13 +12,17 @@ namespace Learnify_API.Data.ViewModels
         public List<Stat> Stats { get; set; }
         public string About { get; set; }
         [NotMapped]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public InstructorTabContent InstructorTabContent { get; set; } = new InstructorTabContent();
 
         [NotMapped]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public AdminTabContent AdminTabContent { get; set; } = new AdminTabContent();
         [NotMapped]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public StudentTabContent StudentTabContent { get; set; } = new StudentTabContent();
         public List<ActionButton> Actions { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? Department { get; set; }
     }
     public class UserInformationVM

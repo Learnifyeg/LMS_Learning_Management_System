@@ -60,20 +60,38 @@ namespace Learnify_API.Controllers
         }
 
         //  Mark Lesson Completed
-        [HttpPost("complete/{lessonId}/{studentId}")]
-        public async Task<IActionResult> MarkLessonCompleted(int lessonId, int studentId)
+        [HttpPost("complete/{lessonId}")]
+        public async Task<IActionResult> MarkLessonCompleted(int lessonId)
         {
+            //  Get userId from token
+            var userIdClaim = User.FindFirst("userId");
+            if (userIdClaim == null) return Unauthorized("Invalid token");
+
+            int studentId = int.Parse(userIdClaim.Value);
+
             var success = await _lessonService.MarkLessonCompletedAsync(lessonId, studentId);
-            if (!success) return NotFound(new { message = "Lesson not found" });
+
+            if (!success)
+                return NotFound(new { message = "Lesson not found" });
+
             return Ok(new { message = "Lesson marked as completed!" });
         }
 
+
         //  Get student progress in course
-        [HttpGet("progress/{courseId}/{studentId}")]
-        public async Task<IActionResult> GetProgressByCourse(int courseId, int studentId)
+        [HttpGet("progress/{courseId}")]
+        public async Task<IActionResult> GetProgressByCourse(int courseId)
         {
+            //  Get userId from token
+            var userIdClaim = User.FindFirst("userId");
+            if (userIdClaim == null) return Unauthorized("Invalid token");
+
+            int studentId = int.Parse(userIdClaim.Value);
+
             var progress = await _lessonService.GetProgressByCourseAsync(courseId, studentId);
+
             return Ok(progress);
         }
+
     }
 }

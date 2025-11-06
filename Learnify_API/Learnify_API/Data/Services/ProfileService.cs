@@ -185,11 +185,14 @@ namespace Learnify_API.Data.Services
                 Stats = stats,
                 About = profile.About,
                 InstructorTabContent = tabContent,
+                StudentTabContent = null,
+                AdminTabContent = null,
                 Actions = new List<ActionButton>
-            {
-                new ActionButton { Label = "Edit Profile", Url = "/UserLayout/EditProfile" },
-                new ActionButton { Label = "Settings", Url = "/UserLayout/SettingPage" }
-            }
+                    {
+                        new ActionButton { Label = "Edit Profile", Url = "/UserLayout/EditProfile" },
+                        new ActionButton { Label = "Settings", Url = "/UserLayout/SettingPage" }
+                    }
+
             };
         }
 
@@ -262,7 +265,9 @@ namespace Learnify_API.Data.Services
                 About = profile.About,
                 StudentTabContent = tabContent,
                 Actions = actions,
-                Department = student.Department
+                Department = student.Department,
+                InstructorTabContent = null,
+                AdminTabContent = null,
 
             };
         }
@@ -363,7 +368,9 @@ namespace Learnify_API.Data.Services
                             new ActionButton { Label = "Edit Profile", Url = "/UserLayout/EditProfile" },
                             new ActionButton { Label = "Settings", Url = "/UserLayout/SettingPage" }
                         },
-                Department = admin.Department
+                Department = null,
+                InstructorTabContent = null,
+                StudentTabContent = null
             };
         }
 
