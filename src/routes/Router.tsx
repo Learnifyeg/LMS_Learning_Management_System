@@ -56,7 +56,9 @@ const StuShoppingCart = lazy(
   () => import("@/views/Student/StuShoppingCart.jsx")
 );
 const MyCourses = lazy(() => import("@/views/Student/MyCourses.jsx"));
-const StudentLessonPage = lazy(() => import("@/views/Student/StudentLessonPage.jsx"));
+const StudentLessonPage = lazy(
+  () => import("@/views/Student/StudentLessonPage.jsx")
+);
 
 // Others
 const UserLayout = lazy(() => import("@/components/UserLayout/UserLayout.jsx"));
@@ -68,7 +70,6 @@ const SendFeedback = lazy(() => import("@/views/Others/SendFeedback.jsx"));
 const SettingPage = lazy(() => import("@/views/Others/SettingPage.jsx"));
 const TermsofUse = lazy(() => import("@/views/Others/TermsofUse.jsx"));
 const EditProfile = lazy(() => import("@/views/Others/EditProfile.jsx"));
-
 
 // Landing Views
 const LandingLayout = lazy(

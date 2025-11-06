@@ -1,6 +1,7 @@
 ﻿using Learnify_API.Data.DTO;
 using Learnify_API.Data.Models;
 using Learnify_API.Data.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

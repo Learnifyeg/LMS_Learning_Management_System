@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { FaEnvelope } from "react-icons/fa";
 import axios from "axios";
 import api from "@/API/Config";
@@ -14,6 +14,8 @@ const ForgetPasswordSchema = z.object({
 
 function ForgetPassword() {
   const navigate = useNavigate();
+  const params = useParams();
+  const { email, token } = params;
   const { theme } = useTheme();
 
   const {

@@ -1,5 +1,6 @@
 ﻿using Learnify_API.Data.Services;
 using Learnify_API.Data.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Learnify_API.Controllers
@@ -16,7 +17,7 @@ namespace Learnify_API.Controllers
         }
 
         //  Instructor adds course
-        //[Authorize(Roles = "Instructor")]
+        [Authorize(Roles = "instructor")]
         [HttpPost("add")]
         public async Task<IActionResult> AddCourse([FromBody] CourseVM model)
         {

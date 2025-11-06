@@ -10,18 +10,19 @@ import LogoNav from "../../ui/Logo/LogoNav";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const userRole = localStorage.getItem("Role");
+  const userRole = JSON.parse(localStorage.getItem("token-storage") || "{}")
+    .state?.user?.role;
+  console.log(JSON.parse(localStorage.getItem("token-storage") || "{}"));
   const handleAccountClick = () => {
     if (userRole === "student") {
       navigate("/StudentLayout");
-    } 
-    else if (userRole === "instructor") {
+    } else if (userRole === "instructor") {
       navigate("/InstructorLayout");
     } else if (userRole === "admin") {
       navigate("/AdminLayout");
     }
   };
-   const handleLogout = () => {
+  const handleLogout = () => {
     localStorage.removeItem("useremail"); // remove user from localStorage
     localStorage.removeItem("token"); // optional, if you saved token separately
     localStorage.removeItem("username"); // optional, if you saved token separately
@@ -30,7 +31,6 @@ const Navbar = () => {
     navigate("/");
     window.location.reload(); // refresh UI to reflect logout
   };
-
 
   return (
     <header className="bg-primary/90 py-3 text-white sticky top-0 z-50 backdrop-blur-md">

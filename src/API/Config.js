@@ -1,6 +1,7 @@
 import useTokenStore from "@/store/user";
 import axios from "axios";
 
+let retry = 2;
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   withCredentials: true, // important for sending cookies
@@ -30,7 +31,9 @@ api.interceptors.response.use(
 
     if (error.response?.status === 401) {
       try {
+        if (retry < 0) return Promise.reject(error);
         // Try refreshing the token
+        retry--;
         const res = await api.post(RefreshTokenEndpoint, null, {
           withCredentials: true,
         });

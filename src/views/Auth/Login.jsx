@@ -22,6 +22,8 @@ import { useEffect, useState } from "react";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import useTokenStore from "@/store/user";
 import api from "@/API/Config";
+import User from "@/store/Classes/User";
+import { useAppStore } from "@/store/app";
 
 const RegisterSchema = z.object({
   email: z.email("Please enter a valid email address"),
@@ -32,31 +34,16 @@ const LoginEndpoint = "Auth/login";
 function Login() {
   const navigate = useNavigate();
   const { setToken } = useTokenStore();
+  const { isLoading } = useAppStore();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(RegisterSchema) });
   const onSubmit = async (data) => {
-    try {
-      const response = await api.post(LoginEndpoint, data);
-      const { token } = response.data;
-      localStorage.setItem("token", response.data.token);
-      // localStorage.setItem("refreshToken", response.data.refreshToken);
-      localStorage.setItem("useremail", response.data.user.email); //  Save email
-      localStorage.setItem("username", response.data.user.fullName);
-      localStorage.setItem("userimage", response.data.user.fullName);
-      localStorage.setItem("userid", response.data.user.userId);
-      localStorage.setItem("Role", response.data.user.role);
-      // localStorage.setItem("token-storage", token);
-      // console.log("token after login", token);
-      setToken(token); // save access token only
-      toast.success("Logged in successfully!");
-      navigate("/");
-    } catch (err) {
-      console.error(err.response?.data);
-      toast.error(err.response?.data?.message || "Login failed");
-    }
+    const user = new User();
+    await user.login(data);
+    navigate("/");
   };
   // localStorage.clear();
 
@@ -118,12 +105,13 @@ function Login() {
       <hr className="my-5 text-text-secondary" />
       <p className="text-text-secondary">
         Don't have an account?{" "}
-        <span
+        <button
           className="text-secondary cursor-pointer hover:scale-105 font-bold"
           onClick={() => navigate("/User/Register")}
+          disabled={isLoading}
         >
           Sign Up
-        </span>
+        </button>
       </p>
     </section>
   );
