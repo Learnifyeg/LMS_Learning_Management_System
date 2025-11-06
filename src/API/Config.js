@@ -7,6 +7,7 @@ const api = axios.create({
   withCredentials: true, // important for sending cookies
   headers: {
     "Content-Type": "application/json",
+    Authorization: `Bearer ${useTokenStore.getState().token}`,
   },
 });
 
