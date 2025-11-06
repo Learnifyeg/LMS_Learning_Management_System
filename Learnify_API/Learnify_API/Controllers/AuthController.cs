@@ -1,6 +1,7 @@
 ﻿using Learnify_API.Data.DTO;
 using Learnify_API.Data.Models;
 using Learnify_API.Data.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -132,6 +133,19 @@ namespace Learnify_API.Controllers
             });
         }
 
+
+        // Get current logged-in user info from JWT
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var result = await _authService.GetUserProfileAsync(User);
+
+            if (result == null)
+                return NotFound("User not found");
+
+            return Ok(result);
+        }
 
 
     }

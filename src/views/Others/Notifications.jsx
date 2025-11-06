@@ -35,7 +35,11 @@ function Notifications() {
         // response.data should now have { Notifications, UnreadCount }
         const notifications = response.data.notifications || [];
         const unreadCount = response.data.unreadCount || 0;
-
+        if (!unreadCount && notifications.length === 0) {
+          toast.info("You have no notifications at the moment.");
+        } else {
+          toast.info(`You have ${unreadCount} unread notifications.`);
+        }
         // Store unread count in localStorage
         localStorage.setItem("notificationCount", unreadCount);
 
@@ -44,6 +48,7 @@ function Notifications() {
       } catch (error) {
         console.error("Error fetching notifications:", error);
         toast.error("Failed to load notifications");
+        console.log("Fetched notifications:", response.data);
       } finally {
         setLoading(false);
       }
@@ -61,6 +66,52 @@ function Notifications() {
 
   // Mark notification as read (both visually + backend)
   const handleMarkAsRead = async (id) => {
+    useEffect(() => {
+      const fetchNotifications = async () => {
+        setLoading(true);
+        try {
+          const userEmail =
+            localStorage.getItem("useremail") || "user1@example.com";
+
+          const response = await api.get(
+            `${ReceiveNotificationsEndpoint}/${userEmail}`
+          );
+
+          const notifications = response.data.notifications || [];
+          const unreadCount = response.data.unreadCount || 0;
+
+          // Logic
+          if (notifications.length === 0) {
+            toast.info("You have no notifications at the moment.");
+          } else if (unreadCount > 0) {
+            toast.info(`You have ${unreadCount} unread notifications.`);
+          } else {
+            toast.info("You have notifications, but all are read.");
+          }
+
+          // Store unread count
+          localStorage.setItem("notificationCount", unreadCount);
+
+          // Update state
+          setNotifications(notifications);
+        } catch (error) {
+          console.error("Error fetching notifications:", error);
+          toast.error("Failed to load notifications");
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      // First fetch immediately
+      fetchNotifications();
+
+      // Repeat every 60 seconds
+      const interval = setInterval(fetchNotifications, 60000);
+
+      // Cleanup when unmounting
+      return () => clearInterval(interval);
+    }, []);
+
     try {
       await api.put(`${MarkAsReadEndpoint}/${id}`);
       setNotifications((prev) =>

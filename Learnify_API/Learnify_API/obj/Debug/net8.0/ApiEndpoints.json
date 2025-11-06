@@ -139,6 +139,16 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.AuthController",
+    "Method": "GetCurrentUser",
+    "RelativePath": "Auth/me",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.AuthController",
     "Method": "RefreshToken",
     "RelativePath": "Auth/refresh-token",
     "HttpMethod": "POST",
@@ -461,17 +471,11 @@
   {
     "ContainingType": "Learnify_API.Controllers.NotificationController",
     "Method": "GetNotificationsByUser",
-    "RelativePath": "Notification/user-receive/{receiverEmail}",
+    "RelativePath": "Notification/user-receive",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "receiverEmail",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -529,32 +533,21 @@
   {
     "ContainingType": "Learnify_API.Controllers.ProfileController",
     "Method": "GetAdminProfile",
-    "RelativePath": "Profile/admin/{id}",
+    "RelativePath": "Profile/admin",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
     "ContainingType": "Learnify_API.Controllers.ProfileController",
     "Method": "EditAdminProfile",
-    "RelativePath": "Profile/edit-admin/{id}",
+    "RelativePath": "Profile/edit-admin",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
       {
         "Name": "Name",
         "Type": "System.String",
@@ -611,16 +604,11 @@
   {
     "ContainingType": "Learnify_API.Controllers.ProfileController",
     "Method": "EditInstructorProfile",
-    "RelativePath": "Profile/edit-instructor/{Id}",
+    "RelativePath": "Profile/edit-instructor",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "Id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
       {
         "Name": "Name",
         "Type": "System.String",
@@ -692,16 +680,11 @@
   {
     "ContainingType": "Learnify_API.Controllers.ProfileController",
     "Method": "EditStudentProfile",
-    "RelativePath": "Profile/edit-student/{Id}",
+    "RelativePath": "Profile/edit-student",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "Id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
       {
         "Name": "Name",
         "Type": "System.String",
@@ -798,33 +781,21 @@
   {
     "ContainingType": "Learnify_API.Controllers.ProfileController",
     "Method": "GetInstructorProfile",
-    "RelativePath": "Profile/instructor/{Id}",
+    "RelativePath": "Profile/instructor",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
     "ContainingType": "Learnify_API.Controllers.ProfileController",
     "Method": "GetStudentProfile",
-    "RelativePath": "Profile/student/{Id}",
+    "RelativePath": "Profile/student",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   }
 ]

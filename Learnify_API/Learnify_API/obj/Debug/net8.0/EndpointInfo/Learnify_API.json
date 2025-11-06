@@ -315,6 +315,18 @@
         }
       }
     },
+    "/Auth/me": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Course/add": {
       "post": {
         "tags": [
@@ -692,20 +704,10 @@
         }
       }
     },
-    "/Notification/user-receive/{receiverEmail}": {
+    "/Notification/user-receive": {
       "get": {
         "tags": [
           "Notification"
-        ],
-        "parameters": [
-          {
-            "name": "receiverEmail",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -816,21 +818,10 @@
         }
       }
     },
-    "/Profile/edit-student/{Id}": {
+    "/Profile/edit-student": {
       "put": {
         "tags": [
           "Profile"
-        ],
-        "parameters": [
-          {
-            "name": "Id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "requestBody": {
           "content": {
@@ -962,21 +953,10 @@
         }
       }
     },
-    "/Profile/edit-instructor/{Id}": {
+    "/Profile/edit-instructor": {
       "put": {
         "tags": [
           "Profile"
-        ],
-        "parameters": [
-          {
-            "name": "Id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "requestBody": {
           "content": {
@@ -1077,21 +1057,10 @@
         }
       }
     },
-    "/Profile/edit-admin/{id}": {
+    "/Profile/edit-admin": {
       "put": {
         "tags": [
           "Profile"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "requestBody": {
           "content": {
@@ -1174,21 +1143,10 @@
         }
       }
     },
-    "/Profile/instructor/{Id}": {
+    "/Profile/instructor": {
       "get": {
         "tags": [
           "Profile"
-        ],
-        "parameters": [
-          {
-            "name": "Id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -1197,21 +1155,10 @@
         }
       }
     },
-    "/Profile/student/{Id}": {
+    "/Profile/student": {
       "get": {
         "tags": [
           "Profile"
-        ],
-        "parameters": [
-          {
-            "name": "Id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -1220,21 +1167,10 @@
         }
       }
     },
-    "/Profile/admin/{id}": {
+    "/Profile/admin": {
       "get": {
         "tags": [
           "Profile"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -1671,6 +1607,13 @@
           },
           "id": {
             "type": "string",
+            "nullable": true
+          },
+          "courses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           }
         },

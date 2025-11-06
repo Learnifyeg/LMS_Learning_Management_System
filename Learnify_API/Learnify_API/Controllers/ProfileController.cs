@@ -1,5 +1,6 @@
 ﻿using Learnify_API.Data.Services;
 using Learnify_API.Data.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Learnify_API.Controllers
@@ -16,10 +17,16 @@ namespace Learnify_API.Controllers
         private readonly ProfileService _service;
 
 
-        [HttpPut("edit-student/{Id}")]
-        public async Task<IActionResult> EditStudentProfile(int Id, [FromForm] EditStudentProfileVM model)
+        [Authorize(Roles = "student")]
+        [HttpPut("edit-student")]
+        public async Task<IActionResult> EditStudentProfile([FromForm] EditStudentProfileVM model)
         {
-            var result = await _service.EditStudentProfileAsync(Id, model);
+            var userId = User.FindFirst("userId")?.Value;
+
+            if (userId == null)
+                return Unauthorized("Invalid token");
+
+            var result = await _service.EditStudentProfileAsync(int.Parse(userId), model);
 
             if (!result)
                 return NotFound("Student or profile not found.");
@@ -28,50 +35,80 @@ namespace Learnify_API.Controllers
         }
 
 
-        [HttpPut("edit-instructor/{Id}")]
-        public async Task<IActionResult> EditInstructorProfile(int Id, [FromForm] EditInstructorProfileVM model)
+
+        [Authorize(Roles = "instructor")]
+        [HttpPut("edit-instructor")]
+        public async Task<IActionResult> EditInstructorProfile([FromForm] EditInstructorProfileVM model)
         {
-            var result = await _service.EditInstructorProfileAsync(Id, model);
-            if (!result)
-                return NotFound("Instructor or profile not found.");
+            var userId = User.FindFirst("userId")?.Value;
+            if (userId == null) return Unauthorized();
+
+            var result = await _service.EditInstructorProfileAsync(int.Parse(userId), model);
+
+            if (!result) return NotFound("Instructor or profile not found.");
 
             return Ok(new { message = "Profile updated successfully!" });
         }
 
-        [HttpPut("edit-admin/{id}")]
-        public async Task<IActionResult> EditAdminProfile(int id, [FromForm] EditAdminProfileVM model)
+
+        [Authorize(Roles = "admin")]
+        [HttpPut("edit-admin")]
+        public async Task<IActionResult> EditAdminProfile([FromForm] EditAdminProfileVM model)
         {
-            var result = await _service.EditAdminProfileAsync(id, model);
+            var userId = User.FindFirst("userId")?.Value;
+            if (userId == null) return Unauthorized();
+
+            var result = await _service.EditAdminProfileAsync(int.Parse(userId), model);
+
             if (!result) return NotFound("Admin or profile not found.");
+
             return Ok(new { message = "Profile updated successfully!" });
         }
 
-        [HttpGet("instructor/{Id}")]
-        public async Task<IActionResult> GetInstructorProfile(int Id)
+        [Authorize(Roles = "instructor")]
+        [HttpGet("instructor")]
+        public async Task<IActionResult> GetInstructorProfile()
         {
-            var profile = await _service.GetInstructorProfileAsync(Id);
+            var userId = User.FindFirst("userId")?.Value;
+            if (userId == null)
+                return Unauthorized(new { message = "Invalid token" });
+
+            var profile = await _service.GetInstructorProfileAsync(int.Parse(userId));
+
             if (profile == null)
                 return NotFound(new { message = "Instructor not found" });
 
             return Ok(profile);
         }
 
-
-        [HttpGet("student/{Id}")]
-        public async Task<IActionResult> GetStudentProfile(int Id)
+        [Authorize(Roles = "student")]
+        [HttpGet("student")]
+        public async Task<IActionResult> GetStudentProfile()
         {
-            var profile = await _service.GetStudentProfileAsync(Id);
+            var userId = User.FindFirst("userId")?.Value;
+            if (userId == null) return Unauthorized();
+
+            var profile = await _service.GetStudentProfileAsync(int.Parse(userId));
+
             if (profile == null)
                 return NotFound(new { message = "Student not found" });
 
             return Ok(profile);
         }
 
-        [HttpGet("admin/{id}")]
-        public async Task<IActionResult> GetAdminProfile(int id)
+        [Authorize(Roles = "admin")]
+        [HttpGet("admin")]
+        public async Task<IActionResult> GetAdminProfile()
         {
-            var profile = await _service.GetAdminProfileAsync(id);
-            if (profile == null) return NotFound(new { message = "Admin not found" });
+            var userId = User.FindFirst("userId")?.Value;
+            if (userId == null)
+                return Unauthorized(new { message = "Invalid token" });
+
+            var profile = await _service.GetAdminProfileAsync(int.Parse(userId));
+
+            if (profile == null)
+                return NotFound(new { message = "Admin not found" });
+
             return Ok(profile);
         }
 

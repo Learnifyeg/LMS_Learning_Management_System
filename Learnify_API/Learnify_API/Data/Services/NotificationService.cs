@@ -14,27 +14,23 @@ namespace Learnify_API.Services
             _context = context;
         }
 
-        //  Create notification
-        //  Create notification
         public async Task<NotificationReadDTO> CreateNotificationAsync(NotificationCreateDTO dto)
         {
-            //  1. Check if receiver exists
-            var receiverExists = await _context.Users
-                .AnyAsync(u => u.Email == dto.ReceiverEmail);
-            if (!receiverExists)
+            //  Check if receiver exists
+            var receiver = await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == dto.ReceiverEmail);
+
+            if (receiver == null)
                 throw new Exception($"Receiver with email {dto.ReceiverEmail} does not exist.");
 
-            //  2. Check if sender exists (optional)
-            User? sender = null;
-            if (dto.SenderId != 0)
-            {
-                sender = await _context.Users
-                    .FirstOrDefaultAsync(u => u.UserId == dto.SenderId);
-                if (sender == null)
-                    throw new Exception($"Sender with ID {dto.SenderId} does not exist.");
-            }
+            //  Get sender
+            var sender = await _context.Users
+                .FirstOrDefaultAsync(u => u.UserId == dto.SenderId);
 
-            //  3. Create notification
+            if (sender == null)
+                throw new Exception($"Sender with ID {dto.SenderId} does not exist.");
+
+            //  Create notification
             var notification = new Notification
             {
                 SenderId = dto.SenderId,
@@ -42,13 +38,13 @@ namespace Learnify_API.Services
                 Title = dto.Title,
                 Message = dto.Message,
                 Type = dto.Type,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.UtcNow
             };
 
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync();
 
-            //  4. Return DTO including sender info
+            //  Return response DTO
             return new NotificationReadDTO
             {
                 NotificationId = notification.NotificationId,
@@ -60,8 +56,8 @@ namespace Learnify_API.Services
                 ReadAt = notification.ReadAt,
                 ReceiverEmail = notification.ReceiverEmail,
                 SenderId = notification.SenderId ?? 0,
-                SenderName = sender?.FullName ?? "System",
-                SenderEmail = sender?.Email ?? "system@learnify.com"
+                SenderName = sender.FullName,
+                SenderEmail = sender.Email
             };
         }
 
@@ -94,7 +90,14 @@ namespace Learnify_API.Services
                 })
                 .ToListAsync();
 
-            // ✅ Return both notifications and unread count
+            // Return both notifications and unread count
+
+            // If no notifications → return empty
+            if (!notifications.Any())
+            {
+                return (Enumerable.Empty<NotificationReadDTO>(), 0);
+            }
+
             return (notifications, unreadNotificationCount);
         }
 

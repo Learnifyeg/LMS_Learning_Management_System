@@ -1,6 +1,8 @@
 ﻿using Learnify_API.Data.DTO;
 using Learnify_API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Learnify_API.Controllers
 {
@@ -16,13 +18,24 @@ namespace Learnify_API.Controllers
         }
 
         // Send a notification from one user to another
+        [Authorize]
         [HttpPost("user-send")]
         public async Task<IActionResult> SendNotification([FromBody] NotificationCreateDTO dto)
         {
-            if (dto.SenderId == 0 || string.IsNullOrWhiteSpace(dto.ReceiverEmail))
-                return BadRequest("SenderId and ReceiverId are required.");
+            // ✅ Extract Sender from JWT
+            var senderIdStr = User.FindFirst("userId")?.Value;
+            if (senderIdStr == null)
+                return Unauthorized(new { message = "Invalid token" });
+
+            int senderId = int.Parse(senderIdStr);
+
+            dto.SenderId = senderId;   //  Override any client value
+
+            if (string.IsNullOrWhiteSpace(dto.ReceiverEmail))
+                return BadRequest("ReceiverEmail is required.");
 
             var result = await _notificationService.CreateNotificationAsync(dto);
+
             return Ok(new
             {
                 message = "Notification sent successfully.",
@@ -30,22 +43,35 @@ namespace Learnify_API.Controllers
             });
         }
 
-        // Get all notifications for a specific user, including unread count
-        [HttpGet("user-receive/{receiverEmail}")]
-        public async Task<IActionResult> GetNotificationsByUser(string receiverEmail)
+
+        [Authorize]
+        [HttpGet("user-receive")]
+        public async Task<IActionResult> GetNotificationsByUser()
         {
-            var (notifications, unreadCount) = await _notificationService.GetUserNotificationsAsync(receiverEmail);
+            // Extract email from token (stored as "sub")
+            var email = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+
+            if (email == null)
+                return Unauthorized(new { message = "Invalid token" });
+
+            var (notifications, unreadNotificationCount) = await _notificationService.GetUserNotificationsAsync(email);
 
             if (notifications == null || !notifications.Any())
-                return NotFound("No notifications found for this user.");
+            {
+                return Ok(new
+                {
+                    Notifications = Array.Empty<NotificationReadDTO>(),
+                    UnreadCount = 0
+                });
+            }
 
-            // Return both notifications and unread count
             return Ok(new
             {
                 Notifications = notifications,
-                UnreadCount = unreadCount
+                UnreadCount = unreadNotificationCount
             });
         }
+
 
 
         //  Mark a notification as read
