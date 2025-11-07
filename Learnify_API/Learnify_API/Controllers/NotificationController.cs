@@ -44,7 +44,7 @@ namespace Learnify_API.Controllers
         }
 
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("user-receive")]
         public async Task<IActionResult> GetNotificationsByUser()
         {

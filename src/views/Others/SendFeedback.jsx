@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import api from "@/API/Config";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import toast, { Toaster } from "react-hot-toast";
+import Urls from "@/API/URL";
 
-const FEEDBACK_API_URL = "Others/Add-Feedback";
+const FEEDBACK_API_URL =Urls.FEEDBACK; // "Others/Add-Feedback"
 
 function SendFeedback() {
   const [email, setEmail] = useState("");

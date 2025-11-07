@@ -18,6 +18,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/Sidebar/sidebar";
+import useTokenStore from "@/store/user";
+
 
 export function TeamSwitcher({
   teams,
@@ -30,8 +32,10 @@ export function TeamSwitcher({
 }) {
   const { isMobile } = useSidebar();
   const [activeTeam, setActiveTeam] = React.useState(teams[0]);
-  const userName = localStorage.getItem("username") || "User";
-
+  // const userName = useTokenStore((state) => state.user?.fullName) || "User";
+  // const userName = localStorage.getItem("username") || "User";
+  
+  const userName = useTokenStore((state) => state.user?.fullName) || "User";
   if (!activeTeam) {
     return null;
   }

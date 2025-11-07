@@ -15,7 +15,7 @@ namespace Learnify_API.Controllers
         public readonly AdminService _adminService;
 
         // GET: api/user
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpGet("get-all-user")]
         public async Task<IActionResult> GetAllUsers()
         {

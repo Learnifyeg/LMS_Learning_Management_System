@@ -6,12 +6,16 @@ const Navbar = lazy(() => import("@/components/SideNavbar/Navbar"));
 const Footer = lazy(() => import("../Footer/Footer"));
 import LogoModes from "../ui/LogoTheme/LogoModes";
 import DefaultImage from "../../../public/images/default-avatar.png";
+import useTokenStore from "@/store/user";
 
-const Image = localStorage.getItem("userimage") || DefaultImage;
+// const Image = localStorage.getItem("userimage") || DefaultImage;
 
 function LayoutContent({ shouldHide }) {
   const { open } = useSidebar(); // ✅ Now it's inside the provider
-  const userRole = localStorage.getItem("Role") || "student";
+  // const userRole = localStorage.getItem("Role") || "student";
+  const Image =  useTokenStore((state) => state.user?.image)|| DefaultImage;
+  const userRole =  useTokenStore((state) => state.user?.role) || "student";
+ 
 
   return (
     <>

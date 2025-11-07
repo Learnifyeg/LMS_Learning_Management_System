@@ -13,31 +13,34 @@ import DefaultImage from "../../../public/images/default-avatar.png";
 
 // components
 import api from "@/API/Config";
+import useTokenStore from "@/store/user";
+import Urls from "@/API/URL";
 
 function Profile({ role = "student" }) {
   const navigate = useNavigate();
   let ProfileEndpoint;
   if (role === "student") {
-    ProfileEndpoint = "Profile/student"; // Replace with dynamic ID if needed
+    ProfileEndpoint =Urls.studentprofile; // Replace with dynamic ID if needed
   } else if (role === "instructor") {
-    ProfileEndpoint = "Profile/instructor"; // Replace with dynamic ID if needed
+    ProfileEndpoint = Urls.instructorprofile; // Replace with dynamic ID if needed
   } else if (role === "admin") {
-    ProfileEndpoint = "Profile/admin"; // Replace with dynamic ID if needed
+    ProfileEndpoint = Urls.adminprofile; // Replace with dynamic ID if needed
   }
   const [profile, setProfile] = useState(null);
   const [activeTab, setActiveTab] = useState("");
+  const { user: User } = useTokenStore.getState();
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const userId = localStorage.getItem("userid");
-        const res = await api.get(`${ProfileEndpoint}/${userId}`);
+        const userId = User?.userId ?? 1;
+        const res = await api.get(`${ProfileEndpoint}`);
         const data = res.data;
         //  Handle tabContent dynamically depending on role
-        const UserRole = localStorage.getItem("Role")?.toLowerCase();
+        const UserRole = User?.role ?? "admin"?.toLowerCase();
         const tabContent = data[`${UserRole}TabContent`];
         //  Fallbacks
-        if (!data.user.avatar) data.user.avatar = localStorage.getItem("userimage") || DefaultImage;
+        if (!data.user.avatar) data.user.avatar = User?.image || DefaultImage;
 
         setProfile({ ...data, tabContent });
         setActiveTab(Object.keys(tabContent || {})[0] || "");

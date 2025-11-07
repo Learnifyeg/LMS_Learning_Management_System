@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import toast from "react-hot-toast";
 import api from "@/API/Config";
+import useTokenStore from "@/store/user";
+import Urls from "@/API/URL";
 
-const SendNotificationEndpoint = "Notification/user-send";
+const SendNotificationEndpoint = Urls.SendNotification; // "Notification/user-send"
 
 const SendNotificationModal = ({
   isOpen,
@@ -36,10 +38,12 @@ const SendNotificationModal = ({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const { user } = useTokenStore.getState();
+
   const handleSend = async (e) => {
     e.preventDefault();
     try {
-      const senderId = parseInt(localStorage.getItem("userid")); // ✅ integer
+      const senderId = user?.userId ?? 1; // integer
       const response = await api.post(SendNotificationEndpoint, {
         SenderId: senderId, // replace with actual logged-in user id if available
         ReceiverEmail: formData.receiverEmail,

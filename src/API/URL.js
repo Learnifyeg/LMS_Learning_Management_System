@@ -15,6 +15,23 @@ const Urls = {
   getCourseById: "Course/",
   approveCourse: "Course/approve/",
   deleteCourse: "Course/delete/",
+  // Profile
+  EditProfile : "Profile/edit-",
+  studentprofile: "Profile/student",
+  instructorprofile: "Profile/instructor",
+  adminprofile: "Profile/admin",
+  // Notifications
+  ReceiveNotifications: "Notification/user-receive",
+  SendNotification: "Notification/user-send",
+  MarkasReadNotifications: "Notification/user-read",
+  DeleteNotification: "Notification/user-delete",
+  // Feedback
+  FEEDBACK: "Others/Add-Feedback",
+  // Admin User Management
+  Users: "Admin/get-all-user",
+  DeleteUsers: "Admin/delete-user-by",
+  UpdateUsers: "Admin/update-user-by",
+  ApproveUser: "Admin/approve-user-by",
 };
 
 export default Urls;

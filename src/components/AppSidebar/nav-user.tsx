@@ -26,6 +26,7 @@ import {
   useSidebar,
 } from "@/components/ui/Sidebar/sidebar";
 import { useNavigate } from "react-router";
+import useTokenStore from "@/store/user";
 
 export function NavUser({
   user,
@@ -42,12 +43,10 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
-   const handleLogout = () => {
-    localStorage.removeItem("useremail"); // remove user from localStorage
-    localStorage.removeItem("token"); // optional, if you saved token separately
-    localStorage.removeItem("username"); // optional, if you saved token separately
-    localStorage.removeItem("userid"); // optional, if you saved token separately
-    localStorage.removeItem("Role"); // optional, if you saved token separately
+  const { clearToken, setUser } = useTokenStore.getState();
+  const handleLogout = () => {
+    clearToken();
+    setUser(undefined);
     navigate("/");
     window.location.reload(); // refresh UI to reflect logout
   };
