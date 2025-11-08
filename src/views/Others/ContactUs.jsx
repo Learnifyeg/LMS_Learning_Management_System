@@ -10,10 +10,13 @@ import {
 } from "react-icons/fa";
 import { useState } from "react";
 import DefaultImage from "../../../public/images/default-avatar.png";
+import useTokenStore from "@/store/user";
 
-const Image = localStorage.getItem("userimage") || DefaultImage;
+// const Image = localStorage.getItem("userimage") ;
 
 function ContactUs() {
+  const Image = useTokenStore((state) => state.user?.image) || DefaultImage;
+  // console.log("image", image);
   const navigate = useNavigate();
   const [selectedMember, setSelectedMember] = useState(null);
 

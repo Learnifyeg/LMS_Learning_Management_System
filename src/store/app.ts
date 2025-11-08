@@ -8,8 +8,13 @@ interface IAppStore {
   modalMsg: string;
   toasterMsg: string;
   error: string;
+
   setIsLoading: (isLoading: boolean) => void;
+  setSaveLoading: (saveLoading: boolean) => void;
+  setDeleteLoading: (deleteLoading: boolean) => void;
+  setModal: (appear: boolean, msg: string) => void;
   setToast: (msg: string) => void;
+  setError: (msg: string) => void;
 }
 
 export const useAppStore = create<IAppStore>((set) => ({
@@ -20,6 +25,12 @@ export const useAppStore = create<IAppStore>((set) => ({
   modalMsg: "",
   toasterMsg: "",
   error: "",
+
   setIsLoading: (isLoading) => set({ isLoading }),
+  setSaveLoading: (saveLoading) => set({ saveLoading }),
+  setDeleteLoading: (deleteLoading) => set({ deleteLoading }),
+  setModal: (modalAppear, modalMsg) => set({ modalAppear, modalMsg }),
   setToast: (msg) => set({ toasterMsg: msg }),
+  setError: (msg) => set({ error: msg }),
 }));
+  

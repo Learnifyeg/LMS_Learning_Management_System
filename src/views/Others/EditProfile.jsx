@@ -6,6 +6,10 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
+import useTokenStore from "@/store/user";
+import Urls from "@/API/URL";
+
+
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -13,14 +17,16 @@ const EditProfile = () => {
   const [avatar, setAvatar] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const userId = localStorage.getItem("userid");
-  const role = localStorage.getItem("Role")?.toLowerCase();
+  const { user } = useTokenStore.getState();
+  const userId = user?.userId ?? 1;
+  const role = user?.role ?? "admin".toLowerCase();
+  const EditProfileEdpoint = Urls.EditProfile + role;
 
   // 🔹 Load Profile Data
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await api.get(`Profile/edit-${role}/${userId}`);
+        const response = await api.get(EditProfileEdpoint);
         const data = response.data;
 
         setFormData({
@@ -70,7 +76,7 @@ const EditProfile = () => {
     if (avatar) form.append("avatar", avatar);
 
     try {
-      const response = await api.put(`Profile/edit-${role}/${userId}`, form, {
+      const response = await api.put(EditProfileEdpoint, form, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       toast.success(response.data.message || "Profile updated successfully!");

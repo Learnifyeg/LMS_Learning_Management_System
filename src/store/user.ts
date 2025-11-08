@@ -11,7 +11,7 @@ interface ITokenStore {
   token: string | null;
   user: User | undefined;
   setToken: (token: string) => void;
-  setUser: (user: User) => void;
+  setUser: (user: User | undefined) => void; 
   clearToken: () => void;
 }
 

@@ -8,15 +8,15 @@ import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import toast, { Toaster } from "react-hot-toast";
 import ConfirmToast from "@/utils/ConfirmToast";
 import DefaultImage from "../../../public/images/default-avatar.png";
-
-const Image = localStorage.getItem("userimage") || DefaultImage;
+import useTokenStore from "@/store/user";
+import Urls from "@/API/URL";
 
 // Endpoints and constants
 const USERS_PER_PAGE = 10;
-const UsersEndPoint = "Admin/get-all-user";
-const DeleteUsersEndPoint = "Admin/delete-user-by";
-const UpdateUsersEndPoint = "Admin/update-user-by";
-const ApproveUserEndPoint = "Admin/approve-user-by";
+const UsersEndPoint = Urls.Users; // "Admin/get-all-users"
+const DeleteUsersEndPoint = Urls.DeleteUser; // "Admin/delete-user-by"
+const UpdateUsersEndPoint =Urls.UpdateUser; // "Admin/update-user-by"
+const ApproveUserEndPoint = Urls.ApproveUser; // "Admin/approve-user-by"
 function UserManagement() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,6 +27,9 @@ function UserManagement() {
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("all"); // all | student | instructor | admin
   const [currentPage, setCurrentPage] = useState(1);
+
+  const { user } = useTokenStore.getState();
+  const Image = user?.image || DefaultImage;
 
   useEffect(() => {
     setLoading(true);
@@ -95,7 +98,7 @@ function UserManagement() {
   const closeModal = () => setSelectedUser(null);
   const handleApprove = (user) => {
     toast.custom((t) => (
-      <ConfirmToast
+      <ConfirmToastno
         message={`Approve ${user.fullName}'s account?`}
         onConfirm={() => {
           api

@@ -9,10 +9,12 @@ import {
   CheckBadgeIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
+import useTokenStore from "@/store/user";
+import Urls from "@/API/URL";
 
-const ReceiveNotificationsEndpoint = "Notification/user-receive";
-const MarkAsReadEndpoint = "Notification/user-read"; // example endpoint for marking read
-const DeleteNotificationEndpoint = "Notification/user-delete"; // example endpoint for marking read
+const ReceiveNotificationsEndpoint = Urls.ReceiveNotifications; // example endpoint for receiving notifications
+const MarkAsReadEndpoint = Urls.MarkasReadNotifications; // example endpoint for marking read
+const DeleteNotificationEndpoint = Urls.DeleteNotification; // example endpoint for marking read
 
 function Notifications() {
   const [notifications, setNotifications] = useState([]);
@@ -21,17 +23,17 @@ function Notifications() {
   const [selectedNotification, setSelectedNotification] = useState(null); // for reply
   const [selectedNotificationDetail, setSelectedNotificationDetail] =
     useState(null);
+  const { user } = useTokenStore.getState();
+  const UserName = user?.fullName ?? "shadcn";
 
   useEffect(() => {
     const fetchNotifications = async () => {
       setLoading(true);
       try {
-        const userEmail =
-          localStorage.getItem("useremail") || "user1@example.com";
-        const response = await api.get(
-          `${ReceiveNotificationsEndpoint}/${userEmail}`
-        );
+        const userEmail = user?.email ?? "user1@example.com";
+        const response = await api.get(ReceiveNotificationsEndpoint);
 
+        console.log("eeee")
         // response.data should now have { Notifications, UnreadCount }
         const notifications = response.data.notifications || [];
         const unreadCount = response.data.unreadCount || 0;
@@ -71,10 +73,10 @@ function Notifications() {
         setLoading(true);
         try {
           const userEmail =
-            localStorage.getItem("useremail") || "user1@example.com";
+            user?.email ?? "user1@example.com";
 
           const response = await api.get(
-            `${ReceiveNotificationsEndpoint}/${userEmail}`
+            `${ReceiveNotificationsEndpoint}`
           );
 
           const notifications = response.data.notifications || [];

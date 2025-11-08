@@ -7,11 +7,12 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 import { NavLinks } from "@/assets/Constants/NavLinks";
 import LogoNav from "../../ui/Logo/LogoNav";
+import useTokenStore from "@/store/user";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const userRole = JSON.parse(localStorage.getItem("token-storage") || "{}")
-    .state?.user?.role;
+  const { clearToken, setUser, user } = useTokenStore.getState(); // ✅ correct
+  const userRole = user?.role;
   console.log(JSON.parse(localStorage.getItem("token-storage") || "{}"));
   const handleAccountClick = () => {
     if (userRole === "student") {
@@ -23,11 +24,13 @@ const Navbar = () => {
     }
   };
   const handleLogout = () => {
-    localStorage.removeItem("useremail"); // remove user from localStorage
-    localStorage.removeItem("token"); // optional, if you saved token separately
-    localStorage.removeItem("username"); // optional, if you saved token separately
-    localStorage.removeItem("userid"); // optional, if you saved token separately
-    localStorage.removeItem("Role"); // optional, if you saved token separately
+    clearToken();
+    setUser(undefined);
+    // localStorage.removeItem("useremail"); // remove user from localStorage
+    // localStorage.removeItem("token"); // optional, if you saved token separately
+    // localStorage.removeItem("username"); // optional, if you saved token separately
+    // localStorage.removeItem("userid"); // optional, if you saved token separately
+    // localStorage.removeItem("Role"); // optional, if you saved token separately
     navigate("/");
     window.location.reload(); // refresh UI to reflect logout
   };

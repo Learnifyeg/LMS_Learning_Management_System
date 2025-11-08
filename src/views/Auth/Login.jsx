@@ -43,6 +43,7 @@ function Login() {
   const onSubmit = async (data) => {
     const user = new User();
     await user.login(data);
+    // console.log("ll",user);
     navigate("/");
   };
   // localStorage.clear();

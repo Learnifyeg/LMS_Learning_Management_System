@@ -32,6 +32,8 @@ const LessonManagement = lazy(
   () => import("@/views/Instructor/LessonManagement.jsx")
 );
 const InstrProfile = lazy(() => import("@/views/Instructor/InstrProfile.jsx"));
+const CreateCourse = lazy(() => import("@/views/Instructor/CreateCourse.jsx"));
+
 
 // Student Views
 const StuDashboard = lazy(() => import("@/views/Student/StuDashboard.jsx"));
@@ -155,6 +157,7 @@ export const router = createBrowserRouter([
         children: [
           { path: "InstrDashboard", element: <InstrDashboard /> },
           { path: "MyCourses", element: <InstCourses /> },
+          { path: "CreateCourse", element: <CreateCourse /> },
           { path: "AllStudents", element: <AllStudents /> },
           { path: "QuizManagement", element: <QuizManagement /> },
           { path: "LessonManagement", element: <LessonManagement /> },

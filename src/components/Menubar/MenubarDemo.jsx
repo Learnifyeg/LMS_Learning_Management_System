@@ -15,10 +15,13 @@ import {
 } from "@/components/ui/menubar";
 import { useNavigate } from "react-router";
 import { Badge } from "@/components/ui/badge";
+import useTokenStore from "@/store/user";
 
 export function MenubarDemo({ role }) {
+  // const Role =
+  //   JSON.parse(localStorage.getItem("role")) === "student" ? true : false;
   const Role =
-    JSON.parse(localStorage.getItem("role")) === "student" ? true : false;
+   useTokenStore((state) => state.user?.role) ? true  : false;
   const navigate = useNavigate();
   const unreadNotificationCount = localStorage.getItem("notificationCount");
   return (
