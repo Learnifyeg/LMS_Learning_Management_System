@@ -42,15 +42,18 @@ function Login() {
   } = useForm({ resolver: zodResolver(RegisterSchema) });
   const onSubmit = async (data) => {
     const user = new User();
-    await user.login(data);
-    // console.log("ll",user);
-    navigate("/");
+    try {
+      await user.login(data);
+      toast.success("Login successful!");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response?.data?.message || "Something went wrong!");
+    }
   };
-  // localStorage.clear();
 
   return (
     <section className="my-5 space-y-6">
-      <Toaster position="top-center" reverseOrder={false} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label>

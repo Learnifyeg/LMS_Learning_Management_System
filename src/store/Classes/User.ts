@@ -2,6 +2,7 @@ import api from "@/API/Config";
 import Urls from "@/API/URL";
 import useTokenStore from "../user";
 import { useAppStore } from "../app";
+
 export interface LoginData {
   email: string;
   password: string;
@@ -28,133 +29,139 @@ export interface InstructorRegisterData extends LoginData {
   yearOfExperience: number;
   bio?: string;
 }
+
 class User {
+  appStore = useAppStore.getState();
+  tokenStore = useTokenStore.getState();
+
   async login(data: LoginData) {
     try {
-      useAppStore.setState({ isLoading: true });
+      this.appStore.setIsLoading(true);
+
       const response = await api.post(Urls.login, data);
       if (response.status === 200) {
-        useTokenStore.setState({ token: response.data.token });
-        useTokenStore.setState({ user: response.data.user });
-        // useAppStore.commit({ type: "setToast", payload: "Login Success" });
+        this.tokenStore.setToken(response.data.token);
+        this.tokenStore.setUser(response.data.user);
+        // this.appStore.setToast("Login Success");
         return response.data;
       }
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      this.appStore.setError(err.message || "Login failed");
+      // this.appStore.setToast("Login failed");
+      throw err;
     } finally {
-      useAppStore.setState({ isLoading: false });
+      this.appStore.setIsLoading(false);
     }
   }
 
-  //   async register(data: RegisterData){
-
-  //   };
   async logout() {
     try {
-      useAppStore.setState({ isLoading: true });
-      useTokenStore.setState({ token: null });
-      useTokenStore.setState({ user: undefined });
-      // useAppStore.commit({ type: "setToast", payload: "Logout Success" });
-    } catch (err) {
-      console.log(err);
+      this.appStore.setIsLoading(true);
+      this.tokenStore.setToken(null);
+      this.tokenStore.setUser(undefined);
+      // this.appStore.setToast("Logout Success");
+    } catch (err: any) {
+      this.appStore.setError(err.message || "Logout failed");
     } finally {
-      useAppStore.setState({ isLoading: false });
+      this.appStore.setIsLoading(false);
     }
   }
 
   async instructorRegister(data: InstructorRegisterData) {
     try {
-      useAppStore.setState({ isLoading: true });
+      this.appStore.setIsLoading(true);
       const response = await api.post(Urls.instrctorRegister, data);
       if (response.status === 200) {
-        // useAppStore.commit({ type: "setToast", payload: "Login Success" });
+        // this.appStore.setToast("Instructor Registered Successfully");
         return response.data;
       }
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      this.appStore.setError(err.message || "Instructor registration failed");
     } finally {
-      useAppStore.setState({ isLoading: false });
+      this.appStore.setIsLoading(false);
     }
   }
 
   async studentRegister(data: StudentRegisterData) {
     try {
-      useAppStore.setState({ isLoading: true });
+      this.appStore.setIsLoading(true);
       const response = await api.post(Urls.studentRegister, data);
       if (response.status === 200) {
-        // useAppStore.commit({ type: "setToast", payload: "Login Success" });
+        // this.appStore.setToast("Student Registered Successfully");
         return response.data;
       }
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      this.appStore.setError(err.message || "Student registration failed");
     } finally {
-      useAppStore.setState({ isLoading: false });
+      this.appStore.setIsLoading(false);
     }
   }
 
   async verifyEmail(email: string, code: string) {
     try {
-      useAppStore.setState({ isLoading: true });
+      this.appStore.setIsLoading(true);
       const response = await api.post(Urls.verifyEmail, { email, code });
       if (response.status === 200) {
-        useTokenStore.setState({ token: response.data.token });
-        useTokenStore.setState({ user: response.data.user });
-        // useAppStore.commit({ type: "setToast", payload: "Login Success" });
+        this.tokenStore.setToken(response.data.token);
+        this.tokenStore.setUser(response.data.user);
+        // this.appStore.setToast("Email Verified Successfully");
         return response.data;
       }
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      this.appStore.setError(err.message || "Email verification failed");
     } finally {
-      useAppStore.setState({ isLoading: false });
+      this.appStore.setIsLoading(false);
     }
   }
 
   async forgotPassword(email: string) {
     try {
-      useAppStore.setState({ isLoading: true });
+      this.appStore.setIsLoading(true);
       const response = await api.post(Urls.forgotPassword, { email });
       if (response.status === 200) {
-        // useAppStore.commit({ type: "setToast", payload: "Login Success" });
+        // this.appStore.setToast("Password reset link sent");
         return response.data;
       }
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      this.appStore.setError(err.message || "Forgot password failed");
     } finally {
-      useAppStore.setState({ isLoading: false });
+      this.appStore.setIsLoading(false);
     }
   }
 
   async resetPassword(email: string, code: string, newPassword: string) {
     try {
-      useAppStore.setState({ isLoading: true });
+      this.appStore.setIsLoading(true);
       const response = await api.post(Urls.resetPassword, {
         email,
         code,
         newPassword,
       });
       if (response.status === 200) {
-        // useAppStore.commit({ type: "setToast", payload: "Login Success" });
+        // this.appStore.setToast("Password Reset Successfully");
         return response.data;
       }
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      this.appStore.setError(err.message || "Reset password failed");
     } finally {
-      useAppStore.setState({ isLoading: false });
+      this.appStore.setIsLoading(false);
     }
   }
 
   async refreshToken() {
     try {
-      useAppStore.setState({ isLoading: true });
+      this.appStore.setIsLoading(true);
       const response = await api.post(Urls.refreshToken);
       if (response.status === 200) {
-        // useAppStore.commit({ type: "setToast", payload: "Login Success" });
+        this.tokenStore.setToken(response.data.token);
+        this.tokenStore.setUser(response.data.user);
+        // this.appStore.setToast("Token refreshed");
         return response.data;
       }
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      this.appStore.setError(err.message || "Token refresh failed");
     } finally {
-      useAppStore.setState({ isLoading: false });
+      this.appStore.setIsLoading(false);
     }
   }
 }

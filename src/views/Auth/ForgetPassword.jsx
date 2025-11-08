@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useTheme } from "@/utils/ThemeProvider";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
@@ -5,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { useNavigate, useParams } from "react-router";
 import { FaEnvelope } from "react-icons/fa";
-import axios from "axios";
+// import axios from "axios";
 import api from "@/API/Config";
 
 const ForgetPasswordSchema = z.object({
