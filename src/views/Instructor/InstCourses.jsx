@@ -57,29 +57,36 @@ function InstCourses() {
   const courses = [...pendingCourses, ...approvedCourses];
 
   return (
-    <div className="p-6 flex flex-col items-center gap-4">
+    <div className="p-6 flex flex-col items-center gap-6 bg-surface rounded-lg shadow-md">
+      {/* Section Heading */}
       <LandingHeading header="My Created Courses" />
 
+      {/* Create Course Button */}
       <button
-        className="px-4 py-2 bg-green-600 text-white rounded"
+        className="px-6 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition-colors duration-200"
         onClick={() => navigate("/InstructorLayout/CreateCourse")}
       >
         + Create Course
       </button>
 
-      {courses.length ? (
-        courses.map((course) => (
-          <CourseCard
-            key={course.id}
-            course={course}
-            onRemove={() => handleDelete(course.id)}
-            onEdit={() => handleEdit(course.id)}
-            onApprove={() => handleApprove(course.id)}
-          />
-        ))
-      ) : (
-        <p className="text-gray-500">No courses created.</p>
-      )}
+      {/* Courses List */}
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {courses.length ? (
+          courses.map((course) => (
+            <CourseCard
+              key={course.id}
+              course={course}
+              onRemove={() => handleDelete(course.id)}
+              onEdit={() => handleEdit(course.id)}
+              onApprove={() => handleApprove(course.id)}
+            />
+          ))
+        ) : (
+          <p className="col-span-full text-center text-gray-500 mt-4">
+            No courses created.
+          </p>
+        )}
+      </div>
     </div>
   );
 }

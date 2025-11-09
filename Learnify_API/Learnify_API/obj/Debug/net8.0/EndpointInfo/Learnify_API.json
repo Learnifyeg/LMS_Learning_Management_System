@@ -442,22 +442,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "instructorId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "isAdmin",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
           }
         ],
         "responses": {

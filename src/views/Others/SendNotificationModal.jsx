@@ -45,7 +45,7 @@ const SendNotificationModal = ({
     try {
       const senderId = user?.userId ?? 1; // integer
       const response = await api.post(SendNotificationEndpoint, {
-        SenderId: senderId, // replace with actual logged-in user id if available
+        // SenderId: senderId, // replace with actual logged-in user id if available
         ReceiverEmail: formData.receiverEmail,
         Title: formData.title,
         Message: formData.message,

@@ -478,9 +478,10 @@ namespace Learnify_API.Data.Services
             // 3️⃣ Add claims — user data inside token
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+              new Claim(ClaimTypes.Email, user.Email),
                 new Claim("userId", user.UserId.ToString()),
-                new Claim("role", user.Role)
+                new Claim("role", user.Role),
+                new Claim(ClaimTypes.Role, user.Role)
             };
 
             // 4️⃣ Create the token
