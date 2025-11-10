@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Learnify_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251101142722_update-profile")]
-    partial class updateprofile
+    [Migration("20251110205822_AddTables")]
+    partial class AddTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -160,8 +160,11 @@ namespace Learnify_API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseId"));
 
                     b.Property<string>("Category")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("CertificateIncluded")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -169,11 +172,35 @@ namespace Learnify_API.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Duration")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hours")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("InstructorId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Posted")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<int>("StudentsEnrolled")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tag")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -182,6 +209,9 @@ namespace Learnify_API.Migrations
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Views")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CourseId");
 
@@ -342,6 +372,33 @@ namespace Learnify_API.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("Lessons");
+                });
+
+            modelBuilder.Entity("Learnify_API.Data.Models.LessonProgress", b =>
+                {
+                    b.Property<int>("ProgressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProgressId"));
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProgressId");
+
+                    b.HasIndex("LessonId");
+
+                    b.ToTable("LessonProgresses");
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.Log", b =>
@@ -602,6 +659,9 @@ namespace Learnify_API.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsEmailVerified")
                         .HasColumnType("bit");
@@ -883,6 +943,17 @@ namespace Learnify_API.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("Learnify_API.Data.Models.LessonProgress", b =>
+                {
+                    b.HasOne("Learnify_API.Data.Models.Lesson", "Lesson")
+                        .WithMany("LessonProgresses")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+                });
+
             modelBuilder.Entity("Learnify_API.Data.Models.Log", b =>
                 {
                     b.HasOne("Learnify_API.Data.Models.User", "User")
@@ -950,8 +1021,8 @@ namespace Learnify_API.Migrations
                             b1.Property<int>("ProfileId")
                                 .HasColumnType("int");
 
-                            b1.Property<byte[]>("Avatar")
-                                .HasColumnType("varbinary(max)");
+                            b1.Property<string>("Avatar")
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Name")
                                 .IsRequired()
@@ -1078,6 +1149,11 @@ namespace Learnify_API.Migrations
                     b.Navigation("Courses");
 
                     b.Navigation("InstructorPayouts");
+                });
+
+            modelBuilder.Entity("Learnify_API.Data.Models.Lesson", b =>
+                {
+                    b.Navigation("LessonProgresses");
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.Quiz", b =>
