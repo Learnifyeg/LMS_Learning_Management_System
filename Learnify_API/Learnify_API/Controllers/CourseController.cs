@@ -125,14 +125,38 @@ namespace Learnify_API.Controllers
             return Ok(new { message = "Course approved successfully!" });
         }
 
+        // UPDATE course (Instructor or Admin)
+        [Authorize(Roles = "admin,instructor")]
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateCourse(int id, [FromBody] CourseVM model)
+        {
+            // Extract user info from token
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            var roleClaim = User.FindFirst(ClaimTypes.Role)?.Value;
+
+            if (userIdClaim == null || roleClaim == null)
+                return Unauthorized();
+
+            var userId = int.Parse(userIdClaim);
+            var isAdmin = roleClaim.ToLower() == "admin";
+
+            var success = await _courseService.UpdateCourseAsync(id, model, userId, isAdmin);
+
+            if (!success)
+                return NotFound(new { message = "Course not found or not authorized to update" });
+
+            return Ok(new { message = "Course updated successfully! Waiting for admin approval." });
+        }
+
+
         //  DELETE course (Admin or Instructor)
-        [Authorize(Roles = "Admin,Instructor")]
+        [Authorize(Roles = "admin,instructor")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
             // Extract user info from token
             var userIdClaim = User.FindFirst("userId")?.Value;
-            var roleClaim = User.FindFirst("role")?.Value;
+            var roleClaim = User.FindFirst(ClaimTypes.Role)?.Value;
 
             if (userIdClaim == null || roleClaim == null)
                 return Unauthorized();

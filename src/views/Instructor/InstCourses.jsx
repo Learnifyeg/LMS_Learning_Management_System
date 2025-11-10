@@ -40,6 +40,32 @@ function InstCourses() {
     }
   };
 
+//   const handleDelete = (course) => {
+//   toast.custom((t) => (
+//     <ConfirmToastno
+//       message={`Delete course "${course.title}"?`}
+//       onConfirm={() => {
+//         courseService
+//           .deleteCourse(course.id)
+//           .then(() => {
+//             setPendingCourses((prev) =>
+//               prev.filter((c) => c.id !== course.id)
+//             );
+//             setApprovedCourses((prev) =>
+//               prev.filter((c) => c.id !== course.id)
+//             );
+//             toast.success("Course deleted");
+//             toast.dismiss(t.id);
+//           })
+//           .catch(() => {
+//             toast.error("Error deleting course");
+//           });
+//       }}
+//       onCancel={() => toast.dismiss(t.id)}
+//     />
+//   ));
+// };
+
   const handleApprove = async (id) => {
     try {
       await courseService.approveCourse(id);
@@ -51,7 +77,8 @@ function InstCourses() {
   };
 
   const handleEdit = (id) => {
-    navigate(`/edit-course/${id}`);
+     navigate(`/InstructorLayout/CreateCourse/${id}`);
+     
   };
 
   const courses = [...pendingCourses, ...approvedCourses];

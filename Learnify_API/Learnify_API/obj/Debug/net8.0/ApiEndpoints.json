@@ -290,6 +290,27 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Learnify_API.Controllers.CourseController",
+    "Method": "UpdateCourse",
+    "RelativePath": "Course/update/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "Learnify_API.Data.ViewModels.CourseVM",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Learnify_API.Controllers.StudentController",
     "Method": "GetAllStudents",
     "RelativePath": "get-students",

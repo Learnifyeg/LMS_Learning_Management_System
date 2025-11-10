@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAppStore } from "@/store/app";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import toast, { Toaster } from "react-hot-toast";
@@ -7,7 +8,11 @@ import CourseService from "@/store/Classes/Course";
 function CreateCourse() {
   const courseService = new CourseService();
   const { saveLoading, setSaveLoading } = useAppStore();
-  
+  const { id } = useParams();            //  Get course ID from URL
+  console.log("Course ID from URL:", id);
+  const navigate = useNavigate();
+  const isEdit = Boolean(id);            //  Edit mode flag
+
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -19,6 +24,21 @@ function CreateCourse() {
     certificateIncluded: false,
     duration: "",
   });
+
+  //  Load course data if editing
+  useEffect(() => {
+    if (!isEdit) return;
+    loadCourse();
+  }, [id]);
+
+  const loadCourse = async () => {
+    try {
+      const course = await courseService.getCourseById(id);
+      if (course) setForm(course);
+    } catch {
+      toast.error("Failed to load course");
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -32,26 +52,37 @@ function CreateCourse() {
     e.preventDefault();
     try {
       setSaveLoading(true);
-      const result = await courseService.addCourse(form);
-      if (result) {
-        toast.success("Course submitted successfully! Waiting for approval.");
-        setForm({
-          title: "",
-          description: "",
-          category: "",
-          hours: "",
-          price: 0,
-          tag: "",
-          image: "",
-          certificateIncluded: false,
-          duration: "",
-        });
+
+      let result;
+      if (isEdit) {
+        result = await courseService.updateCourse(id, form); //  Update existing course
       } else {
-        toast.error("Failed to submit course.");
+        result = await courseService.addCourse(form);        //  Add new course
+      }
+
+      if (result) {
+        toast.success(isEdit ? "Course updated successfully!" : "Course submitted successfully! Waiting for approval.");
+        if (!isEdit) {
+          setForm({
+            title: "",
+            description: "",
+            category: "",
+            hours: "",
+            price: 0,
+            tag: "",
+            image: "",
+            certificateIncluded: false,
+            duration: "",
+          });
+        } else {
+          navigate("/InstructorLayout/InstCourses"); //  Redirect after edit
+        }
+      } else {
+        toast.error("Failed to save course.");
       }
     } catch (err) {
       console.error(err);
-      toast.error("Failed to submit course.");
+      toast.error("Failed to save coursdde.");
     } finally {
       setSaveLoading(false);
     }
@@ -60,7 +91,7 @@ function CreateCourse() {
   return (
     <div className="max-w-4xl mx-auto p-8 bg-card rounded-2xl shadow-lg flex flex-col gap-8">
       <Toaster position="top-center" reverseOrder={false} />
-      <LandingHeading header="Create New Course" />
+      <LandingHeading header={isEdit ? "Edit Course" : "Create New Course"} />
 
       <form
         onSubmit={handleSubmit}
@@ -202,7 +233,7 @@ function CreateCourse() {
             }`}
             disabled={saveLoading}
           >
-            {saveLoading ? "Submitting..." : "Submit Course"}
+            {saveLoading ? (isEdit ? "Updating..." : "Submitting...") : isEdit ? "Update Course" : "Submit Course"}
           </button>
         </div>
       </form>

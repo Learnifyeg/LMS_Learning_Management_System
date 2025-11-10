@@ -13,6 +13,7 @@ const Urls = {
   getPendingCourses: "Course/pending-courses",
   getApprovedCourses: "Course/approved",
   getCourseById: "Course/",
+  updateCourse: "Course/update/",
   approveCourse: "Course/approve/",
   deleteCourse: "Course/delete/",
   // Profile

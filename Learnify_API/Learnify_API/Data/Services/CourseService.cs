@@ -144,6 +144,32 @@ namespace Learnify_API.Data.Services
             return true;
         }
 
+
+        // Update course (Instructor or Admin)
+        public async Task<bool> UpdateCourseAsync(int id, CourseVM model, int userId, bool isAdmin = false)
+        {
+            var course = await _context.Courses.FindAsync(id);
+            if (course == null) return false;
+
+            // Authorization: only instructor who owns the course or admin can update
+            if (!isAdmin && course.InstructorId != userId) return false;
+
+            // Update fields
+            course.Title = model.Title;
+            course.Description = model.Description;
+            course.Category = model.Category;
+            course.Price = model.Price ?? 0;
+            course.Hours = model.Hours ?? course.Hours;
+            course.Tag = model.Tag;
+            course.Image = string.IsNullOrEmpty(model.Image) ? course.Image : model.Image;
+            course.CertificateIncluded = model.CertificateIncluded;
+            course.Duration = model.Duration ?? course.Duration;
+            course.IsApproved = false; // mark as unapproved after edit
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         // Delete Course (Instructor or Admin) 
         public async Task<bool> DeleteCourseAsync(int id, int instructorId, bool isAdmin = false)
         {
