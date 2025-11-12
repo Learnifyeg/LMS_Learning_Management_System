@@ -14,11 +14,16 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { useNavigate } from "react-router";
+import { Badge } from "@/components/ui/badge";
+import useTokenStore from "@/store/user";
 
 export function MenubarDemo({ role }) {
+  // const Role =
+  //   JSON.parse(localStorage.getItem("role")) === "student" ? true : false;
   const Role =
-    JSON.parse(localStorage.getItem("role")) === "student" ? true : false;
+   useTokenStore((state) => state.user?.role) ? true  : false;
   const navigate = useNavigate();
+  const unreadNotificationCount = localStorage.getItem("notificationCount");
   return (
     <Menubar>
       <MenubarMenu>
@@ -80,7 +85,15 @@ export function MenubarDemo({ role }) {
       </MenubarMenu> */}
       <MenubarMenu>
         <MenubarTrigger onClick={() => navigate("/UserLayout/Notifications")}>
-          <i class="fa-solid fa-bell text-xl"></i>
+          <div className="relative">
+            <i className="fa-solid fa-bell text-xl"></i>
+            {/* Badge */}
+            {unreadNotificationCount > 0 && (
+              <Badge className="absolute -top-3 -right-2 text-xs px-1 bg-red-600">
+                {unreadNotificationCount}
+              </Badge>
+            )}
+          </div>
         </MenubarTrigger>
         {/* <MenubarContent>
           <MenubarCheckboxItem>Always Show Bookmarks Bar</MenubarCheckboxItem>

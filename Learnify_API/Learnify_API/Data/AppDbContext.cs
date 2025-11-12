@@ -1,11 +1,12 @@
 ﻿using Learnify_API.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace Learnify_API.Data
 {
 
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         ///
@@ -31,6 +32,7 @@ namespace Learnify_API.Data
         public DbSet<FeedBack> feedBacks { get; set; }
         public DbSet<Profile> profiles { get; set; }
 
+        public DbSet<LessonProgress> LessonProgresses { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<Course>()
@@ -90,6 +92,27 @@ namespace Learnify_API.Data
             modelBuilder.Entity<Profile>().OwnsOne(p => p.SocialLinks);
 
             base.OnModelCreating(modelBuilder);
+
+
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique(); // ensure unique emails (required for principal key)
+
+            //modelBuilder.Entity<Notification>()
+            //    .HasOne(n => n.Receiver)
+            //    .WithMany()
+            //    .HasPrincipalKey(u => u.Email)   // 👈 target Email instead of UserId
+            //    .HasForeignKey(n => n.ReceiverEmail)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Notification>()
+                .HasOne(n => n.Sender)
+                .WithMany()
+                .HasForeignKey(n => n.SenderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
 
 

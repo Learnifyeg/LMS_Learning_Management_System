@@ -772,7 +772,9 @@
       "price": "$10",
       "tag": "BESTSELLER",
       "image": "/images/authIMG.webp",
-      "studentsEnrolled": 3200
+      "studentsEnrolled": 3200,
+      "certificateincluded": true,
+      "duration": "25 hours"
     }
   ],
   "StudentCourses": [

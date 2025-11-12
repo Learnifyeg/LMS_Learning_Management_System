@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z, { set } from "zod";
 import { useNavigate } from "react-router";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import {
   FaFacebook,
   FaTwitter,
@@ -20,28 +20,36 @@ import {
 import LogoModes from "@/components/ui/LogoTheme/LogoModes";
 import { useEffect, useState } from "react";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import useTokenStore from "@/store/user";
+import api from "@/API/Config";
+import User from "@/store/Classes/User";
+import { useAppStore } from "@/store/app";
 
 const RegisterSchema = z.object({
   email: z.email("Please enter a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
+const LoginEndpoint = "Auth/login";
 function Login() {
   const navigate = useNavigate();
+  const { setToken } = useTokenStore();
+  const { isLoading } = useAppStore();
   const {
     register,
-    formState: { errors },
     handleSubmit,
+    formState: { errors },
   } = useForm({ resolver: zodResolver(RegisterSchema) });
-  const { setUser } = useUserStore();
-
-  const onSubmit = (data) => {
-    console.log("Submitted");
-    // const response = axios.post("http://localhost:8000/api/register", data);
-    // if (response.status !== 200) return; //status 200 , message: "success", user : { email: "string", fullName: "string", phoneNumber: "string", role: "string" , token: "string" }
-    setUser(data);
-    toast.success("Logged in successfully!");
-    navigate("/");
+  const onSubmit = async (data) => {
+    const user = new User();
+    try {
+      await user.login(data);
+      toast.success("Login successful!");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response?.data?.message || "Something went wrong!");
+    }
   };
 
   return (
@@ -101,12 +109,13 @@ function Login() {
       <hr className="my-5 text-text-secondary" />
       <p className="text-text-secondary">
         Don't have an account?{" "}
-        <span
+        <button
           className="text-secondary cursor-pointer hover:scale-105 font-bold"
           onClick={() => navigate("/User/Register")}
+          disabled={isLoading}
         >
           Sign Up
-        </span>
+        </button>
       </p>
     </section>
   );

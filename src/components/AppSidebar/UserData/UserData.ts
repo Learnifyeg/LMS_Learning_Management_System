@@ -1,3 +1,4 @@
+import useTokenStore from "@/store/user";
 import {
   AudioWaveform,
   BookOpen,
@@ -11,11 +12,17 @@ import {
   SquareTerminal,
 } from "lucide-react";
 
+// const UserName = localStorage.getItem("username") || "shadcn";
+// const userEmail = localStorage.getItem("useremail") || "m@example.com";
+
+const { user } = useTokenStore.getState();
+const UserName = user?.fullName ?? "shadcn";
+const userEmail = user?.email ?? "m@example.com";
 export const sidebarData = {
   student: {
     user: {
-      name: "shadcn",
-      email: "m@example.com",
+      name: UserName,
+      email: userEmail,
       avatar: "/avatars/shadcn.jpg",
       items: [
         { title: "Dashboard", url: "/StudentLayout/StuDashboard" },
@@ -55,6 +62,7 @@ export const sidebarData = {
           { title: "My Courses", url: "/StudentLayout/MyCourses" },
           { title: "Saved Courses", url: "/StudentLayout/StuSavedCourses" },
           { title: "Course Details", url: "/StudentLayout/StuCourseDetails" },
+          { title: "Lesson Page", url: "/StudentLayout/StudentLessonPage" },
         ],
       },
       {
@@ -104,8 +112,8 @@ export const sidebarData = {
 
   instructor: {
     user: {
-      name: "shadcn",
-      email: "m@example.com",
+      name: UserName,
+      email: userEmail,
       avatar: "/avatars/shadcn.jpg",
       items: [
         { title: "Dashboard", url: "/InstructorLayout/InstrDashboard" },
@@ -143,8 +151,11 @@ export const sidebarData = {
         icon: BookOpen,
         items: [
           { title: "My Courses", url: "/InstructorLayout/MyCourses" },
-          { title: "Lesson Management", url: "/InstructorLayout/LessonManagement" },
-         
+          {
+            title: "Lesson Management",
+            url: "/InstructorLayout/LessonManagement",
+          },
+
           { title: "All Students", url: "/InstructorLayout/AllStudents" },
         ],
       },
@@ -153,7 +164,7 @@ export const sidebarData = {
         url: "#",
         icon: Bot,
         items: [
-           { title: "Quiz Management", url: "/InstructorLayout/QuizManagement" },
+          { title: "Quiz Management", url: "/InstructorLayout/QuizManagement" },
           { title: "Create Quiz", url: "/InstructorLayout/StuQuizResult" },
         ],
       },
@@ -195,8 +206,8 @@ export const sidebarData = {
 
   admin: {
     user: {
-      name: "shadcn",
-      email: "m@example.com",
+      name: UserName,
+      email: userEmail,
       avatar: "/avatars/shadcn.jpg",
       items: [
         { title: "Dashboard", url: "/AdminLayout/AdminDashboard" },
@@ -206,7 +217,7 @@ export const sidebarData = {
     },
     teams: [
       {
-        name: "shadcn",
+        name: UserName,
         logo: GalleryVerticalEnd,
         role: "Admin",
       },

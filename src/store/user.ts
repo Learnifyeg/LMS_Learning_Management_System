@@ -1,39 +1,37 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface IUser {
+export interface User {
+  userId: string;
   email: string;
   fullName: string;
-  phoneNumber?: string;
-  role?: string;
-  token?: string; // JWT
+  role: "student" | "instructor" | "admin" | undefined;
+}
+interface ITokenStore {
+  token: string | null;
+  user: User | undefined;
+  setToken: (token: string | null) => void;
+  setUser: (user: User | undefined) => void;
+  clearToken: () => void;
 }
 
-interface IUserStore {
-  user: IUser;
-  setUser: (user: IUser) => void;
-  clearUser: () => void;
-}
-
-const useUserStore = create<IUserStore>()(
+const useTokenStore = create<ITokenStore>()(
   persist(
     (set) => ({
-      user: {
-        email: "",
-        fullName: "",
-        phoneNumber: "",
-        role: "",
+      token: null,
+      user: undefined,
+      setToken: (token) => {
+        localStorage.setItem("token", JSON.stringify(token));
+        set({ token });
       },
-      setUser: (user) => set({ user }),
-      clearUser: () =>
-        set({
-          user: { email: "", fullName: "", phoneNumber: "", role: "" },
-        }),
+      setUser: (user) => {
+        localStorage.setItem("user", JSON.stringify(user));
+        set({ user });
+      },
+      clearToken: () => set({ token: null }),
     }),
-    {
-      name: "user-storage", // key in localStorage
-    }
+    { name: "token-storage" }
   )
 );
 
-export default useUserStore;
+export default useTokenStore;

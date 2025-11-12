@@ -1,17 +1,18 @@
 ﻿using Learnify_API.Data.Services;
 using Learnify_API.Data.ViewModels;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Learnify_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class OthersController : ControllerBase
     {
-        public OthersController(FeedbackService service) {
-        
-            _service=service;
+        public OthersController(FeedbackService service)
+        {
+
+            _service = service;
         }
         private readonly FeedbackService _service;
 
@@ -21,6 +22,8 @@ namespace Learnify_API.Controllers
             _service.AddFeedBack(vM);
             return Ok(vM);
         }
+
+        [Authorize(Roles = "admin")]
         [HttpGet("get-all-feedbacks")]
         public IActionResult getallFeedBacks()
         {

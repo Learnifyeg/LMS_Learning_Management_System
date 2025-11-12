@@ -13,5 +13,7 @@
         public string Facebook { get; set; } = "https://facebook.com";
         public string Twitter { get; set; } = "https://twitter.com";
         public string Id { get; set; } = string.Empty;
+        public List<string> Courses { get; set; } = new List<string>();
     }
+
 }

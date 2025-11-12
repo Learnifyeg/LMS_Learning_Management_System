@@ -5,10 +5,17 @@ import { SidebarProvider, useSidebar } from "@/components/ui/Sidebar/sidebar";
 const Navbar = lazy(() => import("@/components/SideNavbar/Navbar"));
 const Footer = lazy(() => import("../Footer/Footer"));
 import LogoModes from "../ui/LogoTheme/LogoModes";
+import DefaultImage from "../../../public/images/default-avatar.png";
+import useTokenStore from "@/store/user";
+
+// const Image = localStorage.getItem("userimage") || DefaultImage;
 
 function LayoutContent({ shouldHide }) {
   const { open } = useSidebar(); // ✅ Now it's inside the provider
-  const userRole = localStorage.getItem("role") || "student";
+  // const userRole = localStorage.getItem("Role") || "student";
+  const Image =  useTokenStore((state) => state.user?.image)|| DefaultImage;
+  const userRole =  useTokenStore((state) => state.user?.role) || "student";
+ 
 
   return (
     <>
@@ -55,7 +62,7 @@ function UserLayout() {
             </div>
 
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu_Bwn9_9Uvdpq3DYMfWGtIFiKg6jchz2MOw&s"
+              src={Image}
               alt="profile"
               className="w-10 h-10 rounded-full object-cover cursor-pointer"
               onClick={() => navigate("/UserLayout")}

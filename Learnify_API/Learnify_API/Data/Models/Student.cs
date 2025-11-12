@@ -16,9 +16,12 @@ namespace Learnify_API.Data.Models
         [MaxLength(50)]
         public string? Department { get; set; }
 
-        // 🆕 Added Columns
-        [MaxLength(255)]
-        public string? Title { get; set; }
+        ////  Added Columns
+        //[MaxLength(255)]
+        //public string? Title { get; set; }
+        public string? Phone { get; set; }
+        public string? Address { get; set; }
+        public string? Gender { get; set; }
 
         [MaxLength(100)]
         public string? University { get; set; }
@@ -40,6 +43,8 @@ namespace Learnify_API.Data.Models
 
         [MaxLength(255)]
         public string? Image { get; set; }
+        public string? EducationLevel { get; set; }
+        public string? Major { get; set; }
 
         // Navigation
         public User User { get; set; } = null!;

@@ -15,12 +15,17 @@ import {
 
 // Components
 import api from "@/API/Config";
+import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
+import useAuth from "@/store/useAuth";
 
 // Endpoints and constants
 const dashboardEndPoint = "dashboards";
 
 function Dashboard({ role }) {
   const [dashboard, setDashboard] = useState(null);
+  const { token, user } = useAuth();
+
+  console.log("User Info from Token:", user);
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -55,9 +60,9 @@ function Dashboard({ role }) {
       {/* Header */}
       <div className="mb-8 flex justify-between items-center">
         <div>
-          <h1 className="text-4xl font-bold text-text-primary capitalize">
-            {role} Dashboard
-          </h1>
+          <LandingHeading
+            header={`${role.charAt(0).toUpperCase() + role.slice(1)} Dashboard`}
+          />
           <p className="text-text-secondary mt-2">
             Welcome back, {fullName}! Here’s your overview.
           </p>

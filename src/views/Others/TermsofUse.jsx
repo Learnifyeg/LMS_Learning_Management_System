@@ -1,3 +1,5 @@
+import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
+
 function TermsofUse() {
   const policies = [
     {
@@ -28,7 +30,7 @@ function TermsofUse() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <header className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-text-primary">Terms of Use</h1>
+           <LandingHeading header="Terms of Use" />
         </header>
 
         {/* Policies Table */}

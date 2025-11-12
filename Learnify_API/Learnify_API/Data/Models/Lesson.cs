@@ -22,6 +22,7 @@ namespace Learnify_API.Data.Models
         public int Order { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        //public ICollection<LessonProgress>? LessonProgresses { get; set; }
+        // Navigation: many progresses per lesson
+        public ICollection<LessonProgress>? LessonProgresses { get; set; }
     }
 }

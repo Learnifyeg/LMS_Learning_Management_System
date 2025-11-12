@@ -1,6 +1,9 @@
 ﻿using Learnify_API.Data;
+using Learnify_API.Data.Models;
 using Learnify_API.Data.Services;
+using Learnify_API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -20,47 +23,65 @@ namespace Learnify_API
                 option.UseSqlServer(builder.Configuration.GetConnectionString("conString")));
             builder.Services.AddTransient<FeedbackService>();
             //  Add CORS Policy
-           builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll",
-        policy =>
-        {
-            policy
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
+            builder.Services.AddCors(options =>
+             {
+                 options.AddPolicy("AllowAll",
+                     policy =>
+                     {
+                         policy
+                             .AllowAnyOrigin()
+                             .AllowAnyHeader()
+                             .AllowAnyMethod();
+                     });
+             });
 
             // Add services for Swagger
             builder.Services.AddScoped<StudentService>();
             builder.Services.AddScoped<InstructorService>();
             builder.Services.AddScoped<AdminService>();
             builder.Services.AddScoped<AuthService>();
+            builder.Services.AddScoped<ProfileService>();
+            builder.Services.AddScoped<CourseService>();
+            builder.Services.AddScoped<LessonService>();
+            builder.Services.AddScoped<INotificationService, NotificationService>();
+            builder.Services.AddScoped<UserSettingsService>();
+
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            // --------------------------------- Identity --------------------------------------------
+            builder.Services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>();
+            // --------------------------------- Identity --------------------------------------------
+
+
 
             // --------------------------------- JWT Configuration --------------------------------------------
 
-            var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
-
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                        ValidAudience = builder.Configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(key)
-                    };
-                });
-
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+             .AddJwtBearer(options =>
+             {
+                 options.RequireHttpsMetadata = false;
+                 options.SaveToken = true;
+                 options.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuer = true,
+                     ValidateAudience = true,
+                     ValidateLifetime = true,
+                     ValidateIssuerSigningKey = true,
+                     ClockSkew = TimeSpan.Zero, // ⬅️ add this
+                     ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                     ValidAudience = builder.Configuration["Jwt:Audience"],
+                     IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+                 };
+             });
             builder.Services.AddAuthorization();
             builder.Services.AddScoped<EmailService>();
 
@@ -101,9 +122,25 @@ namespace Learnify_API
 
             // --------------------------------- Swagger Security Setup --------------------------------------------
 
+            // -------------------------------- CORS Configuration AllowFrontend --------------------------------------------
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173") // React app URL
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials(); // Important for sending cookies
+                });
+            });
+            //app.UseCors("AllowFrontend");
             var app = builder.Build();
-            app.UseCors("AllowAll");
+            //app.UseCors("AllowAll");
+            // -------------------------------- CORS Configuration AllowFrontend --------------------------------------------
 
+
+
+            // Configure the HTTP request pipeline.
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -116,8 +153,12 @@ namespace Learnify_API
             app.UseStaticFiles();
 
             // Use CORS before authorization
-            app.UseCors("AllowReactApp");
+            //app.UseCors("AllowReactApp");
 
+
+            app.UseCors("AllowFrontend"); //  Must come before authentication
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

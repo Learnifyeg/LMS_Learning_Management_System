@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "../App.jsx";
+
 // Lazy-loaded dashboards
 const InstrDashboard = lazy(
   () => import("@/views/Instructor/InstrDashboard.jsx")
@@ -31,6 +32,8 @@ const LessonManagement = lazy(
   () => import("@/views/Instructor/LessonManagement.jsx")
 );
 const InstrProfile = lazy(() => import("@/views/Instructor/InstrProfile.jsx"));
+const CreateCourse = lazy(() => import("@/views/Instructor/CreateCourse.jsx"));
+
 
 // Student Views
 const StuDashboard = lazy(() => import("@/views/Student/StuDashboard.jsx"));
@@ -55,6 +58,9 @@ const StuShoppingCart = lazy(
   () => import("@/views/Student/StuShoppingCart.jsx")
 );
 const MyCourses = lazy(() => import("@/views/Student/MyCourses.jsx"));
+const StudentLessonPage = lazy(
+  () => import("@/views/Student/StudentLessonPage.jsx")
+);
 
 // Others
 const UserLayout = lazy(() => import("@/components/UserLayout/UserLayout.jsx"));
@@ -65,6 +71,7 @@ const SearchResults = lazy(() => import("@/views/Others/SearchResults.jsx"));
 const SendFeedback = lazy(() => import("@/views/Others/SendFeedback.jsx"));
 const SettingPage = lazy(() => import("@/views/Others/SettingPage.jsx"));
 const TermsofUse = lazy(() => import("@/views/Others/TermsofUse.jsx"));
+const EditProfile = lazy(() => import("@/views/Others/EditProfile.jsx"));
 
 // Landing Views
 const LandingLayout = lazy(
@@ -80,6 +87,7 @@ const AuthLayout = lazy(
 const Login = lazy(() => import("../views/Auth/Login.jsx"));
 const Register = lazy(() => import("../views/Auth/Register/Register.jsx"));
 const ForgetPassword = lazy(() => import("../views/Auth/ForgetPassword.jsx"));
+const ResetPassword = lazy(() => import("../views/Auth/ResetPassword.jsx"));
 const InstructorRegister = lazy(
   () => import("../views/Auth/InstructorRegister.jsx")
 );
@@ -108,6 +116,7 @@ export const router = createBrowserRouter([
           { path: "Register", element: <Register /> },
           { path: "InstructorRegister", element: <InstructorRegister /> },
           { path: "ForgetPassword", element: <ForgetPassword /> },
+          { path: "ResetPassword", element: <ResetPassword /> },
         ],
       },
       {
@@ -121,6 +130,7 @@ export const router = createBrowserRouter([
           { path: "SendFeedback", element: <SendFeedback /> },
           { path: "SettingPage", element: <SettingPage /> },
           { path: "TermsofUse", element: <TermsofUse /> },
+          { path: "EditProfile", element: <EditProfile /> },
         ],
       },
       {
@@ -138,6 +148,7 @@ export const router = createBrowserRouter([
           { path: "StuSavedCourses", element: <StuSavedCourses /> },
           { path: "StuShoppingCart", element: <StuShoppingCart /> },
           { path: "MyCourses", element: <MyCourses /> },
+          { path: "StudentLessonPage", element: <StudentLessonPage /> },
         ],
       },
       {
@@ -146,6 +157,8 @@ export const router = createBrowserRouter([
         children: [
           { path: "InstrDashboard", element: <InstrDashboard /> },
           { path: "MyCourses", element: <InstCourses /> },
+          { path: "CreateCourse", element: <CreateCourse /> },
+          { path: "CreateCourse/:id", element: <CreateCourse /> },
           { path: "AllStudents", element: <AllStudents /> },
           { path: "QuizManagement", element: <QuizManagement /> },
           { path: "LessonManagement", element: <LessonManagement /> },
