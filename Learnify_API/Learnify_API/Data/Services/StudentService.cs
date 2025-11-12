@@ -6,62 +6,65 @@ namespace Learnify_API.Data.Services
 {
     public class StudentService
     {
-        // Database context injection
+        private readonly AppDbContext _context;
+
         public StudentService(AppDbContext context)
         {
             _context = context;
         }
 
-        private readonly AppDbContext _context;
-
-
-        // ---------- Add New Student ----------
-        public async Task<StudentVM> AddStudentAsync(StudentVM model)
+        // -------- Add Student with optional course --------
+        public async Task<StudentVM> AddStudentAsync(StudentVM model, List<int>? courseIds = null)
         {
-            // Create new User entity
+            // 1. Add User
             var user = new User
             {
                 FullName = model.Name,
                 Email = model.Email,
-                //PasswordHash = BCrypt.Net.BCrypt.HashPassword("123456"), // default password
                 Role = "Student",
-                ProfileImage = model.Image,
+                ProfileImage = model.Image
             };
-
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            // Create corresponding Student entity
+            // 2. Add Student
             var student = new Student
             {
-                StudentId = user.UserId, // Foreign Key (UserId)
+                StudentId = user.UserId,
                 EnrollmentNo = $"ENR-{Guid.NewGuid().ToString().Substring(0, 6)}",
                 Department = model.University,
-                GPA = null,
                 User = user
             };
-
             _context.Students.Add(student);
             await _context.SaveChangesAsync();
 
-            // Return the created student in the same view model
-            return new StudentVM
+            // 3. Add Enrollments
+            if (courseIds != null)
             {
-                Id = student.StudentId.ToString(),
-                Name = user.FullName,
-                Email = user.Email,
-                Image = user.ProfileImage ?? "https://cdn-icons-png.flaticon.com/512/4140/4140048.png",
-                University = model.University,
-                Country = model.Country,
-                Title = model.Title,
-                LinkedIn = model.LinkedIn,
-                GitHub = model.GitHub,
-                Facebook = model.Facebook,
-                Twitter = model.Twitter
-            };
+                foreach (var courseId in courseIds)
+                {
+                    var enrollment = new Enrollment
+                    {
+                        StudentId = student.StudentId,
+                        CourseId = courseId,
+                        EnrollmentDate = DateTime.Now
+                    };
+                    _context.Enrollments.Add(enrollment);
+                }
+                await _context.SaveChangesAsync();
+            }
+
+            // 4. Return StudentVM
+            var enrolledCourses = courseIds != null
+                ? await _context.Courses.Where(c => courseIds.Contains(c.CourseId)).Select(c => c.Title).ToListAsync()
+                : new List<string>();
+
+            model.Id = student.StudentId.ToString();
+            model.Courses = enrolledCourses;
+            return model;
         }
 
-        // ----------- Get All Students -----------
+        // -------- Get all students (admin) --------
         public async Task<IEnumerable<StudentVM>> GetAllStudentsAsync()
         {
             var students = await _context.Students
@@ -70,20 +73,44 @@ namespace Learnify_API.Data.Services
 
             return students.Select(s => new StudentVM
             {
-                Image = s.User.ProfileImage ?? "https://cdn-icons-png.flaticon.com/512/4140/4140048.png",
+                Id = s.StudentId.ToString(),
                 Name = s.User.FullName,
-                Title = "Full Stack Web Student", // static for now
-                University = "Cairo University",  // can be dynamic later
-                Country = "Egypt",                // can be dynamic later
                 Email = s.User.Email,
-                LinkedIn = "https://linkedin.com/in",
-                GitHub = "https://github.com",
-                Facebook = "https://facebook.com",
-                Twitter = "https://twitter.com",
-                //Id = s.StudentId.ToString()
+                Image = s.User.ProfileImage ?? "https://cdn-icons-png.flaticon.com/512/4140/4140048.png",
+                University = s.University ?? "Unknown",
+                Country = s.Country ?? "Unknown",
+                Title = "Full Stack Web Student",
+                Courses = s.Enrollments != null
+                    ? s.Enrollments.Select(e => e.Course.Title).ToList()
+                    : new List<string>()
             });
         }
 
+        // -------- Get students by instructor --------
+        public async Task<IEnumerable<StudentVM>> GetStudentsByInstructorAsync(int instructorId)
+        {
+            var enrollments = await _context.Enrollments
+                .Include(e => e.Student).ThenInclude(s => s.User)
+                .Include(e => e.Course)
+                .Where(e => e.Course.InstructorId == instructorId)
+                .ToListAsync();
 
+            var students = enrollments
+                .GroupBy(e => e.Student)
+                .Select(g => new StudentVM
+                {
+                    Id = g.Key.StudentId.ToString(),
+                    Name = g.Key.User.FullName,
+                    Email = g.Key.User.Email,
+                    Image = g.Key.Image ?? "https://cdn-icons-png.flaticon.com/512/4140/4140048.png",
+                    University = g.Key.University ?? "Unknown",
+                    Country = g.Key.Country ?? "Unknown",
+                    Title = "Full Stack Web Student",
+                    Courses = g.Select(e => e.Course.Title).Distinct().ToList()
+                })
+                .ToList();
+
+            return students;
+        }
     }
 }
