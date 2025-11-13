@@ -17,22 +17,34 @@ const Urls = {
   approveCourse: "Course/approve",
   deleteCourse: "Course/delete",
   // Profile
-  EditProfile : "Profile/edit-",
+  EditProfile: "Profile/edit-",
   studentprofile: "Profile/student",
   instructorprofile: "Profile/instructor",
   adminprofile: "Profile/admin",
+  getUserSettings: "userSetting/settings/",
+  updateUserSettings: "userSetting/update/",
   // Notifications
   ReceiveNotifications: "Notification/user-receive",
   SendNotification: "Notification/user-send",
-  MarkasReadNotifications: "Notification/user-read",
+  MarkasReadNotifications: "Notification/user-read/",
   DeleteNotification: "Notification/user-delete",
   // Feedback
-  FEEDBACK: "Others/Add-Feedback",
+  AddFeedBack: "Others/Add-Feedback",
+  GetAllFeedback: "Others/get-all-feedback",
   // Admin User Management
   Users: "Admin/get-all-user",
+  userById: "Admin/get-user-by/",
   DeleteUsers: "Admin/delete-user-by",
   UpdateUsers: "Admin/update-user-by",
   ApproveUser: "Admin/approve-user-by",
+  // Lesson
+  AddLesson: "Lesson/add",
+  UpdateLesson: "Lesson/update/",
+  DeleteLesson: "Lesson/delete/",
+  GetLessonById: "Lesson/",
+  GetLessonByCourse: "Lesson/by-course/",
+  CompleteLesson: "Lesson/complete/",
+  LessonProgress: "Lesson/progress/",
 };
 
 export default Urls;
