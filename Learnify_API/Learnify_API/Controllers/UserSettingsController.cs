@@ -3,7 +3,11 @@ using Learnify_API.Data.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
+<<<<<<< HEAD
+[Route("userSetting")]
+=======
 [Route("api/user")]
+>>>>>>> f7f5d4ca271a096adc4b4b1d8cfce39ee6c3617a
 public class UserSettingsController : ControllerBase
 {
     private readonly UserSettingsService _service;

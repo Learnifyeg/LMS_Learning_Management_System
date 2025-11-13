@@ -8,10 +8,10 @@ import CourseService from "@/store/Classes/Course";
 function CreateCourse() {
   const courseService = new CourseService();
   const { saveLoading, setSaveLoading } = useAppStore();
-  const { id } = useParams();            //  Get course ID from URL
+  const { id } = useParams(); //  Get course ID from URL
   console.log("Course ID from URL:", id);
   const navigate = useNavigate();
-  const isEdit = Boolean(id);            //  Edit mode flag
+  const isEdit = Boolean(id); //  Edit mode flag
 
   const [form, setForm] = useState({
     title: "",
@@ -22,7 +22,8 @@ function CreateCourse() {
     tag: "",
     image: "",
     certificateIncluded: false,
-    duration: "",
+    durationNumber: "",
+    durationUnit: "",
   });
 
   //  Load course data if editing
@@ -34,7 +35,17 @@ function CreateCourse() {
   const loadCourse = async () => {
     try {
       const course = await courseService.getCourseById(id);
-      if (course) setForm(course);
+      if (course) {
+        const [durationNumber, durationUnit] = (course.duration || "").split(
+          " "
+        );
+        setForm({
+          ...course,
+          description: course.description || "",
+          durationNumber: durationNumber || "",
+          durationUnit: durationUnit || "",
+        });
+      }
     } catch {
       toast.error("Failed to load course");
     }
@@ -53,15 +64,27 @@ function CreateCourse() {
     try {
       setSaveLoading(true);
 
+      const submitForm = {
+        ...form,
+        duration: `${form.durationNumber || ""} ${
+          form.durationUnit || ""
+        }`.trim(),
+        description: form.description || "", // ensure never null
+      };
+
       let result;
       if (isEdit) {
-        result = await courseService.updateCourse(id, form); //  Update existing course
+        result = await courseService.updateCourse(id, submitForm);
       } else {
-        result = await courseService.addCourse(form);        //  Add new course
+        result = await courseService.addCourse(submitForm);
       }
 
       if (result) {
-        toast.success(isEdit ? "Course updated successfully!" : "Course submitted successfully! Waiting for approval.");
+        toast.success(
+          isEdit
+            ? "Course updated successfully!"
+            : "Course submitted successfully! Waiting for approval."
+        );
         if (!isEdit) {
           setForm({
             title: "",
@@ -78,7 +101,7 @@ function CreateCourse() {
           navigate("/InstructorLayout/InstCourses"); //  Redirect after edit
         }
       } else {
-        toast.error("Failed to save course.");
+        toast.error("Failed to save course.888");
       }
     } catch (err) {
       console.error(err);
@@ -99,7 +122,9 @@ function CreateCourse() {
       >
         {/* Course Title */}
         <div className="flex flex-col gap-2 md:col-span-2">
-          <label className="text-text-secondary font-medium">Course Title</label>
+          <label className="text-text-secondary font-medium">
+            Course Title
+          </label>
           <input
             type="text"
             name="title"
@@ -124,17 +149,40 @@ function CreateCourse() {
           />
         </div>
 
-        {/* Duration */}
         <div className="flex flex-col gap-2">
           <label className="text-text-secondary font-medium">Duration</label>
-          <input
-            type="text"
-            name="duration"
-            value={form.duration}
-            onChange={handleChange}
-            placeholder="e.g. 4 Weeks"
-            className="border border-input p-3 rounded-xl focus:ring-2 focus:ring-primary bg-surface text-text-primary"
-          />
+          <div className="flex gap-2">
+            <input
+              type="number"
+              name="durationNumber"
+              value={form.duration || ""}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  durationNumber: e.target.value,
+                }))
+              }
+              placeholder="e.g. 4"
+              className="w-1/2 border border-input p-3 rounded-xl focus:ring-2 focus:ring-primary bg-surface text-text-primary"
+            />
+
+            <select
+              name="durationUnit"
+              value={form.durationUnit || ""}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  durationUnit: e.target.value,
+                }))
+              }
+              className="w-1/2 border border-input p-3 rounded-xl focus:ring-2 focus:ring-primary bg-surface text-text-primary"
+            >
+              <option value="">Select Unit</option>
+              <option value="days">Days</option>
+              <option value="weeks">Weeks</option>
+              <option value="months">Months</option>
+            </select>
+          </div>
         </div>
 
         {/* Hours */}
@@ -178,7 +226,9 @@ function CreateCourse() {
 
         {/* Cover Image */}
         <div className="flex flex-col gap-2 md:col-span-2">
-          <label className="text-text-secondary font-medium">Cover Image URL</label>
+          <label className="text-text-secondary font-medium">
+            Cover Image URL
+          </label>
           <input
             type="text"
             name="image"
@@ -233,7 +283,13 @@ function CreateCourse() {
             }`}
             disabled={saveLoading}
           >
-            {saveLoading ? (isEdit ? "Updating..." : "Submitting...") : isEdit ? "Update Course" : "Submit Course"}
+            {saveLoading
+              ? isEdit
+                ? "Updating..."
+                : "Submitting..."
+              : isEdit
+              ? "Update Course"
+              : "Submit Course"}
           </button>
         </div>
       </form>
