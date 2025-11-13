@@ -1,39 +1,80 @@
 import React from "react";
 
-function CourseCard({ course, onRemove, onAddToCart }) {
+function CourseCard({ course, onRemove, onAddToCart , onEdit }) {
   return (
-    <div className="w-full max-w-md p-4 border rounded-lg shadow">
-      <img
-        src={course.image}
-        alt={course.title}
-        className="w-full h-48 object-cover rounded"
-      />
-      <h2 className="text-xl font-bold mt-2">{course.title}</h2>
-      <p className="text-gray-600 text-sm">{course.description}</p>
-
-      <div className="flex items-center justify-between mt-3 text-sm">
-        <span>Rating: {course.rating}</span>
-        <span>Price: ${course.price}</span>
+    <div className="card card-hover w-full max-w-sm bg-surface rounded-xl shadow-lg overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-2xl">
+      {/* Course Image */}
+      <div className="relative h-48 w-full overflow-hidden">
+        <img
+          src={course.image || "/placeholder.png"}
+          alt={course.title}
+          className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+        />
+        {!course.isApproved && (
+          <span className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded-full">
+            Pending
+          </span>
+        )}
       </div>
 
-      <div className="flex gap-2 mt-3">
-        {onRemove && (
-          <button
-            className="px-3 py-1 bg-red-500 text-white rounded"
-            onClick={onRemove}
-          >
-            Remove
-          </button>
-        )}
+      {/* Course Content */}
+      <div className="p-4 flex flex-col gap-2">
+        <h2 className="text-lg font-semibold text-text-primary">
+          {course.title}
+        </h2>
+        <p className="text-sm text-text-secondary line-clamp-3">
+          {course.description || "No description available"}
+        </p>
+        {/* Course Stats */}
+        <div className="flex flex-wrap gap-2 mt-3 text-sm">
+          <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full font-semibold shadow-sm hover:shadow-md transition-all duration-200">
+            Author: {course.author || "Unknown"}
+          </span>
 
-        {onAddToCart && (
-          <button
-            className="px-3 py-1 bg-blue-500 text-white rounded"
-            onClick={onAddToCart}
-          >
-            Add to Cart
-          </button>
-        )}
+          <span className="px-3 py-1 bg-purple-50 text-purple-700 rounded-full font-semibold shadow-sm hover:shadow-md transition-all duration-200">
+            Rating: {course.rating}
+          </span>
+
+          <span className="px-3 py-1 bg-green-50 text-green-700 rounded-full font-semibold shadow-sm hover:shadow-md transition-all duration-200">
+            Price: ${course.price.toFixed(2)}
+          </span>
+
+          <span className="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full font-semibold shadow-sm hover:shadow-md transition-all duration-200">
+            Views: {course.views || "0 views"}
+          </span>
+
+          <span className="px-3 py-1 bg-yellow-50 text-yellow-800 rounded-full font-semibold shadow-sm hover:shadow-md transition-all duration-200">
+            Students: {course.studentsEnrolled || 0}
+          </span>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-2 mt-3">
+          {onRemove && (
+            <button
+              className="btn btn-hover w-full bg-destructive text-white rounded-md py-2 font-medium hover:bg-destructive/80"
+              onClick={onRemove}
+            >
+              Remove
+            </button>
+          )}
+          {onEdit && (
+            <button
+              className="btn btn-hover w-full bg-primary text-white rounded-md py-2 font-medium hover:bg-primary/80"
+              onClick={onEdit}
+            >
+              Edit Course
+            </button>
+          )}
+          {onAddToCart && (
+            <button
+              className="btn btn-hover w-full bg-primary text-white rounded-md py-2 font-medium hover:bg-primary/80"
+              onClick={onAddToCart}
+            >
+              Add to Cart
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

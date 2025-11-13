@@ -5104,23 +5104,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Youssef\\.nuget\\packages\\": {},
+    "C:\\Users\\dell\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Learnify\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
+      "projectUniqueName": "D:\\project depi\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
       "projectName": "Learnify_API",
-      "projectPath": "D:\\Learnify\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
-      "packagesPath": "C:\\Users\\Youssef\\.nuget\\packages\\",
-      "outputPath": "D:\\Learnify\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\obj\\",
+      "projectPath": "D:\\project depi\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
+      "packagesPath": "C:\\Users\\dell\\.nuget\\packages\\",
+      "outputPath": "D:\\project depi\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Youssef\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5207,7 +5207,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

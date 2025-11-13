@@ -99,10 +99,29 @@ class Course {
     }
   }
 
+async updateCourse(id: string, form: any) {
+  try {
+    useAppStore.setState({ isLoading: true });
+
+    const response = await api.put(`${Urls.updateCourse}/${id}`, form);
+    if (response.status === 200) {
+      // toast.success(response.data.message, { position: "top-center" });
+      return response.data;
+    }
+  } catch (err) {
+    console.log(err);
+    // toast.error("Failed to update course", { position: "top-center" });
+  } finally {
+    useAppStore.setState({ isLoading: false });
+  }
+}
+
   async deleteCourse(id: string) {
     try {
       useAppStore.setState({ isLoading: true });
-      const response = await api.get(Urls.deleteCourse + id);
+      useAppStore.getState().setToastPosition("top-center");
+
+      const response = await api.delete(Urls.deleteCourse + id);
       if (response.status === 200) {
         // useAppStore.commit({ type: "setToast", payload: "Login Success" });
         return response.data;

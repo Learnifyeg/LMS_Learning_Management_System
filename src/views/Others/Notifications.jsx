@@ -49,7 +49,7 @@ function Notifications() {
         setNotifications(notifications);
       } catch (error) {
         console.error("Error fetching notifications:", error);
-        toast.error("Failed to load notifications");
+         toast.error(error.response?.data?.message || ("Failed to load notifications"));
         console.log("Fetched notifications:", response.data);
       } finally {
         setLoading(false);
@@ -98,7 +98,8 @@ function Notifications() {
           setNotifications(notifications);
         } catch (error) {
           console.error("Error fetching notifications:", error);
-          toast.error("Failed to load notifications");
+            toast.error(error.response?.data?.message || ("Failed to load notifications"));
+          // toast.error);
         } finally {
           setLoading(false);
         }

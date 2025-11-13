@@ -2,6 +2,7 @@
 using Learnify_API.Data.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Learnify_API.Controllers
 {
@@ -17,7 +18,7 @@ namespace Learnify_API.Controllers
         }
 
         //  Instructor adds course
-        [Authorize(Roles = "instructor")]
+        //[Authorize(Roles = "instructor")]
         [HttpPost("add")]
         public async Task<IActionResult> AddCourse([FromBody] CourseVM model)
         {
@@ -40,7 +41,7 @@ namespace Learnify_API.Controllers
         public async Task<IActionResult> GetPendingCourses()
         {
             var userIdClaim = User.FindFirst("userId")?.Value;
-            var roleClaim = User.FindFirst("role")?.Value;
+            var roleClaim = User.FindFirst(ClaimTypes.Role)?.Value;
 
             if (userIdClaim == null) return Unauthorized("jjj");
 
@@ -74,7 +75,7 @@ namespace Learnify_API.Controllers
         public async Task<IActionResult> GetAllApprovedCourses()
         {
             var userIdClaim = User.FindFirst("userId")?.Value;
-            var roleClaim = User.FindFirst("role")?.Value;
+            var roleClaim = User.FindFirst(ClaimTypes.Role)?.Value;
 
             if (userIdClaim == null) return Unauthorized();
 
@@ -124,18 +125,53 @@ namespace Learnify_API.Controllers
             return Ok(new { message = "Course approved successfully!" });
         }
 
-        //  DELETE course (Admin or Instructor)
-        //[Authorize(Roles = "Admin,Instructor")]
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteCourse(int id, [FromQuery] int instructorId, [FromQuery] bool isAdmin = false)
+        // UPDATE course (Instructor or Admin)
+        [Authorize(Roles = "admin,instructor")]
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateCourse(int id, [FromBody] CourseVM model)
         {
-            var success = await _courseService.DeleteCourseAsync(id, instructorId, isAdmin);
+            // Extract user info from token
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            var roleClaim = User.FindFirst(ClaimTypes.Role)?.Value;
+
+            if (userIdClaim == null || roleClaim == null)
+                return Unauthorized();
+
+            var userId = int.Parse(userIdClaim);
+            var isAdmin = roleClaim.ToLower() == "admin";
+
+            var success = await _courseService.UpdateCourseAsync(id, model, userId, isAdmin);
+
+            if (!success)
+                return NotFound(new { message = "Course not found or not authorized to update" });
+
+            return Ok(new { message = "Course updated successfully! Waiting for admin approval." });
+        }
+
+
+        //  DELETE course (Admin or Instructor)
+        [Authorize(Roles = "admin,instructor")]
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteCourse(int id)
+        {
+            // Extract user info from token
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            var roleClaim = User.FindFirst(ClaimTypes.Role)?.Value;
+
+            if (userIdClaim == null || roleClaim == null)
+                return Unauthorized();
+
+            var userId = int.Parse(userIdClaim);
+            var isAdmin = roleClaim.ToLower() == "admin";
+
+            var success = await _courseService.DeleteCourseAsync(id, userId, isAdmin);
 
             if (!success)
                 return NotFound(new { message = "Course not found or not authorized to delete" });
 
             return Ok(new { message = "Course deleted successfully!" });
         }
+
 
 
     }

@@ -158,6 +158,7 @@ export const router = createBrowserRouter([
           { path: "InstrDashboard", element: <InstrDashboard /> },
           { path: "MyCourses", element: <InstCourses /> },
           { path: "CreateCourse", element: <CreateCourse /> },
+          { path: "CreateCourse/:id", element: <CreateCourse /> },
           { path: "AllStudents", element: <AllStudents /> },
           { path: "QuizManagement", element: <QuizManagement /> },
           { path: "LessonManagement", element: <LessonManagement /> },

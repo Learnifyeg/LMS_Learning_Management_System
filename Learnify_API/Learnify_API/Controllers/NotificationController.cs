@@ -2,7 +2,7 @@
 using Learnify_API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Learnify_API.Controllers
 {
@@ -49,7 +49,7 @@ namespace Learnify_API.Controllers
         public async Task<IActionResult> GetNotificationsByUser()
         {
             // Extract email from token (stored as "sub")
-            var email = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
 
             if (email == null)
                 return Unauthorized(new { message = "Invalid token" });

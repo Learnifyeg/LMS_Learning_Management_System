@@ -1,34 +1,43 @@
-// React
 import { useEffect, useState } from "react";
 import { Search, Linkedin, Github, Facebook, Twitter } from "lucide-react";
-
-// Components
 import api from "@/API/Config";
 import Pagination from "../Others/Pagination";
 
-// Endpoints and constants
 const STUDENT_PER_PAGE = 8;
-const StudentsEndPoint = "get-students"; // API endpoint
 
-function AllStudents() {
-  const [students, setstudents] = useState([]);
+function AllStudents({ role }) {
+  const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
+    // ✅ لو الـ role لسه undefined ما نعملش call
+    if (!role) return;
+
     setLoading(true);
+
+    const endpoint =
+      role?.toLowerCase() === "instructor" ? "get-my-students" : "get-students";
+
+    const token = localStorage.getItem("token"); // خدي التوكن من التخزين
+
     api
-      .get(StudentsEndPoint)
-      .then((res) => setstudents(res.data))
-      .catch((err) => console.log(err))
+      .get(endpoint, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => setStudents(res.data))
+      .catch((err) => console.error("Error fetching students:", err))
       .finally(() => setLoading(false));
-  }, []);
+  }, [role]);
 
-
+  // 🔍 فلترة حسب الاسم
   const filteredStudents = students.filter((student) =>
-    student.name.toLowerCase().includes(searchTerm.toLowerCase())
+    student.fullName?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
   const totalPages = Math.max(
     1,
     Math.ceil(filteredStudents.length / STUDENT_PER_PAGE)
@@ -39,18 +48,16 @@ function AllStudents() {
     pageStartIndex + STUDENT_PER_PAGE
   );
 
-  console.log(students)
   if (loading) {
     return (
       <div className="flex items-center justify-center h-48 text-gray-500">
-        Loading lessons...
+        Loading students...
       </div>
     );
   }
 
   function ProfileCard({
-    image,
-    name,
+    fullName,
     title,
     university,
     country,
@@ -59,21 +66,21 @@ function AllStudents() {
     github,
     facebook,
     twitter,
+    image,
   }) {
     return (
       <div className="w-full max-w-2xs bg-gray-50 dark:bg-gray-800 rounded-2xl shadow-md flex flex-col items-center p-5 hover:shadow-xl transition-all duration-300">
         <img
-          src={image}
-          alt={name}
+          src={image || "/default-profile.png"}
+          alt={fullName}
           className="w-24 h-24 rounded-full border-2 border-gray-300 object-cover"
         />
         <h3 className="font-semibold text-lg mt-3 text-gray-800 dark:text-white text-center">
-          {name}
+          {fullName}
         </h3>
         <p className="text-gray-500 dark:text-gray-300 text-sm text-center">
           {title}
         </p>
-
         {university && (
           <p className="text-gray-600 dark:text-gray-400 text-xs mt-1 text-center">
             {university}
@@ -89,7 +96,6 @@ function AllStudents() {
             {email}
           </p>
         )}
-
         <div className="flex gap-3 mt-4 flex-wrap justify-center">
           {linkedin && (
             <a
@@ -149,6 +155,7 @@ function AllStudents() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
+
       {/* 👇 Filtered Students */}
       <div className="flex flex-wrap justify-center gap-6">
         {paginatedStudents.length > 0 ? (
@@ -159,6 +166,7 @@ function AllStudents() {
           <p className="text-gray-500 text-center w-full">No students found</p>
         )}
       </div>
+
       {/* Pagination */}
       <div className="mt-4 flex items-center justify-center">
         <Pagination
