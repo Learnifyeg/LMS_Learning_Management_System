@@ -26,17 +26,14 @@ namespace Learnify_API.Data.Services
                 FirstName = user.FullName.Split(' ')[0],
                 LastName = user.FullName.Split(' ').Length > 1 ? user.FullName.Split(' ')[1] : "",
                 Email = user.Email,
-<<<<<<< HEAD
                 //Phone = user.Phone ?? "",
                 //Headline = user.Headline ?? "",
                 //About = user.About ?? "",
                 //Newsletter = user.Newsletter
-=======
-                Phone = user.Phone ?? "",
-                Headline = user.Headline ?? "",
-                About = user.About ?? "",
-                Newsletter = user.Newsletter
->>>>>>> f7f5d4ca271a096adc4b4b1d8cfce39ee6c3617a
+                //Phone = user.Phone ?? "",
+                //Headline = user.Headline ?? "",
+                //About = user.About ?? "",
+                //Newsletter = user.Newsletter
             };
         }
 
