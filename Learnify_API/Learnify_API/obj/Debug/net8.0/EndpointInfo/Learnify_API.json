@@ -1187,7 +1187,11 @@
         }
       }
     },
+<<<<<<< HEAD
     "/Student/add-student": {
+=======
+    "/api/Student/add-student": {
+>>>>>>> f7f5d4ca271a096adc4b4b1d8cfce39ee6c3617a
       "post": {
         "tags": [
           "Student"
@@ -1231,7 +1235,11 @@
         }
       }
     },
+<<<<<<< HEAD
     "/Student/get-students": {
+=======
+    "/api/Student/get-students": {
+>>>>>>> f7f5d4ca271a096adc4b4b1d8cfce39ee6c3617a
       "get": {
         "tags": [
           "Student"
@@ -1243,7 +1251,11 @@
         }
       }
     },
+<<<<<<< HEAD
     "/Student/get-my-students": {
+=======
+    "/api/Student/get-my-students": {
+>>>>>>> f7f5d4ca271a096adc4b4b1d8cfce39ee6c3617a
       "get": {
         "tags": [
           "Student"
@@ -1255,7 +1267,11 @@
         }
       }
     },
+<<<<<<< HEAD
     "/userSetting/settings/{userId}": {
+=======
+    "/api/user/settings/{userId}": {
+>>>>>>> f7f5d4ca271a096adc4b4b1d8cfce39ee6c3617a
       "get": {
         "tags": [
           "UserSettings"
