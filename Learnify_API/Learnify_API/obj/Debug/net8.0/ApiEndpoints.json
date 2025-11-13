@@ -1,21 +1,5 @@
 [
   {
-    "ContainingType": "Learnify_API.Controllers.StudentController",
-    "Method": "AddStudent",
-    "RelativePath": "add-student",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "studentVM",
-        "Type": "Learnify_API.Data.ViewModels.StudentVM",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "Learnify_API.Controllers.AdminController",
     "Method": "ApproveUserById",
     "RelativePath": "Admin/approve-user-by/{id}",
@@ -308,16 +292,6 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Learnify_API.Controllers.StudentController",
-    "Method": "GetAllStudents",
-    "RelativePath": "get-students",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -797,6 +771,84 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "AddStudent",
+    "RelativePath": "Student/add-student",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentVM",
+        "Type": "Learnify_API.Data.ViewModels.StudentVM",
+        "IsRequired": true
+      },
+      {
+        "Name": "courseIds",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "GetMyStudents",
+    "RelativePath": "Student/get-my-students",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "GetAllStudents",
+    "RelativePath": "Student/get-students",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserSettingsController",
+    "Method": "GetSettings",
+    "RelativePath": "userSetting/settings/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserSettingsController",
+    "Method": "UpdateSettings",
+    "RelativePath": "userSetting/settings/{userId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "Learnify_API.Data.ViewModels.UserSettingsViewModel",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]

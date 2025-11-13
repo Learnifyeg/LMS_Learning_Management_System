@@ -44,6 +44,7 @@ namespace Learnify_API
             builder.Services.AddScoped<CourseService>();
             builder.Services.AddScoped<LessonService>();
             builder.Services.AddScoped<INotificationService, NotificationService>();
+            builder.Services.AddScoped<UserSettingsService>();
 
 
             builder.Services.AddEndpointsApiExplorer();

@@ -1,6 +1,6 @@
 import React from "react";
 
-function CourseCard({ course, onRemove, onAddToCart , onEdit }) {
+function CourseCard({ course, onRemove, onAddToCart, onEdit }) {
   return (
     <div className="card card-hover w-full max-w-sm bg-surface rounded-xl shadow-lg overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-2xl">
       {/* Course Image */}
@@ -45,6 +45,9 @@ function CourseCard({ course, onRemove, onAddToCart , onEdit }) {
 
           <span className="px-3 py-1 bg-yellow-50 text-yellow-800 rounded-full font-semibold shadow-sm hover:shadow-md transition-all duration-200">
             Students: {course.studentsEnrolled || 0}
+          </span>
+          <span className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full font-semibold shadow-sm hover:shadow-md transition-all duration-200">
+           Duration: {course.hours ? `${course.hours} hour${course.hours > 1 ? "s" : ""}` : "N/A"}
           </span>
         </div>
 

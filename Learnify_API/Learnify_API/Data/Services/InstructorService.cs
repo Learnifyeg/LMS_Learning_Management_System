@@ -1,4 +1,5 @@
-﻿namespace Learnify_API.Data.Services
+﻿
+namespace Learnify_API.Data.Services
 {
     public class InstructorService
     {
@@ -7,5 +8,10 @@
             _context = context;
         }
         private readonly AppDbContext _context;
+
+        internal async Task GetDashboardAsync(int userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -4,6 +4,7 @@ import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import CourseCard from "./CourseCard";
 import CourseService from "@/store/Classes/Course";
 import toast from "react-hot-toast";
+import ConfirmToast from "@/utils/ConfirmToast";
 
 const courseService = new CourseService();
 
@@ -26,45 +27,54 @@ function InstCourses() {
       console.error(err);
     }
   };
+  const handleDelete = (id) => {
+    console.log(id);
+    toast.custom((t) => (
+      <ConfirmToast
+        message="Are you sure you want to delete this course?"
+        onConfirm={async () => {
+          toast.dismiss(t.id);
+          try {
+            await courseService.deleteCourse(id);
 
-  const handleDelete = async (id) => {
-    try {
-      await courseService.deleteCourse(id);
+            setPendingCourses((prev) => prev.filter((c) => c.id !== id));
+            setApprovedCourses((prev) => prev.filter((c) => c.id !== id));
 
-      setPendingCourses((prev) => prev.filter((c) => c.id !== id));
-      setApprovedCourses((prev) => prev.filter((c) => c.id !== id));
-
-      toast.success("Course deleted");
-    } catch {
-      toast.error("Error deleting course");
-    }
+            toast.success("Course deleted");
+          } catch {
+            toast.error("Error deleting course");
+          }
+        }}
+        onCancel={() => toast.dismiss(t.id)}
+      />
+    ));
   };
 
-//   const handleDelete = (course) => {
-//   toast.custom((t) => (
-//     <ConfirmToastno
-//       message={`Delete course "${course.title}"?`}
-//       onConfirm={() => {
-//         courseService
-//           .deleteCourse(course.id)
-//           .then(() => {
-//             setPendingCourses((prev) =>
-//               prev.filter((c) => c.id !== course.id)
-//             );
-//             setApprovedCourses((prev) =>
-//               prev.filter((c) => c.id !== course.id)
-//             );
-//             toast.success("Course deleted");
-//             toast.dismiss(t.id);
-//           })
-//           .catch(() => {
-//             toast.error("Error deleting course");
-//           });
-//       }}
-//       onCancel={() => toast.dismiss(t.id)}
-//     />
-//   ));
-// };
+  //   const handleDelete = (course) => {
+  //   toast.custom((t) => (
+  //     <ConfirmToastno
+  //       message={`Delete course "${course.title}"?`}
+  //       onConfirm={() => {
+  //         courseService
+  //           .deleteCourse(course.id)
+  //           .then(() => {
+  //             setPendingCourses((prev) =>
+  //               prev.filter((c) => c.id !== course.id)
+  //             );
+  //             setApprovedCourses((prev) =>
+  //               prev.filter((c) => c.id !== course.id)
+  //             );
+  //             toast.success("Course deleted");
+  //             toast.dismiss(t.id);
+  //           })
+  //           .catch(() => {
+  //             toast.error("Error deleting course");
+  //           });
+  //       }}
+  //       onCancel={() => toast.dismiss(t.id)}
+  //     />
+  //   ));
+  // };
 
   const handleApprove = async (id) => {
     try {
@@ -77,8 +87,7 @@ function InstCourses() {
   };
 
   const handleEdit = (id) => {
-     navigate(`/InstructorLayout/CreateCourse/${id}`);
-     
+    navigate(`/InstructorLayout/CreateCourse/${id}`);
   };
 
   const courses = [...pendingCourses, ...approvedCourses];

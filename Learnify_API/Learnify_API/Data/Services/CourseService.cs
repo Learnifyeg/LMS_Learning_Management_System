@@ -54,6 +54,7 @@ namespace Learnify_API.Data.Services
                     Id = c.CourseId,
                     Title = c.Title,
                     Category = c.Category ?? "",
+                    Description = c.Description ?? "",  // ← ADD THIS
                     Author = c.Instructor.User.FullName ?? "Unknown",
                     AuthorId = c.InstructorId,
                     Views = c.Views,
@@ -84,6 +85,7 @@ namespace Learnify_API.Data.Services
                     Id = c.CourseId,
                     Title = c.Title,
                     Category = c.Category ?? "",
+                    Description = c.Description ?? "",  // ← ADD THIS
                     Author = c.Instructor.User.FullName ?? "Unknown",
                     AuthorId = c.InstructorId,
                     Views = c.Views,
@@ -115,6 +117,7 @@ namespace Learnify_API.Data.Services
             {
                 Id = c.CourseId,
                 Title = c.Title,
+                Description = c.Description ?? "",  // ← ADD THIS
                 Category = c.Category ?? "",
                 Author = c.Instructor.User.FullName ?? "Unknown",
                 AuthorId = c.InstructorId,
@@ -131,6 +134,7 @@ namespace Learnify_API.Data.Services
                 InstructorId = c.InstructorId,
                 IsApproved = c.IsApproved
             };
+
         }
 
         // Approve Course (Admin)
