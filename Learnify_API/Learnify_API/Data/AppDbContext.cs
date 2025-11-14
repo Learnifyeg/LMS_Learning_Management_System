@@ -28,7 +28,7 @@ namespace Learnify_API.Data
         //public DbSet<Payment> Payments { get; set; }
         public DbSet<InstructorPayout> InstructorPayouts { get; set; }
         public DbSet<Log> Logs { get; set; }
-        public DbSet<Notification> Notifications { get; set; }
+       // public DbSet<Notification> Notifications { get; set; }
         public DbSet<FeedBack> feedBacks { get; set; }
         public DbSet<Profile> profiles { get; set; }
 
@@ -107,11 +107,11 @@ namespace Learnify_API.Data
             //    .HasForeignKey(n => n.ReceiverEmail)
             //    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Notification>()
-                .HasOne(n => n.Sender)
-                .WithMany()
-                .HasForeignKey(n => n.SenderId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<Notification>()
+            //    .HasOne(n => n.Sender)
+            //    .WithMany()
+            //    .HasForeignKey(n => n.SenderId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
         }
 

@@ -12,6 +12,9 @@ namespace Learnify_API.Data.Models
         [ForeignKey("StudentId")]
         public Student Student { get; set; } = null!;
 
+        public int InstructorId { get; set; }
+        [ForeignKey("InstructorId")]
+        public Instructor Instructor { get; set; } = null!;
         public int CourseId { get; set; }
         [ForeignKey("CourseId")]
         public Course Course { get; set; } = null!;

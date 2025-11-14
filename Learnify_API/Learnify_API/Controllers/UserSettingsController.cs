@@ -16,12 +16,12 @@ public class UserSettingsController : ControllerBase
 
     // GET /api/user/settings/{userId}
     [HttpGet("settings/{userId}")]
-    public async Task<IActionResult> GetSettings(int userId)  // <-- int بدل string
-    {
-        var settings = await _service.GetSettingsAsync(userId);
-        if (settings == null) return NotFound();
-        return Ok(settings);
-    }
+    //public async Task<IActionResult> GetSettings(int userId)  // <-- int بدل string
+    //{
+    //  //  var settings = await _service.GetSettingsAsync(userId);
+    //    if (settings == null) return NotFound();
+    //    return Ok(settings);
+    //}
 
     // POST /api/user/settings/{userId}
     [HttpPost("settings/{userId}")]

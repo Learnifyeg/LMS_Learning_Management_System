@@ -1,7 +1,7 @@
 ﻿using Learnify_API.Data;
 using Learnify_API.Data.Models;
 using Learnify_API.Data.Services;
-using Learnify_API.Services;
+//using Learnify_API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -43,8 +43,9 @@ namespace Learnify_API
             builder.Services.AddScoped<ProfileService>();
             builder.Services.AddScoped<CourseService>();
             builder.Services.AddScoped<LessonService>();
-            builder.Services.AddScoped<INotificationService, NotificationService>();
+          //  builder.Services.AddScoped<INotificationService, NotificationService>();
             builder.Services.AddScoped<UserSettingsService>();
+            builder.Services.AddScoped<DashboardService>();
 
 
             builder.Services.AddEndpointsApiExplorer();
