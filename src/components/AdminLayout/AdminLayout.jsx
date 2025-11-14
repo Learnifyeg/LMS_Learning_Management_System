@@ -11,7 +11,7 @@ import useTokenStore from "@/store/user";
 // const Image = localStorage.getItem("userimage") || DefaultImage;
 
 function LayoutContent({ shouldHide }) {
-  const { open } = useSidebar(); // ✅ Now it's inside the provider
+  const { open } = useSidebar(); // Now it's inside the provider
   
   const Image =  useTokenStore((state) => state.user?.image) || DefaultImage;
   return (
@@ -45,7 +45,6 @@ function AdminLayout() {
     "StuQuizResult",
     "StuShoppingCart",
     "StuQuizPage",
-    "SearchResults",
   ];
   const shouldHide = hiddenPaths.includes(location);
 
