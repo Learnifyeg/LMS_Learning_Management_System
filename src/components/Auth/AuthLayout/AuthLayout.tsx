@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import authIMG from "@/assets/authIMG.webp";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import LogoModes from "@/components/ui/LogoTheme/LogoModes";
@@ -6,11 +6,20 @@ import { Separator } from "@/components/ui/separator";
 import { useTheme } from "@/utils/ThemeProvider";
 import { SocialButtons } from "@/assets/Constants/Features";
 import SocialButton from "../SocialButton/SocialButton";
+import useTokenStore from "@/store/user";
+import { useEffect } from "react";
 
 const AuthLayout = () => {
   const { theme } = useTheme();
   const pathname = useLocation().pathname;
   const page = pathname.split("/").pop(); // Get last part of URL
+  const { token } = useTokenStore();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (token) {
+      navigate("/UserLayout");
+    }
+  }, [token]);
 
   // Determine the header title and description
   const getHeaderTitle = () => {
@@ -31,7 +40,8 @@ const AuthLayout = () => {
     return "";
   };
 
-  const showSocialButtons = page !== "ForgetPassword" && page !== "ResetPassword";
+  const showSocialButtons =
+    page !== "ForgetPassword" && page !== "ResetPassword";
 
   return (
     <main className="min-h-dvh overflow-y-auto bg-surface">
@@ -44,7 +54,9 @@ const AuthLayout = () => {
             <CardTitle className="text-3xl font-bold text-primary">
               Welcome to Learnify
             </CardTitle>
-            <p className="text-muted-foreground mt-2">{getHeaderDescription()}</p>
+            <p className="text-muted-foreground mt-2">
+              {getHeaderDescription()}
+            </p>
           </CardHeader>
 
           <CardContent className="space-y-4">

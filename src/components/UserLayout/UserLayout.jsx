@@ -13,15 +13,12 @@ import useTokenStore from "@/store/user";
 function LayoutContent({ shouldHide }) {
   const { open } = useSidebar(); // ✅ Now it's inside the provider
   // const userRole = localStorage.getItem("Role") || "student";
-  const Image =  useTokenStore((state) => state.user?.image)|| DefaultImage;
-  const userRole =  useTokenStore((state) => state.user?.role) || "student";
- 
+  const Image = useTokenStore((state) => state.user?.image) || DefaultImage;
+  const userRole = useTokenStore((state) => state.user?.role) || "student";
 
   return (
     <>
-      <Suspense fallback={null}>
-        <Navbar role={userRole} />
-      </Suspense>
+      <Navbar role={userRole} />
 
       <div
         className={`transition-all duration-300 mt-16 ${
@@ -29,11 +26,7 @@ function LayoutContent({ shouldHide }) {
         } max-md:ml-5`}
       >
         <Outlet />
-        {!shouldHide && (
-          <Suspense fallback={null}>
-            <Footer />
-          </Suspense>
-        )}
+        {!shouldHide && <Footer />}
       </div>
     </>
   );
