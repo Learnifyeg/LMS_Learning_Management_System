@@ -13,25 +13,25 @@ namespace Learnify_API.Data.Services
         }
 
         // لو هتيجي من frontend كـ int
-        public async Task<UserSettingsViewModel?> GetSettingsAsync(int userId)
-        {
-            var user = await _context.Users
-                .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.UserId == userId);
+        //public async Task<UserSettingsViewModel?> GetSettingsAsync(int userId)
+        //{
+        //    var user = await _context.Users
+        //        .AsNoTracking()
+        //        .FirstOrDefaultAsync(u => u.UserId == userId);
 
-            if (user == null) return null;
+        //    if (user == null) return null;
 
-            return new UserSettingsViewModel
-            {
-                FirstName = user.FullName.Split(' ')[0],
-                LastName = user.FullName.Split(' ').Length > 1 ? user.FullName.Split(' ')[1] : "",
-                Email = user.Email,
-                Phone = user.Phone ?? "",
-                Headline = user.Headline ?? "",
-                About = user.About ?? "",
-                Newsletter = user.Newsletter
-            };
-        }
+        //    //return new UserSettingsViewModel
+        //    //{
+        //    //    FirstName = user.FullName.Split(' ')[0],
+        //    //    LastName = user.FullName.Split(' ').Length > 1 ? user.FullName.Split(' ')[1] : "",
+        //    //    Email = user.Email,
+        //    //    Phone = user.Phone ?? "",
+        //    //    Headline = user.Headline ?? "",
+        //    //    About = user.About ?? "",
+        //    //    Newsletter = user.Newsletter
+        //    //};
+        //}
 
 
         public async Task<bool> UpdateSettingsAsync(int userId, UserSettingsViewModel model)
