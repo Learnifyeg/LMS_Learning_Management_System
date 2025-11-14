@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "@/API/Config";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import SendNotificationModal from "./SendNotificationModal";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import ConfirmToast from "@/utils/ConfirmToast";
@@ -33,7 +33,7 @@ function Notifications() {
         const userEmail = user?.email ?? "user1@example.com";
         const response = await api.get(ReceiveNotificationsEndpoint);
 
-        console.log("eeee")
+        console.log("eeee");
         // response.data should now have { Notifications, UnreadCount }
         const notifications = response.data.notifications || [];
         const unreadCount = response.data.unreadCount || 0;
@@ -49,7 +49,9 @@ function Notifications() {
         setNotifications(notifications);
       } catch (error) {
         console.error("Error fetching notifications:", error);
-         toast.error(error.response?.data?.message || ("Failed to load notifications"));
+        toast.error(
+          error.response?.data?.message || "Failed to load notifications"
+        );
         console.log("Fetched notifications:", response.data);
       } finally {
         setLoading(false);
@@ -72,12 +74,9 @@ function Notifications() {
       const fetchNotifications = async () => {
         setLoading(true);
         try {
-          const userEmail =
-            user?.email ?? "user1@example.com";
+          const userEmail = user?.email ?? "user1@example.com";
 
-          const response = await api.get(
-            `${ReceiveNotificationsEndpoint}`
-          );
+          const response = await api.get(`${ReceiveNotificationsEndpoint}`);
 
           const notifications = response.data.notifications || [];
           const unreadCount = response.data.unreadCount || 0;
@@ -98,7 +97,9 @@ function Notifications() {
           setNotifications(notifications);
         } catch (error) {
           console.error("Error fetching notifications:", error);
-            toast.error(error.response?.data?.message || ("Failed to load notifications"));
+          toast.error(
+            error.response?.data?.message || "Failed to load notifications"
+          );
           // toast.error);
         } finally {
           setLoading(false);
@@ -174,7 +175,6 @@ function Notifications() {
 
   return (
     <div className="min-h-screen bg-background py-8">
-      <Toaster position="top-center" reverseOrder={false} />
       <div className="container mx-auto px-4">
         {/* Header */}
         <header className="mb-8">

@@ -59,7 +59,6 @@ class User {
       this.appStore.setIsLoading(true);
       this.tokenStore.setToken(null);
       this.tokenStore.setUser(undefined);
-      // this.appStore.setToast("Logout Success");
     } catch (err: any) {
       this.appStore.setError(err.message || "Logout failed");
     } finally {

@@ -16,9 +16,7 @@ function LayoutContent({ shouldHide }) {
 
   return (
     <>
-      <Suspense fallback={null}>
-        <Navbar role="student" />
-      </Suspense>
+      <Navbar role="student" />
 
       <div
         className={`transition-all duration-300 mt-16 ${
@@ -26,11 +24,7 @@ function LayoutContent({ shouldHide }) {
         } max-md:ml-5`}
       >
         <Outlet />
-        {!shouldHide && (
-          <Suspense fallback={null}>
-            <Footer />
-          </Suspense>
-        )}
+        {!shouldHide && <Footer />}
       </div>
     </>
   );

@@ -1,35 +1,18 @@
-import { useEffect, useState } from "react";
 import FiltersSidebar from "@/views/Others/SearchResults/FiltersSidebar";
 import CourseCard from "@/views/Others/SearchResults/CourseCard";
-import api from "@/API/Config";
-import Urls from "@/API/URL";
+import useCourse from "@/hooks/useCourse";
 
 export default function SearchResults() {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const getCoursesEndpoint = Urls.getApprovedCourses;
-
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        setLoading(true);
-        const response = await api.get(getCoursesEndpoint);
-        setCourses(response.data || []);
-      } catch (err) {
-        setError("Failed to load courses.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCourses();
-  }, []);
-
+  const { approvedCourses } = useCourse();
+  const { data, isLoading, error } = approvedCourses;
   return (
     <div className="custom-container py-10 flex flex-col gap-6">
-      <div className="text-gray-500 text-sm">Home / Courses / Search Results</div>
-      <h1 className="text-3xl font-semibold text-text-primary">Search Results</h1>
+      <div className="text-gray-500 text-sm">
+        Home / Courses / Search Results
+      </div>
+      <h1 className="text-3xl font-semibold text-text-primary">
+        Search Results
+      </h1>
 
       <div className="flex gap-8">
         {/* Sidebar Filters */}
@@ -40,7 +23,9 @@ export default function SearchResults() {
         {/* Courses Grid */}
         <div className="flex-1">
           <div className="flex justify-between items-center mb-5">
-            <span className="text-text-secondary">{courses.length} Results found</span>
+            <span className="text-text-secondary">
+              {data?.length} Results found
+            </span>
             <select className="border border-input rounded-md px-3 py-2 text-sm bg-surface">
               <option>Sort by</option>
               <option>Newest</option>
@@ -49,15 +34,15 @@ export default function SearchResults() {
             </select>
           </div>
 
-          {loading && <p>Loading courses...</p>}
+          {isLoading && <p>Loading courses...</p>}
           {error && <p className="text-red-500">{error}</p>}
-          {!loading && !error && courses.length === 0 && (
+          {!isLoading && !error && data.length === 0 && (
             <p className="text-gray-400">No approved courses found.</p>
           )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {!loading &&
-              courses.map((course) => (
+            {!isLoading &&
+              data?.map((course) => (
                 <CourseCard
                   key={course.id}
                   course={{

@@ -11,11 +11,11 @@ const App = () => {
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        <div className="relative min-h-screen ">
+        <div className="relative min-h-screen overflow-x-hidden">
           <ThemeToggle />
           <Outlet />
           <ConfirmToast />
-          <Toaster position="bottom-right" />
+          <Toaster />
         </div>
         <ReactQueryDevtools />
       </QueryClientProvider>

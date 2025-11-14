@@ -32,7 +32,7 @@ export interface InstructorRegisterData extends LoginData {
   bio?: string;
 }
 
-const useUser = () => {
+const useAuth = () => {
   const appStore = useAppStore();
   const tokenStore = useTokenStore();
   const queryClient = useQueryClient();
@@ -176,4 +176,4 @@ const useUser = () => {
   };
 };
 
-export default useUser;
+export default useAuth;

@@ -1,5 +1,3 @@
-"use client";
-
 import {
   BadgeCheck,
   Bell,
@@ -46,9 +44,7 @@ export function NavUser({
   const { clearToken, setUser } = useTokenStore.getState();
   const handleLogout = () => {
     clearToken();
-    setUser(undefined);
     navigate("/");
-    window.location.reload(); // refresh UI to reflect logout
   };
 
   return (

@@ -35,7 +35,6 @@ const InstrProfile = lazy(() => import("@/views/Instructor/InstrProfile.jsx"));
 const CreateCourse = lazy(() => import("@/views/Instructor/CreateCourse.jsx"));
 
 
-
 // Student Views
 const StuDashboard = lazy(() => import("@/views/Student/StuDashboard.jsx"));
 const StuStudentLayout = lazy(
@@ -68,7 +67,9 @@ const UserLayout = lazy(() => import("@/components/UserLayout/UserLayout.jsx"));
 const ContactUs = lazy(() => import("@/views/Others/ContactUs.jsx"));
 const HelpPage = lazy(() => import("@/views/Others/HelpPage.jsx"));
 const Notifications = lazy(() => import("@/views/Others/Notifications.jsx"));
-const SearchResults = lazy(() => import("@/views/Others/SearchResults/SearchResults.jsx"));
+const SearchResults = lazy(
+  () => import("@/views/Others/SearchResults/SearchResults.jsx")
+);
 const SendFeedback = lazy(() => import("@/views/Others/SendFeedback.jsx"));
 const SettingPage = lazy(() => import("@/views/Others/SettingPage.jsx"));
 const TermsofUse = lazy(() => import("@/views/Others/TermsofUse.jsx"));
@@ -162,7 +163,7 @@ export const router = createBrowserRouter([
           { path: "MyCourses", element: <InstCourses /> },
           { path: "CreateCourse", element: <CreateCourse /> },
           { path: "CreateCourse/:id", element: <CreateCourse /> },
-          { path: "AllStudents", element: <AllStudents /> },
+          // { path: "AllStudents", element: <AllStudents /> },
           { path: "QuizManagement", element: <QuizManagement /> },
           { path: "LessonManagement", element: <LessonManagement /> },
           { path: "InstrProfile", element: <InstrProfile /> },
