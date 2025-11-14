@@ -17,7 +17,7 @@ namespace Learnify_API.Controllers
             _courseService = courseService;
         }
 
-        //  Instructor adds course
+        //Instructor adds course
         //[Authorize(Roles = "instructor")]
         [HttpPost("add")]
         public async Task<IActionResult> AddCourse([FromBody] CourseVM model)
