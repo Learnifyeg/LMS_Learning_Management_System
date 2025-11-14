@@ -250,6 +250,16 @@ export const sidebarData = {
         // ],
       },
       {
+        title: "Feedback Management",
+        url: "/UserLayout/AllFeedback",
+        icon: BookOpen,
+        // items: [
+        //   { title: "My Courses", url: "/StudentLayout/MyCourses" },
+        //   { title: "Saved Courses", url: "/StudentLayout/StuSavedCourses" },
+        //   { title: "Course Details", url: "/StudentLayout/StuCourseDetails" },
+        // ],
+      },
+      {
         title: "User Management",
         url: "/AdminLayout/UserManagement",
         icon: BookOpen,
@@ -298,7 +308,7 @@ export const sidebarData = {
         items: [
           { title: "Help", url: "/UserLayout/HelpPage" },
           { title: "Contact Us", url: "/UserLayout/ContactUs" },
-          { title: "Feedback", url: "/UserLayout/SendFeedback" },
+          // { title: "Feedback", url: "/UserLayout/AllFeedback" },
         ],
       },
     ],

@@ -134,7 +134,7 @@ namespace Learnify_API.Controllers
         }
 
 
-        // Get current logged-in user info from JWT
+        // Get current logged-in user info from JWT 
         [Authorize]
         [HttpGet("me")]
         public async Task<IActionResult> GetCurrentUser()

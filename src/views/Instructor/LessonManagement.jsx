@@ -70,7 +70,7 @@ function LessonManagement() {
             <tr>
               <th className="px-4 py-2 text-left">Title</th>
               <th className="px-4 py-2 text-left">Duration</th>
-              <th className="px-4 py-2 text-left">Preview</th>
+              <th className="px-4 py-2 text-left">Preview</th>  
               <th className="px-4 py-2 text-left">Posted</th>
               <th className="px-4 py-2 text-center">Actions</th>
             </tr>

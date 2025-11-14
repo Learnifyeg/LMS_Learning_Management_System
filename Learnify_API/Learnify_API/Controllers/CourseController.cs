@@ -71,7 +71,6 @@ namespace Learnify_API.Controllers
 
         // Get all approved courses
         [HttpGet("approved")]
-        [Authorize] // both admin and instructor
         public async Task<IActionResult> GetAllApprovedCourses()
         {
             var userIdClaim = User.FindFirst("userId")?.Value;
@@ -115,7 +114,7 @@ namespace Learnify_API.Controllers
         }
 
         //  Admin approves a course
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         [HttpPut("approve/{id}")]
         public async Task<IActionResult> ApproveCourse(int id)
         {

@@ -30,9 +30,10 @@ const Urls = {
   DeleteNotification: "Notification/user-delete",
   // Feedback
   AddFeedBack: "Others/Add-Feedback",
-  GetAllFeedback: "Others/get-all-feedback",
+  GetAllFeedback: "Others/get-all-feedbacks",
   // Admin User Management
   Users: "Admin/get-all-user",
+  AllStudents: "/Student/get-my-students",
   userById: "Admin/get-user-by/",
   DeleteUsers: "Admin/delete-user-by",
   UpdateUsers: "Admin/update-user-by",

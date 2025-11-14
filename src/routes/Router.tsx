@@ -35,6 +35,7 @@ const InstrProfile = lazy(() => import("@/views/Instructor/InstrProfile.jsx"));
 const CreateCourse = lazy(() => import("@/views/Instructor/CreateCourse.jsx"));
 
 
+
 // Student Views
 const StuDashboard = lazy(() => import("@/views/Student/StuDashboard.jsx"));
 const StuStudentLayout = lazy(
@@ -72,6 +73,7 @@ const SendFeedback = lazy(() => import("@/views/Others/SendFeedback.jsx"));
 const SettingPage = lazy(() => import("@/views/Others/SettingPage.jsx"));
 const TermsofUse = lazy(() => import("@/views/Others/TermsofUse.jsx"));
 const EditProfile = lazy(() => import("@/views/Others/EditProfile.jsx"));
+const FeedbackManagement = lazy(() => import("@/views/Admin/FeedbackManagement.jsx"));
 
 // Landing Views
 const LandingLayout = lazy(
@@ -125,6 +127,7 @@ export const router = createBrowserRouter([
         children: [
           { path: "ContactUs", element: <ContactUs /> },
           { path: "HelpPage", element: <HelpPage /> },
+          { path: "AllFeedback", element: <FeedbackManagement /> },
           { path: "Notifications", element: <Notifications /> },
           { path: "SearchResults", element: <SearchResults /> },
           { path: "SendFeedback", element: <SendFeedback /> },

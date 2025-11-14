@@ -11,7 +11,7 @@ import useTokenStore from "@/store/user";
 // const Image = localStorage.getItem("userimage") || DefaultImage;
 
 function LayoutContent({ shouldHide }) {
-  const { open } = useSidebar(); // ✅ Now it's inside the provider
+  const { open } = useSidebar(); //  Now it's inside the provider
   // const userRole = localStorage.getItem("Role") || "student";
   const Image =  useTokenStore((state) => state.user?.image)|| DefaultImage;
   const userRole =  useTokenStore((state) => state.user?.role) || "student";

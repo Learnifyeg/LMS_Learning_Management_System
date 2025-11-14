@@ -1,7 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
     "D:\\Desktop\\Learnify_DEPI\\Learnify_API\\Learnify_API\\Learnify_API.csproj": {}
   },
   "projects": {
@@ -13,29 +12,12 @@
         "projectPath": "D:\\Desktop\\Learnify_DEPI\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
         "packagesPath": "C:\\Users\\W.I\\.nuget\\packages\\",
         "outputPath": "D:\\Desktop\\Learnify_DEPI\\Learnify_API\\Learnify_API\\obj\\",
-=======
-    "D:\\Learnify\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj": {}
-  },
-  "projects": {
-    "D:\\Learnify\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\Learnify\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
-        "projectName": "Learnify_API",
-        "projectPath": "D:\\Learnify\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
-        "packagesPath": "C:\\Users\\Youssef\\.nuget\\packages\\",
-        "outputPath": "D:\\Learnify\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\obj\\",
->>>>>>> 3f0896baeb9d1f24c7b88ecbf2379d3e277d1b64
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-<<<<<<< HEAD
           "C:\\Users\\W.I\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
-          "C:\\Users\\Youssef\\AppData\\Roaming\\NuGet\\NuGet.Config",
->>>>>>> 3f0896baeb9d1f24c7b88ecbf2379d3e277d1b64
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -122,11 +104,7 @@
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
-=======
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
->>>>>>> 3f0896baeb9d1f24c7b88ecbf2379d3e277d1b64
         }
       }
     }

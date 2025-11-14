@@ -19,7 +19,7 @@ export interface FeedbackData {
 const useFeedback = () => {
   const queryClient = useQueryClient();
 
-  // ✅ Fetch all feedback
+  // Fetch all feedback
   const getAllFeedback = () =>
     useQuery({
       queryKey: ["feedback"],
@@ -29,7 +29,7 @@ const useFeedback = () => {
       },
     });
 
-  // ✅ Add feedback
+  //  Add feedback
   const addFeedback = useMutation({
     mutationFn: async (data: FeedbackData) => {
       const res = await api.post(Urls.AddFeedBack, data);
