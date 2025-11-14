@@ -67,7 +67,7 @@ const UserLayout = lazy(() => import("@/components/UserLayout/UserLayout.jsx"));
 const ContactUs = lazy(() => import("@/views/Others/ContactUs.jsx"));
 const HelpPage = lazy(() => import("@/views/Others/HelpPage.jsx"));
 const Notifications = lazy(() => import("@/views/Others/Notifications.jsx"));
-const SearchResults = lazy(() => import("@/views/Others/SearchResults.jsx"));
+const SearchResults = lazy(() => import("@/views/Others/SearchResults/SearchResults.jsx"));
 const SendFeedback = lazy(() => import("@/views/Others/SendFeedback.jsx"));
 const SettingPage = lazy(() => import("@/views/Others/SettingPage.jsx"));
 const TermsofUse = lazy(() => import("@/views/Others/TermsofUse.jsx"));

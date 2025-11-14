@@ -58,6 +58,47 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "AddStudent",
+    "RelativePath": "api/Student/add-student",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentVM",
+        "Type": "Learnify_API.Data.ViewModels.StudentVM",
+        "IsRequired": true
+      },
+      {
+        "Name": "courseIds",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "GetMyStudents",
+    "RelativePath": "api/Student/get-my-students",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "GetAllStudents",
+    "RelativePath": "api/Student/get-students",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Learnify_API.Controllers.AuthController",
     "Method": "AdminRegister",
     "RelativePath": "Auth/admin-register",

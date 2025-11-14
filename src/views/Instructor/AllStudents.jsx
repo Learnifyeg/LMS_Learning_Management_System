@@ -12,7 +12,7 @@ function AllStudents({ role }) {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    // ✅ لو الـ role لسه undefined ما نعملش call
+    //  لو الـ role لسه undefined ما نعملش call
     if (!role) return;
 
     setLoading(true);
@@ -33,7 +33,7 @@ function AllStudents({ role }) {
       .finally(() => setLoading(false));
   }, [role]);
 
-  // 🔍 فلترة حسب الاسم
+  //  فلترة حسب الاسم
   const filteredStudents = students.filter((student) =>
     student.fullName?.toLowerCase().includes(searchTerm.toLowerCase())
   );

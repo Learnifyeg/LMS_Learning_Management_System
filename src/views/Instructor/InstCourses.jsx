@@ -50,6 +50,25 @@ function InstCourses() {
     ));
   };
 
+  //  // Delete course
+  // const handleDelete = (course) => {
+  //   toast.custom((t) => (
+  //     <ConfirmToast
+  //       message={`Delete ${course.title}?`}
+  //       onConfirm={() => {
+  //         api
+  //           .delete(`${DeleteCourseEndPoint}/${course.id}`)
+  //           .then(() => {
+  //             setCourses((prev) => prev.filter((c) => c.id !== course.id));
+  //             toast.success(`Deleted ${course.title}`);
+  //           })
+  //           .catch(() => toast.error("Failed to delete course"));
+  //       }}
+  //       onCancel={() => toast.dismiss(t.id)}
+  //     />
+  //   ));
+  // };
+
   //   const handleDelete = (course) => {
   //   toast.custom((t) => (
   //     <ConfirmToastno

@@ -2,15 +2,14 @@
 using Learnify_API.Data.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace Learnify_API.Controllers
 {
-<<<<<<< HEAD
+    //<<<<<<< HEAD
     [Route("[controller]")]
-=======
+    //=======
     [Route("api/[controller]")]
->>>>>>> f7f5d4ca271a096adc4b4b1d8cfce39ee6c3617a
+    //>>>>>>> f7f5d4ca271a096adc4b4b1d8cfce39ee6c3617a
     [ApiController]
     public class StudentController : ControllerBase
     {

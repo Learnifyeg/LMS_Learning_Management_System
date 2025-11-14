@@ -98,7 +98,7 @@ function CreateCourse() {
             duration: "",
           });
         } else {
-          navigate("/InstructorLayout/InstCourses"); //  Redirect after edit
+          navigate("/InstructorLayout/MyCourses"); //  Redirect after edit
         }
       } else {
         toast.error("Failed to save course.888");
