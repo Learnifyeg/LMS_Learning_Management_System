@@ -5,8 +5,10 @@ import { Play } from "lucide-react";
 import { Separator } from "../../ui/separator";
 import { useEffect } from "react";
 import useTokenStore from "@/store/user";
+import { useNavigate } from "react-router";
 
 export default function HeroSection() {
+  const navigate = useNavigate();
   // const { token } = useTokenStore(); // get token
   // useEffect(() => {
   //   console.log(token);
@@ -40,7 +42,8 @@ export default function HeroSection() {
             <Button
               size="lg"
               className="btn-hover text-lg px-8 py-6 font-semibold shadow-lg bg-gradient-to-r from-primary to-primary/90 border-0 text-white transition-all duration-300"
-            >
+           onClick={() => {navigate('/UserLayout/SearchResults')}} 
+           >
               Start Learning Today
               <div className="ml-2 w-2 h-2 bg-white/80 rounded-full animate-pulse"></div>
             </Button>
@@ -48,6 +51,7 @@ export default function HeroSection() {
               size="lg"
               variant="outline"
               className="btn-hover text-lg px-8 py-6 font-semibold border-2 border-primary/20 bg-background/50 backdrop-blur-sm hover:bg-primary/5 hover:border-primary/40 text-text-primary transition-all duration-300"
+             onClick={() => {navigate('/About')}} 
             >
               Learn More
             </Button>

@@ -87,13 +87,13 @@ class Course {
   async approveCourse(id: string) {
     try {
       useAppStore.setState({ isLoading: true });
-      const response = await api.get(Urls.approveCourse + id);
+      const response = await api.put(Urls.approveCourse + id);
       if (response.status === 200) {
         // useAppStore.commit({ type: "setToast", payload: "Login Success" });
         return response.data;
       }
     } catch (err) {
-      console.log(err);
+      console.log("error-approveCourse", err);
     } finally {
       useAppStore.setState({ isLoading: false });
     }

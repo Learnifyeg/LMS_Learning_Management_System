@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { Search, Linkedin, Github, Facebook, Twitter } from "lucide-react";
 import api from "@/API/Config";
 import Pagination from "../Others/Pagination";
+import Urls from "@/API/URL";
+import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 
 const STUDENT_PER_PAGE = 8;
+const AllStudentsEndpoint = Urls.AllStudents;
 
 function AllStudents({ role }) {
   const [students, setStudents] = useState([]);
@@ -12,28 +15,39 @@ function AllStudents({ role }) {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    // ✅ لو الـ role لسه undefined ما نعملش call
-    if (!role) return;
+    const fetchStudents = async () => {
+      setLoading(true);
+      try {
+        const response = await api.get(AllStudentsEndpoint);
+        if (response.data.length === 0) {
+          setStudents([]); // explicitly set empty
+        } else {
+          const mappedStudents = response.data.map((student) => ({
+            fullName: student.name,
+            title: student.title,
+            university: student.university,
+            country: student.country,
+            email: student.email,
+            linkedin: student.linkedIn,
+            github: student.gitHub,
+            facebook: student.facebook,
+            twitter: student.twitter,
+            image: student.image,
+          }));
+          setStudents(mappedStudents);
+        }
+      } catch (err) {
+        console.error("Error fetching students:", err);
+        setStudents([]); // also set empty if error occurs
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    setLoading(true);
-
-    const endpoint =
-      role?.toLowerCase() === "instructor" ? "get-my-students" : "get-students";
-
-    const token = localStorage.getItem("token"); // خدي التوكن من التخزين
-
-    api
-      .get(endpoint, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => setStudents(res.data))
-      .catch((err) => console.error("Error fetching students:", err))
-      .finally(() => setLoading(false));
+    fetchStudents();
   }, [role]);
 
-  // 🔍 فلترة حسب الاسم
+  //  فلترة حسب الاسم
   const filteredStudents = students.filter((student) =>
     student.fullName?.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -144,6 +158,7 @@ function AllStudents({ role }) {
 
   return (
     <div className="py-5 ">
+       <LandingHeading header="All Students" />
       {/* 🔍 Search bar */}
       <div className="flex items-center gap-2 border rounded-full px-4 py-2 w-full max-w-md mb-8 mx-auto bg-gray-100 dark:bg-gray-600">
         <Search className="text-gray-500" size={20} />
@@ -163,7 +178,11 @@ function AllStudents({ role }) {
             <ProfileCard key={index} {...student} />
           ))
         ) : (
-          <p className="text-gray-500 text-center w-full">No students found</p>
+          <p className="text-gray-500 text-center w-full">
+            {students.length === 0
+              ? "There are no students yet"
+              : "No students found"}
+          </p>
         )}
       </div>
 

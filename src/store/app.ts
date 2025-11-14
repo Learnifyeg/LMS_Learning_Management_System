@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import toast from "react-hot-toast";
 
 type ToastPosition =
   | "top-left"
@@ -22,7 +23,7 @@ interface IAppStore {
   setSaveLoading: (saveLoading: boolean) => void;
   setDeleteLoading: (deleteLoading: boolean) => void;
   setModal: (appear: boolean, msg: string) => void;
-  setToast: (msg: string) => void;
+  setToast: (msg: string, type: "success" | "error") => void;
   setToastPosition: (pos: ToastPosition) => void;
   setError: (msg: string) => void;
 }
@@ -41,7 +42,20 @@ export const useAppStore = create<IAppStore>((set) => ({
   setSaveLoading: (saveLoading) => set({ saveLoading }),
   setDeleteLoading: (deleteLoading) => set({ deleteLoading }),
   setModal: (modalAppear, modalMsg) => set({ modalAppear, modalMsg }),
-  setToast: (msg) => set({ toasterMsg: msg }),
+  setToast: (msg, type) => {
+    switch (type) {
+      case "success":
+        toast.success(msg, { position: useAppStore.getState().toastPosition });
+        break;
+      case "error":
+        toast.error(msg, { position: useAppStore.getState().toastPosition });
+        break;
+      default:
+        toast(msg, { position: useAppStore.getState().toastPosition });
+        break;
+    }
+    set({ toasterMsg: msg });
+  },
 
   setToastPosition: (toastPosition) => set({ toastPosition }),
   setError: (msg) => set({ error: msg }),

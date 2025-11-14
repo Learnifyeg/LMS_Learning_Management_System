@@ -2,11 +2,13 @@
 using Learnify_API.Data.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace Learnify_API.Controllers
 {
+    [Route("[controller]")]
+    //=======sss
     [Route("api/[controller]")]
+
     [ApiController]
     public class StudentController : ControllerBase
     {

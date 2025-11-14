@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z, { set } from "zod";
 import { useNavigate } from "react-router";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import {
   FaFacebook,
   FaTwitter,
@@ -23,6 +23,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import useTokenStore from "@/store/user";
 import api from "@/API/Config";
 import User from "@/store/Classes/User";
+import useAuth from "@/hooks/useAuth";
 import { useAppStore } from "@/store/app";
 
 const RegisterSchema = z.object({
@@ -34,22 +35,24 @@ const LoginEndpoint = "Auth/login";
 function Login() {
   const navigate = useNavigate();
   const { setToken } = useTokenStore();
-  const { isLoading } = useAppStore();
+  const { setToast } = useAppStore();
+  const { loginMutation } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(RegisterSchema) });
   const onSubmit = async (data) => {
-    const user = new User();
-    try {
-      await user.login(data);
-      toast.success("Login successful!");
-      navigate("/");
-    } catch (error) {
-      console.error(error);
-      toast.error(error.response?.data?.message || "Something went wrong!");
-    }
+    await loginMutation.mutateAsync(data, {
+      onSuccess(data) {
+        setToken(data.token);
+        setToast("Login Success", "success");
+        navigate("/");
+      },
+      onError(err) {
+        setToast("Login failed", "error");
+      },
+    });
   };
 
   return (
@@ -112,7 +115,7 @@ function Login() {
         <button
           className="text-secondary cursor-pointer hover:scale-105 font-bold"
           onClick={() => navigate("/User/Register")}
-          disabled={isLoading}
+          disabled={loginMutation.isPending}
         >
           Sign Up
         </button>

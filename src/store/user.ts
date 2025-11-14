@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
 export interface User {
   userId: string;
@@ -15,23 +14,23 @@ interface ITokenStore {
   clearToken: () => void;
 }
 
-const useTokenStore = create<ITokenStore>()(
-  persist(
-    (set) => ({
-      token: null,
-      user: undefined,
-      setToken: (token) => {
-        localStorage.setItem("token", JSON.stringify(token));
-        set({ token });
-      },
-      setUser: (user) => {
-        localStorage.setItem("user", JSON.stringify(user));
-        set({ user });
-      },
-      clearToken: () => set({ token: null }),
-    }),
-    { name: "token-storage" }
-  )
-);
+const tokenFromStorage = localStorage.getItem("token");
+const userFromStorage = localStorage.getItem("user");
+const useTokenStore = create<ITokenStore>()((set) => ({
+  token: tokenFromStorage ? JSON.parse(tokenFromStorage) : null,
+  user:
+    userFromStorage && userFromStorage !== "undefined"
+      ? JSON.parse(userFromStorage)
+      : undefined,
+  setToken: (token) => {
+    localStorage.setItem("token", JSON.stringify(token));
+    set({ token });
+  },
+  setUser: (user) => {
+    localStorage.setItem("user", JSON.stringify(user));
+    set({ user });
+  },
+  clearToken: () => set({ token: null, user: undefined }),
+}));
 
 export default useTokenStore;

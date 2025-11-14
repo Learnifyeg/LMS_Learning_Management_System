@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "@/API/Config";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import SendNotificationModal from "./SendNotificationModal";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import ConfirmToast from "@/utils/ConfirmToast";
@@ -11,123 +11,38 @@ import {
 } from "@heroicons/react/24/solid";
 import useTokenStore from "@/store/user";
 import Urls from "@/API/URL";
+import useNotification from "@/hooks/useNotification";
 
 const ReceiveNotificationsEndpoint = Urls.ReceiveNotifications; // example endpoint for receiving notifications
 const MarkAsReadEndpoint = Urls.MarkasReadNotifications; // example endpoint for marking read
 const DeleteNotificationEndpoint = Urls.DeleteNotification; // example endpoint for marking read
 
 function Notifications() {
-  const [notifications, setNotifications] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState(null); // for reply
   const [selectedNotificationDetail, setSelectedNotificationDetail] =
     useState(null);
   const { user } = useTokenStore.getState();
   const UserName = user?.fullName ?? "shadcn";
-
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      setLoading(true);
-      try {
-        const userEmail = user?.email ?? "user1@example.com";
-        const response = await api.get(ReceiveNotificationsEndpoint);
-
-        console.log("eeee")
-        // response.data should now have { Notifications, UnreadCount }
-        const notifications = response.data.notifications || [];
-        const unreadCount = response.data.unreadCount || 0;
-        if (!unreadCount && notifications.length === 0) {
-          toast.info("You have no notifications at the moment.");
-        } else {
-          toast.info(`You have ${unreadCount} unread notifications.`);
-        }
-        // Store unread count in localStorage
-        localStorage.setItem("notificationCount", unreadCount);
-
-        // Update state
-        setNotifications(notifications);
-      } catch (error) {
-        console.error("Error fetching notifications:", error);
-         toast.error(error.response?.data?.message || ("Failed to load notifications"));
-        console.log("Fetched notifications:", response.data);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    // first fetch immediately
-    fetchNotifications();
-
-    // repeat every 60 seconds
-    const interval = setInterval(fetchNotifications, 60000);
-
-    // cleanup when unmounting
-    return () => clearInterval(interval);
-  }, []);
-
-  // Mark notification as read (both visually + backend)
+  const { getNotifications, markAsRead, deleteNotification } =
+    useNotification();
+  const { data, isLoading: loading } = getNotifications();
+  const { notifications } = data || {};
+  console.log(notifications);
   const handleMarkAsRead = async (id) => {
-    useEffect(() => {
-      const fetchNotifications = async () => {
-        setLoading(true);
-        try {
-          const userEmail =
-            user?.email ?? "user1@example.com";
 
-          const response = await api.get(
-            `${ReceiveNotificationsEndpoint}`
-          );
-
-          const notifications = response.data.notifications || [];
-          const unreadCount = response.data.unreadCount || 0;
-
-          // Logic
-          if (notifications.length === 0) {
-            toast.info("You have no notifications at the moment.");
-          } else if (unreadCount > 0) {
-            toast.info(`You have ${unreadCount} unread notifications.`);
-          } else {
-            toast.info("You have notifications, but all are read.");
-          }
-
-          // Store unread count
-          localStorage.setItem("notificationCount", unreadCount);
-
-          // Update state
-          setNotifications(notifications);
-        } catch (error) {
-          console.error("Error fetching notifications:", error);
-            toast.error(error.response?.data?.message || ("Failed to load notifications"));
-          // toast.error);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      // First fetch immediately
-      fetchNotifications();
-
-      // Repeat every 60 seconds
-      const interval = setInterval(fetchNotifications, 60000);
-
-      // Cleanup when unmounting
-      return () => clearInterval(interval);
-    }, []);
-
-    try {
-      await api.put(`${MarkAsReadEndpoint}/${id}`);
-      setNotifications((prev) =>
-        prev.map((n) => (n.notificationId === id ? { ...n, isRead: true } : n))
-      );
-      toast.success("Notification marked as read");
-    } catch (err) {
-      console.error("Error marking as read:", err);
-      toast.error("Failed to mark as read");
-    }
+    await markAsRead.mutateAsync(id, {
+      onSuccess: () => {
+        // Handle success
+        toast.success("Notification marked as read");
+      },
+      onError: (err) => {
+        // console.error("Error marking notification as read:", err);
+        toast.error("Failed to mark notification as read");
+      },
+    });
   };
 
-  // View notification details
   const handleViewDetails = (notification) => {
     setSelectedNotificationDetail(notification);
   };
@@ -144,20 +59,16 @@ function Notifications() {
       <ConfirmToast
         message={`Are you sure you want to delete the notification "${notification.title}"?`}
         onConfirm={async () => {
-          try {
-            await api.delete(
-              `${DeleteNotificationEndpoint}/${notification.notificationId}`
-            );
-            setNotifications((prev) =>
-              prev.filter(
-                (n) => n.notificationId !== notification.notificationId
-              )
-            );
-            toast.success("Notification deleted successfully");
-          } catch (err) {
-            console.error("Error deleting notification:", err);
-            toast.error("Failed to delete notification");
-          }
+          await deleteNotification.mutateAsync(notification.notificationId, {
+            onSuccess: () => {
+              // Handle success
+              toast.success("Notification deleted");
+            },
+            onError: (err) => {
+              // console.error("Error deleting notification:", err);
+              toast.error ("Failed to delete notification");
+            },
+          });
         }}
         onCancel={() => {
           toast.dismiss(t.id); // optional, already handled in ConfirmToast
@@ -174,7 +85,6 @@ function Notifications() {
 
   return (
     <div className="min-h-screen bg-background py-8">
-      <Toaster position="top-center" reverseOrder={false} />
       <div className="container mx-auto px-4">
         {/* Header */}
         <header className="mb-8">
@@ -184,7 +94,7 @@ function Notifications() {
               <p className="text-text-secondary mt-1">
                 {loading
                   ? "Loading notifications..."
-                  : `You have ${notifications.length} notifications`}
+                  : `You have ${notifications?.length} notifications`}
               </p>
             }
           />
@@ -216,12 +126,12 @@ function Notifications() {
           <div className="bg-card rounded-lg shadow-sm overflow-hidden divide-y divide-gray-100">
             {loading ? (
               <p className="p-6 text-center text-text-secondary">Loading...</p>
-            ) : notifications.length === 0 ? (
+            ) : notifications?.length === 0 ? (
               <p className="p-6 text-center text-text-secondary">
                 No notifications found.
               </p>
             ) : (
-              notifications.map((notification) => (
+              notifications?.map((notification) => (
                 <div
                   key={notification.notificationId}
                   className={`p-6 transition-colors hover:bg-muted/40 ${

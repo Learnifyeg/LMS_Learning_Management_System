@@ -26,7 +26,7 @@ import useCountries from "@/hooks/useCountries";
 import Select from "react-select";
 import { customSelectStyles } from "@/utils/SelectStyle";
 import api from "@/API/Config";
-import toast, { Toaster } from "react-hot-toast";
+import { useAppStore } from "@/store/app";
 
 const StudentRegisterEndPoint = "Auth/student-register";
 
@@ -60,6 +60,7 @@ function Register() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const { allCountries } = useCountries();
+  const { setToast } = useAppStore();
   const [formData, setFormData] = useLocalStorage("studentSignup", {
     FullName: "",
     Email: "",
@@ -129,12 +130,13 @@ function Register() {
       .post(StudentRegisterEndPoint, formattedData)
       .then((response) => {
         // localStorage.setItem("Role", "student");
+        setToast(response.message || "Registration successful", "success");
         navigate("/User/Login");
       })
       .catch((error) => {
         const errMsg = error.response?.data?.message || "Something went wrong";
 
-        toast.error(errMsg);
+        setToast(errMsg, "error");
       });
   };
 

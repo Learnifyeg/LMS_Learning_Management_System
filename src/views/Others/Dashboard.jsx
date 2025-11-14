@@ -1,5 +1,3 @@
-// React
-import React, { useEffect, useState } from "react";
 import {
   FaBook,
   FaCheckCircle,
@@ -14,36 +12,21 @@ import {
 } from "react-icons/fa";
 
 // Components
-import api from "@/API/Config";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import useAuth from "@/store/useAuth";
-
-// Endpoints and constants
-const dashboardEndPoint = "dashboards";
+import useDashboard from "@/hooks/useDashboard";
+import FullSpinner from "@/components/ui/Full Spinner/FullSpinner";
 
 function Dashboard({ role }) {
-  const [dashboard, setDashboard] = useState(null);
-  const { token, user } = useAuth();
-
+  const { user } = useAuth();
+  const { dashboard } = useDashboard();
+  const { data, isLoading } = dashboard;
   console.log("User Info from Token:", user);
 
-  useEffect(() => {
-    const fetchDashboard = async () => {
-      try {
-        const res = await api.get(`${dashboardEndPoint}`);
-        const data = res.data.find((d) => d.role === role);
-        setDashboard(data);
-      } catch (err) {
-        console.error("Error fetching dashboard:", err);
-      }
-    };
-    fetchDashboard();
-  }, [role]);
-
-  if (!dashboard) {
+  if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen text-gray-500 dark:text-gray-300">
-        Loading dashboard...
+      <div>
+        <FullSpinner />
       </div>
     );
   }
@@ -53,7 +36,7 @@ function Dashboard({ role }) {
   };
 
   const { fullName, stats, liveSessions, finalProjects, notifications } =
-    dashboard;
+    data || {};
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -86,28 +69,28 @@ function Dashboard({ role }) {
           <>
             <StatCard
               title="Total Courses"
-              value={stats.totalCourses}
+              value={stats?.totalCourses}
               color="blue"
               icon={<FaBook className="text-2xl text-blue-500" />}
               onClick={() => handleViewAll("courses")}
             />
             <StatCard
               title="Completed Courses"
-              value={stats.completedCourses}
+              value={stats?.completedCourses}
               color="green"
               icon={<FaCheckCircle className="text-2xl text-green-500" />}
-              progress={(stats.completedCourses / stats.totalCourses) * 100}
+              progress={(stats?.completedCourses / stats?.totalCourses) * 100}
             />
             <StatCard
               title="Quizzes Passed"
-              value={`${stats.quizzesPassed.passed}/${stats.quizzesPassed.total}`}
+              value={`${stats?.quizzesPassed?.passed}/${stats?.quizzesPassed?.total}`}
               color="yellow"
               icon={<FaClipboardList className="text-2xl text-yellow-500" />}
-              extra={`${stats.quizzesPassed.successRate}% success rate`}
+              extra={`${stats?.quizzesPassed?.successRate}% success rate`}
             />
             <StatCard
               title="Certificates"
-              value={stats.certificatesEarned}
+              value={stats?.certificatesEarned}
               color="purple"
               icon={<FaCertificate className="text-2xl text-purple-500" />}
               onClick={() => handleViewAll("certificates")}
@@ -119,28 +102,28 @@ function Dashboard({ role }) {
           <>
             <StatCard
               title="Total Students"
-              value={stats.totalStudents}
+              value={stats?.totalStudents}
               color="blue"
               icon={<FaUsers className="text-2xl text-blue-500" />}
               onClick={() => handleViewAll("courses")}
             />
             <StatCard
               title="Courses Created"
-              value={stats.coursesCreated}
+              value={stats?.coursesCreated}
               color="green"
               icon={<FaBook className="text-2xl text-green-500" />}
               onClick={() => handleViewAll("courses")}
             />
             <StatCard
               title="Projects Supervised"
-              value={stats.projectsSupervised}
+              value={stats?.projectsSupervised}
               color="yellow"
               icon={<FaProjectDiagram className="text-2xl text-yellow-500" />}
               onClick={() => handleViewAll("courses")}
             />
             <StatCard
               title="Certificates Issued"
-              value={stats.certificatesIssued}
+              value={stats?.certificatesIssued}
               color="purple"
               icon={<FaCertificate className="text-2xl text-purple-500" />}
               onClick={() => handleViewAll("courses")}
@@ -152,28 +135,28 @@ function Dashboard({ role }) {
           <>
             <StatCard
               title="Total Students"
-              value={stats.totalStudents}
+              value={stats?.totalStudents}
               color="blue"
               icon={<FaUsers className="text-2xl text-blue-500" />}
               onClick={() => handleViewAll("courses")}
             />
             <StatCard
               title="Total Instructors"
-              value={stats.totalInstructors}
+              value={stats?.totalInstructors}
               color="green"
               icon={<FaChalkboardTeacher className="text-2xl text-green-500" />}
               onClick={() => handleViewAll("courses")}
             />
             <StatCard
               title="Total Courses"
-              value={stats.totalCourses}
+              value={stats?.totalCourses}
               color="yellow"
               icon={<FaBook className="text-2xl text-yellow-500" />}
               onClick={() => handleViewAll("courses")}
             />
             <StatCard
               title="Certificates Issued"
-              value={stats.certificatesIssued}
+              value={stats?.certificatesIssued}
               color="purple"
               icon={<FaCertificate className="text-2xl text-purple-500" />}
               onClick={() => handleViewAll("courses")}

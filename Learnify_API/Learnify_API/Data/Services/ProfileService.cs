@@ -182,6 +182,7 @@ namespace Learnify_API.Data.Services
                 Role = "instructor",
                 User = userInfo,
                 SocialLinks = socialLinks,
+                Department = instructor.Specialization,
                 Stats = stats,
                 About = profile.About,
                 InstructorTabContent = tabContent,

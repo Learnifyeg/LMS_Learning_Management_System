@@ -13,26 +13,40 @@ const Urls = {
   getPendingCourses: "Course/pending-courses",
   getApprovedCourses: "Course/approved",
   getCourseById: "Course/",
-  updateCourse: "Course/update/",
-  approveCourse: "Course/approve/",
+  updateCourse: "Course/update",
+  approveCourse: "Course/approve",
   deleteCourse: "Course/delete/",
   // Profile
-  EditProfile : "Profile/edit-",
+  EditProfile: "Profile/edit-",
   studentprofile: "Profile/student",
   instructorprofile: "Profile/instructor",
   adminprofile: "Profile/admin",
+  getUserSettings: "userSetting/settings/",
+  updateUserSettings: "userSetting/update/",
+  dashboard: "dashboard",
   // Notifications
   ReceiveNotifications: "Notification/user-receive",
   SendNotification: "Notification/user-send",
-  MarkasReadNotifications: "Notification/user-read",
-  DeleteNotification: "Notification/user-delete",
+  MarkasReadNotifications: "Notification/user-read/",
+  DeleteNotification: "Notification/user-delete/",
   // Feedback
-  FEEDBACK: "Others/Add-Feedback",
+  AddFeedBack: "Others/Add-Feedback",
+  GetAllFeedback: "Others/get-all-feedbacks",
   // Admin User Management
   Users: "Admin/get-all-user",
+  AllStudents: "/Student/get-my-students",
+  userById: "Admin/get-user-by/",
   DeleteUsers: "Admin/delete-user-by",
   UpdateUsers: "Admin/update-user-by",
   ApproveUser: "Admin/approve-user-by",
+  // Lesson
+  AddLesson: "Lesson/add",
+  UpdateLesson: "Lesson/update/",
+  DeleteLesson: "Lesson/delete/",
+  GetLessonById: "Lesson/",
+  GetLessonByCourse: "Lesson/by-course/",
+  CompleteLesson: "Lesson/complete/",
+  LessonProgress: "Lesson/progress/",
 };
 
 export default Urls;

@@ -21,6 +21,7 @@ namespace Learnify_API.Data.Services
 
         //    if (user == null) return null;
 
+<<<<<<< HEAD
         //    //return new UserSettingsViewModel
         //    //{
         //    //    FirstName = user.FullName.Split(' ')[0],
@@ -32,6 +33,23 @@ namespace Learnify_API.Data.Services
         //    //    Newsletter = user.Newsletter
         //    //};
         //}
+=======
+            return new UserSettingsViewModel
+            {
+                FirstName = user.FullName.Split(' ')[0],
+                LastName = user.FullName.Split(' ').Length > 1 ? user.FullName.Split(' ')[1] : "",
+                Email = user.Email,
+                //Phone = user.Phone ?? "",
+                //Headline = user.Headline ?? "",
+                //About = user.About ?? "",
+                //Newsletter = user.Newsletter
+                //Phone = user.Phone ?? "",
+                //Headline = user.Headline ?? "",
+                //About = user.About ?? "",
+                //Newsletter = user.Newsletter
+            };
+        }
+>>>>>>> f520ce03bc38371ffd5ef4d6bdb71dc807861ea8
 
 
         public async Task<bool> UpdateSettingsAsync(int userId, UserSettingsViewModel model)

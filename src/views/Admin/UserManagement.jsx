@@ -98,7 +98,7 @@ function UserManagement() {
   const closeModal = () => setSelectedUser(null);
   const handleApprove = (user) => {
     toast.custom((t) => (
-      <ConfirmToastno
+      <ConfirmToast
         message={`Approve ${user.fullName}'s account?`}
         onConfirm={() => {
           api

@@ -67,11 +67,14 @@ const UserLayout = lazy(() => import("@/components/UserLayout/UserLayout.jsx"));
 const ContactUs = lazy(() => import("@/views/Others/ContactUs.jsx"));
 const HelpPage = lazy(() => import("@/views/Others/HelpPage.jsx"));
 const Notifications = lazy(() => import("@/views/Others/Notifications.jsx"));
-const SearchResults = lazy(() => import("@/views/Others/SearchResults.jsx"));
+const SearchResults = lazy(
+  () => import("@/views/Others/SearchResults/SearchResults.jsx")
+);
 const SendFeedback = lazy(() => import("@/views/Others/SendFeedback.jsx"));
 const SettingPage = lazy(() => import("@/views/Others/SettingPage.jsx"));
 const TermsofUse = lazy(() => import("@/views/Others/TermsofUse.jsx"));
 const EditProfile = lazy(() => import("@/views/Others/EditProfile.jsx"));
+const FeedbackManagement = lazy(() => import("@/views/Admin/FeedbackManagement.jsx"));
 
 // Landing Views
 const LandingLayout = lazy(
@@ -125,6 +128,7 @@ export const router = createBrowserRouter([
         children: [
           { path: "ContactUs", element: <ContactUs /> },
           { path: "HelpPage", element: <HelpPage /> },
+          { path: "AllFeedback", element: <FeedbackManagement /> },
           { path: "Notifications", element: <Notifications /> },
           { path: "SearchResults", element: <SearchResults /> },
           { path: "SendFeedback", element: <SendFeedback /> },
@@ -159,7 +163,7 @@ export const router = createBrowserRouter([
           { path: "MyCourses", element: <InstCourses /> },
           { path: "CreateCourse", element: <CreateCourse /> },
           { path: "CreateCourse/:id", element: <CreateCourse /> },
-          { path: "AllStudents", element: <AllStudents /> },
+          { path: "AllStudents", element: < AllStudents /> },
           { path: "QuizManagement", element: <QuizManagement /> },
           { path: "LessonManagement", element: <LessonManagement /> },
           { path: "InstrProfile", element: <InstrProfile /> },

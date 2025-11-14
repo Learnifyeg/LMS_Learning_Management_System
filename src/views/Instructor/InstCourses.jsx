@@ -1,87 +1,105 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import CourseCard from "./CourseCard";
 import CourseService from "@/store/Classes/Course";
 import toast from "react-hot-toast";
-
-const courseService = new CourseService();
+import ConfirmToast from "@/utils/ConfirmToast";
+import useCourse from "@/hooks/useCourse";
+import FullSpinner from "@/components/ui/Full Spinner/FullSpinner";
 
 function InstCourses() {
-  const [pendingCourses, setPendingCourses] = useState([]);
-  const [approvedCourses, setApprovedCourses] = useState([]);
+  const { deleteCourse, pendingCourses, approvedCourses, approveCourse } =
+    useCourse();
   const navigate = useNavigate();
+  const { data: pendingCoursesData, isLoading } = pendingCourses;
+  const { data: approvedCoursesData, isLoading: approvedIsLoading } =
+    approvedCourses;
 
-  useEffect(() => {
-    loadCourses();
-  }, []);
-
-  const loadCourses = async () => {
-    try {
-      const pending = await courseService.getPendingCourses();
-      const approved = await courseService.getApprovedCourses();
-      setPendingCourses(pending ?? []);
-      setApprovedCourses(approved ?? []);
-    } catch (err) {
-      console.error(err);
-    }
+  console.log(pendingCourses, approvedCourses);
+  const handleDelete = (id) => {
+    console.log(id);
+    toast.custom((t) => (
+      <ConfirmToast
+        message="Are you sure you want to delete this course?"
+        onConfirm={async () => {
+          toast.dismiss(t.id);
+          await deleteCourse.mutateAsync(id, {
+            onSuccess: () => {
+              toast.success("Course deleted");
+            },
+            onError: () => {
+              toast.error("Failed to delete course");
+            },
+          });
+        }}
+        onCancel={() => toast.dismiss(t.id)}
+      />
+    ));
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await courseService.deleteCourse(id);
+  //  // Delete course
+  // const handleDelete = (course) => {
+  //   toast.custom((t) => (
+  //     <ConfirmToast
+  //       message={`Delete ${course.title}?`}
+  //       onConfirm={() => {
+  //         api
+  //           .delete(`${DeleteCourseEndPoint}/${course.id}`)
+  //           .then(() => {
+  //             setCourses((prev) => prev.filter((c) => c.id !== course.id));
+  //             toast.success(`Deleted ${course.title}`);
+  //           })
+  //           .catch(() => toast.error("Failed to delete course"));
+  //       }}
+  //       onCancel={() => toast.dismiss(t.id)}
+  //     />
+  //   ));
+  // };
 
-      setPendingCourses((prev) => prev.filter((c) => c.id !== id));
-      setApprovedCourses((prev) => prev.filter((c) => c.id !== id));
-
-      toast.success("Course deleted");
-    } catch {
-      toast.error("Error deleting course");
-    }
-  };
-
-//   const handleDelete = (course) => {
-//   toast.custom((t) => (
-//     <ConfirmToastno
-//       message={`Delete course "${course.title}"?`}
-//       onConfirm={() => {
-//         courseService
-//           .deleteCourse(course.id)
-//           .then(() => {
-//             setPendingCourses((prev) =>
-//               prev.filter((c) => c.id !== course.id)
-//             );
-//             setApprovedCourses((prev) =>
-//               prev.filter((c) => c.id !== course.id)
-//             );
-//             toast.success("Course deleted");
-//             toast.dismiss(t.id);
-//           })
-//           .catch(() => {
-//             toast.error("Error deleting course");
-//           });
-//       }}
-//       onCancel={() => toast.dismiss(t.id)}
-//     />
-//   ));
-// };
+  //   const handleDelete = (course) => {
+  //   toast.custom((t) => (
+  //     <ConfirmToastno
+  //       message={`Delete course "${course.title}"?`}
+  //       onConfirm={() => {
+  //         courseService
+  //           .deleteCourse(course.id)
+  //           .then(() => {
+  //             setPendingCourses((prev) =>
+  //               prev.filter((c) => c.id !== course.id)
+  //             );
+  //             setApprovedCourses((prev) =>
+  //               prev.filter((c) => c.id !== course.id)
+  //             );
+  //             toast.success("Course deleted");
+  //             toast.dismiss(t.id);
+  //           })
+  //           .catch(() => {
+  //             toast.error("Error deleting course");
+  //           });
+  //       }}
+  //       onCancel={() => toast.dismiss(t.id)}
+  //     />
+  //   ));
+  // };
 
   const handleApprove = async (id) => {
-    try {
-      await courseService.approveCourse(id);
-      toast.success("Course approved");
-      loadCourses();
-    } catch {
-      toast.error("Error approving course");
-    }
+    await approveCourse.mutateAsync(id, {
+      onSuccess: () => {
+        toast.success("Course approved");
+      },
+      onError: () => {
+        toast.error("Failed to approve course");
+      },
+    });
   };
 
   const handleEdit = (id) => {
-     navigate(`/InstructorLayout/CreateCourse/${id}`);
-     
+    navigate(`/InstructorLayout/CreateCourse/${id}`);
   };
 
-  const courses = [...pendingCourses, ...approvedCourses];
+  
+  if (isLoading || approvedIsLoading) return <FullSpinner />;
+  const courses = [...pendingCoursesData, ...approvedCoursesData] || [];
 
   return (
     <div className="p-6 flex flex-col items-center gap-6 bg-surface rounded-lg shadow-md">
@@ -98,7 +116,7 @@ function InstCourses() {
 
       {/* Courses List */}
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {courses.length ? (
+        {courses?.length ? (
           courses.map((course) => (
             <CourseCard
               key={course.id}

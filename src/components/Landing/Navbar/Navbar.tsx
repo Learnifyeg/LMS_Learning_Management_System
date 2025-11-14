@@ -11,29 +11,23 @@ import useTokenStore from "@/store/user";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { clearToken, setUser, user } = useTokenStore.getState(); // ✅ correct
+  const { clearToken, setUser, user } = useTokenStore.getState();
   const userRole = user?.role;
-  console.log(JSON.parse(localStorage.getItem("token-storage") || "{}"));
   const handleAccountClick = () => {
     if (userRole === "student") {
-      navigate("/StudentLayout");
+      navigate("/StudentLayout/StuDashboard");
     } else if (userRole === "instructor") {
-      navigate("/InstructorLayout");
+      navigate("/InstructorLayout/InstrDashboard");
     } else if (userRole === "admin") {
-      navigate("/AdminLayout");
+      navigate("/AdminLayout/AdminDashboard");
     }
   };
   const handleLogout = () => {
     clearToken();
     setUser(undefined);
-    // localStorage.removeItem("useremail"); // remove user from localStorage
-    // localStorage.removeItem("token"); // optional, if you saved token separately
-    // localStorage.removeItem("username"); // optional, if you saved token separately
-    // localStorage.removeItem("userid"); // optional, if you saved token separately
-    // localStorage.removeItem("Role"); // optional, if you saved token separately
     navigate("/");
-    window.location.reload(); // refresh UI to reflect logout
   };
+  console.log("object")
 
   return (
     <header className="bg-primary/90 py-3 text-white sticky top-0 z-50 backdrop-blur-md">
