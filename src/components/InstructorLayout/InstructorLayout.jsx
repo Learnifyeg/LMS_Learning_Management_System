@@ -45,6 +45,7 @@ function InstructorLayout() {
     "StuQuizResult",
     "StuShoppingCart",
     "StuQuizPage",
+    "SearchResults",
   ];
   const shouldHide = hiddenPaths.includes(location);
 

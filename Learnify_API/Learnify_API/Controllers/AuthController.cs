@@ -76,8 +76,8 @@ namespace Learnify_API.Controllers
             Response.Cookies.Append("refreshToken", result.Data.RefreshToken, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Lax,
+                Secure = true,
+                SameSite = SameSiteMode.None,
                 Path = "/",
                 Expires = DateTime.UtcNow.AddMinutes(refreshTokenExpiryMinutes)
             });

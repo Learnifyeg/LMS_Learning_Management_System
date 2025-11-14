@@ -50,7 +50,7 @@ const useNotification = () => {
   // ✅ Mark notifications as read
   const markAsRead = useMutation({
     mutationFn: async (notificationId: string) => {
-      const res = await api.post(Urls.MarkasReadNotifications + notificationId);
+      const res = await api.put(Urls.MarkasReadNotifications + notificationId);
       return res.data;
     },
 
@@ -64,7 +64,7 @@ const useNotification = () => {
   // ✅ Delete notifications
   const deleteNotification = useMutation({
     mutationFn: async (notificationId: string) => {
-      const res = await api.post(Urls.DeleteNotification + notificationId);
+      const res = await api.delete(Urls.DeleteNotification + notificationId);
       return res.data;
     },
 

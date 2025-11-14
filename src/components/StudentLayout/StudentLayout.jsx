@@ -39,6 +39,7 @@ function StuStudentLayout() {
     "StuQuizResult",
     "StuShoppingCart",
     "StuQuizPage",
+    "SearchResults",
   ];
   const shouldHide = hiddenPaths.includes(location);
 

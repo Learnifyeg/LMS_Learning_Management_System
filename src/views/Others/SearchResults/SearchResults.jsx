@@ -5,11 +5,12 @@ import useCourse from "@/hooks/useCourse";
 export default function SearchResults() {
   const { approvedCourses } = useCourse();
   const { data, isLoading, error } = approvedCourses;
+  console.log(error)
   return (
     <div className="custom-container py-10 flex flex-col gap-6">
-      <div className="text-gray-500 text-sm">
+      {/* <div className="text-gray-500 text-sm">
         Home / Courses / Search Results
-      </div>
+      </div> */}
       <h1 className="text-3xl font-semibold text-text-primary">
         Search Results
       </h1>
@@ -35,11 +36,14 @@ export default function SearchResults() {
           </div>
 
           {isLoading && <p>Loading courses...</p>}
-          {error && <p className="text-red-500">{error}</p>}
-          {!isLoading && !error && data.length === 0 && (
+          {error && (
+            <p className="text-red-500">
+              {error.message || "Something went wrong"}
+            </p>
+          )}
+          {!isLoading && !error && data?.length === 0 && (
             <p className="text-gray-400">No approved courses found.</p>
           )}
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {!isLoading &&
               data?.map((course) => (

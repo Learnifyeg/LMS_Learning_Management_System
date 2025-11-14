@@ -15,7 +15,7 @@ const Urls = {
   getCourseById: "Course/",
   updateCourse: "Course/update",
   approveCourse: "Course/approve",
-  deleteCourse: "Course/delete",
+  deleteCourse: "Course/delete/",
   // Profile
   EditProfile: "Profile/edit-",
   studentprofile: "Profile/student",
@@ -28,7 +28,7 @@ const Urls = {
   ReceiveNotifications: "Notification/user-receive",
   SendNotification: "Notification/user-send",
   MarkasReadNotifications: "Notification/user-read/",
-  DeleteNotification: "Notification/user-delete",
+  DeleteNotification: "Notification/user-delete/",
   // Feedback
   AddFeedBack: "Others/Add-Feedback",
   GetAllFeedback: "Others/get-all-feedbacks",

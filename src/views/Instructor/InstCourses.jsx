@@ -15,6 +15,7 @@ function InstCourses() {
   const { data: approvedCoursesData, isLoading: approvedIsLoading } =
     approvedCourses;
 
+  console.log(pendingCourses, approvedCourses);
   const handleDelete = (id) => {
     console.log(id);
     toast.custom((t) => (
@@ -96,9 +97,9 @@ function InstCourses() {
     navigate(`/InstructorLayout/CreateCourse/${id}`);
   };
 
-  const courses = [...pendingCoursesData, ...approvedCoursesData];
-
+  
   if (isLoading || approvedIsLoading) return <FullSpinner />;
+  const courses = [...pendingCoursesData, ...approvedCoursesData] || [];
 
   return (
     <div className="p-6 flex flex-col items-center gap-6 bg-surface rounded-lg shadow-md">
@@ -115,7 +116,7 @@ function InstCourses() {
 
       {/* Courses List */}
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {courses.length ? (
+        {courses?.length ? (
           courses.map((course) => (
             <CourseCard
               key={course.id}

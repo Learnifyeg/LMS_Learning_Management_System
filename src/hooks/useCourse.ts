@@ -44,7 +44,7 @@ const useCourse = (id?: string) => {
       const res = await api.get<{ success: boolean; data: any }>(
         Urls.getCourseById + id
       );
-      return res.data.data;
+      return res.data;
     },
     enabled: !!id,
   });
@@ -55,7 +55,7 @@ const useCourse = (id?: string) => {
       const res = await api.get<{ success: boolean; data: any[] }>(
         Urls.getPendingCourses
       );
-      return res.data.data;
+      return res.data;
     },
   });
 
@@ -65,7 +65,7 @@ const useCourse = (id?: string) => {
       const res = await api.get<{ success: boolean; data: any[] }>(
         Urls.getApprovedCourses
       );
-      return res.data.data;
+      return res.data;
     },
   });
 
@@ -86,7 +86,7 @@ const useCourse = (id?: string) => {
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      return res.data.data;
+      return res.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });
@@ -110,7 +110,7 @@ const useCourse = (id?: string) => {
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      return res.data.data;
+      return res.data;
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });
@@ -123,7 +123,7 @@ const useCourse = (id?: string) => {
       const res = await api.put<{ success: boolean; data: any }>(
         Urls.approveCourse + id
       );
-      return res.data.data;
+      return res.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });
@@ -137,7 +137,8 @@ const useCourse = (id?: string) => {
       return id;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["courses"] });
+      queryClient.invalidateQueries({ queryKey: ["pendingCourses"] });
+      queryClient.invalidateQueries({ queryKey: ["approvedCourses"] });
     },
   });
 
