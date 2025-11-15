@@ -557,7 +557,7 @@
       "passed": true
     }
   ],
-  "dashboards": [
+  "dashboards": [ 
     {
       "role": "student",
       "id": "1",

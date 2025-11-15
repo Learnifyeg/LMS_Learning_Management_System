@@ -36,7 +36,7 @@ export interface CourseForm {
 const useCourse = (id?: string) => {
   const queryClient = useQueryClient();
 
-  // ✅ Fetch single course
+  //  Fetch single course
   const CourseById = useQuery({
     queryKey: ["course", id],
     queryFn: async () => {

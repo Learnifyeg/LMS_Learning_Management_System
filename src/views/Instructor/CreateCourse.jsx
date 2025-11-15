@@ -266,13 +266,15 @@ function CreateCourse() {
           </span>
         </div>
 
-        {/* Add Lesson Button */}
+        {/* Add Lesson Button
         <button
           type="button"
           className="md:col-span-2 border border-primary text-primary rounded-xl py-3 hover:bg-primary/10 transition"
+        
+          onClick={() => navigate("/InstructorLayout/CreateLesson/" + (id || ""))}
         >
           + Add Lesson
-        </button>
+        </button> */}
 
         {/* Submit Course */}
         <div className="md:col-span-2 flex justify-start">

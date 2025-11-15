@@ -1,9 +1,10 @@
 import useCourse from "@/hooks/useCourse";
 import React, { useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router-dom";
 
-export default function StuCourseDetails() {
-  const { id } = useParams();
+export default function     () {
+  const { id } = useParams(); // course ID
+  const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState("about");
 
   const { CourseById } = useCourse(id);
@@ -34,17 +35,12 @@ export default function StuCourseDetails() {
             {/* Course Card */}
             <div className="card flex flex-col md:flex-row items-start gap-6 card-hover">
               <img
-                src={
-                  course.image ||
-                  "https://via.placeholder.com/300x200?text=No+Image"
-                }
+                src={course.image || "https://via.placeholder.com/300x200?text=No+Image"}
                 alt={course.title}
                 className="w-full md:w-56 h-40 object-cover rounded shadow-sm"
               />
-
               <div className="flex-1 space-y-3">
                 <h1 className="text-2xl font-bold">{course.title}</h1>
-
                 <div className="flex items-center gap-4 text-sm">
                   <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold">
                     ⭐ {course.rating ?? "-"}
@@ -53,11 +49,19 @@ export default function StuCourseDetails() {
                     {course.studentsEnrolled} enrolled · {course.posted}
                   </span>
                 </div>
-
                 <div className="flex gap-3 mt-2">
-                  <button className="btn btn-primary btn-hover">Add to Cart</button>
-                  <button className="btn btn-hover border border-[var(--input)] bg-transparent">
-                    Buy Now
+                  <button
+                    className="btn btn-primary btn-hover"
+                    
+                    onClick={() => navigate(`/InstructorLayout/CreateLesson/${id}`)}
+                  >
+                    + Add Lesson
+                  </button>
+                  <button
+                    className="btn btn-hover border border-[var(--input)] bg-transparent"
+                    onClick={() => navigate(`/InstructorLayout/CreateQuiz/${id}`)}
+                  >
+                    + Add Quiz
                   </button>
                 </div>
               </div>
@@ -111,6 +115,7 @@ export default function StuCourseDetails() {
                           <li
                             key={index}
                             className="card p-3 cursor-pointer hover:bg-muted card-hover"
+                            onClick={()=>navigate("/InstructorLayout/InstLessonDetails/"+lesson["id"])}
                           >
                             Lesson {index + 1} - {lesson}
                           </li>
@@ -128,7 +133,7 @@ export default function StuCourseDetails() {
                             key={index}
                             className="card p-3 cursor-pointer hover:bg-muted card-hover"
                           >
-                            Quiz {index + 1} - {quiz}
+                            Quiz {index + 1} - {quiz.title}
                           </li>
                         ))}
                       </ul>
@@ -144,7 +149,7 @@ export default function StuCourseDetails() {
           {/* Right Sidebar */}
           <aside className="card space-y-3 p-4">
             <h2 className="text-lg font-semibold mb-2">Course Information</h2>
-            <div className="space-y-2 text-sm text-[var(--color-text-secondary) ]">
+            <div className="space-y-2 text-sm text-[var(--color-text-secondary)]">
               <p>
                 Price: <span className="font-semibold">${course.price}</span>
               </p>

@@ -97,7 +97,6 @@ function InstCourses() {
     navigate(`/InstructorLayout/CreateCourse/${id}`);
   };
 
-  
   if (isLoading || approvedIsLoading) return <FullSpinner />;
   const courses = [...pendingCoursesData, ...approvedCoursesData] || [];
 
@@ -121,9 +120,11 @@ function InstCourses() {
             <CourseCard
               key={course.id}
               course={course}
+              onClick={() =>
+                navigate(`/InstructorLayout/InstCourseDetails/${course.id}`)
+              }
               onRemove={() => handleDelete(course.id)}
               onEdit={() => handleEdit(course.id)}
-              onApprove={() => handleApprove(course.id)}
             />
           ))
         ) : (

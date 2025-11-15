@@ -1514,6 +1514,20 @@
           },
           "isApproved": {
             "type": "boolean"
+          },
+          "lessons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "quizzes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

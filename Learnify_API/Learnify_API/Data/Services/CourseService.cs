@@ -110,6 +110,8 @@ namespace Learnify_API.Data.Services
             var c = await _context.Courses
                  .Include(x => x.Instructor)
                      .ThenInclude(i => i.User)
+                 .Include(x => x.Lessons)       // ← Add lessons
+                 .Include(x => x.Quizzes)       // ← Add quizzes
                  .FirstOrDefaultAsync(x => x.CourseId == id);
             if (c == null) return null;
 
@@ -117,7 +119,7 @@ namespace Learnify_API.Data.Services
             {
                 Id = c.CourseId,
                 Title = c.Title,
-                Description = c.Description ?? "",  // ← ADD THIS
+                Description = c.Description ?? "",
                 Category = c.Category ?? "",
                 Author = c.Instructor.User.FullName ?? "Unknown",
                 AuthorId = c.InstructorId,
@@ -132,7 +134,11 @@ namespace Learnify_API.Data.Services
                 CertificateIncluded = c.CertificateIncluded,
                 Duration = c.Duration,
                 InstructorId = c.InstructorId,
-                IsApproved = c.IsApproved
+                IsApproved = c.IsApproved,
+
+                // New fields
+                Lessons = c.Lessons?.Select(l => l.Title).ToList(),
+                Quizzes = c.Quizzes?.Select(q => q.Title).ToList()
             };
 
         }

@@ -1,11 +1,13 @@
 import FiltersSidebar from "@/views/Others/SearchResults/FiltersSidebar";
 import CourseCard from "@/views/Others/SearchResults/CourseCard";
 import useCourse from "@/hooks/useCourse";
+import { useNavigate } from "react-router";
 
 export default function SearchResults() {
+  const navigate = useNavigate();
   const { approvedCourses } = useCourse();
   const { data, isLoading, error } = approvedCourses;
-  console.log(error)
+  console.log(error);
   return (
     <div className="custom-container py-10 flex flex-col gap-6">
       {/* <div className="text-gray-500 text-sm">
@@ -48,6 +50,9 @@ export default function SearchResults() {
             {!isLoading &&
               data?.map((course) => (
                 <CourseCard
+                  onClick={() =>
+                    navigate(`/UserLayout/CourseDetails/${course.id}`)
+                  }
                   key={course.id}
                   course={{
                     id: course.id,

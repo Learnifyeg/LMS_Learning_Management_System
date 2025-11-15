@@ -22,5 +22,7 @@
 
         public int InstructorId { get; set; }
         public bool IsApproved { get; set; } = false;
+        public List<string>? Lessons { get; set; }
+        public List<string>? Quizzes { get; set; }
     }
 }

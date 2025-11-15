@@ -31,6 +31,8 @@ function LayoutContent({ shouldHide }) {
     </>
   );
 }
+// localStorage.clear();
+// sessionStorage.clear();
 
 function UserLayout() {
   const navigate = useNavigate();

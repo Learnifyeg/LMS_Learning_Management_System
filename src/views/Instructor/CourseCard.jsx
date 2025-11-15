@@ -1,8 +1,11 @@
 import React from "react";
 
-function CourseCard({ course, onRemove, onAddToCart, onEdit }) {
+function CourseCard({ course, onClick, onRemove, onAddToCart, onEdit }) {
   return (
-    <div className="card card-hover w-full max-w-sm bg-surface rounded-xl shadow-lg overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-2xl">
+    <div
+      className="card card-hover w-full max-w-sm bg-surface rounded-xl shadow-lg overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-2xl cursor-pointer"
+      onClick={onClick} // ← make the whole card clickable
+    >
       {/* Course Image */}
       <div className="relative h-48 w-full overflow-hidden">
         <img
@@ -25,29 +28,26 @@ function CourseCard({ course, onRemove, onAddToCart, onEdit }) {
         <p className="text-sm text-text-secondary line-clamp-3">
           {course.description || "No description available"}
         </p>
+
         {/* Course Stats */}
         <div className="flex flex-wrap gap-2 mt-3 text-sm">
           <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full font-semibold shadow-sm hover:shadow-md transition-all duration-200">
             Author: {course.author || "Unknown"}
           </span>
-
           <span className="px-3 py-1 bg-purple-50 text-purple-700 rounded-full font-semibold shadow-sm hover:shadow-md transition-all duration-200">
             Rating: {course.rating}
           </span>
-
           <span className="px-3 py-1 bg-green-50 text-green-700 rounded-full font-semibold shadow-sm hover:shadow-md transition-all duration-200">
             Price: ${course.price.toFixed(2)}
           </span>
-
           <span className="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full font-semibold shadow-sm hover:shadow-md transition-all duration-200">
             Views: {course.views || "0 views"}
           </span>
-
           <span className="px-3 py-1 bg-yellow-50 text-yellow-800 rounded-full font-semibold shadow-sm hover:shadow-md transition-all duration-200">
             Students: {course.studentsEnrolled || 0}
           </span>
           <span className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full font-semibold shadow-sm hover:shadow-md transition-all duration-200">
-           Duration: {course.hours ? `${course.hours} hour${course.hours > 1 ? "s" : ""}` : "N/A"}
+            Duration: {course.hours ? `${course.hours} hour${course.hours > 1 ? "s" : ""}` : "N/A"}
           </span>
         </div>
 
@@ -56,7 +56,10 @@ function CourseCard({ course, onRemove, onAddToCart, onEdit }) {
           {onRemove && (
             <button
               className="btn btn-hover w-full bg-destructive text-white rounded-md py-2 font-medium hover:bg-destructive/80"
-              onClick={onRemove}
+              onClick={(e) => {
+                e.stopPropagation(); // prevent card click
+                onRemove();
+              }}
             >
               Remove
             </button>
@@ -64,7 +67,10 @@ function CourseCard({ course, onRemove, onAddToCart, onEdit }) {
           {onEdit && (
             <button
               className="btn btn-hover w-full bg-primary text-white rounded-md py-2 font-medium hover:bg-primary/80"
-              onClick={onEdit}
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit();
+              }}
             >
               Edit Course
             </button>
@@ -72,7 +78,10 @@ function CourseCard({ course, onRemove, onAddToCart, onEdit }) {
           {onAddToCart && (
             <button
               className="btn btn-hover w-full bg-primary text-white rounded-md py-2 font-medium hover:bg-primary/80"
-              onClick={onAddToCart}
+              onClick={(e) => {
+                e.stopPropagation();
+                onAddToCart();
+              }}
             >
               Add to Cart
             </button>
