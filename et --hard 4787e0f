@@ -1,0 +1,12 @@
+[33mad282c9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mRana[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: merge origin/main: Fast-forward
+[33m4787e0f[m[33m ([m[1;31morigin/Rana[m[33m)[m HEAD@{1}: commit: save
+[33mbd6f1db[m HEAD@{2}: commit (merge): Resolve merge conflict for UserSettingsService
+[33m79d1300[m HEAD@{3}: commit: saving my work
+[33mef2afae[m HEAD@{4}: commit (merge): Remove bin and obj folders from git tracking and ignore them
+[33m966033b[m HEAD@{5}: commit: Remove bin and obj folders from tracking and clean build files
+[33m95eadf5[m HEAD@{6}: commit: Clean build files and update .gitignore
+[33m07f3fc2[m HEAD@{7}: reset: moving to HEAD
+[33m07f3fc2[m HEAD@{8}: commit: nnnn
+[33m8328403[m HEAD@{9}: checkout: moving from main to Rana
+[33mf7f5d4c[m[33m ([m[1;32mmain[m[33m)[m HEAD@{10}: commit: all students controller
+[33mb4ac6e4[m HEAD@{11}: clone: from https://github.com/Learnifyeg/LMS_Learning_Management_System.git
