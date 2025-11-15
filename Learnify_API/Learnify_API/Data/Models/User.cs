@@ -42,5 +42,11 @@ namespace Learnify_API.Data.Models
         // New refresh token fields
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiresAt { get; set; }
+        public bool Newsletter { get; set; } = false;
+        public string Headline { get; set; } = string.Empty;
+        public string About { get; set; } = string.Empty;
+        [MaxLength(20)]
+        public string? Phone { get; set; }
+
     }
 }
