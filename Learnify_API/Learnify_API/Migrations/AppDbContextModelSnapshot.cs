@@ -126,6 +126,9 @@ namespace Learnify_API.Migrations
                     b.Property<int?>("CourseId1")
                         .HasColumnType("int");
 
+                    b.Property<int>("InstructorId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("IssuedAt")
                         .HasColumnType("datetime2");
 
@@ -140,6 +143,8 @@ namespace Learnify_API.Migrations
                     b.HasIndex("CourseId");
 
                     b.HasIndex("CourseId1");
+
+                    b.HasIndex("InstructorId");
 
                     b.HasIndex("StudentId");
 
@@ -424,55 +429,6 @@ namespace Learnify_API.Migrations
                     b.ToTable("Logs");
                 });
 
-            modelBuilder.Entity("Learnify_API.Data.Models.Notification", b =>
-                {
-                    b.Property<int>("NotificationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotificationId"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ReadAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReceiverEmail")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int?>("SenderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Type")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("NotificationId");
-
-                    b.HasIndex("SenderId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Notifications");
-                });
-
             modelBuilder.Entity("Learnify_API.Data.Models.Profile", b =>
                 {
                     b.Property<int>("Id")
@@ -554,6 +510,12 @@ namespace Learnify_API.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PassingScore")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -644,6 +606,10 @@ namespace Learnify_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
+                    b.Property<string>("About")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -657,10 +623,17 @@ namespace Learnify_API.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("Headline")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Newsletter")
                         .HasColumnType("bit");
 
                     b.Property<string>("PasswordHash")
@@ -673,6 +646,10 @@ namespace Learnify_API.Migrations
 
                     b.Property<DateTime?>("PasswordResetExpiresAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("ProfileImage")
                         .HasMaxLength(255)
@@ -862,6 +839,12 @@ namespace Learnify_API.Migrations
                         .WithMany("Certificates")
                         .HasForeignKey("CourseId1");
 
+                    b.HasOne("Learnify_API.Data.Models.Instructor", "Instructor")
+                        .WithMany()
+                        .HasForeignKey("InstructorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Learnify_API.Data.Models.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
@@ -873,6 +856,8 @@ namespace Learnify_API.Migrations
                         .HasForeignKey("StudentId1");
 
                     b.Navigation("Course");
+
+                    b.Navigation("Instructor");
 
                     b.Navigation("Student");
                 });
@@ -960,20 +945,6 @@ namespace Learnify_API.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Learnify_API.Data.Models.Notification", b =>
-                {
-                    b.HasOne("Learnify_API.Data.Models.User", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Learnify_API.Data.Models.User", null)
-                        .WithMany("Notifications")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.Profile", b =>
@@ -1172,8 +1143,6 @@ namespace Learnify_API.Migrations
                     b.Navigation("Instructor");
 
                     b.Navigation("Logs");
-
-                    b.Navigation("Notifications");
 
                     b.Navigation("Student");
                 });

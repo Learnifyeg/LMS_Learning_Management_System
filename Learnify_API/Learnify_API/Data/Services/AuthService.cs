@@ -396,8 +396,8 @@ namespace Learnify_API.Data.Services
                 user.RefreshTokenExpiresAt = DateTime.UtcNow.AddMinutes(double.Parse(_config["Jwt:RefreshTokenValidityMins"]));
                 await _context.SaveChangesAsync();
 
-                var unreadNotificationCount = await _context.Notifications
-                    .CountAsync(n => n.ReceiverEmail == user.Email && !n.IsRead);
+                //var unreadNotificationCount = await _context.Notifications
+                //    .CountAsync(n => n.ReceiverEmail == user.Email && !n.IsRead);
 
                 var expiresInMinutes = double.Parse(_config["Jwt:TokenValidityMins"]);
 
@@ -412,7 +412,7 @@ namespace Learnify_API.Data.Services
                         user.FullName,
                         user.Email,
                         user.Role,
-                        NotificationCount = unreadNotificationCount
+                       // NotificationCount = unreadNotificationCount
                     }
                 };
 

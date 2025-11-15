@@ -16,9 +16,14 @@ namespace Learnify_API.Data.Models
         public string Title { get; set; } = string.Empty;
 
         public int TotalMarks { get; set; }
+
+        // ===== إضافات جديدة =====
+        public int Duration { get; set; }      // بالثواني
+        public int PassingScore { get; set; }  // نسبة النجاح
+
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public ICollection<Question>? Questions { get; set; }
-        //public ICollection<QuizResult>? QuizResults { get; set; }
     }
+
 }

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Desktop\\Learnify_DEPI\\Learnify_API\\Learnify_API\\Learnify_API.csproj": {}
+    "D:\\project depi\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj": {}
   },
   "projects": {
-    "D:\\Desktop\\Learnify_DEPI\\Learnify_API\\Learnify_API\\Learnify_API.csproj": {
+    "D:\\project depi\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Desktop\\Learnify_DEPI\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
+        "projectUniqueName": "D:\\project depi\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
         "projectName": "Learnify_API",
-        "projectPath": "D:\\Desktop\\Learnify_DEPI\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
-        "packagesPath": "C:\\Users\\W.I\\.nuget\\packages\\",
-        "outputPath": "D:\\Desktop\\Learnify_DEPI\\Learnify_API\\Learnify_API\\obj\\",
+        "projectPath": "D:\\project depi\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
+        "packagesPath": "C:\\Users\\dell\\.nuget\\packages\\",
+        "outputPath": "D:\\project depi\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\W.I\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.5.1, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.21, )"
@@ -83,6 +87,10 @@
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[8.14.0, )"
+            },
+            "System.Reactive": {
+              "target": "Package",
+              "version": "[6.1.0, )"
             }
           },
           "imports": [
@@ -104,7 +112,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

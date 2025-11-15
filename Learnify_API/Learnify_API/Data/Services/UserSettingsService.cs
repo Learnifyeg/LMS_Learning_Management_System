@@ -1,4 +1,5 @@
-﻿using Learnify_API.Data.ViewModels;
+﻿using Learnify_API.Data.Models;
+using Learnify_API.Data.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Learnify_API.Data.Services
@@ -12,43 +13,69 @@ namespace Learnify_API.Data.Services
             _context = context;
         }
 
-        // لو هتيجي من frontend كـ int
-        public async Task<UserSettingsViewModel?> GetSettingsAsync(int userId)
+        // ========================================
+        // 1) Get user settings by userId
+        // ========================================
+        public async Task<UserSettingsVM?> GetUserSettingsAsync(int userId)
         {
-            var user = await _context.Users
-                .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.UserId == userId);
-
+            var user = await _context.Users.FindAsync(userId);
             if (user == null) return null;
 
-            return new UserSettingsViewModel
+            return new UserSettingsVM
             {
-                FirstName = user.FullName.Split(' ')[0],
-                LastName = user.FullName.Split(' ').Length > 1 ? user.FullName.Split(' ')[1] : "",
+                FirstName = ExtractFirstName(user.FullName),
+                LastName = ExtractLastName(user.FullName),
+                Headline = user.Headline,
+                About = user.About,
                 Email = user.Email,
-                //Phone = user.Phone ?? "",
-                //Headline = user.Headline ?? "",
-                //About = user.About ?? "",
-                //Newsletter = user.Newsletter
-                //Phone = user.Phone ?? "",
-                //Headline = user.Headline ?? "",
-                //About = user.About ?? "",
-                //Newsletter = user.Newsletter
+                Phone = user.Phone,
+                Newsletter = user.Newsletter
             };
         }
 
-
-        public async Task<bool> UpdateSettingsAsync(int userId, UserSettingsViewModel model)
+        // ========================================
+        // 2) Update user settings
+        // ========================================
+        public async Task<UserSettingsVM?> UpdateUserSettingsAsync(int userId, UserSettingsVM vm)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId); // <-- اتغير هنا
-            if (user == null) return false;
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null) return null;
 
-            user.FullName = model.FirstName + " " + model.LastName; // لو عايزة تفصلي الاسم ممكن تغيري
-            user.Email = model.Email;
-            // ممكن تضيفي أي خصائص تانية حسب الـ model
+            // نحافظ على الإيميل الأصلي
+            // user.Email = vm.Email; // مش بنعدل الإيميل هنا
+
+            // باقي البيانات تتعدل
+            user.FullName = $"{vm.FirstName} {vm.LastName}".Trim();
+            user.Headline = vm.Headline;
+            user.About = vm.About;
+            user.Phone = vm.Phone;
+            user.Newsletter = vm.Newsletter;
 
             await _context.SaveChangesAsync();
-            return true;
+            return new UserSettingsVM
+            {
+                FirstName = ExtractFirstName(user.FullName),
+                LastName = ExtractLastName(user.FullName),
+                Headline = user.Headline,
+                About = user.About,
+                Email = user.Email, // نرجع الإيميل القديم
+                Phone = user.Phone,
+                Newsletter = user.Newsletter
+            };
+        }
+
+        private string ExtractFirstName(string fullName)
+        {
+            if (string.IsNullOrWhiteSpace(fullName)) return "";
+            var parts = fullName.Split(' ', 2);
+            return parts[0];
+        }
+
+        private string ExtractLastName(string fullName)
+        {
+            if (string.IsNullOrWhiteSpace(fullName)) return "";
+            var parts = fullName.Split(' ', 2);
+            return parts.Length > 1 ? parts[1] : "";
         }
     }
 }
