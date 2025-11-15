@@ -28,11 +28,13 @@ namespace Learnify_API.Data
         //public DbSet<Payment> Payments { get; set; }
         public DbSet<InstructorPayout> InstructorPayouts { get; set; }
         public DbSet<Log> Logs { get; set; }
-       // public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         public DbSet<FeedBack> feedBacks { get; set; }
         public DbSet<Profile> profiles { get; set; }
 
         public DbSet<LessonProgress> LessonProgresses { get; set; }
+        //public object Notifications { get; internal set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<Course>()
@@ -68,13 +70,13 @@ namespace Learnify_API.Data
                 .HasOne(e => e.Student)
                 .WithMany(s => s.Enrollments)
                 .HasForeignKey(e => e.StudentId)
-                .OnDelete(DeleteBehavior.Restrict);  // 🔥 important change
+                .OnDelete(DeleteBehavior.Restrict);  // important change
 
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Course)
                 .WithMany(c => c.Enrollments)
                 .HasForeignKey(e => e.CourseId)
-                .OnDelete(DeleteBehavior.Restrict);  // 🔥 optional but safer
+                .OnDelete(DeleteBehavior.Restrict);  // optional but safer
 
             // Fix cascade delete issue between Student, Course, and Certificate
             modelBuilder.Entity<Certificate>()
@@ -100,18 +102,18 @@ namespace Learnify_API.Data
                 .HasIndex(u => u.Email)
                 .IsUnique(); // ensure unique emails (required for principal key)
 
-            //modelBuilder.Entity<Notification>()
-            //    .HasOne(n => n.Receiver)
-            //    .WithMany()
-            //    .HasPrincipalKey(u => u.Email)   // 👈 target Email instead of UserId
-            //    .HasForeignKey(n => n.ReceiverEmail)
-            //    .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Notification>()
+               .HasOne(n => n.Receiver)
+               .WithMany()
+               .HasForeignKey(n => n.ReceiverEmail)
+               .HasPrincipalKey(u => u.Email)
+               .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<Notification>()
-            //    .HasOne(n => n.Sender)
-            //    .WithMany()
-            //    .HasForeignKey(n => n.SenderId)
-            //    .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Notification>()
+                .HasOne(n => n.Sender)
+                .WithMany()
+                .HasForeignKey(n => n.SenderId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
 

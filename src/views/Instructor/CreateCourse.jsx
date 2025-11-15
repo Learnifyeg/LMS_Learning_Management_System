@@ -8,10 +8,10 @@ import CourseService from "@/store/Classes/Course";
 function CreateCourse() {
   const courseService = new CourseService();
   const { saveLoading, setSaveLoading } = useAppStore();
-  const { id } = useParams(); //  Get course ID from URL
-  console.log("Course ID from URL:", id);
+  const { courseid } = useParams(); //  Get course ID from URL
+  console.log("Course ID from URL:", courseid);
   const navigate = useNavigate();
-  const isEdit = Boolean(id); //  Edit mode flag
+  const isEdit = Boolean(courseid); //  Edit mode flag
 
   const [form, setForm] = useState({
     title: "",
@@ -30,11 +30,11 @@ function CreateCourse() {
   useEffect(() => {
     if (!isEdit) return;
     loadCourse();
-  }, [id]);
+  }, [courseid]);
 
   const loadCourse = async () => {
     try {
-      const course = await courseService.getCourseById(id);
+      const course = await courseService.getCourseById(courseid);
       if (course) {
         const [durationNumber, durationUnit] = (course.duration || "").split(
           " "
@@ -74,7 +74,7 @@ function CreateCourse() {
 
       let result;
       if (isEdit) {
-        result = await courseService.updateCourse(id, submitForm);
+        result = await courseService.updateCourse(courseid, submitForm);
       } else {
         result = await courseService.addCourse(submitForm);
       }
@@ -155,7 +155,7 @@ function CreateCourse() {
             <input
               type="number"
               name="durationNumber"
-              value={form.duration || ""}
+              value={form.durationNumber || ""}
               onChange={(e) =>
                 setForm((prev) => ({
                   ...prev,
@@ -163,7 +163,7 @@ function CreateCourse() {
                 }))
               }
               placeholder="e.g. 4"
-              className="w-1/2 border border-input p-3 rounded-xl focus:ring-2 focus:ring-primary bg-surface text-text-primary"
+              className="w-1/2 border border-input p-3 rounded-xl focus:ring-2 focus:ring-primary bg-surface text-white"
             />
 
             <select

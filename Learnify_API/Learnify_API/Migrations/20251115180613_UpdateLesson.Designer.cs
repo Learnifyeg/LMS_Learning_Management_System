@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Learnify_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251114230842_AddDurationPassingScoreToQuiz")]
-    partial class AddDurationPassingScoreToQuiz
+    [Migration("20251115180613_UpdateLesson")]
+    partial class UpdateLesson
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -346,39 +346,6 @@ namespace Learnify_API.Migrations
                     b.ToTable("InstructorPayouts");
                 });
 
-            modelBuilder.Entity("Learnify_API.Data.Models.Lesson", b =>
-                {
-                    b.Property<int>("LessonId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LessonId"));
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("VideoUrl")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("LessonId");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("Lessons");
-                });
-
             modelBuilder.Entity("Learnify_API.Data.Models.LessonProgress", b =>
                 {
                     b.Property<int>("ProgressId")
@@ -430,6 +397,57 @@ namespace Learnify_API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Logs");
+                });
+
+            modelBuilder.Entity("Learnify_API.Data.Models.Notification", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotificationId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ReadAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReceiverEmail")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("SenderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("NotificationId");
+
+                    b.HasIndex("ReceiverEmail");
+
+                    b.HasIndex("SenderId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.Profile", b =>
@@ -609,6 +627,10 @@ namespace Learnify_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
+                    b.Property<string>("About")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -622,10 +644,17 @@ namespace Learnify_API.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("Headline")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Newsletter")
                         .HasColumnType("bit");
 
                     b.Property<string>("PasswordHash")
@@ -638,6 +667,10 @@ namespace Learnify_API.Migrations
 
                     b.Property<DateTime?>("PasswordResetExpiresAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("ProfileImage")
                         .HasMaxLength(255)
@@ -669,6 +702,57 @@ namespace Learnify_API.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Lesson", b =>
+                {
+                    b.Property<int>("LessonId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LessonId"));
+
+                    b.Property<string>("AttachmentUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsFreePreview")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("VideoUrl")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("LessonId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Lessons");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -902,20 +986,9 @@ namespace Learnify_API.Migrations
                     b.Navigation("Instructor");
                 });
 
-            modelBuilder.Entity("Learnify_API.Data.Models.Lesson", b =>
-                {
-                    b.HasOne("Learnify_API.Data.Models.Course", "Course")
-                        .WithMany("Lessons")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-                });
-
             modelBuilder.Entity("Learnify_API.Data.Models.LessonProgress", b =>
                 {
-                    b.HasOne("Learnify_API.Data.Models.Lesson", "Lesson")
+                    b.HasOne("Lesson", "Lesson")
                         .WithMany("LessonProgresses")
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -933,6 +1006,29 @@ namespace Learnify_API.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Learnify_API.Data.Models.Notification", b =>
+                {
+                    b.HasOne("Learnify_API.Data.Models.User", "Receiver")
+                        .WithMany()
+                        .HasForeignKey("ReceiverEmail")
+                        .HasPrincipalKey("Email")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Learnify_API.Data.Models.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Learnify_API.Data.Models.User", null)
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.Profile", b =>
@@ -1038,6 +1134,17 @@ namespace Learnify_API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Lesson", b =>
+                {
+                    b.HasOne("Learnify_API.Data.Models.Course", "Course")
+                        .WithMany("Lessons")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1107,11 +1214,6 @@ namespace Learnify_API.Migrations
                     b.Navigation("InstructorPayouts");
                 });
 
-            modelBuilder.Entity("Learnify_API.Data.Models.Lesson", b =>
-                {
-                    b.Navigation("LessonProgresses");
-                });
-
             modelBuilder.Entity("Learnify_API.Data.Models.Quiz", b =>
                 {
                     b.Navigation("Questions");
@@ -1132,7 +1234,14 @@ namespace Learnify_API.Migrations
 
                     b.Navigation("Logs");
 
+                    b.Navigation("Notifications");
+
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("Lesson", b =>
+                {
+                    b.Navigation("LessonProgresses");
                 });
 #pragma warning restore 612, 618
         }

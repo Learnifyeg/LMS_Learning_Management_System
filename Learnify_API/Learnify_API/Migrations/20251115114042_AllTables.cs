@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Learnify_API.Migrations
 {
     /// <inheritdoc />
-    public partial class AddTables : Migration
+    public partial class AllTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -86,11 +86,16 @@ namespace Learnify_API.Migrations
                     PasswordResetCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PasswordResetExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RefreshTokenExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    RefreshTokenExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Newsletter = table.Column<bool>(type: "bit", nullable: false),
+                    Headline = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    About = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.UniqueConstraint("AK_Users_Email", x => x.Email);
                 });
 
             migrationBuilder.CreateTable(
@@ -283,6 +288,12 @@ namespace Learnify_API.Migrations
                 {
                     table.PrimaryKey("PK_Notifications", x => x.NotificationId);
                     table.ForeignKey(
+                        name: "FK_Notifications_Users_ReceiverEmail",
+                        column: x => x.ReceiverEmail,
+                        principalTable: "Users",
+                        principalColumn: "Email",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Notifications_Users_SenderId",
                         column: x => x.SenderId,
                         principalTable: "Users",
@@ -419,6 +430,7 @@ namespace Learnify_API.Migrations
                 {
                     CertificateId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false),
+                    InstructorId = table.Column<int>(type: "int", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false),
                     CertificateUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IssuedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -439,6 +451,12 @@ namespace Learnify_API.Migrations
                         column: x => x.CourseId1,
                         principalTable: "Courses",
                         principalColumn: "CourseId");
+                    table.ForeignKey(
+                        name: "FK_Certificates_Instructors_InstructorId",
+                        column: x => x.InstructorId,
+                        principalTable: "Instructors",
+                        principalColumn: "InstructorId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Certificates_Students_StudentId",
                         column: x => x.StudentId,
@@ -513,6 +531,8 @@ namespace Learnify_API.Migrations
                     CourseId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     TotalMarks = table.Column<int>(type: "int", nullable: false),
+                    Duration = table.Column<int>(type: "int", nullable: false),
+                    PassingScore = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -623,6 +643,11 @@ namespace Learnify_API.Migrations
                 column: "CourseId1");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Certificates_InstructorId",
+                table: "Certificates",
+                column: "InstructorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Certificates_StudentId",
                 table: "Certificates",
                 column: "StudentId");
@@ -666,6 +691,11 @@ namespace Learnify_API.Migrations
                 name: "IX_Logs_UserId",
                 table: "Logs",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notifications_ReceiverEmail",
+                table: "Notifications",
+                column: "ReceiverEmail");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_SenderId",

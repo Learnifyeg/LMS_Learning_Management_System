@@ -16,12 +16,14 @@ import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import useAuth from "@/store/useAuth";
 import useDashboard from "@/hooks/useDashboard";
 import FullSpinner from "@/components/ui/Full Spinner/FullSpinner";
+import { useNavigate } from "react-router";
 
 function Dashboard({ role }) {
   const { user } = useAuth();
   const { dashboard } = useDashboard();
   const { data, isLoading } = dashboard;
-  console.log("User Info from Token:", user);
+  const navigate = useNavigate();
+  console.log("User Info from Token:", dashboard);
 
   if (isLoading) {
     return (
@@ -35,8 +37,56 @@ function Dashboard({ role }) {
     console.log("Navigate to:", section);
   };
 
-  const { fullName, stats, liveSessions, finalProjects, notifications } =
-    data || {};
+  // Normalize stats based on role
+  let stats = {};
+  let liveSessions = [];
+  let finalProjects = [];
+  let notifications = [];
+
+  if (data) {
+    switch (role) {
+      case "student":
+        stats = {
+          totalCourses: data.totalCourses,
+          completedCourses: data.completedCourses,
+          quizzesPassed: {
+            passed: data.quizzesPassed,
+            total: data.quizzesTotal,
+            successRate: data.successRate,
+          },
+          certificatesEarned: data.certificatesEarned,
+        };
+        liveSessions = data.liveSessions || [];
+        finalProjects = data.finalProjects || [];
+        notifications = data.notifications || [];
+        break;
+
+      case "instructor":
+        stats = {
+          totalStudents: data.totalStudents,
+          coursesCreated: data.coursesCreated,
+          projectsSupervised: data.projectsSupervised,
+          certificatesIssued: data.certificatesIssued,
+        };
+        notifications = data.notifications || [];
+        break;
+
+      case "admin":
+        stats = {
+          totalStudents: data.totalStudents,
+          totalInstructors: data.totalInstructors,
+          totalCourses: data.totalCourses,
+          certificatesIssued: data.certificatesIssued,
+        };
+        notifications = data.notifications || [];
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  const fullName = data?.fullName || "User";
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -50,17 +100,6 @@ function Dashboard({ role }) {
             Welcome back, {fullName}! Here’s your overview.
           </p>
         </div>
-
-        {/* Simple Role Switcher (for testing) */}
-        {/* <select
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          className="border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:text-white"
-        >
-          <option value="student">Student</option>
-          <option value="instructor">Instructor</option>
-          <option value="admin">Admin</option>
-        </select> */}
       </div>
 
       {/* Stats */}
@@ -69,28 +108,32 @@ function Dashboard({ role }) {
           <>
             <StatCard
               title="Total Courses"
-              value={stats?.totalCourses}
+              value={stats.totalCourses}
               color="blue"
               icon={<FaBook className="text-2xl text-blue-500" />}
               onClick={() => handleViewAll("courses")}
             />
             <StatCard
               title="Completed Courses"
-              value={stats?.completedCourses}
+              value={stats.completedCourses}
               color="green"
               icon={<FaCheckCircle className="text-2xl text-green-500" />}
-              progress={(stats?.completedCourses / stats?.totalCourses) * 100}
+              progress={
+                stats.totalCourses
+                  ? (stats.completedCourses / stats.totalCourses) * 100
+                  : 0
+              }
             />
             <StatCard
               title="Quizzes Passed"
-              value={`${stats?.quizzesPassed?.passed}/${stats?.quizzesPassed?.total}`}
+              value={`${stats.quizzesPassed.passed}/${stats.quizzesPassed.total}`}
               color="yellow"
               icon={<FaClipboardList className="text-2xl text-yellow-500" />}
-              extra={`${stats?.quizzesPassed?.successRate}% success rate`}
+              extra={`${stats.quizzesPassed.successRate}% success rate`}
             />
             <StatCard
               title="Certificates"
-              value={stats?.certificatesEarned}
+              value={stats.certificatesEarned}
               color="purple"
               icon={<FaCertificate className="text-2xl text-purple-500" />}
               onClick={() => handleViewAll("certificates")}
@@ -102,31 +145,31 @@ function Dashboard({ role }) {
           <>
             <StatCard
               title="Total Students"
-              value={stats?.totalStudents}
+              value={stats.totalStudents}
               color="blue"
               icon={<FaUsers className="text-2xl text-blue-500" />}
-              onClick={() => handleViewAll("courses")}
+              onClick={() => handleViewAll("students")}
             />
             <StatCard
               title="Courses Created"
-              value={stats?.coursesCreated}
+              value={stats.coursesCreated}
               color="green"
               icon={<FaBook className="text-2xl text-green-500" />}
               onClick={() => handleViewAll("courses")}
             />
             <StatCard
               title="Projects Supervised"
-              value={stats?.projectsSupervised}
+              value={stats.projectsSupervised}
               color="yellow"
               icon={<FaProjectDiagram className="text-2xl text-yellow-500" />}
-              onClick={() => handleViewAll("courses")}
+              onClick={() => handleViewAll("projects")}
             />
             <StatCard
               title="Certificates Issued"
-              value={stats?.certificatesIssued}
+              value={stats.certificatesIssued}
               color="purple"
               icon={<FaCertificate className="text-2xl text-purple-500" />}
-              onClick={() => handleViewAll("courses")}
+              onClick={() => handleViewAll("certificates")}
             />
           </>
         )}
@@ -135,31 +178,31 @@ function Dashboard({ role }) {
           <>
             <StatCard
               title="Total Students"
-              value={stats?.totalStudents}
+              value={stats.totalStudents}
               color="blue"
               icon={<FaUsers className="text-2xl text-blue-500" />}
-              onClick={() => handleViewAll("courses")}
+              onClick={() => handleViewAll("students")}
             />
             <StatCard
               title="Total Instructors"
-              value={stats?.totalInstructors}
+              value={stats.totalInstructors}
               color="green"
               icon={<FaChalkboardTeacher className="text-2xl text-green-500" />}
-              onClick={() => handleViewAll("courses")}
+              onClick={() => handleViewAll("instructors")}
             />
             <StatCard
               title="Total Courses"
-              value={stats?.totalCourses}
+              value={stats.totalCourses}
               color="yellow"
               icon={<FaBook className="text-2xl text-yellow-500" />}
               onClick={() => handleViewAll("courses")}
             />
             <StatCard
               title="Certificates Issued"
-              value={stats?.certificatesIssued}
+              value={stats.certificatesIssued}
               color="purple"
               icon={<FaCertificate className="text-2xl text-purple-500" />}
-              onClick={() => handleViewAll("courses")}
+              onClick={() => handleViewAll("certificates")}
             />
           </>
         )}
@@ -169,28 +212,25 @@ function Dashboard({ role }) {
       {role === "student" && (
         <>
           <Section title="Live Sessions" icon={<FaCalendarAlt />} color="red">
-            {liveSessions?.map((session) => (
+            {liveSessions.map((session) => (
               <SessionCard key={session.sessionId} session={session} />
             ))}
           </Section>
 
-          <Section
-            title="Final Projects"
-            icon={<FaProjectDiagram />}
-            color="indigo"
-          >
-            {finalProjects?.map((project) => (
+          <Section title="Final Projects" icon={<FaProjectDiagram />} color="indigo">
+            {finalProjects.map((project) => (
               <ProjectCard key={project.projectId} project={project} />
             ))}
           </Section>
         </>
       )}
 
-      <Section title="Notifications" icon={<FaBell />} color="pink">
-        {notifications?.map((note) => (
+       <Section title="Notifications" icon={<FaBell />} color="pink">
+        {notifications.map((note) => (
           <div
             key={note.notificationId}
-            className="p-4 rounded-lg border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 mb-3"
+            onClick={() => navigate("/UserLayout/Notifications")}
+            className="p-4 rounded-lg border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 mb-3 cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors"
           >
             <p className="font-bold text-text-secondary">{note.message}</p>
             <p className="text-sm text-text-secondary">{note.time}</p>
@@ -210,16 +250,12 @@ const StatCard = ({ title, value, color, icon, progress, extra, onClick }) => (
     <div className="flex items-center justify-between">
       <div>
         <p className="text-text-secondary text-sm font-medium">{title}</p>
-        <p className="text-3xl font-bold text-gray-800 dark:text-white mt-2">
-          {value}
-        </p>
+        <p className="text-3xl font-bold text-gray-800 dark:text-white mt-2">{value}</p>
       </div>
-      <div className={`p-3 bg-${color}-100 dark:bg-${color}-900 rounded-xl`}>
-        {icon}
-      </div>
+      <div className={`p-3 bg-${color}-100 dark:bg-${color}-900 rounded-xl`}>{icon}</div>
     </div>
 
-    {progress && (
+    {progress !== undefined && (
       <div className="mt-4">
         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
           <div
@@ -227,17 +263,11 @@ const StatCard = ({ title, value, color, icon, progress, extra, onClick }) => (
             style={{ width: `${progress}%` }}
           ></div>
         </div>
-        <p className="text-xs text-text-secondary mt-2">
-          {progress.toFixed(0)}% completion rate
-        </p>
+        <p className="text-xs text-text-secondary mt-2">{progress.toFixed(0)}% completion rate</p>
       </div>
     )}
 
-    {extra && (
-      <div className={`mt-4 text-sm text-${color}-600 dark:text-${color}-400`}>
-        {extra}
-      </div>
-    )}
+    {extra && <div className={`mt-4 text-sm text-${color}-600 dark:text-${color}-400`}>{extra}</div>}
 
     {onClick && (
       <div
@@ -269,9 +299,7 @@ const SessionCard = ({ session }) => (
     <div className={`w-3 h-3 rounded-full bg-${session.color}-500 mr-3`}></div>
     <div>
       <p className="font-bold text-text-secondary">{session.title}</p>
-      <p className="text-sm text-text-secondary">
-        {new Date(session.date).toLocaleString()}
-      </p>
+      <p className="text-sm text-text-secondary">{new Date(session.date).toLocaleString()}</p>
     </div>
   </div>
 );

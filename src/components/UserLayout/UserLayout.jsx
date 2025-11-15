@@ -37,7 +37,8 @@ function LayoutContent({ shouldHide }) {
 function UserLayout() {
   const navigate = useNavigate();
   const location = useLocation().pathname.split("/").pop();
-  const hiddenPaths = ["AboutUs", "ContactUs", "SearchResults ", "TermsofUse"];
+  console.log("location" , location)
+  const hiddenPaths = ["AboutUs", "ContactUs", "SearchResults", "TermsofUse"];
   const shouldHide = hiddenPaths.includes(location);
 
   return (

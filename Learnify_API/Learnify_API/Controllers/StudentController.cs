@@ -1,14 +1,10 @@
 ﻿using Learnify_API.Data.Services;
-using Learnify_API.Data.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Learnify_API.Controllers
 {
     [Route("[controller]")]
-    //=======sss
-    [Route("api/[controller]")]
-
     [ApiController]
     public class StudentController : ControllerBase
     {
@@ -19,17 +15,17 @@ namespace Learnify_API.Controllers
             _studentService = studentService;
         }
 
-        // -------- Add Student --------
-        [Authorize(Roles = "admin")]
-        [HttpPost("add-student")]
-        public async Task<IActionResult> AddStudent([FromBody] StudentVM studentVM, [FromQuery] List<int>? courseIds)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        //// -------- Add Student --------
+        //[Authorize(Roles = "admin")]
+        //[HttpPost("add-student")]
+        //public async Task<IActionResult> AddStudent([FromBody] StudentVM studentVM, [FromQuery] List<int>? courseIds)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
 
-            var createdStudent = await _studentService.AddStudentAsync(studentVM, courseIds);
-            return CreatedAtAction(nameof(GetAllStudents), new { id = createdStudent.Id }, createdStudent);
-        }
+        //    var createdStudent = await _studentService.AddStudentAsync(studentVM, courseIds);
+        //    return CreatedAtAction(nameof(GetAllStudents), new { id = createdStudent.Id }, createdStudent);
+        //}
 
         // -------- Get all students (admin + instructor) --------
         [Authorize(Roles = "admin, instructor")]

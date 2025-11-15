@@ -493,21 +493,10 @@
         }
       }
     },
-    "/api/Dashboard/student/{studentId}": {
+    "/Dashboard/student": {
       "get": {
         "tags": [
           "Dashboard"
-        ],
-        "parameters": [
-          {
-            "name": "studentId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -516,21 +505,10 @@
         }
       }
     },
-    "/api/Dashboard/instructor/{instructorId}": {
+    "/Dashboard/instructor": {
       "get": {
         "tags": [
           "Dashboard"
-        ],
-        "parameters": [
-          {
-            "name": "instructorId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -539,20 +517,10 @@
         }
       }
     },
-    "/api/Dashboard/admin": {
+    "/Dashboard/admin": {
       "get": {
         "tags": [
           "Dashboard"
-        ],
-        "parameters": [
-          {
-            "name": "adminId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -734,6 +702,95 @@
         "parameters": [
           {
             "name": "courseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Notification/user-send": {
+      "post": {
+        "tags": [
+          "Notification"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationCreateDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationCreateDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Notification/user-receive": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Notification/user-read/{id}": {
+      "put": {
+        "tags": [
+          "Notification"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Notification/user-delete/{id}": {
+      "delete": {
+        "tags": [
+          "Notification"
+        ],
+        "parameters": [
+          {
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -1166,7 +1223,7 @@
         }
       }
     },
-    "/api/Question/add": {
+    "/Question/add": {
       "post": {
         "tags": [
           "Question"
@@ -1197,7 +1254,7 @@
         }
       }
     },
-    "/api/Question/quiz/{quizId}": {
+    "/Question/quiz/{quizId}": {
       "get": {
         "tags": [
           "Question"
@@ -1220,7 +1277,7 @@
         }
       }
     },
-    "/api/Question/{id}": {
+    "/Question/{id}": {
       "get": {
         "tags": [
           "Question"
@@ -1304,7 +1361,7 @@
         }
       }
     },
-    "/api/Quiz": {
+    "/Quiz": {
       "get": {
         "tags": [
           "Quiz"
@@ -1388,7 +1445,7 @@
         }
       }
     },
-    "/api/Quiz/{id}": {
+    "/Quiz/{id}": {
       "get": {
         "tags": [
           "Quiz"
@@ -1603,94 +1660,6 @@
         }
       }
     },
-    "/Student/add-student": {
-      "post": {
-        "tags": [
-          "Student"
-        ],
-        "parameters": [
-          {
-            "name": "courseIds",
-            "in": "query",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StudentVM"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StudentVM"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/StudentVM"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Student/add-student": {
-      "post": {
-        "tags": [
-          "Student"
-        ],
-        "parameters": [
-          {
-            "name": "courseIds",
-            "in": "query",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StudentVM"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StudentVM"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/StudentVM"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/Student/get-students": {
       "get": {
         "tags": [
@@ -1703,31 +1672,7 @@
         }
       }
     },
-    "/api/Student/get-students": {
-      "get": {
-        "tags": [
-          "Student"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/Student/get-my-students": {
-      "get": {
-        "tags": [
-          "Student"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Student/get-my-students": {
       "get": {
         "tags": [
           "Student"
@@ -1900,6 +1845,26 @@
             "type": "string",
             "nullable": true
           },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "contentType": {
+            "type": "string",
+            "nullable": true
+          },
+          "attachmentUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "isFreePreview": {
+            "type": "boolean"
+          },
           "order": {
             "type": "integer",
             "format": "int32",
@@ -1983,6 +1948,32 @@
             "nullable": true
           },
           "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NotificationCreateDTO": {
+        "type": "object",
+        "properties": {
+          "senderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "receiverEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
             "type": "string",
             "nullable": true
           }
@@ -2161,63 +2152,6 @@
         },
         "additionalProperties": false
       },
-      "StudentVM": {
-        "type": "object",
-        "properties": {
-          "image": {
-            "type": "string",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "university": {
-            "type": "string",
-            "nullable": true
-          },
-          "country": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "linkedIn": {
-            "type": "string",
-            "nullable": true
-          },
-          "gitHub": {
-            "type": "string",
-            "nullable": true
-          },
-          "facebook": {
-            "type": "string",
-            "nullable": true
-          },
-          "twitter": {
-            "type": "string",
-            "nullable": true
-          },
-          "id": {
-            "type": "string",
-            "nullable": true
-          },
-          "courses": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "UpdateLessonRequest": {
         "type": "object",
         "properties": {
@@ -2225,8 +2159,29 @@
             "type": "string",
             "nullable": true
           },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
           "videoUrl": {
             "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "contentType": {
+            "type": "string",
+            "nullable": true
+          },
+          "attachmentUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "isFreePreview": {
+            "type": "boolean",
             "nullable": true
           },
           "order": {

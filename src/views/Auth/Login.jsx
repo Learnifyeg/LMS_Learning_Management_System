@@ -55,6 +55,8 @@ function Login() {
     });
   };
 
+  // localStorage.clear();
+  // sessionStorage.clear();
   return (
     <section className="my-5 space-y-6">
       <form onSubmit={handleSubmit(onSubmit)}>

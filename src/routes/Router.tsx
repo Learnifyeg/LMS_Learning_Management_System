@@ -3,7 +3,6 @@ import { createBrowserRouter } from "react-router";
 import App from "../App.jsx";
 
 
-
 // Lazy-loaded dashboards
 const InstrDashboard = lazy(
   () => import("@/views/Instructor/InstrDashboard.jsx")
@@ -36,10 +35,16 @@ const LessonManagement = lazy(
 const InstrProfile = lazy(() => import("@/views/Instructor/InstrProfile.jsx"));
 const CreateCourse = lazy(() => import("@/views/Instructor/CreateCourse.jsx"));
 const CreateLesson = lazy(() => import("@/views/Instructor/CreateLesson"));
-const InstructorCourseDetails = lazy(() => import("@/views/Instructor/InstructorCourseDetails.jsx"));
-const InstructorLessonDetails = lazy(() => import("@/views/Instructor/InstructorLessonDetails.jsx"));
-
-
+const CreateQuiz = lazy(() => import("@/views/Instructor/CreateQuiz.jsx"));
+const InstructorCourseDetails = lazy(
+  () => import("@/views/Instructor/InstructorCourseDetails.jsx")
+);
+const InstructorLessonDetails = lazy(
+  () => import("@/views/Instructor/InstructorLessonDetails.jsx")
+);
+const EditLesson = lazy(
+  () => import("@/views/Instructor/EditLesson.jsx")
+);
 
 
 // Student Views
@@ -81,7 +86,9 @@ const SendFeedback = lazy(() => import("@/views/Others/SendFeedback.jsx"));
 const SettingPage = lazy(() => import("@/views/Others/SettingPage.jsx"));
 const TermsofUse = lazy(() => import("@/views/Others/TermsofUse.jsx"));
 const EditProfile = lazy(() => import("@/views/Others/EditProfile.jsx"));
-const FeedbackManagement = lazy(() => import("@/views/Admin/FeedbackManagement.jsx"));
+const FeedbackManagement = lazy(
+  () => import("@/views/Admin/FeedbackManagement.jsx")
+);
 
 // Landing Views
 const LandingLayout = lazy(
@@ -116,6 +123,8 @@ export const router = createBrowserRouter([
           { index: true, element: <Landing /> },
           { path: "Courses", element: <Courses /> },
           { path: "About", element: <About /> },
+          { path: "SearchResults", element: <SearchResults /> },
+          { path: "CourseDetails/:id", element: <StuCourseDetails /> },
         ],
       },
       {
@@ -137,7 +146,6 @@ export const router = createBrowserRouter([
           { path: "HelpPage", element: <HelpPage /> },
           { path: "AllFeedback", element: <FeedbackManagement /> },
           { path: "Notifications", element: <Notifications /> },
-          { path: "SearchResults", element: <SearchResults /> },
           { path: "SendFeedback", element: <SendFeedback /> },
           { path: "SettingPage", element: <SettingPage /> },
           { path: "TermsofUse", element: <TermsofUse /> },
@@ -158,7 +166,6 @@ export const router = createBrowserRouter([
           { path: "StuSavedCourses", element: <StuSavedCourses /> },
           { path: "StuShoppingCart", element: <StuShoppingCart /> },
           { path: "MyCourses", element: <MyCourses /> },
-          { path: "CourseDetails/:id", element: <StuCourseDetails /> },
           { path: "StudentLessonPage/:id", element: <StudentLessonPage /> },
         ],
       },
@@ -169,11 +176,19 @@ export const router = createBrowserRouter([
           { path: "InstrDashboard", element: <InstrDashboard /> },
           { path: "MyCourses", element: <InstCourses /> },
           { path: "CreateCourse", element: <CreateCourse /> },
-          { path: "CreateLesson/:id", element: <CreateLesson /> },
-          { path: "CreateCourse/:id", element: <CreateCourse /> },
-          { path: "InstCourseDetails/:id", element: <InstructorCourseDetails /> },
-          { path: "InstLessonDetails/:id", element: <InstructorLessonDetails /> },
-          { path: "AllStudents", element: < AllStudents /> },
+          { path: "CreateLesson/:courseid", element: <CreateLesson /> },
+          { path: "EditLesson/:lessonid", element: <EditLesson /> },
+          { path: "CreateQuiz/:courseid", element: <CreateQuiz /> },
+          { path: "CreateCourse/:courseid", element: <CreateCourse /> },
+          {
+            path: "InstCourseDetails/:id",
+            element: <InstructorCourseDetails />,
+          },
+          {
+            path: "InstLessonDetails/:id",
+            element: <InstructorLessonDetails />,
+          },
+          { path: "AllStudents", element: <AllStudents /> },
           { path: "QuizManagement", element: <QuizManagement /> },
           { path: "LessonManagement", element: <LessonManagement /> },
           { path: "InstrProfile", element: <InstrProfile /> },

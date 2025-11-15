@@ -8,7 +8,7 @@ namespace Learnify_API.Data.Models
         [Key]
         public int Id { get; set; }
 
-        // Foreign key to User
+        // Foreign key to Userdd
         public int UserId { get; set; }
 
         [ForeignKey("UserId")]

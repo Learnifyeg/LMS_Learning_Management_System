@@ -27,6 +27,7 @@ import Select from "react-select";
 import { customSelectStyles } from "@/utils/SelectStyle";
 import api from "@/API/Config";
 import { useAppStore } from "@/store/app";
+import { Toaster } from "react-hot-toast";
 
 const StudentRegisterEndPoint = "Auth/student-register";
 

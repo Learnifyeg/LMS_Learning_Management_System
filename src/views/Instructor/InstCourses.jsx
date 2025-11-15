@@ -98,7 +98,10 @@ function InstCourses() {
   };
 
   if (isLoading || approvedIsLoading) return <FullSpinner />;
-  const courses = [...pendingCoursesData, ...approvedCoursesData] || [];
+const courses = [
+  ...(pendingCoursesData ?? []),
+  ...(approvedCoursesData ?? [])
+];
 
   return (
     <div className="p-6 flex flex-col items-center gap-6 bg-surface rounded-lg shadow-md">

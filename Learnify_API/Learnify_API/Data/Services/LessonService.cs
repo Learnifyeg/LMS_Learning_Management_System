@@ -22,29 +22,39 @@ namespace Learnify_API.Data.Services
             int nextOrder = model.Order ?? await _context.Lessons
                 .Where(l => l.CourseId == model.CourseId)
                 .CountAsync() + 1;
-
             var lesson = new Lesson
             {
                 CourseId = model.CourseId,
                 Title = model.Title,
                 VideoUrl = model.VideoUrl,
+                Description = model.Description,
+                Duration = model.Duration ?? 0,
+                ContentType = model.ContentType ?? "Video",
+                AttachmentUrl = model.AttachmentUrl,
+                IsFreePreview = model.IsFreePreview,
                 Order = nextOrder,
                 CreatedAt = DateTime.Now
             };
+
 
             _context.Lessons.Add(lesson);
             await _context.SaveChangesAsync();
             return true;
         }
 
-        //  Update Lesson
+        // Update Lesson
         public async Task<bool> UpdateLessonAsync(int lessonId, UpdateLessonRequest model)
         {
             var lesson = await _context.Lessons.FindAsync(lessonId);
             if (lesson == null) return false;
 
             lesson.Title = model.Title ?? lesson.Title;
+            lesson.Description = model.Description ?? lesson.Description;
             lesson.VideoUrl = model.VideoUrl ?? lesson.VideoUrl;
+            lesson.Duration = model.Duration ?? lesson.Duration;
+            lesson.ContentType = model.ContentType ?? lesson.ContentType;
+            lesson.AttachmentUrl = model.AttachmentUrl ?? lesson.AttachmentUrl;
+            lesson.IsFreePreview = model.IsFreePreview ?? lesson.IsFreePreview;
             lesson.Order = model.Order ?? lesson.Order;
 
             await _context.SaveChangesAsync();
@@ -63,6 +73,7 @@ namespace Learnify_API.Data.Services
         }
 
         //  Get Lesson by Id
+        // Get Lesson by Id
         public async Task<LessonVM?> GetLessonByIdAsync(int lessonId)
         {
             var lesson = await _context.Lessons.FindAsync(lessonId);
@@ -74,6 +85,11 @@ namespace Learnify_API.Data.Services
                 CourseId = lesson.CourseId,
                 Title = lesson.Title,
                 VideoUrl = lesson.VideoUrl,
+                Description = lesson.Description,
+                Duration = lesson.Duration,
+                ContentType = lesson.ContentType,
+                AttachmentUrl = lesson.AttachmentUrl,
+                IsFreePreview = lesson.IsFreePreview,
                 Order = lesson.Order,
                 CreatedAt = lesson.CreatedAt
             };
@@ -91,11 +107,18 @@ namespace Learnify_API.Data.Services
                     CourseId = l.CourseId,
                     Title = l.Title,
                     VideoUrl = l.VideoUrl,
+                    Description = l.Description,
+                    Duration = l.Duration,
+                    ContentType = l.ContentType,
+                    AttachmentUrl = l.AttachmentUrl,
+                    IsFreePreview = l.IsFreePreview,
                     Order = l.Order,
                     CreatedAt = l.CreatedAt
                 })
                 .ToListAsync();
         }
+
+
 
         // Mark Lesson as Completed
         public async Task<bool> MarkLessonCompletedAsync(int lessonId, int studentId)

@@ -5,15 +5,27 @@
         public int CourseId { get; set; }
         public string Title { get; set; } = string.Empty;
         public string? VideoUrl { get; set; }
+        public string? Description { get; set; }
+        public int? Duration { get; set; }
+        public string? ContentType { get; set; }
+        public string? AttachmentUrl { get; set; }
+        public bool IsFreePreview { get; set; }
         public int? Order { get; set; }
     }
 
+
     public class UpdateLessonRequest
     {
-        public string Title { get; set; } = string.Empty;
+        public string? Title { get; set; }
+        public string? Description { get; set; }
         public string? VideoUrl { get; set; }
+        public int? Duration { get; set; }
+        public string? ContentType { get; set; }
+        public string? AttachmentUrl { get; set; }
+        public bool? IsFreePreview { get; set; }
         public int? Order { get; set; }
     }
+
 
     public class LessonVM
     {
@@ -21,6 +33,11 @@
         public int CourseId { get; set; }
         public string Title { get; set; } = string.Empty;
         public string? VideoUrl { get; set; }
+        public string? Description { get; set; }
+        public int Duration { get; set; }
+        public string ContentType { get; set; } = "Video";
+        public string? AttachmentUrl { get; set; }
+        public bool IsFreePreview { get; set; }
         public int Order { get; set; }
         public DateTime CreatedAt { get; set; }
     }

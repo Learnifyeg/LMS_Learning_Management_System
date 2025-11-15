@@ -1,56 +1,70 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import useLesson from "@/hooks/useLesson";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import useLesson from "@/hooks/useLesson";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 
-export default function CreateLesson() {
-  const { courseid: courseId } = useParams();
-  console.log("courseId", courseId);
-
+export default function EditLesson() {
+  const { lessonid } = useParams();
   const navigate = useNavigate();
-  const { addLessonMutation } = useLesson();
+
+  const { getLessonById, updateLessonMutation } = useLesson(lessonid);
+  const { data: lesson, isLoading } = getLessonById(lessonid);
 
   const [form, setForm] = useState({
     title: "",
     description: "",
     videoUrl: "",
     duration: "",
-    lessonType: "video",
-    isFreePreview: false,
-    thumbnail: "",
+    contentType: "Video",
     attachmentUrl: "",
-    order: 0,
+    isFreePreview: false,
+    order: 1,
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  useEffect(() => {
+    if (lesson) {
+      setForm({
+        title: lesson.title,
+        description: lesson.description,
+        videoUrl: lesson.videoUrl,
+        duration: lesson.duration,
+        contentType: lesson.contentType,
+        attachmentUrl: lesson.attachmentUrl,
+        isFreePreview: lesson.isFreePreview,
+        order: lesson.order,
+      });
+    }
+  }, [lesson]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    setForm({ ...form, [name]: type === "checkbox" ? checked : value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!courseId) return toast.error("Course ID missing!");
-
-    setIsSubmitting(true);
     try {
-      await addLessonMutation.mutateAsync({
+      await updateLessonMutation.mutateAsync({
+        id: Number(lessonid),
         ...form,
-        courseId: Number(courseId),
       });
-      toast.success("Lesson created successfully!");
-      navigate(`/InstructorLayout/InstCourseDetails/${courseId}`);
+
+      toast.success("Lesson updated successfully!");
+      navigate(`/InstructorLayout/LessonDetails/${lessonid}`);
     } catch (err) {
-      toast.error("Failed to create lesson. Check all fields.");
-    } finally {
-      setIsSubmitting(false);
+      console.error(err);
+      toast.error("Failed to update lesson.");
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-lg font-medium text-text-secondary">Loading lesson...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background py-8">
@@ -58,7 +72,7 @@ export default function CreateLesson() {
       <div className="custom-container">
         <div className="max-w-2xl mx-auto">
           <div className="card border border-border p-8 space-y-6">
-            <LandingHeading header="Create New Lesson" />
+              <LandingHeading header="Edit Lesson" />
             
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Basic Information Section */}
@@ -92,7 +106,7 @@ export default function CreateLesson() {
                     name="description"
                     value={form.description}
                     onChange={handleChange}
-                    placeholder="Provide a brief description of this lesson..."
+                    placeholder="Describe what students will learn in this lesson..."
                     className="w-full border border-input bg-background text-text-primary p-3 rounded-lg h-24 resize-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   />
                 </div>
@@ -100,15 +114,15 @@ export default function CreateLesson() {
                 {/* Order */}
                 <div>
                   <label className="block text-sm font-medium text-text-primary mb-2">
-                    Lesson Order in Course *
+                    Lesson Order *
                   </label>
                   <input
                     type="number"
                     name="order"
                     value={form.order}
                     onChange={handleChange}
-                    placeholder="0"
-                    min="0"
+                    placeholder="1"
+                    min="1"
                     className="w-full border border-input bg-background text-text-primary p-3 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     required
                   />
@@ -121,78 +135,62 @@ export default function CreateLesson() {
                   Lesson Content
                 </h3>
                 
-                {/* Lesson Type */}
+                {/* Content Type */}
                 <div>
                   <label className="block text-sm font-medium text-text-primary mb-2">
-                    Lesson Type *
+                    Content Type *
                   </label>
                   <select
-                    name="lessonType"
-                    value={form.lessonType}
+                    name="contentType"
+                    value={form.contentType}
                     onChange={handleChange}
                     className="w-full border border-input bg-background text-text-primary p-3 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   >
-                    <option value="video">Video Lesson</option>
-                    <option value="quiz">Quiz</option>
-                    <option value="pdf">PDF Material</option>
-                    <option value="task">Assignment</option>
+                    <option value="Video">Video</option>
+                    <option value="Document">Document</option>
+                    <option value="Article">Article</option>
                   </select>
                 </div>
 
                 {/* Video URL */}
                 <div>
                   <label className="block text-sm font-medium text-text-primary mb-2">
-                    Video URL *
+                    Video URL
                   </label>
                   <input
                     type="url"
                     name="videoUrl"
                     value={form.videoUrl}
                     onChange={handleChange}
-                    placeholder="https://example.com/video.mp4"
+                    placeholder="https://example.com/video"
                     className="w-full border border-input bg-background text-text-primary p-3 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                    required
                   />
                 </div>
 
                 {/* Duration */}
                 <div>
                   <label className="block text-sm font-medium text-text-primary mb-2">
-                    Duration
+                    Duration (minutes)
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     name="duration"
                     value={form.duration}
                     onChange={handleChange}
-                    placeholder="10:30 (minutes:seconds)"
+                    placeholder="60"
+                    min="1"
                     className="w-full border border-input bg-background text-text-primary p-3 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   />
                 </div>
               </div>
 
-              {/* Media & Attachments Section */}
+              {/* Attachments Section */}
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-text-primary border-b border-border pb-2">
-                  Media & Attachments
+                  Attachments
                 </h3>
                 
-                {/* Thumbnail */}
-                <div>
-                  <label className="block text-sm font-medium text-text-primary mb-2">
-                    Thumbnail Image URL
-                  </label>
-                  <input
-                    type="url"
-                    name="thumbnail"
-                    value={form.thumbnail}
-                    onChange={handleChange}
-                    placeholder="https://example.com/thumbnail.jpg"
-                    className="w-full border border-input bg-background text-text-primary p-3 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  />
-                </div>
-
-                {/* Attachment */}
+                {/* Attachment URL */}
                 <div>
                   <label className="block text-sm font-medium text-text-primary mb-2">
                     Attachment URL
@@ -202,7 +200,7 @@ export default function CreateLesson() {
                     name="attachmentUrl"
                     value={form.attachmentUrl}
                     onChange={handleChange}
-                    placeholder="PDF / ZIP / Resource Link"
+                    placeholder="https://example.com/document"
                     className="w-full border border-input bg-background text-text-primary p-3 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   />
                 </div>
@@ -228,7 +226,7 @@ export default function CreateLesson() {
                       Enable Free Preview
                     </label>
                     <p className="text-xs text-text-secondary mt-1">
-                      Allow students to view this lesson without enrollment
+                      Allow students to preview this lesson for free
                     </p>
                   </div>
                 </div>
@@ -238,16 +236,16 @@ export default function CreateLesson() {
               <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={updateLessonMutation.isLoading}
                   className="flex-1 btn btn-primary btn-hover py-3 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? (
+                  {updateLessonMutation.isLoading ? (
                     <span className="flex items-center justify-center gap-2">
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      Creating Lesson...
+                      Saving...
                     </span>
                   ) : (
-                    "Create Lesson"
+                    "Save Changes"
                   )}
                 </button>
                 <button
@@ -272,11 +270,11 @@ export default function CreateLesson() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-text-secondary">Type:</span>
-                  <span className="text-text-primary font-medium capitalize">{form.lessonType}</span>
+                  <span className="text-text-primary font-medium">{form.contentType}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-text-secondary">Duration:</span>
-                  <span className="text-text-primary font-medium">{form.duration || "Not set"}</span>
+                  <span className="text-text-primary font-medium">{form.duration || "Not set"} minutes</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-text-secondary">Free Preview:</span>

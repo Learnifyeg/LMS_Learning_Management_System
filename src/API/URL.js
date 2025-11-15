@@ -23,7 +23,9 @@ const Urls = {
   adminprofile: "Profile/admin",
   getUserSettings: "userSetting/settings/",
   updateUserSettings: "userSetting/update/",
-  dashboard: "dashboard",
+  dashboardStudent: "/Dashboard/student",
+  dashboardInstructor: "/Dashboard/instructor",
+  dashboardAdmin: "/Dashboard/admin",
   // Notifications
   ReceiveNotifications: "Notification/user-receive",
   SendNotification: "Notification/user-send",

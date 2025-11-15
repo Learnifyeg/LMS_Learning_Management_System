@@ -29,7 +29,7 @@ namespace Learnify_API.Data.Models
         public Student? Student { get; set; }
         public Instructor? Instructor { get; set; }
         public Admin? Admin { get; set; }
-    //    public ICollection<Notification>? Notifications { get; set; }
+        public ICollection<Notification>? Notifications { get; set; }
         public ICollection<Log>? Logs { get; set; }
 
         public bool IsApproved { get; set; } = false;

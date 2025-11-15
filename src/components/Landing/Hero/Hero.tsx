@@ -42,7 +42,7 @@ export default function HeroSection() {
             <Button
               size="lg"
               className="btn-hover text-lg px-8 py-6 font-semibold shadow-lg bg-gradient-to-r from-primary to-primary/90 border-0 text-white transition-all duration-300"
-           onClick={() => {navigate('/UserLayout/SearchResults')}} 
+           onClick={() => {navigate('/SearchResults')}} 
            >
               Start Learning Today
               <div className="ml-2 w-2 h-2 bg-white/80 rounded-full animate-pulse"></div>

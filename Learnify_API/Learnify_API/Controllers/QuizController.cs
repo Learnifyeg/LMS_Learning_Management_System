@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Learnify_API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class QuizController : ControllerBase
     {
         private readonly QuizService _quizService;
@@ -18,7 +18,7 @@ namespace Learnify_API.Controllers
 
         // ================== GET ALL ==================
         [HttpGet]
-       // [Authorize] // أي مستخدم مسجل يقدر يشوف الكويزات
+        // [Authorize] // أي مستخدم مسجل يقدر يشوف الكويزات
         public async Task<ActionResult<List<QuizVM>>> GetAll()
         {
             var quizzes = await _quizService.GetAllQuizzesAsync();

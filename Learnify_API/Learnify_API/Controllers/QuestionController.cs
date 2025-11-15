@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Learnify_API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class QuestionController : ControllerBase
     {
         private readonly QuestionService _service;

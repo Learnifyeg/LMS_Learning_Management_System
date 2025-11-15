@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Learnify_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251115005811_AddPhoneandaboutandheadlineToUsers")]
-    partial class AddPhoneandaboutandheadlineToUsers
+    [Migration("20251115114042_AllTables")]
+    partial class AllTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -430,6 +430,57 @@ namespace Learnify_API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Logs");
+                });
+
+            modelBuilder.Entity("Learnify_API.Data.Models.Notification", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotificationId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ReadAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReceiverEmail")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("SenderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("NotificationId");
+
+                    b.HasIndex("ReceiverEmail");
+
+                    b.HasIndex("SenderId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.Profile", b =>
@@ -950,6 +1001,29 @@ namespace Learnify_API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Learnify_API.Data.Models.Notification", b =>
+                {
+                    b.HasOne("Learnify_API.Data.Models.User", "Receiver")
+                        .WithMany()
+                        .HasForeignKey("ReceiverEmail")
+                        .HasPrincipalKey("Email")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Learnify_API.Data.Models.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Learnify_API.Data.Models.User", null)
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
+                });
+
             modelBuilder.Entity("Learnify_API.Data.Models.Profile", b =>
                 {
                     b.HasOne("Learnify_API.Data.Models.User", "UserEntity")
@@ -1146,6 +1220,8 @@ namespace Learnify_API.Migrations
                     b.Navigation("Instructor");
 
                     b.Navigation("Logs");
+
+                    b.Navigation("Notifications");
 
                     b.Navigation("Student");
                 });
