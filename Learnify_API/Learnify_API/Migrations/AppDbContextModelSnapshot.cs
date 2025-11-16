@@ -17,7 +17,7 @@ namespace Learnify_API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.10")
+                .HasAnnotation("ProductVersion", "8.0.22")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -548,6 +548,32 @@ namespace Learnify_API.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("Quizzes");
+                });
+
+            modelBuilder.Entity("Learnify_API.Data.Models.SavedCourse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SavedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("SavedCourses");
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.Student", b =>
@@ -1120,6 +1146,25 @@ namespace Learnify_API.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("Learnify_API.Data.Models.SavedCourse", b =>
+                {
+                    b.HasOne("Learnify_API.Data.Models.Course", "Course")
+                        .WithMany("SavedCourses")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Learnify_API.Data.Models.Student", "Student")
+                        .WithMany("SavedCourses")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("Learnify_API.Data.Models.Student", b =>
                 {
                     b.HasOne("Learnify_API.Data.Models.User", "User")
@@ -1202,6 +1247,8 @@ namespace Learnify_API.Migrations
                     b.Navigation("Lessons");
 
                     b.Navigation("Quizzes");
+
+                    b.Navigation("SavedCourses");
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.Instructor", b =>
@@ -1221,6 +1268,8 @@ namespace Learnify_API.Migrations
                     b.Navigation("Certificates");
 
                     b.Navigation("Enrollments");
+
+                    b.Navigation("SavedCourses");
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.User", b =>

@@ -3,6 +3,9 @@ import HeroSection from "@/components/Landing/Hero/Hero";
 import Parametric from "@/components/Landing/Parametric/Parametric";
 
 const Landing = () => {
+  // localStorage.clear();
+  // sessionStorage.clear();
+  console.log("object")
   return (
     <>
       {/* HeroSection */}

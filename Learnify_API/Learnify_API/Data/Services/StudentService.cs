@@ -112,5 +112,116 @@ namespace Learnify_API.Data.Services
 
             return students;
         }
+
+        // Save a course
+        public async Task<bool> SaveCourseAsync(int studentId, int courseId)
+        {
+            var exists = await _context.SavedCourses
+                .AnyAsync(s => s.StudentId == studentId && s.CourseId == courseId);
+
+            if (exists) return false;
+
+            var saved = new SavedCourse
+            {
+                StudentId = studentId,
+                CourseId = courseId
+            };
+
+            _context.SavedCourses.Add(saved);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        // Get saved courses list
+        public async Task<IEnumerable<CourseVM>> GetSavedCoursesAsync(int studentId)
+        {
+            return await _context.SavedCourses
+                .Include(c => c.Course)
+                .Where(c => c.StudentId == studentId)
+                .Select(c => new CourseVM
+                {
+                    Id = c.Course.CourseId,
+                    Title = c.Course.Title,
+                    Category = c.Course.Category ?? "",
+                    Description = c.Course.Description ?? "",  // ← ADD THIS
+                    Author = c.Course.Instructor.User.FullName ?? "Unknown",
+                    AuthorId = c.Course.InstructorId,
+                    Views = c.Course.Views,
+                    Posted = c.Course.Posted,
+                    Rating = c.Course.Rating,
+                    Hours = c.Course.Hours,
+                    Price = c.Course.Price,
+                    Tag = c.Course.Tag,
+                    Image = c.Course.Image,
+                    CertificateIncluded = c.Course.CertificateIncluded,
+                    Duration = c.Course.Duration,
+                    InstructorId = c.Course.InstructorId,
+                    IsApproved = c.Course.IsApproved
+                }).ToListAsync();
+        }
+
+        public async Task<bool> RemoveSavedCourseAsync(int studentId, int courseId)
+        {
+            var saved = await _context.SavedCourses
+                .FirstOrDefaultAsync(s => s.StudentId == studentId && s.CourseId == courseId);
+
+            if (saved == null) return false;
+
+            _context.SavedCourses.Remove(saved);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+
+        // -------- Get student's enrollments --------
+        public async Task<IEnumerable<CourseVM>> GetEnrollmentsAsync(int studentId)
+        {
+            return await _context.Enrollments
+                .Include(e => e.Course)
+                .Where(e => e.StudentId == studentId)
+                .Select(e => new CourseVM
+                {
+                    Id = e.Course.CourseId,
+                    Title = e.Course.Title,
+                    Image = e.Course.Image,
+                    Price = e.Course.Price
+                }).ToListAsync();
+        }
+
+        // -------- Enroll student in a course --------
+        public async Task<bool> EnrollCourseAsync(int studentId, int courseId)
+        {
+            // Check if already enrolled
+            var exists = await _context.Enrollments
+                .AnyAsync(e => e.StudentId == studentId && e.CourseId == courseId);
+
+            if (exists) return false;
+
+            var enrollment = new Enrollment
+            {
+                StudentId = studentId,
+                CourseId = courseId,
+                EnrollmentDate = DateTime.Now
+            };
+
+            _context.Enrollments.Add(enrollment);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        // Optional: Remove enrollment
+        public async Task<bool> RemoveEnrollmentAsync(int studentId, int courseId)
+        {
+            var enrollment = await _context.Enrollments
+                .FirstOrDefaultAsync(e => e.StudentId == studentId && e.CourseId == courseId);
+
+            if (enrollment == null) return false;
+
+            _context.Enrollments.Remove(enrollment);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+
     }
 }

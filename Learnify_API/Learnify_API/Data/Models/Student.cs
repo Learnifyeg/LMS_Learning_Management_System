@@ -49,6 +49,8 @@ namespace Learnify_API.Data.Models
         // Navigation
         public User User { get; set; } = null!;
         public ICollection<Enrollment>? Enrollments { get; set; }
+
+        public ICollection<SavedCourse>? SavedCourses { get; set; }
         public ICollection<Certificate>? Certificates { get; set; }
         //public ICollection<FinalProject>? FinalProjects { get; set; }
         //public ICollection<Payment>? Payments { get; set; }

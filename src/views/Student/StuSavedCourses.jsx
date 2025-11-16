@@ -1,80 +1,50 @@
-// React
-import React, { lazy, Suspense, useEffect, useState } from "react";
+/* eslint-disable react-hooks/rules-of-hooks */
 
-// Components
-import api from "@/API/Config";
+import React, { lazy, Suspense } from "react";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
+import useStudent from "@/hooks/useStudent";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 // Lazy load CourseCard
-const CourseCard = lazy(() => import("../Student/CourseCard/CourseCard"));
+const CourseCard = lazy(() => import("@/views/Others/SearchResults/CourseCard"));
 
-// Endpoints and constants
-const CoursesEndPoint = "SavedCourses";
-const CartEndPoint = "Cart";
+export default function StuSavedCourses() {
+  const { savedCourses, removeSavedCourse } = useStudent();
+  const navigate = useNavigate();
 
-function StuSavedCourses() {
-  const [courses, setCourses] = useState({});
-  const [cart, setCart] = useState([]);
-
-  useEffect(() => {
-    // Get  All SavedCourses
-    api
-      .get(`${CoursesEndPoint}`)
-      .then((res) => setCourses(res.data))
-      .catch((err) => console.log(err));
-    // Get  All cart
-    api
-      .get(`${CartEndPoint}`)
-      .then((res) => setCart(res.data))
-      .catch((err) => console.log(err));
-  }, []);
-
-  console.log(cart);
-  // Remove Course
-  const handleRemove = async (id) => {
-    // delete the data
-    await api
-      .delete(`${CoursesEndPoint}/${id}`)
-      .then((res) => console.log("Deleted", res.data))
-      .catch((err) => console.log(err));
+  const handleRemove = (id) => {
+    removeSavedCourse.mutate(id, {
+      onSuccess: () => toast.success("Course removed successfully"),
+      onError: () => toast.error("Failed to remove course"),
+    });
   };
 
-  // Add to Cart
-  const handleAddToCart = async (course) => {
-    // add data
-    if (!cart.find((c) => c.id === course.id)) {
-      await api
-        .post(`${CartEndPoint}`, course)
-        .then((res) => console.log("add", res.data))
-        .catch((err) => console.log(err));
-    } else {
-      alert("Course already in cart");
-      return;
-    }
-  };
+  if (savedCourses.isLoading) return <p>Loading...</p>;
+  
+  const courses = savedCourses.data || [];
+  // console.log("courses", courses);
 
   return (
-    <>
-      <div className="p-6 flex flex-col items-center gap-4">
-        <div className="w-full flex justify-start">
-           <LandingHeading header="Saved Courses" />
-        </div>
+    <div className="p-6 flex flex-col items-center gap-4">
+      <div className="w-full flex justify-start">
+        <LandingHeading header="Saved Courses" />
+      </div>
 
         {courses.length > 0 ? (
-          courses.map((course) => (
-            <CourseCard
-              key={course.id}
-              course={course}
-              onRemove={handleRemove}
-              onAddToCart={handleAddToCart}
-            />
-          ))
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+            {courses.map((course) => (
+              <CourseCard
+                key={course.id}
+                course={course}
+                onRemove={() => handleRemove(course.id)}
+                 onClick={() => navigate(`/StudentLayout/StuCourseDetails/${course.id}`)}
+              />
+            ))}
+          </div>
         ) : (
-          <p className="text-gray-500">No courses available.</p>
+          <p className="text-gray-500 text-lg">No saved courses yet.</p>
         )}
-      </div>
-    </>
+    </div>
   );
 }
-
-export default StuSavedCourses;

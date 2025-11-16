@@ -102,6 +102,13 @@ namespace Learnify_API.Controllers
             return Ok(courses);
         }
 
+        [HttpGet("approved/all")]
+        [AllowAnonymous] // for searching courses without login
+        public async Task<IActionResult> GetAllApprovedCoursesForAnyUser()
+        {
+            var courses = await _courseService.GetAllApprovedCoursesAsync();
+            return Ok(courses);
+        }
 
         //  Get course by id
         [HttpGet("{id}")]

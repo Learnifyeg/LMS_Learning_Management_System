@@ -249,6 +249,16 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.CourseController",
+    "Method": "GetAllApprovedCoursesForAnyUser",
+    "RelativePath": "Course/approved/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.CourseController",
     "Method": "DeleteCourse",
     "RelativePath": "Course/delete/{id}",
     "HttpMethod": "DELETE",
@@ -1066,6 +1076,22 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "Enroll",
+    "RelativePath": "Student/enroll",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
     "Method": "GetMyStudents",
     "RelativePath": "Student/get-my-students",
     "HttpMethod": "GET",
@@ -1078,6 +1104,74 @@
     "ContainingType": "Learnify_API.Controllers.StudentController",
     "Method": "GetAllStudents",
     "RelativePath": "Student/get-students",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "GetMyEnrollments",
+    "RelativePath": "Student/my-enrollments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "RemoveEnrollment",
+    "RelativePath": "Student/remove-enrollment",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "RemoveSavedCourse",
+    "RelativePath": "Student/remove-saved-course",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "SaveCourse",
+    "RelativePath": "Student/save-course",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "GetSavedCourses",
+    "RelativePath": "Student/saved-courses",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

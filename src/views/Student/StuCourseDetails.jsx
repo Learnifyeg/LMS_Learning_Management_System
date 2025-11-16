@@ -1,6 +1,9 @@
 import useCourse from "@/hooks/useCourse";
+import useStudent from "@/hooks/useStudent";
 import React, { useState } from "react";
 import { useParams } from "react-router";
+import toast, { Toaster } from "react-hot-toast";
+import ConfirmToast from "@/utils/ConfirmToast";
 
 export default function StuCourseDetails() {
   const { id } = useParams();
@@ -9,6 +12,17 @@ export default function StuCourseDetails() {
   const { CourseById } = useCourse(id);
   const { data: course, isLoading } = CourseById;
 
+  const {
+    saveCourse,
+    savedCourses,
+    removeSavedCourse,
+    enrollCourse,
+    myEnrollments,
+    removeEnrollment,
+  } = useStudent();
+
+  const isSaved = savedCourses.data?.some((c) => c.id === course?.id);
+  const isEnrolled = myEnrollments.data?.some((c) => c.id === course?.id);
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -27,6 +41,7 @@ export default function StuCourseDetails() {
 
   return (
     <div className="min-h-screen bg-background text-text-primary">
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="custom-container py-8">
         <div className="grid lg:grid-cols-3 gap-8 items-start">
           {/* Main Content */}
@@ -48,7 +63,7 @@ export default function StuCourseDetails() {
                     <h1 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">
                       {course.title}
                     </h1>
-                    
+
                     <div className="flex flex-wrap items-center gap-3 mb-4">
                       <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold">
                         ⭐ {course.rating ?? "No ratings"}
@@ -61,18 +76,83 @@ export default function StuCourseDetails() {
                       </span>
                     </div>
 
-                    <p className="text-text-secondary line-clamp-2">
+                    {/* <p className="text-text-secondary line-clamp-2">
                       {course.description || "No description provided."}
-                    </p>
+                    </p> */}
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                    <button className="btn btn-primary btn-hover flex-1 py-3 font-semibold">
-                      Add to Cart
+                    <button
+                      onClick={() => {
+                        {
+                          isSaved
+                            ? toast.custom((t) => (
+                                <ConfirmToast
+                                  message="Are you sure you want to remove this course from saved?"
+                                  onConfirm={() => {
+                                    removeSavedCourse.mutate(course.id, {
+                                      onSuccess: () =>
+                                        toast.success(
+                                          "Course removed from saved!"
+                                        ),
+                                      onError: () =>
+                                        toast.error("Failed to remove course"),
+                                    });
+                                  }}
+                                  onCancel={() => toast.dismiss(t.id)}
+                                />
+                              ))
+                            : toast.custom((t) => (
+                                <ConfirmToast
+                                  message="Are you sure you want to remove this course from saved?"
+                                  onConfirm={() => {
+                                    removeEnrollment.mutate(course.id, {
+                                      onSuccess: () =>
+                                        toast.success(
+                                          "Course removed from saved!"
+                                        ),
+                                      onError: () =>
+                                        toast.error("Failed to remove course"),
+                                    });
+                                  }}
+                                  onCancel={() => toast.dismiss(t.id)}
+                                />
+                              ));
+                        }
+                      }}
+                      className="btn flex-1 py-3 font-semibold bg-red-500 cursor-pointer"
+                    >
+                      {isSaved
+                        ? "Remove from Saved"
+                        : "Remove from Enrollments"}
                     </button>
-                    <button className="btn bg-transparent border border-input text-text-primary btn-hover flex-1 py-3 font-semibold">
-                      Buy Now
-                    </button>
+
+                    {isSaved ? (
+                      <button
+                        className="btn bg-transparent border border-input text-text-primary btn-hover flex-1 py-3 font-semibold"
+                        onClick={() => {
+                          // First, enroll in course
+                          enrollCourse.mutate(course.id, {
+                            onSuccess: () =>
+                              toast.success("Enrolled in course successfully!"),
+                            onError: () =>
+                              toast.error("Failed to enroll in course"),
+                          });
+
+                          // Then, remove from saved (if you want to do both)
+                          removeSavedCourse.mutate(course.id, {
+                            // onSuccess: () =>
+                            //   toast.success("Course removed from saved!"),
+                            // onError: () =>
+                            //   toast.error("Failed to remove course"),
+                          });
+                        }}
+                      >
+                        Buy Now
+                      </button>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
@@ -173,7 +253,21 @@ export default function StuCourseDetails() {
                           {course.lessons.map((lesson, index) => (
                             <div
                               key={index}
-                              className="card p-4 cursor-pointer hover:bg-muted card-hover border border-border"
+                              className={`card p-4 cursor-pointer hover:bg-muted card-hover border border-border ${
+                                !isEnrolled
+                                  ? "opacity-50 cursor-not-allowed"
+                                  : ""
+                              }`}
+                              onClick={() => {
+                                if (isEnrolled) {
+                                  // Navigate to lesson details with lesson id
+                                  navigate(`/lesson/${lesson.id}`);
+                                } else {
+                                  toast.error(
+                                    "You must enroll in the course to view lessons!"
+                                  );
+                                }
+                              }}
                             >
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
@@ -187,7 +281,8 @@ export default function StuCourseDetails() {
                                       {lesson.title || `Lesson ${index + 1}`}
                                     </h4>
                                     <p className="text-text-secondary text-sm">
-                                      {lesson.duration || "10:30"} • {lesson.type || "Video"}
+                                      {lesson.duration || "10:30"} •{" "}
+                                      {lesson.type || "Video"}
                                     </p>
                                   </div>
                                 </div>
@@ -231,7 +326,8 @@ export default function StuCourseDetails() {
                                       {quiz.title || `Quiz ${index + 1}`}
                                     </h4>
                                     <p className="text-text-secondary text-sm">
-                                      {quiz.questions?.length || 0} questions • {quiz.duration || "15 mins"}
+                                      {quiz.questions?.length || 0} questions •{" "}
+                                      {quiz.duration || "15 mins"}
                                     </p>
                                   </div>
                                 </div>
@@ -268,31 +364,46 @@ export default function StuCourseDetails() {
                     ${course.price || "Free"}
                   </span>
                 </div>
-                
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span className="text-text-secondary">Duration</span>
-                    <span className="font-medium text-text-primary">{course.hours} Hours</span>
+                    <span className="font-medium text-text-primary">
+                      {course.hours} Hours
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-text-secondary">Students</span>
-                    <span className="font-medium text-text-primary">{course.studentsEnrolled}</span>
+                    <span className="font-medium text-text-primary">
+                      {course.studentsEnrolled}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-text-secondary">Views</span>
-                    <span className="font-medium text-text-primary">{course.views}</span>
+                    <span className="font-medium text-text-primary">
+                      {course.views}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-text-secondary">Author</span>
-                    <span className="font-medium text-text-primary">{course.author}</span>
+                    <span className="font-medium text-text-primary">
+                      {course.author}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-text-secondary">Category</span>
-                    <span className="font-medium text-text-primary">{course.category || "N/A"}</span>
+                    <span className="font-medium text-text-primary">
+                      {course.category || "N/A"}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-text-secondary">Certificate</span>
-                    <span className={`font-medium ${course.certificateIncluded ? 'text-green-600' : 'text-text-secondary'}`}>
+                    <span
+                      className={`font-medium ${
+                        course.certificateIncluded
+                          ? "text-green-600"
+                          : "text-text-secondary"
+                      }`}
+                    >
                       {course.certificateIncluded ? "Included" : "Not Included"}
                     </span>
                   </div>
@@ -310,19 +421,25 @@ export default function StuCourseDetails() {
                   <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
                     <span className="text-primary">📚</span>
                   </div>
-                  <span className="text-text-primary">{course.lessons?.length || 0} Lessons</span>
+                  <span className="text-text-primary">
+                    {course.lessons?.length || 0} Lessons
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-secondary/10 rounded-full flex items-center justify-center">
                     <span className="text-secondary">📝</span>
                   </div>
-                  <span className="text-text-primary">{course.quizzes?.length || 0} Quizzes</span>
+                  <span className="text-text-primary">
+                    {course.quizzes?.length || 0} Quizzes
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
                     <span className="text-green-600">🏆</span>
                   </div>
-                  <span className="text-text-primary">Certificate of Completion</span>
+                  <span className="text-text-primary">
+                    Certificate of Completion
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">

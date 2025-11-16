@@ -69,6 +69,16 @@ const useCourse = (id?: string) => {
     },
   });
 
+  const  allApprovedCourses = useQuery({
+    queryKey: ["allApprovedCourses"],
+    queryFn: async () => {
+      const res = await api.get<{ success: boolean; data: any[] }>(
+        Urls.AllApprovedCourses
+      );
+      return res.data;
+    },
+  });
+
   // ✅ Create course
   const createCourse = useMutation({
     mutationFn: async (data: CourseForm) => {
@@ -146,6 +156,7 @@ const useCourse = (id?: string) => {
     CourseById,
     pendingCourses,
     approvedCourses,
+    allApprovedCourses,
     createCourse,
     updateCourse,
     approveCourse,

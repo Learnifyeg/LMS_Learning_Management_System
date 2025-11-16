@@ -89,6 +89,9 @@ const EditProfile = lazy(() => import("@/views/Others/EditProfile.jsx"));
 const FeedbackManagement = lazy(
   () => import("@/views/Admin/FeedbackManagement.jsx")
 );
+const CourseDetails = lazy(
+  () => import("@/views/Others/SearchResults/CourseDetails.jsx")
+);
 
 // Landing Views
 const LandingLayout = lazy(
@@ -124,7 +127,7 @@ export const router = createBrowserRouter([
           { path: "Courses", element: <Courses /> },
           { path: "About", element: <About /> },
           { path: "SearchResults", element: <SearchResults /> },
-          { path: "CourseDetails/:id", element: <StuCourseDetails /> },
+          { path: "CourseDetails/:id", element: <CourseDetails /> },
         ],
       },
       {
@@ -163,6 +166,7 @@ export const router = createBrowserRouter([
           { path: "StuMyCertificates", element: <StuMyCertificates /> },
           { path: "StuQuizPage", element: <StuQuizPage /> },
           { path: "StuQuizResult", element: <StuQuizResult /> },
+          { path: "StuCourseDetails/:id", element: <StuCourseDetails /> },
           { path: "StuSavedCourses", element: <StuSavedCourses /> },
           { path: "StuShoppingCart", element: <StuShoppingCart /> },
           { path: "MyCourses", element: <MyCourses /> },

@@ -12,6 +12,7 @@ const Urls = {
   addCourse: "Course/add",
   getPendingCourses: "Course/pending-courses",
   getApprovedCourses: "Course/approved",
+  AllApprovedCourses: "Course/approved/all",
   getCourseById: "Course/",
   updateCourse: "Course/update",
   approveCourse: "Course/approve",
@@ -49,6 +50,13 @@ const Urls = {
   GetLessonByCourse: "Lesson/by-course/",
   CompleteLesson: "Lesson/complete/",
   LessonProgress: "Lesson/progress/",
+  // Student 
+  saveCourse: "/Student/save-course",
+  savedCourses: "/Student/saved-courses",
+  removeSavedCourse: "/Student/remove-saved-course",
+  myEnrollments: "/Student/my-enrollments",
+  enroll: "/Student/enroll",
+  removeEnrollment: "/Student/remove-enrollment",
 };
 
 export default Urls;

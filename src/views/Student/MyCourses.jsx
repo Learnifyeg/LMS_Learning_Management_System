@@ -1,50 +1,54 @@
-// React
-import { useEffect, useState } from "react";
-
-// Components
-import api from "@/API/Config";
-import CourseCard from "./CourseCard/CourseCard";
+import React, { lazy } from "react";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
+import useStudent from "@/hooks/useStudent";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router";
 
-// Endpoints and constants
-const CoursesEndPoint = "Courses";
-const StudentCoursesEndPoint = "StudentCourses";
-function MyCourses() {
-  const [allCourses, setAllCourses] = useState([]);
-  const [studentCourses, setStudentCourses] = useState([]);
+// Lazy load CourseCard
+const CourseCard = lazy(() => import("@/views/Others/SearchResults/CourseCard"));
 
-  const currentUserId = 501; // ← replace with auth user
+export default function MyCourses() {
+  const { myEnrollments, removeEnrollment } = useStudent(); // useStudent hook
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    api.get(CoursesEndPoint).then((res) => setAllCourses(res.data));
-    api
-      .get(StudentCoursesEndPoint)
-      .then((res) =>
-        setStudentCourses(res.data.filter((c) => c.userId === currentUserId))
-      );
-  }, []);
+  const handleRemove = (id) => {
+    removeEnrollment.mutate(id, {
+      onSuccess: () => toast.success("Course removed from your enrollments"),
+      onError: () => toast.error("Failed to remove course"),
+    });
+  };
 
-  const enrolledCourseList = allCourses.filter((course) =>
-    studentCourses.some((sc) => sc.courseId === course.id)
-  );
+  if (myEnrollments.isLoading)
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-500">Loading your enrolled courses...</p>
+      </div>
+    );
+
+  const courses = myEnrollments.data || [];
 
   return (
     <div className="p-6 flex flex-col items-center gap-4">
-       <LandingHeading header="My Enrolled Courses" />
+      <div className="w-full flex justify-start">
+        <LandingHeading header="My Enrolled Courses" />
+      </div>
 
-      {enrolledCourseList.length > 0 ? (
-        enrolledCourseList.map((course) => (
-          <CourseCard
-            key={course.id}
-            course={course}
-            onRemove={null} // Disable delete
-            onAddToCart={null} // Disable add to cart
-          />
-        ))
+      {courses.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+          {courses.map((course) => (
+            <CourseCard
+              key={course.id}
+              course={course}
+              onRemove={() => handleRemove(course.id)} // Optional
+              onClick={() =>
+                navigate(`/StudentLayout/StuCourseDetails/${course.id}`)
+              }
+            />
+          ))}
+        </div>
       ) : (
-        <p className="text-gray-500">No enrolled courses found.</p>
+        <p className="text-gray-500 text-lg">No enrolled courses found.</p>
       )}
     </div>
   );
 }
-export default MyCourses;

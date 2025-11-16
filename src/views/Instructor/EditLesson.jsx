@@ -51,7 +51,7 @@ export default function EditLesson() {
       });
 
       toast.success("Lesson updated successfully!");
-      navigate(`/InstructorLayout/LessonDetails/${lessonid}`);
+      navigate(`/InstructorLayout/InstLessonDetails/${lessonid}`);
     } catch (err) {
       console.error(err);
       toast.error("Failed to update lesson.");

@@ -6,9 +6,10 @@ import { useState } from "react";
 
 export default function SearchResults() {
   const navigate = useNavigate();
-  const { approvedCourses } = useCourse();
-  const { data = [], isLoading, error } = approvedCourses;
+  const { allApprovedCourses } = useCourse();
+  const { data = [], isLoading, error } = allApprovedCourses;
 
+  console.log(data)
   const [filters, setFilters] = useState({
     category: "",
     certificate: "",

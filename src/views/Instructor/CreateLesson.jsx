@@ -13,15 +13,16 @@ export default function CreateLesson() {
 
   const [form, setForm] = useState({
     title: "",
-    description: "",
+    description: "",  
     videoUrl: "",
     duration: "",
-    lessonType: "video",
+    contentType: "video",
     isFreePreview: false,
     thumbnail: "",
     attachmentUrl: "",
     order: 0,
   });
+  console.log(form)
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -161,11 +162,11 @@ export default function CreateLesson() {
                     Duration
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     name="duration"
                     value={form.duration}
                     onChange={handleChange}
-                    placeholder="10:30 (minutes:seconds)"
+                    placeholder="10 (minutes)"
                     className="w-full border border-input bg-background text-text-primary p-3 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   />
                 </div>

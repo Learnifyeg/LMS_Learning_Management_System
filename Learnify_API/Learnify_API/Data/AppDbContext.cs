@@ -33,6 +33,7 @@ namespace Learnify_API.Data
         public DbSet<Profile> profiles { get; set; }
 
         public DbSet<LessonProgress> LessonProgresses { get; set; }
+        public DbSet<SavedCourse> SavedCourses { get; set; }
         //public object Notifications { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -114,6 +115,18 @@ namespace Learnify_API.Data
                 .WithMany()
                 .HasForeignKey(n => n.SenderId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<SavedCourse>()
+              .HasOne(sc => sc.Student)
+              .WithMany(s => s.SavedCourses)
+              .HasForeignKey(sc => sc.StudentId)
+              .OnDelete(DeleteBehavior.Restrict); // <-- Important
+
+            modelBuilder.Entity<SavedCourse>()
+                .HasOne(sc => sc.Course)
+                .WithMany(c => c.SavedCourses)
+                .HasForeignKey(sc => sc.CourseId)
+                .OnDelete(DeleteBehavior.Restrict); // <-- Optional
 
         }
 
