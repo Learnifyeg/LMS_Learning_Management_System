@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 export default function CourseDetails() {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState("about");
 
@@ -23,7 +23,9 @@ export default function CourseDetails() {
   if (!course) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--color-background)]">
-        <div className="text-lg font-medium text-[var(--text-secondary)]">No course found.</div>
+        <div className="text-lg font-medium text-[var(--text-secondary)]">
+          No course found.
+        </div>
       </div>
     );
   }
@@ -37,7 +39,10 @@ export default function CourseDetails() {
             {/* Course Header */}
             <div className="flex flex-col lg:flex-row items-start gap-6 bg-[var(--color-card)] p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-[var(--color-border)]">
               <img
-                src={course.image || "https://via.placeholder.com/400x250?text=No+Image"}
+                src={
+                  course.image ||
+                  "https://via.placeholder.com/400x250?text=No+Image"
+                }
                 alt={course.title}
                 className="w-full lg:w-72 h-48 lg:h-40 object-cover rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
               />
@@ -59,14 +64,18 @@ export default function CourseDetails() {
                 <div className="flex flex-wrap gap-3 mt-6">
                   <button
                     className="btn btn-primary btn-hover px-6 py-3 rounded-lg font-semibold flex items-center gap-2"
-                    onClick={() => navigate(`/InstructorLayout/CreateLesson/${id}`)}
+                    onClick={() =>
+                      navigate(`/InstructorLayout/CreateLesson/${id}`)
+                    }
                   >
                     <span className="text-lg">+</span>
                     Add Lesson
                   </button>
                   <button
                     className="btn btn-outline border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2"
-                    onClick={() => navigate(`/InstructorLayout/CreateQuiz/${id}`)}
+                    onClick={() =>
+                      navigate(`/InstructorLayout/CreateQuiz/${id}`)
+                    }
                   >
                     <span className="text-lg">+</span>
                     Add Quiz
@@ -80,7 +89,7 @@ export default function CourseDetails() {
               <div className="flex border-b border-[var(--color-border)]">
                 {[
                   { id: "about", label: "About Course" },
-                  { id: "content", label: "Course Content" }
+                  { id: "content", label: "Course Content" },
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -131,41 +140,36 @@ export default function CourseDetails() {
                         <span className="w-2 h-8 bg-[var(--color-primary)] rounded-full"></span>
                         Lessons ({course.lessons?.length || 0})
                       </h2>
-                      {course.lessons && course.lessons.length ? (
-                        <div className="space-y-3">
-                          {course.lessons.map((lesson, idx) => (
-                            <div
-                              key={idx}
-                              className="p-6 bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] hover:border-[var(--color-primary)] hover:shadow-lg cursor-pointer transition-all duration-300 group"
-                              onClick={() => navigate(`/InstructorLayout/InstLessonDetails/${lesson.id}`)}
-                            >
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-4">
-                                  <div className="w-10 h-10 bg-[var(--color-primary)] text-white rounded-lg flex items-center justify-center font-bold text-sm">
-                                    {idx + 1}
-                                  </div>
-                                  <div>
-                                    <h3 className="font-semibold text-[var(--text-primary)] group-hover:text-[var(--color-primary)] transition-colors">
-                                      {lesson.title || `Lesson ${idx + 1}`}
-                                    </h3>
-                                    <p className="text-sm text-[var(--text-secondary)] mt-1">
-                                      Click to view details
-                                    </p>
-                                  </div>
-                                </div>
-                                <div className="text-[var(--color-primary)] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  →
-                                </div>
+                      {course.lessons.map((lesson, idx) => (
+                        <div
+                          key={idx}
+                          className="p-6 bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] hover:border-[var(--color-primary)] hover:shadow-lg cursor-pointer transition-all duration-300 group"
+                          onClick={() =>
+                            navigate(
+                              `/InstructorLayout/InstLessonDetails/${lesson.lessonId}`
+                            )
+                          }
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                              <div className="w-10 h-10 bg-[var(--color-primary)] text-white rounded-lg flex items-center justify-center font-bold text-sm">
+                                {idx + 1}
+                              </div>
+                              <div>
+                                <h3 className="font-semibold text-[var(--text-primary)] group-hover:text-[var(--color-primary)] transition-colors">
+                                  {lesson.title || `Lesson ${idx + 1}`}
+                                </h3>
+                                <p className="text-sm text-[var(--text-secondary)] mt-1">
+                                  Click to view details
+                                </p>
                               </div>
                             </div>
-                          ))}
+                            <div className="text-[var(--color-primary)] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                              →
+                            </div>
+                          </div>
                         </div>
-                      ) : (
-                        <div className="text-center py-12 bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)]">
-                          <p className="text-[var(--text-secondary)] text-lg">No lessons available yet.</p>
-                          <p className="text-sm text-[var(--text-secondary)] mt-2">Add your first lesson to get started!</p>
-                        </div>
-                      )}
+                      ))}
                     </div>
 
                     {/* Quizzes Section */}
@@ -199,8 +203,12 @@ export default function CourseDetails() {
                         </div>
                       ) : (
                         <div className="text-center py-12 bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)]">
-                          <p className="text-[var(--text-secondary)] text-lg">No quizzes available yet.</p>
-                          <p className="text-sm text-[var(--text-secondary)] mt-2">Add quizzes to test your students!</p>
+                          <p className="text-[var(--text-secondary)] text-lg">
+                            No quizzes available yet.
+                          </p>
+                          <p className="text-sm text-[var(--text-secondary)] mt-2">
+                            Add quizzes to test your students!
+                          </p>
                         </div>
                       )}
                     </div>
@@ -222,22 +230,43 @@ export default function CourseDetails() {
                   { icon: "💰", label: "Price", value: `$${course.price}` },
                   { icon: "👀", label: "Views", value: course.views },
                   { icon: "⏱️", label: "Duration", value: course.hours },
-                  { icon: "👨‍🎓", label: "Students", value: course.studentsEnrolled },
+                  {
+                    icon: "👨‍🎓",
+                    label: "Students",
+                    value: course.studentsEnrolled,
+                  },
                   { icon: "👨‍🏫", label: "Author", value: course.author },
-                  { icon: "📚", label: "Category", value: course.category || "N/A" },
-                  { 
-                    icon: "📜", 
-                    label: "Certificate", 
-                    value: course.certificateIncluded ? "Included" : "Not Included",
-                    color: course.certificateIncluded ? "text-green-600" : "text-[var(--text-secondary)]"
-                  }
+                  {
+                    icon: "📚",
+                    label: "Category",
+                    value: course.category || "N/A",
+                  },
+                  {
+                    icon: "📜",
+                    label: "Certificate",
+                    value: course.certificateIncluded
+                      ? "Included"
+                      : "Not Included",
+                    color: course.certificateIncluded
+                      ? "text-green-600"
+                      : "text-[var(--text-secondary)]",
+                  },
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center justify-between py-3 border-b border-[var(--color-border)] last:border-b-0">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between py-3 border-b border-[var(--color-border)] last:border-b-0"
+                  >
                     <div className="flex items-center gap-3">
                       <span className="text-lg">{item.icon}</span>
-                      <span className="text-[var(--text-secondary)] font-medium">{item.label}</span>
+                      <span className="text-[var(--text-secondary)] font-medium">
+                        {item.label}
+                      </span>
                     </div>
-                    <span className={`font-semibold text-[var(--text-primary)] ${item.color || ''}`}>
+                    <span
+                      className={`font-semibold text-[var(--text-primary)] ${
+                        item.color || ""
+                      }`}
+                    >
                       {item.value}
                     </span>
                   </div>
@@ -249,14 +278,16 @@ export default function CourseDetails() {
             <div className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] rounded-2xl shadow-lg p-8 text-white">
               <h3 className="text-xl font-bold mb-4">Quick Actions</h3>
               <div className="space-y-3">
-                <button 
+                <button
                   className="w-full bg-white/20 hover:bg-white/30 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 text-left flex items-center gap-3"
-                  onClick={() => navigate(`/InstructorLayout/CreateLesson/${id}`)}
+                  onClick={() =>
+                    navigate(`/InstructorLayout/CreateLesson/${id}`)
+                  }
                 >
                   <span className="text-lg">📖</span>
                   Add New Lesson
                 </button>
-                <button 
+                <button
                   className="w-full bg-white/20 hover:bg-white/30 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 text-left flex items-center gap-3"
                   onClick={() => navigate(`/InstructorLayout/CreateQuiz/${id}`)}
                 >

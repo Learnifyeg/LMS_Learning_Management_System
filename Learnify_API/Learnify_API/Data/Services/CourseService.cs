@@ -136,10 +136,31 @@ namespace Learnify_API.Data.Services
                 InstructorId = c.InstructorId,
                 IsApproved = c.IsApproved,
 
-                // New fields
-                Lessons = c.Lessons?.Select(l => l.Title).ToList(),
-                Quizzes = c.Quizzes?.Select(q => q.Title).ToList()
+                Lessons = c.Lessons?
+                  .OrderBy(l => l.Order)
+                  .Select(l => new LessonVM
+                  {
+                      LessonId = l.LessonId,
+                      Title = l.Title,
+                      Order = l.Order,
+                      Duration = l.Duration,
+                  }).ToList(),
+
+                Quizzes = c.Quizzes?
+                  .Select(q => new QuizVM
+                  {
+                      Id = q.QuizId,
+                      LessonId = q.CourseId, // or q.LessonId if needed
+                      Title = q.Title,
+                      Duration = q.Duration,
+                      PassingScore = q.PassingScore,
+                      //TotalQuestions = q.TotalQuestions,
+                      QuestionsEndpoint = $"/api/quizzes/{q.QuizId}/questions",
+                      //Posted = q.Posted ?? ""
+                  }).ToList()
             };
+
+
 
         }
 

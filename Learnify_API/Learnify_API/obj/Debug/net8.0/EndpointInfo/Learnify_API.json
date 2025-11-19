@@ -1373,7 +1373,7 @@
         }
       }
     },
-    "/Quiz": {
+    "/Quiz/get-all": {
       "get": {
         "tags": [
           "Quiz"
@@ -1409,7 +1409,49 @@
             }
           }
         }
-      },
+      }
+    },
+    "/Quiz/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "Quiz"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizVM"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizVM"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizVM"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Quiz/add": {
       "post": {
         "tags": [
           "Quiz"
@@ -1457,45 +1499,7 @@
         }
       }
     },
-    "/Quiz/{id}": {
-      "get": {
-        "tags": [
-          "Quiz"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/QuizVM"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/QuizVM"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/QuizVM"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/Quiz/update/{id}": {
       "put": {
         "tags": [
           "Quiz"
@@ -1552,7 +1556,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/Quiz/delete/{id}": {
       "delete": {
         "tags": [
           "Quiz"
@@ -1940,14 +1946,14 @@
           "lessons": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/LessonVM"
             },
             "nullable": true
           },
           "quizzes": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/QuizVM"
             },
             "nullable": true
           }
@@ -2060,6 +2066,55 @@
           "bio": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LessonVM": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "courseId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "contentType": {
+            "type": "string",
+            "nullable": true
+          },
+          "attachmentUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "isFreePreview": {
+            "type": "boolean"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false

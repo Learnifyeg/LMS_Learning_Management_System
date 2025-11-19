@@ -900,28 +900,8 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.QuizController",
-    "Method": "GetAll",
-    "RelativePath": "Quiz",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[Learnify_API.Data.ViewModels.QuizVM, Learnify_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "Learnify_API.Controllers.QuizController",
     "Method": "Create",
-    "RelativePath": "Quiz",
+    "RelativePath": "Quiz/add",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -946,8 +926,44 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.QuizController",
+    "Method": "Delete",
+    "RelativePath": "Quiz/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.QuizController",
+    "Method": "GetAll",
+    "RelativePath": "Quiz/get-all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Learnify_API.Data.ViewModels.QuizVM, Learnify_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.QuizController",
     "Method": "GetById",
-    "RelativePath": "Quiz/{id}",
+    "RelativePath": "Quiz/get-by-id/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -973,7 +989,7 @@
   {
     "ContainingType": "Learnify_API.Controllers.QuizController",
     "Method": "Update",
-    "RelativePath": "Quiz/{id}",
+    "RelativePath": "Quiz/update/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -1000,22 +1016,6 @@
         "StatusCode": 200
       }
     ]
-  },
-  {
-    "ContainingType": "Learnify_API.Controllers.QuizController",
-    "Method": "Delete",
-    "RelativePath": "Quiz/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
   },
   {
     "ContainingType": "Learnify_API.Controllers.SettingsController",

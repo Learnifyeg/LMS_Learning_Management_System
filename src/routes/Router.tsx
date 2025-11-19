@@ -2,7 +2,6 @@ import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "../App.jsx";
 
-
 // Lazy-loaded dashboards
 const InstrDashboard = lazy(
   () => import("@/views/Instructor/InstrDashboard.jsx")
@@ -42,10 +41,11 @@ const InstructorCourseDetails = lazy(
 const InstructorLessonDetails = lazy(
   () => import("@/views/Instructor/InstructorLessonDetails.jsx")
 );
-const EditLesson = lazy(
-  () => import("@/views/Instructor/EditLesson.jsx")
-);
+const EditLesson = lazy(() => import("@/views/Instructor/EditLesson.jsx"));
 
+const InstructorQuizDetails = lazy(
+  () => import("@/views/Instructor/InstQuizDetails.jsx")
+);
 
 // Student Views
 const StuDashboard = lazy(() => import("@/views/Student/StuDashboard.jsx"));
@@ -191,6 +191,10 @@ export const router = createBrowserRouter([
           {
             path: "InstLessonDetails/:id",
             element: <InstructorLessonDetails />,
+          },
+          {
+            path: "InstQuizDetails/:id",
+            element: <InstructorQuizDetails />,
           },
           { path: "AllStudents", element: <AllStudents /> },
           { path: "QuizManagement", element: <QuizManagement /> },

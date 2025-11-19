@@ -17,7 +17,7 @@ namespace Learnify_API.Controllers
         }
 
         // ================== GET ALL ==================
-        [HttpGet]
+        [HttpGet("get-all")]
         // [Authorize] // أي مستخدم مسجل يقدر يشوف الكويزات
         public async Task<ActionResult<List<QuizVM>>> GetAll()
         {
@@ -26,8 +26,8 @@ namespace Learnify_API.Controllers
         }
 
         // ================== GET BY ID ==================
-        [HttpGet("{id}")]
-        [Authorize] // أي مستخدم مسجل يقدر يشوف كويز واحد
+        [HttpGet("get-by-id/{id}")]
+        //[Authorize] // أي مستخدم مسجل يقدر يشوف كويز واحد
         public async Task<ActionResult<QuizVM>> GetById(int id)
         {
             var quiz = await _quizService.GetQuizByIdAsync(id);
@@ -36,8 +36,8 @@ namespace Learnify_API.Controllers
         }
 
         // ================== POST ==================
-        [HttpPost]
-        [Authorize(Roles = "Instructor")] // بس الإنستركتور يقدر يضيف كويز
+        [HttpPost("add")]
+        [Authorize(Roles = "instructor")] // بس الإنستركتور يقدر يضيف كويز
         public async Task<ActionResult<QuizVM>> Create([FromBody] QuizVM quizVM)
         {
             var createdQuiz = await _quizService.CreateQuizAsync(quizVM);
@@ -45,8 +45,8 @@ namespace Learnify_API.Controllers
         }
 
         // ================== UPDATE ==================
-        [HttpPut("{id}")]
-        [Authorize(Roles = "Instructor")] // بس الإنستركتور يقدر يحدث الكويز
+        [HttpPut("update/{id}")]
+        [Authorize(Roles = "instructor")] // بس الإنستركتور يقدر يحدث الكويز
         public async Task<ActionResult<QuizVM>> Update(int id, [FromBody] QuizVM quizVM)
         {
             var updatedQuiz = await _quizService.UpdateQuizAsync(id, quizVM);
@@ -55,8 +55,8 @@ namespace Learnify_API.Controllers
         }
 
         // ================== DELETE ==================
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "Instructor")] // بس الإنستركتور يقدر يحذف الكويز
+        [HttpDelete("delete/{id}")]
+        [Authorize(Roles = "instructor")] // بس الإنستركتور يقدر يحذف الكويز
         public async Task<ActionResult> Delete(int id)
         {
             var deleted = await _quizService.DeleteQuizAsync(id);
