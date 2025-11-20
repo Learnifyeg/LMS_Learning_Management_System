@@ -1,6 +1,6 @@
-import useCourse from "@/hooks/useCourse";
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import useCourse from "@/hooks/useCourse";
 
 export default function CourseDetails() {
   const { id } = useParams();
@@ -134,7 +134,7 @@ export default function CourseDetails() {
 
                 {currentTab === "content" && (
                   <div className="space-y-8">
-                    {/* Lessons Section */}
+                    {/* Lessons */}
                     <div className="space-y-4">
                       <h2 className="text-2xl font-bold text-[var(--text-primary)] flex items-center gap-3">
                         <span className="w-2 h-8 bg-[var(--color-primary)] rounded-full"></span>
@@ -172,7 +172,7 @@ export default function CourseDetails() {
                       ))}
                     </div>
 
-                    {/* Quizzes Section */}
+                    {/* Quizzes */}
                     <div className="space-y-4">
                       <h2 className="text-2xl font-bold text-[var(--text-primary)] flex items-center gap-3">
                         <span className="w-2 h-8 bg-[var(--color-secondary)] rounded-full"></span>
@@ -183,7 +183,12 @@ export default function CourseDetails() {
                           {course.quizzes.map((quiz, idx) => (
                             <div
                               key={idx}
-                              className="p-6 bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] hover:shadow-md transition-all duration-300"
+                              onClick={() =>
+                                navigate(
+                                  `/InstructorLayout/InstQuizDetails/${quiz.id}`
+                                )
+                              }
+                              className="p-6 bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] hover:shadow-md transition-all duration-300 cursor-pointer"
                             >
                               <div className="flex items-center gap-4">
                                 <div className="w-10 h-10 bg-[var(--color-secondary)] text-white rounded-lg flex items-center justify-center font-bold text-sm">
@@ -274,7 +279,7 @@ export default function CourseDetails() {
               </div>
             </div>
 
-            {/* Quick Actions Card */}
+            {/* Quick Actions */}
             <div className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] rounded-2xl shadow-lg p-8 text-white">
               <h3 className="text-xl font-bold mb-4">Quick Actions</h3>
               <div className="space-y-3">
@@ -289,7 +294,7 @@ export default function CourseDetails() {
                 </button>
                 <button
                   className="w-full bg-white/20 hover:bg-white/30 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 text-left flex items-center gap-3"
-                  onClick={() => navigate(`/InstructorLayout/CreateQuiz/${id}`)}
+                  onClick={() => navigate(`/InstructorLayout/CreateQuiz/${id}/0`)}
                 >
                   <span className="text-lg">🧩</span>
                   Create Quiz

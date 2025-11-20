@@ -8,10 +8,17 @@ interface AddQuizData {
   duration: number;
   lessonId: number;
   passingScore: number;
+  totalQuestions: number;
 }
 
-interface UpdateQuizData extends Omit<AddQuizData, "lessonId"> {}
+interface UpdateQuizData {
+  title: string;
+  duration: number;
+  passingScore: number;
+  lessonId: number; // required by backend
+   totalQuestions: number;
 
+}
 const useQuiz = (id?: string) => {
   const queryClient = useQueryClient();
 

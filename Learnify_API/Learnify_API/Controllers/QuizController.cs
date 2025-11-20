@@ -27,7 +27,7 @@ namespace Learnify_API.Controllers
 
         // ================== GET BY ID ==================
         [HttpGet("get-by-id/{id}")]
-        //[Authorize] // أي مستخدم مسجل يقدر يشوف كويز واحد
+        [Authorize] // أي مستخدم مسجل يقدر يشوف كويز واحد
         public async Task<ActionResult<QuizVM>> GetById(int id)
         {
             var quiz = await _quizService.GetQuizByIdAsync(id);
@@ -46,7 +46,7 @@ namespace Learnify_API.Controllers
 
         // ================== UPDATE ==================
         [HttpPut("update/{id}")]
-        [Authorize(Roles = "instructor")] // بس الإنستركتور يقدر يحدث الكويز
+        //[Authorize(Roles = "instructor")] // بس الإنستركتور يقدر يحدث الكويز
         public async Task<ActionResult<QuizVM>> Update(int id, [FromBody] QuizVM quizVM)
         {
             var updatedQuiz = await _quizService.UpdateQuizAsync(id, quizVM);

@@ -60,7 +60,7 @@ const Urls = {
   // Quiz
   GetQuizById: "Quiz/get-by-id/",
   GetAllQuizzes: "Quiz/get-all",
-  AddQuiz: "/Quiz/add",
+  AddQuiz: "Quiz/add",
   UpdateQuiz: "Quiz/update/",
   DeleteQuiz: "Quiz/delete/"
 };

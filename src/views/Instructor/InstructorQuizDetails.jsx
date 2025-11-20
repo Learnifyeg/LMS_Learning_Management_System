@@ -1,84 +1,95 @@
-// ---------------- InstructorQuizDetails.jsx ----------------
-import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useQuiz from "@/hooks/useQuiz";
 import toast, { Toaster } from "react-hot-toast";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
+import ConfirmToast from "@/utils/ConfirmToast";
 
 export default function InstructorQuizDetails() {
-  const { quizid: quizId } = useParams();
+  const { quizid: quizId, courseid: courseId } = useParams();
   const navigate = useNavigate();
-  const { getQuizById, deleteQuestionMutation } = useQuiz();
-  const [quiz, setQuiz] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { getQuizById, deleteQuizMutation } = useQuiz();
 
-  useEffect(() => {
-    async function fetchQuiz() {
-      try {
-        const data = await getQuizById(quizId);
-        setQuiz(data);
-      } catch (err) {
-        toast.error("Failed to fetch quiz details");
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchQuiz();
-  }, [quizId]);
+  const { data: quiz, isLoading, error } = getQuizById(quizId);
 
-  const handleDeleteQuestion = async (questionId) => {
-    if (!window.confirm("Are you sure you want to delete this question?")) return;
-
-    try {
-      await deleteQuestionMutation.mutateAsync(questionId);
-      toast.success("Question deleted successfully!");
-      setQuiz((prev) => ({
-        ...prev,
-        questions: prev.questions.filter((q) => q.id !== questionId),
-      }));
-    } catch (err) {
-      toast.error("Failed to delete question");
-    }
+  const handleDeleteQuiz = async () => {
+   toast.custom((t) => (
+    <ConfirmToast 
+      message="Are you sure you want to delete this quiz?"
+      onConfirm={async () => {
+        toast.dismiss(t.id);
+        try {
+          await deleteQuizMutation.mutateAsync(quizId);
+          toast.success("Quiz deleted successfully!");
+          navigate(`/InstructorLayout/InstCourseDetails/${courseId}`);
+        } catch (err) {
+          console.error(err);
+          toast.error("Failed to delete quiz");
+        }
+      }}
+      onCancel={() => toast.dismiss(t.id)}
+    />
+  ));
   };
 
-  if (loading) {
+  if (isLoading)
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-lg font-medium">Loading quiz details...</div>
       </div>
     );
-  }
 
-  if (!quiz) {
+  if (error || !quiz)
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg font-medium">Quiz not found.</div>
+        <div className="text-lg font-medium text-red-600">
+          Failed to fetch quiz details.
+        </div>
       </div>
     );
-  }
 
   return (
     <div className="max-w-5xl mx-auto p-8 bg-card rounded-2xl shadow-lg flex flex-col gap-6">
-      <Toaster />
       <LandingHeading header={`Quiz: ${quiz.title}`} />
+      <Toaster position="top-center" />
 
       {/* Quiz Info */}
       <div className="bg-surface p-6 rounded-xl border border-border shadow-sm">
         <h2 className="text-2xl font-bold mb-4">Quiz Information</h2>
         <div className="grid grid-cols-2 gap-4">
-          <div><strong>Title:</strong> {quiz.title}</div>
-          <div><strong>Duration:</strong> {quiz.duration} seconds</div>
-          <div><strong>Passing Score:</strong> {quiz.passingScore}</div>
-          <div><strong>Total Questions:</strong> {quiz.totalQuestions}</div>
-          <div><strong>Posted:</strong> {quiz.posted}</div>
+          <div>
+            <strong>Title:</strong> {quiz.title}
+          </div>
+          <div>
+            <strong>Duration:</strong> {quiz.duration} seconds
+          </div>
+          <div>
+            <strong>Passing Score:</strong> {quiz.passingScore}
+          </div>
+          <div>
+            <strong>Total Questions:</strong> {quiz.questions?.length || 0}
+          </div>
+          <div>
+            <strong>Posted:</strong> {quiz.posted}
+          </div>
         </div>
+
         <div className="mt-4 flex gap-4">
           <button
-            onClick={() => navigate(`/InstructorLayout/EditQuiz/${quiz.id}`)}
+            onClick={() =>
+              navigate(`/InstructorLayout/EditQuiz/${quiz.id}`)
+            }
             className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90"
           >
             Edit Quiz
           </button>
+
+          <button
+            onClick={handleDeleteQuiz}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700/90"
+          >
+            Delete Quiz
+          </button>
+
           <button
             onClick={() => navigate(`/InstructorLayout/AddQuestion/${quiz.id}`)}
             className="bg-secondary text-white px-4 py-2 rounded hover:bg-secondary/90"
@@ -88,10 +99,9 @@ export default function InstructorQuizDetails() {
         </div>
       </div>
 
-      {/* Questions */}
+      {/* Questions List */}
       <div className="bg-surface p-6 rounded-xl border border-border shadow-sm">
         <h2 className="text-2xl font-bold mb-4">Questions</h2>
-
         {quiz.questions && quiz.questions.length ? (
           <div className="space-y-4">
             {quiz.questions.map((q, idx) => (
@@ -125,10 +135,7 @@ export default function InstructorQuizDetails() {
                   >
                     Edit
                   </button>
-                  <button
-                    onClick={() => handleDeleteQuestion(q.id)}
-                    className="text-red-600 hover:underline"
-                  >
+                  <button disabled className="text-red-400 cursor-not-allowed">
                     Delete
                   </button>
                 </div>

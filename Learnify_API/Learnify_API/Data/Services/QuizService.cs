@@ -89,6 +89,7 @@ namespace Learnify_API.Data.Services
             quiz.CourseId = quizVM.LessonId;
             quiz.Duration = quizVM.Duration;
             quiz.PassingScore = quizVM.PassingScore;
+            //quiz.TotalQuestions = quizVM.TotalQuestions; // <-- added
 
             await _context.SaveChangesAsync();
 

@@ -1,4 +1,3 @@
-// ---------------- CreateQuiz.jsx ----------------
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useQuiz from "@/hooks/useQuiz";
@@ -14,33 +13,29 @@ export default function CreateQuiz() {
     title: "",
     duration: 0,
     passingScore: 50,
-    totalQuestions: 0 // added field
+    totalQuestions: 0,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
-      [name]: name === "duration" || name === "passingScore" || name === "totalQuestions"
-        ? Number(value)
-        : value
+      [name]:
+        name === "duration" || name === "passingScore" || name === "totalQuestions"
+          ? Number(value)
+          : value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!courseId) return toast.error("Course ID missing!");
-
     try {
-      await addQuizMutation.mutateAsync({
-        ...form,
-        lessonId: Number(courseId)
-      });
+      await addQuizMutation.mutateAsync({ ...form, lessonId: Number(courseId) });
       toast.success("Quiz created successfully!");
       navigate(`/InstructorLayout/InstCourseDetails/${courseId}`);
     } catch (err) {
       console.error(err);
-      toast.error("Failed to create quiz. Check all fields and authorization.");
+      toast.error("Failed to create quiz.");
     }
   };
 
@@ -48,7 +43,6 @@ export default function CreateQuiz() {
     <div className="max-w-2xl mx-auto p-8 bg-card rounded-2xl shadow-lg flex flex-col gap-6">
       <Toaster />
       <LandingHeading header="Create Quiz" />
-
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <label className="font-semibold">Quiz Title</label>
         <input
@@ -80,8 +74,8 @@ export default function CreateQuiz() {
           onChange={handleChange}
           placeholder="Enter passing score"
           className="border p-3 rounded"
-          min={0}
-          max={100}
+          // min={0}
+          // max={100}
           required
         />
 
@@ -93,7 +87,7 @@ export default function CreateQuiz() {
           onChange={handleChange}
           placeholder="Enter total number of questions"
           className="border p-3 rounded"
-          min={0}
+          // min={0}
         />
 
         <button
