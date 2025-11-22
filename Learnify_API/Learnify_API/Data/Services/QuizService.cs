@@ -23,7 +23,7 @@ namespace Learnify_API.Data.Services
             return quizzes.Select(q => new QuizVM
             {
                 Id = q.QuizId,
-                LessonId = q.CourseId,
+                CourseId = q.CourseId,
                 Title = q.Title,
                 Duration = q.Duration,           // دلوقتي بيجي من DB
                 PassingScore = q.PassingScore,   // دلوقتي بيجي من DB
@@ -45,7 +45,7 @@ namespace Learnify_API.Data.Services
             return new QuizVM
             {
                 Id = quiz.QuizId,
-                LessonId = quiz.CourseId,
+                CourseId = quiz.CourseId,
                 Title = quiz.Title,
                 Duration = quiz.Duration,
                 PassingScore = quiz.PassingScore,
@@ -56,11 +56,18 @@ namespace Learnify_API.Data.Services
         }
 
         // ================== CREATE ==================
-        public async Task<QuizVM> CreateQuizAsync(QuizVM quizVM)
+        public async Task<QuizVM> CreateQuizAsync(QuizVM quizVM, int instructorId)
         {
+            // تأكد إن الكورس موجود وبيخص الـ Instructor ده
+            var course = await _context.Courses
+                .FirstOrDefaultAsync(c => c.CourseId == quizVM.CourseId && c.InstructorId == instructorId);
+
+            if (course == null)
+                throw new Exception("Course not found or doesn't belong to you.");
+
             var quiz = new Quiz
             {
-                CourseId = quizVM.LessonId,
+                CourseId = quizVM.CourseId,
                 Title = quizVM.Title,
                 Duration = quizVM.Duration,
                 PassingScore = quizVM.PassingScore,
@@ -79,6 +86,7 @@ namespace Learnify_API.Data.Services
             return quizVM;
         }
 
+
         // ================== UPDATE ==================
         public async Task<QuizVM?> UpdateQuizAsync(int id, QuizVM quizVM)
         {
@@ -86,7 +94,7 @@ namespace Learnify_API.Data.Services
             if (quiz == null) return null;
 
             quiz.Title = quizVM.Title;
-            quiz.CourseId = quizVM.LessonId;
+            quiz.CourseId = quizVM.CourseId;
             quiz.Duration = quizVM.Duration;
             quiz.PassingScore = quizVM.PassingScore;
 
@@ -106,5 +114,82 @@ namespace Learnify_API.Data.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        // Get Quizzes by Instructor
+        public async Task<IEnumerable<QuizVM>> GetQuizzesByInstructorAsync(int instructorId)
+        {
+            // تأكيد إن الـ Instructor موجود
+            var instructorExists = await _context.Instructors.AnyAsync(i => i.InstructorId == instructorId);
+            if (!instructorExists)
+                return new List<QuizVM>();
+
+            // جلب الكويزات الخاصة بالكورسات بتاعة الـ Instructor
+            var quizzes = await _context.Quizzes
+                .Include(q => q.Questions)
+                .Include(q => q.Course) // لازم Course عشان نعرف InstructorId
+                .Where(q => q.Course.InstructorId == instructorId)
+                .OrderByDescending(q => q.CreatedAt)
+                .ToListAsync();
+
+            return quizzes.Select(q => new QuizVM
+            {
+                Id = q.QuizId,
+                CourseId = q.CourseId,
+                Title = q.Title,
+                Duration = q.Duration,
+                PassingScore = q.PassingScore,
+                TotalQuestions = q.Questions?.Count ?? 0,
+                QuestionsEndpoint = "questions",
+                Posted = $"{(DateTime.Now - q.CreatedAt).Days} days ago"
+            }).ToList();
+        }
+
+        public async Task<int?> GetInstructorIdByUserId(int userId)
+        {
+            var instructor = await _context.Instructors
+                .FirstOrDefaultAsync(i => i.User.UserId == userId); // أو i.UserId حسب الـ Model عندك
+
+            return instructor?.InstructorId;
+        }
+
+        public async Task<CourseVM?> GetCourseByIdAsync(int id)
+        {
+            var c = await _context.Courses
+                 .Include(x => x.Instructor)
+                     .ThenInclude(i => i.User)
+                 .Include(x => x.Lessons)       // ← Add lessons
+                 .Include(x => x.Quizzes)       // ← Add quizzes
+                 .FirstOrDefaultAsync(x => x.CourseId == id);
+            if (c == null) return null;
+
+            return new CourseVM
+            {
+                Id = c.CourseId,
+                Title = c.Title,
+                Description = c.Description ?? "",
+                Category = c.Category ?? "",
+                Author = c.Instructor.User.FullName ?? "Unknown",
+                AuthorId = c.InstructorId,
+                Views = c.Views,
+                Posted = c.Posted,
+                Rating = c.Rating,
+                Hours = c.Hours,
+                Price = c.Price,
+                Tag = c.Tag,
+                Image = c.Image,
+                StudentsEnrolled = c.StudentsEnrolled,
+                CertificateIncluded = c.CertificateIncluded,
+                Duration = c.Duration,
+                InstructorId = c.InstructorId,
+                IsApproved = c.IsApproved,
+
+                // New fields
+                Lessons = c.Lessons?.Select(l => l.Title).ToList(),
+                Quizzes = c.Quizzes?.Select(q => q.Title).ToList()
+            };
+
+        }
+
+
     }
 }
