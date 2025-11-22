@@ -57,6 +57,12 @@ const Urls = {
   myEnrollments: "/Student/my-enrollments",
   enroll: "/Student/enroll",
   removeEnrollment: "/Student/remove-enrollment",
+  // Quiz
+  GetQuizById: "Quiz/get-by-id/",
+  GetAllQuizzes: "Quiz/get-all",
+  AddQuiz: "Quiz/add",
+  UpdateQuiz: "Quiz/update/",
+  DeleteQuiz: "Quiz/delete/"
 };
 
 export default Urls;

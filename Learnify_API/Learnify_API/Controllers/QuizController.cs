@@ -16,28 +16,67 @@ namespace Learnify_API.Controllers
         {
             _quizService = quizService;
         }
+        // ================== get-all ==================
 
-        // ================== GET ALL ==================
-        [HttpGet]
+        [HttpGet("get-all")]
         public async Task<ActionResult<List<QuizVM>>> GetAll()
         {
-            var quizzes = await _quizService.GetAllQuizzesAsync();
-            return Ok(quizzes);
+        // جلب userId من الـ token
+        var userIdClaim =
+        User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier) ??
+        User.FindFirst("userId") ??
+        User.FindFirst("id") ??
+        User.FindFirst("sub");
+        
+        if (userIdClaim == null) return Unauthorized("User not found.");
+        int userId = int.Parse(userIdClaim.Value);
+        
+        // جلب instructorId
+        var instructorId = await _quizService.GetInstructorIdByUserId(userId);
+        if (instructorId == null) return Unauthorized("Instructor profile not found.");
+        
+        // جلب الكويزات الخاصة بالانستركتور
+        var quizzes = await _quizService.GetQuizzesByInstructorAsync(instructorId.Value);
+        if (!quizzes.Any()) return NotFound("No quizzes found for this instructor.");
+        
+        return Ok(quizzes);
         }
 
-        // ================== GET BY ID ==================
-        [HttpGet("{id}")]
-        [Authorize]
+        // ================== get-by-id ==================
+        [Authorize(Roles = "instructor")]
+        [HttpGet("get-by-id/{id}")]
         public async Task<ActionResult<QuizVM>> GetById(int id)
         {
-            var quiz = await _quizService.GetQuizByIdAsync(id);
-            if (quiz == null) return NotFound();
-            return Ok(quiz);
+        var userIdClaim =
+        User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier) ??
+        User.FindFirst("userId") ??
+        User.FindFirst("id") ??
+        User.FindFirst("sub");
+        
+        if (userIdClaim == null) return Unauthorized("User not found.");
+        int userId = int.Parse(userIdClaim.Value);
+        
+        var instructorId = await _quizService.GetInstructorIdByUserId(userId);
+        if (instructorId == null) return Unauthorized("Instructor profile not found.");
+        
+        // جلب الكويز
+        var quiz = await _quizService.GetQuizByIdAsync(id);
+        if (quiz == null) return NotFound();
+        
+        // تأكد إن الكويز يخص الانستركتور
+        var course = await _quizService.GetCourseByIdAsync(quiz.CourseId);
+        if (course == null || course.InstructorId != instructorId.Value)
+            return Unauthorized("This quiz does not belong to the instructor.");
+        
+        return Ok(quiz);
         }
+        
 
         // ================== POST ==================
-        [Authorize(Roles = "instructor")]
-        [HttpPost]
+
+        [HttpPost("add")]
+        [Authorize(Roles = "instructor")] // بس الإنستركتور يقدر يضيف كويز
+
         public async Task<ActionResult<QuizVM>> Create([FromBody] QuizVM quizVM)
         {
             var userIdClaim =
@@ -64,8 +103,9 @@ namespace Learnify_API.Controllers
         }
 
         // ================== UPDATE ==================
-        [Authorize(Roles = "instructor")]
-        [HttpPut("{id}")]
+
+        [HttpPut("update/{id}")]
+        //[Authorize(Roles = "instructor")] // بس الإنستركتور يقدر يحدث الكويز
         public async Task<ActionResult<QuizVM>> Update(int id, [FromBody] QuizVM quizVM)
         {
             var userIdClaim =
@@ -91,8 +131,9 @@ namespace Learnify_API.Controllers
         }
 
         // ================== DELETE ==================
-        [Authorize(Roles = "instructor")]
-        [HttpDelete("{id}")]
+
+        [HttpDelete("delete/{id}")]
+        [Authorize(Roles = "instructor")] // بس الإنستركتور يقدر يحذف الكويز
         public async Task<ActionResult> Delete(int id)
         {
             var userIdClaim =

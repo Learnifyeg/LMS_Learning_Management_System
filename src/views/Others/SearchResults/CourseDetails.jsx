@@ -87,14 +87,14 @@ export default function CourseDetails() {
                       }}
                       disabled={isSaved}
                       className={`btn flex-1 py-3 font-semibold ${
-                        isSaved|| isEnrolled
+                        isSaved || isEnrolled
                           ? "bg-gray-400 text-white cursor-not-allowed"
                           : "btn-primary btn-hover"
                       }`}
                     >
-                      {isEnrolled 
+                      {isEnrolled
                         ? "Enrolled"
-                        :isSaved
+                        : isSaved
                         ? "Saved"
                         : "Save course"}
                     </button>
@@ -220,35 +220,30 @@ export default function CourseDetails() {
                       <h2 className="text-xl font-semibold text-text-primary mb-4">
                         Course Lessons ({course.lessons?.length || 0})
                       </h2>
+
                       {course.lessons && course.lessons.length > 0 ? (
                         <div className="space-y-3">
                           {course.lessons.map((lesson, index) => (
                             <div
                               key={index}
-                              className="card p-4 cursor-pointer hover:bg-muted card-hover border border-border"
+                              className="card p-4 border border-border rounded-lg bg-[var(--color-surface)]"
                             >
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                                    <span className="text-primary font-semibold text-sm">
-                                      {index + 1}
-                                    </span>
-                                  </div>
-                                  <div>
-                                    <h4 className="font-medium text-text-primary">
-                                      {lesson.title || `Lesson ${index + 1}`}
-                                    </h4>
-                                    <p className="text-text-secondary text-sm">
-                                      {lesson.duration || "10:30"} •{" "}
-                                      {lesson.type || "Video"}
-                                    </p>
-                                  </div>
-                                </div>
-                                {lesson.isFreePreview && (
-                                  <span className="px-2 py-1 bg-secondary/10 text-secondary text-xs font-medium rounded">
-                                    Free Preview
+                              <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                                  <span className="text-primary font-semibold text-sm">
+                                    {index + 1}
                                   </span>
-                                )}
+                                </div>
+
+                                <div>
+                                  <h4 className="font-medium text-text-primary">
+                                    {lesson.title || `Lesson ${index + 1}`}
+                                  </h4>
+
+                                  <p className="text-text-secondary text-sm">
+                                    {lesson.duration || "0 min"}
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           ))}

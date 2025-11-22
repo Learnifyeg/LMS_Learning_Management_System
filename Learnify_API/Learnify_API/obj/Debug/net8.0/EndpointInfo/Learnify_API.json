@@ -1411,7 +1411,7 @@
         }
       }
     },
-    "/Quiz": {
+    "/Quiz/get-all": {
       "get": {
         "tags": [
           "Quiz"
@@ -1447,7 +1447,49 @@
             }
           }
         }
-      },
+      }
+    },
+    "/Quiz/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "Quiz"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizVM"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizVM"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizVM"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Quiz/add": {
       "post": {
         "tags": [
           "Quiz"
@@ -1495,45 +1537,7 @@
         }
       }
     },
-    "/Quiz/{id}": {
-      "get": {
-        "tags": [
-          "Quiz"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/QuizVM"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/QuizVM"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/QuizVM"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/Quiz/update/{id}": {
       "put": {
         "tags": [
           "Quiz"
@@ -1590,7 +1594,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/Quiz/delete/{id}": {
       "delete": {
         "tags": [
           "Quiz"
@@ -2016,14 +2022,14 @@
           "lessons": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/LessonVM"
             },
             "nullable": true
           },
           "quizzes": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/QuizVM"
             },
             "nullable": true
           }

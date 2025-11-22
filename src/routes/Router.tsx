@@ -42,11 +42,12 @@ const InstructorCourseDetails = lazy(
 const InstructorLessonDetails = lazy(
   () => import("@/views/Instructor/InstructorLessonDetails.jsx")
 );
-const EditLesson = lazy(
-  () => import("@/views/Instructor/EditLesson.jsx")
+const EditLesson = lazy(() => import("@/views/Instructor/EditLesson.jsx"));
+
+const InstructorQuizDetails = lazy(
+  () => import("@/views/Instructor/InstructorQuizDetails.jsx")
 );
-
-
+const EditQuiz = lazy(() => import("@/views/Instructor/EditQuiz.jsx"));
 // Student Views
 const StuDashboard = lazy(() => import("@/views/Student/StuDashboard.jsx"));
 const StuStudentLayout = lazy(
@@ -183,6 +184,7 @@ export const router = createBrowserRouter([
           { path: "CreateLesson/:courseid", element: <CreateLesson /> },
           { path: "EditLesson/:lessonid", element: <EditLesson /> },
           { path: "CreateQuiz/:courseid", element: <CreateQuiz /> },
+          { path: "EditQuiz/:quizid", element: <EditQuiz /> },
           { path: "CreateCourse/:courseid", element: <CreateCourse /> },
           {
             path: "InstCourseDetails/:id",
@@ -191,6 +193,10 @@ export const router = createBrowserRouter([
           {
             path: "InstLessonDetails/:id",
             element: <InstructorLessonDetails />,
+          },
+          {
+            path: "InstQuizDetails/:quizid",
+            element: <InstructorQuizDetails />,
           },
           { path: "AllStudents", element: <AllStudents /> },
           { path: "QuizManagement", element: <QuizManagement /> },
