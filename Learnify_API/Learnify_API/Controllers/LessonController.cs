@@ -1,6 +1,9 @@
 ﻿using Learnify_API.Data.Services;
 using Learnify_API.Data.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Learnify_API.Controllers
 {
@@ -17,6 +20,8 @@ namespace Learnify_API.Controllers
         }
 
         // Add Lesson
+        [Authorize(Roles = "instructor")]
+
         [HttpPost("add")]
         public async Task<IActionResult> AddLesson([FromBody] CreateLessonRequest model)
         {
@@ -26,6 +31,8 @@ namespace Learnify_API.Controllers
         }
 
         //  Update Lesson
+        [Authorize(Roles = "instructor")]
+
         [HttpPut("update/{lessonId}")]
         public async Task<IActionResult> UpdateLesson(int lessonId, [FromBody] UpdateLessonRequest model)
         {
@@ -35,6 +42,8 @@ namespace Learnify_API.Controllers
         }
 
         //  Delete Lesson
+        [Authorize(Roles = "instructor")]
+
         [HttpDelete("delete/{lessonId}")]
         public async Task<IActionResult> DeleteLesson(int lessonId)
         {
@@ -44,6 +53,8 @@ namespace Learnify_API.Controllers
         }
 
         //  Get Lesson by Id
+        [Authorize(Roles = "instructor")]
+
         [HttpGet("{lessonId}")]
         public async Task<IActionResult> GetLessonById(int lessonId)
         {
@@ -53,6 +64,9 @@ namespace Learnify_API.Controllers
         }
 
         //  Get Lessons by Course
+
+        [Authorize(Roles = "instructor")]
+
         [HttpGet("by-course/{courseId}")]
         public async Task<IActionResult> GetLessonsByCourse(int courseId)
         {
@@ -61,6 +75,8 @@ namespace Learnify_API.Controllers
         }
 
         //  Mark Lesson Completed
+        [Authorize(Roles = "instructor")]
+
         [HttpPost("complete/{lessonId}")]
         public async Task<IActionResult> MarkLessonCompleted(int lessonId)
         {
@@ -80,6 +96,8 @@ namespace Learnify_API.Controllers
 
 
         //  Get student progress in course
+        [Authorize(Roles = "instructor")]
+
         [HttpGet("progress/{courseId}")]
         public async Task<IActionResult> GetProgressByCourse(int courseId)
         {
@@ -93,6 +111,37 @@ namespace Learnify_API.Controllers
 
             return Ok(progress);
         }
+
+        [Authorize(Roles = "instructor")]
+        [HttpGet("all-by-instructor")]
+        public async Task<ActionResult<IEnumerable<LessonVM>>> GetAllLessonsByInstructor()
+        {
+            var userIdClaim =
+                User.FindFirst(ClaimTypes.NameIdentifier) ??
+                User.FindFirst("userId") ??
+                User.FindFirst("UserId") ??
+                User.FindFirst("id") ??
+                User.FindFirst("sub") ??
+                User.FindFirst("uid");
+
+            if (userIdClaim == null)
+                return Unauthorized("User not found.");
+
+            int userId = int.Parse(userIdClaim.Value);
+
+            var instructorId = await _lessonService.GetInstructorIdByUserId(userId);
+
+            if (instructorId == null)
+                return Unauthorized("Instructor profile not found.");
+
+            var lessons = await _lessonService.GetLessonsByInstructorAsync(instructorId.Value);
+
+            if (!lessons.Any())
+                return NotFound("No lessons found for this instructor.");
+
+            return Ok(lessons);
+        }
+
 
     }
 }
