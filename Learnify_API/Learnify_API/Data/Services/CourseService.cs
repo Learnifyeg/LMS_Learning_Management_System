@@ -151,7 +151,10 @@ namespace Learnify_API.Data.Services
                   {
                       Id = q.QuizId,
                       CourseId = q.CourseId, // or q.LessonId if needed
+<<<<<<< HEAD
                       LessonId = q.LessonId,
+=======
+>>>>>>> bb96b48a14984e482e8fddc936582014c3a89d05
                       Title = q.Title,
                       Duration = q.Duration,
                       PassingScore = q.PassingScore,

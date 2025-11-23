@@ -729,6 +729,44 @@
         }
       }
     },
+    "/Lesson/all-by-instructor": {
+      "get": {
+        "tags": [
+          "Lesson"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LessonVM"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LessonVM"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LessonVM"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Notification/user-send": {
       "post": {
         "tags": [
@@ -1587,6 +1625,44 @@
         }
       }
     },
+    "/Quiz/by-instructor": {
+      "get": {
+        "tags": [
+          "Quiz"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuizVM"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuizVM"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuizVM"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Settings/{userId}": {
       "get": {
         "tags": [
@@ -2236,10 +2312,13 @@
             "format": "int32"
           },
           "courseId": {
+<<<<<<< HEAD
             "type": "integer",
             "format": "int32"
           },
           "lessonId": {
+=======
+>>>>>>> bb96b48a14984e482e8fddc936582014c3a89d05
             "type": "integer",
             "format": "int32"
           },

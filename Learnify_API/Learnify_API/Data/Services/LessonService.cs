@@ -13,15 +13,20 @@ namespace Learnify_API.Data.Services
             _context = context;
         }
 
-        //  Add Lesson
+        // Add Lesson
         public async Task<bool> AddLessonAsync(CreateLessonRequest model)
         {
-            var course = await _context.Courses.FindAsync(model.CourseId);
-            if (course == null) return false;
+            var course = await _context.Courses
+                .Include(c => c.Instructor)
+                .FirstOrDefaultAsync(c => c.CourseId == model.CourseId);
+
+            if (course == null)
+                return false;
 
             int nextOrder = model.Order ?? await _context.Lessons
                 .Where(l => l.CourseId == model.CourseId)
                 .CountAsync() + 1;
+
             var lesson = new Lesson
             {
                 CourseId = model.CourseId,
@@ -36,11 +41,11 @@ namespace Learnify_API.Data.Services
                 CreatedAt = DateTime.Now
             };
 
-
             _context.Lessons.Add(lesson);
             await _context.SaveChangesAsync();
             return true;
         }
+
 
         // Update Lesson
         public async Task<bool> UpdateLessonAsync(int lessonId, UpdateLessonRequest model)
@@ -61,7 +66,8 @@ namespace Learnify_API.Data.Services
             return true;
         }
 
-        //  Delete Lesson
+
+        // Delete Lesson
         public async Task<bool> DeleteLessonAsync(int lessonId)
         {
             var lesson = await _context.Lessons.FindAsync(lessonId);
@@ -72,7 +78,7 @@ namespace Learnify_API.Data.Services
             return true;
         }
 
-        //  Get Lesson by Id
+
         // Get Lesson by Id
         public async Task<LessonVM?> GetLessonByIdAsync(int lessonId)
         {
@@ -112,6 +118,7 @@ namespace Learnify_API.Data.Services
             };
         }
 
+
         // Get Lessons by Course
         public async Task<IEnumerable<LessonVM>> GetLessonsByCourseAsync(int courseId)
         {
@@ -139,16 +146,14 @@ namespace Learnify_API.Data.Services
         }
 
 
-
         // Mark Lesson as Completed
         public async Task<bool> MarkLessonCompletedAsync(int lessonId, int studentId)
         {
             var lesson = await _context.Lessons.FindAsync(lessonId);
             if (lesson == null) return false;
 
-            var progress = _context.LessonProgresses
-                .Where(p => p.LessonId == lessonId && p.StudentId == studentId)
-                .FirstOrDefault(); // using sync version, avoids async error
+            var progress = await _context.LessonProgresses
+                .FirstOrDefaultAsync(p => p.LessonId == lessonId && p.StudentId == studentId);
 
             if (progress == null)
             {
@@ -171,7 +176,8 @@ namespace Learnify_API.Data.Services
             return true;
         }
 
-        // Get Progress for a Student in a Course
+
+        // Get Progress By Course
         public async Task<IEnumerable<LessonProgressVM>> GetProgressByCourseAsync(int courseId, int studentId)
         {
             return await _context.Lessons
@@ -189,5 +195,47 @@ namespace Learnify_API.Data.Services
                 })
                 .ToListAsync();
         }
+
+
+        // Get Lessons By Instructor
+        public async Task<IEnumerable<LessonVM>> GetLessonsByInstructorAsync(int instructorId)
+        {
+            // 👌 أولاً: تأكيد إن الـ Instructor موجود
+            var instructorExists = await _context.Instructors
+                .AnyAsync(i => i.InstructorId == instructorId);
+
+            if (!instructorExists)
+                return new List<LessonVM>(); // أو ترجعي null حسب المتفق عليه
+
+
+            // 👌 ثانياً: جلب الدروس مع Include للـ Course
+            return await _context.Lessons
+                .Include(l => l.Course)
+                .Where(l => l.Course.InstructorId == instructorId)
+                .OrderBy(l => l.Order)
+                .Select(l => new LessonVM
+                {
+                    LessonId = l.LessonId,
+                    CourseId = l.CourseId,
+                    Title = l.Title,
+                    VideoUrl = l.VideoUrl,
+                    Description = l.Description,
+                    Duration = l.Duration,
+                    ContentType = l.ContentType,
+                    AttachmentUrl = l.AttachmentUrl,
+                    IsFreePreview = l.IsFreePreview,
+                    Order = l.Order,
+                    CreatedAt = l.CreatedAt
+                })
+                .ToListAsync();
+        }
+        public async Task<int?> GetInstructorIdByUserId(int userId)
+        {
+            var instructor = await _context.Instructors
+                .FirstOrDefaultAsync(i => i.User.UserId == userId); // ← التصحيح هنا
+
+            return instructor?.InstructorId;
+        }
+
     }
 }
