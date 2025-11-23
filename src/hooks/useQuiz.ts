@@ -16,8 +16,7 @@ interface UpdateQuizData {
   duration: number;
   passingScore: number;
   lessonId: number; // required by backend
-   totalQuestions: number;
-
+  totalQuestions: number;
 }
 const useQuiz = (id?: string) => {
   const queryClient = useQueryClient();
@@ -75,11 +74,21 @@ const useQuiz = (id?: string) => {
       queryClient.invalidateQueries({ queryKey: ["quizzes"] });
     },
   });
+// 🔹 Get quizzes for logged-in instructor automatically
+const getQuizzesByInstructor = () =>
+  useQuery({
+    queryKey: ["quizzes-instructor"],
+    queryFn: async () => {
+      const res = await api.get(Urls.GetQuizzesByInstructor);
+      return res.data;
+    },
+  });
 
   return {
     // Queries
     getQuizById,
     getAllQuizzes,
+    getQuizzesByInstructor,
 
     // Mutations
     addQuizMutation,

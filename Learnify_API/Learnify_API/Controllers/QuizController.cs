@@ -12,7 +12,7 @@ namespace Learnify_API.Controllers
     {
         private readonly QuizService _quizService;
 
-    public QuizController(QuizService quizService)
+        public QuizController(QuizService quizService)
         {
             _quizService = quizService;
         }
@@ -21,60 +21,58 @@ namespace Learnify_API.Controllers
         [HttpGet("get-all")]
         public async Task<ActionResult<List<QuizVM>>> GetAll()
         {
-        // جلب userId من الـ token
-        var userIdClaim =
-        User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier) ??
-        User.FindFirst("userId") ??
-        User.FindFirst("id") ??
-        User.FindFirst("sub");
-        
-        if (userIdClaim == null) return Unauthorized("User not found.");
-        int userId = int.Parse(userIdClaim.Value);
-        
-        // جلب instructorId
-        var instructorId = await _quizService.GetInstructorIdByUserId(userId);
-        if (instructorId == null) return Unauthorized("Instructor profile not found.");
-        
-        // جلب الكويزات الخاصة بالانستركتور
-        var quizzes = await _quizService.GetQuizzesByInstructorAsync(instructorId.Value);
-        if (!quizzes.Any()) return NotFound("No quizzes found for this instructor.");
-        
-        return Ok(quizzes);
+            // جلب userId من الـ token
+            var userIdClaim =
+            User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier) ??
+            User.FindFirst("userId") ??
+            User.FindFirst("id") ??
+            User.FindFirst("sub");
+
+            if (userIdClaim == null) return Unauthorized("User not found.");
+            int userId = int.Parse(userIdClaim.Value);
+
+            // جلب instructorId
+            var instructorId = await _quizService.GetInstructorIdByUserId(userId);
+            if (instructorId == null) return Unauthorized("Instructor profile not found.");
+
+            // جلب الكويزات الخاصة بالانستركتور
+            var quizzes = await _quizService.GetQuizzesByInstructorAsync(instructorId.Value);
+            if (!quizzes.Any()) return NotFound("No quizzes found for this instructor.");
+
+            return Ok(quizzes);
         }
 
         // ================== get-by-id ==================
         [Authorize(Roles = "instructor")]
         [HttpGet("get-by-id/{id}")]
-<<<<<<< HEAD
         //[Authorize] // أي مستخدم مسجل يقدر يشوف كويز واحد
-=======
->>>>>>> bb96b48a14984e482e8fddc936582014c3a89d05
+
         public async Task<ActionResult<QuizVM>> GetById(int id)
         {
-        var userIdClaim =
-        User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier) ??
-        User.FindFirst("userId") ??
-        User.FindFirst("id") ??
-        User.FindFirst("sub");
-        
-        if (userIdClaim == null) return Unauthorized("User not found.");
-        int userId = int.Parse(userIdClaim.Value);
-        
-        var instructorId = await _quizService.GetInstructorIdByUserId(userId);
-        if (instructorId == null) return Unauthorized("Instructor profile not found.");
-        
-        // جلب الكويز
-        var quiz = await _quizService.GetQuizByIdAsync(id);
-        if (quiz == null) return NotFound();
-        
-        // تأكد إن الكويز يخص الانستركتور
-        var course = await _quizService.GetCourseByIdAsync(quiz.CourseId);
-        if (course == null || course.InstructorId != instructorId.Value)
-            return Unauthorized("This quiz does not belong to the instructor.");
-        
-        return Ok(quiz);
+            var userIdClaim =
+            User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier) ??
+            User.FindFirst("userId") ??
+            User.FindFirst("id") ??
+            User.FindFirst("sub");
+
+            if (userIdClaim == null) return Unauthorized("User not found.");
+            int userId = int.Parse(userIdClaim.Value);
+
+            var instructorId = await _quizService.GetInstructorIdByUserId(userId);
+            if (instructorId == null) return Unauthorized("Instructor profile not found.");
+
+            // جلب الكويز
+            var quiz = await _quizService.GetQuizByIdAsync(id);
+            if (quiz == null) return NotFound();
+
+            // تأكد إن الكويز يخص الانستركتور
+            var course = await _quizService.GetCourseByIdAsync(quiz.CourseId);
+            if (course == null || course.InstructorId != instructorId.Value)
+                return Unauthorized("This quiz does not belong to the instructor.");
+
+            return Ok(quiz);
         }
-        
+
 
         // ================== POST ==================
 

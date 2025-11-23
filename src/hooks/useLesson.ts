@@ -112,11 +112,22 @@ const useLesson = (id?: string) => {
     },
   });
 
+
+  // 🔹 Get lessons for logged-in instructor automatically
+const getLessonsByInstructor = () =>
+  useQuery({
+    queryKey: ["lessons-instructor"],
+    queryFn: async () => {
+      const res = await api.get(Urls.GetLessonsByInstructor);
+      return res.data;
+    },
+  });
   return {
     // Queries
     getLessonById,
     getLessonsByCourse,
     getLessonProgress,
+    getLessonsByInstructor,
 
     // Mutations
     addLessonMutation,

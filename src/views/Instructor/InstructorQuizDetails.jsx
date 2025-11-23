@@ -132,7 +132,7 @@ export default function InstructorQuizDetails() {
                 <div className="flex flex-col gap-2">
                   <button
                     onClick={() =>
-                      navigate(`/InstructorLayout/EditQuestion/${q.id}`)
+                       navigate(`/InstructorLayout/EditQuiz/${quiz.id}/${quiz.courseId}/${quiz.lessonId}`)
                     }
                     className="text-blue-600 hover:underline"
                   >

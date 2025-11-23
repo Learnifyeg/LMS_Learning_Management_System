@@ -2312,13 +2312,10 @@
             "format": "int32"
           },
           "courseId": {
-<<<<<<< HEAD
             "type": "integer",
             "format": "int32"
           },
           "lessonId": {
-=======
->>>>>>> bb96b48a14984e482e8fddc936582014c3a89d05
             "type": "integer",
             "format": "int32"
           },

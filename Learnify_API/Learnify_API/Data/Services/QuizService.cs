@@ -23,10 +23,7 @@ namespace Learnify_API.Data.Services
             return quizzes.Select(q => new QuizVM
             {
                 Id = q.QuizId,
-<<<<<<< HEAD
                 LessonId = q.LessonId,
-=======
->>>>>>> bb96b48a14984e482e8fddc936582014c3a89d05
                 CourseId = q.CourseId,
                 Title = q.Title,
                 Duration = q.Duration,           // دلوقتي بيجي من DB
@@ -49,10 +46,7 @@ namespace Learnify_API.Data.Services
             return new QuizVM
             {
                 Id = quiz.QuizId,
-<<<<<<< HEAD
                 LessonId = quiz.LessonId,
-=======
->>>>>>> bb96b48a14984e482e8fddc936582014c3a89d05
                 CourseId = quiz.CourseId,
                 Title = quiz.Title,
                 Duration = quiz.Duration,
@@ -76,10 +70,7 @@ namespace Learnify_API.Data.Services
 
             var quiz = new Quiz
             {
-<<<<<<< HEAD
                 LessonId = quizVM.LessonId,
-=======
->>>>>>> bb96b48a14984e482e8fddc936582014c3a89d05
                 CourseId = quizVM.CourseId,
                 Title = quizVM.Title,
                 Duration = quizVM.Duration,
@@ -110,10 +101,7 @@ namespace Learnify_API.Data.Services
 
             quiz.Title = quizVM.Title;
             quiz.CourseId = quizVM.CourseId;
-<<<<<<< HEAD
             quiz.LessonId = quizVM.LessonId;
-=======
->>>>>>> bb96b48a14984e482e8fddc936582014c3a89d05
             quiz.Duration = quizVM.Duration;
             quiz.PassingScore = quizVM.PassingScore;
             quiz.TotalMarks = quizVM.TotalMarks;

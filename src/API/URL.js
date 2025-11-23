@@ -50,6 +50,7 @@ const Urls = {
   GetLessonByCourse: "Lesson/by-course/",
   CompleteLesson: "Lesson/complete/",
   LessonProgress: "Lesson/progress/",
+  GetLessonsByInstructor: "/Lesson/all-by-instructor",
   // Student 
   saveCourse: "/Student/save-course",
   savedCourses: "/Student/saved-courses",
@@ -62,7 +63,8 @@ const Urls = {
   GetAllQuizzes: "Quiz/get-all",
   AddQuiz: "Quiz/add",
   UpdateQuiz: "Quiz/update/",
-  DeleteQuiz: "Quiz/delete/"
+  DeleteQuiz: "Quiz/delete/",
+  GetQuizzesByInstructor: "/Quiz/by-instructor"  
 };
 
 export default Urls;
