@@ -27,7 +27,7 @@ namespace Learnify_API.Controllers
 
         // ================== GET BY ID ==================
         [HttpGet("get-by-id/{id}")]
-        [Authorize] // أي مستخدم مسجل يقدر يشوف كويز واحد
+        //[Authorize] // أي مستخدم مسجل يقدر يشوف كويز واحد
         public async Task<ActionResult<QuizVM>> GetById(int id)
         {
             var quiz = await _quizService.GetQuizByIdAsync(id);

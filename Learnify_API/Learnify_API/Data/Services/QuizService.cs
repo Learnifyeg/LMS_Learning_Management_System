@@ -23,11 +23,12 @@ namespace Learnify_API.Data.Services
             return quizzes.Select(q => new QuizVM
             {
                 Id = q.QuizId,
-                LessonId = q.CourseId,
+                LessonId = q.LessonId,
+                CourseId = q.CourseId,
                 Title = q.Title,
                 Duration = q.Duration,           // دلوقتي بيجي من DB
                 PassingScore = q.PassingScore,   // دلوقتي بيجي من DB
-                TotalQuestions = q.Questions?.Count ?? 0,
+                TotalQuestions = q.TotalQuestions,
                 QuestionsEndpoint = "questions",
                 Posted = $"{(DateTime.Now - q.CreatedAt).Days} days ago"
             }).ToList();
@@ -45,11 +46,13 @@ namespace Learnify_API.Data.Services
             return new QuizVM
             {
                 Id = quiz.QuizId,
-                LessonId = quiz.CourseId,
+                LessonId = quiz.LessonId,
+                CourseId = quiz.CourseId,
                 Title = quiz.Title,
                 Duration = quiz.Duration,
                 PassingScore = quiz.PassingScore,
-                TotalQuestions = quiz.Questions?.Count ?? 0,
+                TotalMarks = quiz.TotalMarks,
+                TotalQuestions = quiz.TotalQuestions,
                 QuestionsEndpoint = "questions",
                 Posted = $"{(DateTime.Now - quiz.CreatedAt).Days} days ago"
             };
@@ -60,21 +63,24 @@ namespace Learnify_API.Data.Services
         {
             var quiz = new Quiz
             {
-                CourseId = quizVM.LessonId,
+                LessonId = quizVM.LessonId,
+                CourseId = quizVM.CourseId,
                 Title = quizVM.Title,
                 Duration = quizVM.Duration,
                 PassingScore = quizVM.PassingScore,
+                TotalMarks = quizVM.TotalMarks,
+                TotalQuestions = quizVM.TotalQuestions,
                 CreatedAt = DateTime.Now
             };
 
             _context.Quizzes.Add(quiz);
             await _context.SaveChangesAsync();
 
-            // تحديث الـ VM بعد الإنشاء
-            quizVM.Id = quiz.QuizId;
-            quizVM.TotalQuestions = 0;
-            quizVM.Posted = "0 days ago";
-            quizVM.QuestionsEndpoint = "questions";
+            //// تحديث الـ VM بعد الإنشاء
+            //quizVM.Id = quiz.QuizId;
+            //quizVM.TotalQuestions = 0;
+            //quizVM.Posted = "0 days ago";
+            //quizVM.QuestionsEndpoint = "questions";
 
             return quizVM;
         }
@@ -86,9 +92,13 @@ namespace Learnify_API.Data.Services
             if (quiz == null) return null;
 
             quiz.Title = quizVM.Title;
-            quiz.CourseId = quizVM.LessonId;
+            quiz.CourseId = quizVM.CourseId;
+            quiz.LessonId = quizVM.LessonId;
             quiz.Duration = quizVM.Duration;
             quiz.PassingScore = quizVM.PassingScore;
+            quiz.TotalMarks = quizVM.TotalMarks;
+            quiz.TotalQuestions = quizVM.TotalQuestions;
+
             //quiz.TotalQuestions = quizVM.TotalQuestions; // <-- added
 
             await _context.SaveChangesAsync();

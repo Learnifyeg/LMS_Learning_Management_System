@@ -63,10 +63,13 @@ export default function InstructorQuizDetails() {
             <strong>Duration:</strong> {quiz.duration} seconds
           </div>
           <div>
+            <strong>Total Marks:</strong> {quiz.totalMarks}
+          </div>
+          <div>
             <strong>Passing Score:</strong> {quiz.passingScore}
           </div>
           <div>
-            <strong>Total Questions:</strong> {quiz.questions?.length || 0}
+            <strong>Total Questions:</strong> {quiz.totalQuestions || 0}
           </div>
           <div>
             <strong>Posted:</strong> {quiz.posted}
@@ -76,7 +79,7 @@ export default function InstructorQuizDetails() {
         <div className="mt-4 flex gap-4">
           <button
             onClick={() =>
-              navigate(`/InstructorLayout/EditQuiz/${quiz.id}`)
+              navigate(`/InstructorLayout/EditQuiz/${quiz.id}/${quiz.courseId}/${quiz.lessonId}`)
             }
             className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90"
           >

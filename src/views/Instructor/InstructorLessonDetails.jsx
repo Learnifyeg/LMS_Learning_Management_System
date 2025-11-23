@@ -103,7 +103,7 @@ export default function InstructorLessonDetails() {
             <button
               className="btn btn-hover border border-input bg-transparent text-text-primary"
               onClick={() =>
-                navigate(`/InstructorLayout/CreateQuiz/${lesson.courseId}`)
+                navigate(`/InstructorLayout/CreateQuiz/${lesson.courseId}/${lesson.lessonId}`)
               }
             >
               + Add Quiz
@@ -182,7 +182,7 @@ export default function InstructorLessonDetails() {
                     <li
                       key={index}
                       className="card p-4 cursor-pointer hover:bg-muted card-hover border border-border"
-                      onClick={() => navigate(`/InstructorLayout/EditQuiz/${quiz.id}`)}
+                      onClick={() => navigate(`/InstructorLayout/InstQuizDetails/${quiz.id}/${quiz.courseId}/${quiz.lessonId  }`)}
                     >
                       <div className="flex justify-between items-center">
                         <div>
@@ -199,7 +199,7 @@ export default function InstructorLessonDetails() {
                   <p className="text-text-secondary mb-4">No quizzes available for this lesson.</p>
                   <button
                     className="btn btn-primary btn-hover"
-                    onClick={() => navigate(`/InstructorLayout/CreateQuiz/${lesson.courseId}`)}
+                    onClick={() => navigate(`/InstructorLayout/CreateQuiz/${lesson.courseId}/${lesson.lessonId}`)}
                   >
                     Create First Quiz
                   </button>
@@ -265,7 +265,7 @@ export default function InstructorLessonDetails() {
               </button>
               <button
                 className="w-full btn btn-secondary btn-hover"
-                onClick={() => navigate(`/InstructorLayout/CreateQuiz/${lesson.courseId}`)}
+                onClick={() => navigate(`/InstructorLayout/CreateQuiz/${lesson.courseId}/${lesson.lessonId}`)}
               >
                 Add New Quiz
               </button>

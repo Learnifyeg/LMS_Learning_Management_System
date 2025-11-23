@@ -183,8 +183,8 @@ export const router = createBrowserRouter([
           { path: "CreateCourse", element: <CreateCourse /> },
           { path: "CreateLesson/:courseid", element: <CreateLesson /> },
           { path: "EditLesson/:lessonid", element: <EditLesson /> },
-          { path: "CreateQuiz/:courseid", element: <CreateQuiz /> },
-          { path: "EditQuiz/:quizid", element: <EditQuiz /> },
+          { path: "CreateQuiz/:courseid/:lessonId", element: <CreateQuiz /> },
+          { path: "EditQuiz/:quizid/:courseId/:lessonId", element: <EditQuiz /> },
           { path: "CreateCourse/:courseid", element: <CreateCourse /> },
           {
             path: "InstCourseDetails/:id",
@@ -195,7 +195,7 @@ export const router = createBrowserRouter([
             element: <InstructorLessonDetails />,
           },
           {
-            path: "InstQuizDetails/:quizid",
+            path: "InstQuizDetails/:quizid/:courseId/:lessonId",
             element: <InstructorQuizDetails />,
           },
           { path: "AllStudents", element: <AllStudents /> },

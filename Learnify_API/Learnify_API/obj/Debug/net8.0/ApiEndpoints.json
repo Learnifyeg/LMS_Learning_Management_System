@@ -528,7 +528,12 @@
         "IsRequired": false
       },
       {
-        "Name": "image",
+        "Name": "feedbackimage",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "imagefile",
         "Type": "Microsoft.AspNetCore.Http.IFormFile",
         "IsRequired": false
       }

@@ -82,50 +82,31 @@ export default function StuCourseDetails() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                    <button
-                      onClick={() => {
-                        {
-                          isSaved
-                            ? toast.custom((t) => (
-                                <ConfirmToast
-                                  message="Are you sure you want to remove this course from saved?"
-                                  onConfirm={() => {
-                                    removeSavedCourse.mutate(course.id, {
-                                      onSuccess: () =>
-                                        toast.success(
-                                          "Course removed from saved!"
-                                        ),
-                                      onError: () =>
-                                        toast.error("Failed to remove course"),
-                                    });
-                                  }}
-                                  onCancel={() => toast.dismiss(t.id)}
-                                />
-                              ))
-                            : toast.custom((t) => (
-                                <ConfirmToast
-                                  message="Are you sure you want to remove this course from saved?"
-                                  onConfirm={() => {
-                                    removeEnrollment.mutate(course.id, {
-                                      onSuccess: () =>
-                                        toast.success(
-                                          "Course removed from saved!"
-                                        ),
-                                      onError: () =>
-                                        toast.error("Failed to remove course"),
-                                    });
-                                  }}
-                                  onCancel={() => toast.dismiss(t.id)}
-                                />
-                              ));
-                        }
-                      }}
-                      className="btn flex-1 py-3 font-semibold bg-red-500 cursor-pointer"
-                    >
-                      {isSaved
-                        ? "Remove from Saved"
-                        : "Remove from Enrollments"}
-                    </button>
+                    {isSaved ? (
+                      <button
+                        onClick={() => {
+                          toast.custom((t) => (
+                            <ConfirmToast
+                              message="Are you sure you want to remove this course from saved?"
+                              onConfirm={() => {
+                                removeSavedCourse.mutate(course.id, {
+                                  onSuccess: () =>
+                                    toast.success("Course removed from saved!"),
+                                  onError: () =>
+                                    toast.error("Failed to remove course"),
+                                });
+                              }}
+                              onCancel={() => toast.dismiss(t.id)}
+                            />
+                          ));
+                        }}
+                        className="btn flex-1 py-3 font-semibold bg-red-500 cursor-pointer"
+                      >
+                        Remove from Saved
+                      </button>
+                    ) : (
+                      <p>Your Progress is </p>
+                    )}
 
                     {isSaved ? (
                       <button
@@ -148,7 +129,7 @@ export default function StuCourseDetails() {
                           });
                         }}
                       >
-                        Buy Now
+                        Checkout Now
                       </button>
                     ) : (
                       ""
@@ -259,14 +240,14 @@ export default function StuCourseDetails() {
                                   : ""
                               }`}
                               onClick={() => {
-                                if (isEnrolled) {
+                                // if (isEnrolled) {
                                   // Navigate to lesson details with lesson id
-                                  navigate(`/lesson/${lesson.id}`);
-                                } else {
-                                  toast.error(
-                                    "You must enroll in the course to view lessons!"
-                                  );
-                                }
+                                  navigate(`/StudentLayout/StudentLessonPage/${lesson.lessonId}`);
+                                // } else {
+                                //   toast.error(
+                                //     "You must enroll in the course to view lessons!"
+                                //   );
+                                // }
                               }}
                             >
                               <div className="flex items-center justify-between">
@@ -332,7 +313,7 @@ export default function StuCourseDetails() {
                                   </div>
                                 </div>
                                 <span className="text-text-secondary text-sm">
-                                  Score: {quiz.passingScore || "70%"}
+                                  Score: {quiz.totalMarks || "--"}
                                 </span>
                               </div>
                             </div>

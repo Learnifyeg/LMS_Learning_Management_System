@@ -71,7 +71,7 @@ export default function CourseDetails() {
                     <span className="text-lg">+</span>
                     Add Lesson
                   </button>
-                  <button
+                  {/* <button
                     className="btn btn-outline border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2"
                     onClick={() =>
                       navigate(`/InstructorLayout/CreateQuiz/${id}`)
@@ -79,7 +79,7 @@ export default function CourseDetails() {
                   >
                     <span className="text-lg">+</span>
                     Add Quiz
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -185,7 +185,7 @@ export default function CourseDetails() {
                               key={idx}
                               onClick={() =>
                                 navigate(
-                                  `/InstructorLayout/InstQuizDetails/${quiz.id}`
+                                  `/InstructorLayout/InstQuizDetails/${quiz.id}/${quiz.courseId}/${quiz.lessonId}`
                                 )
                               }
                               className="p-6 bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] hover:shadow-md transition-all duration-300 cursor-pointer"

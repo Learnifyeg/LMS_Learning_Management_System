@@ -9,6 +9,7 @@ namespace Learnify_API.Data.Models
         public int QuizId { get; set; }
 
         public int CourseId { get; set; }
+        public int LessonId { get; set; }
         [ForeignKey("CourseId")]
         public Course Course { get; set; } = null!;
 
@@ -23,7 +24,9 @@ namespace Learnify_API.Data.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
+
         public ICollection<Question>? Questions { get; set; }
+        public int TotalQuestions { get; set; }
     }
 
 }

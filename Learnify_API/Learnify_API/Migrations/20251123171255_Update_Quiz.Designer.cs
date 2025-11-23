@@ -4,6 +4,7 @@ using Learnify_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Learnify_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251123171255_Update_Quiz")]
+    partial class Update_Quiz
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -274,8 +277,8 @@ namespace Learnify_API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("image")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("image")
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 
@@ -548,9 +551,6 @@ namespace Learnify_API.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("TotalMarks")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalQuestions")
                         .HasColumnType("int");
 
                     b.HasKey("QuizId");

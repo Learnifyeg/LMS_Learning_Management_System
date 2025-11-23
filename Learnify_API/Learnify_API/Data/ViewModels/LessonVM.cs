@@ -40,6 +40,7 @@
         public bool IsFreePreview { get; set; }
         public int Order { get; set; }
         public DateTime CreatedAt { get; set; }
+        public List<QuizVM>? Quizzes { get; set; }
     }
 
     // Progress tracking view model

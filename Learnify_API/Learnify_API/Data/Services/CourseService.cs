@@ -150,7 +150,8 @@ namespace Learnify_API.Data.Services
                   .Select(q => new QuizVM
                   {
                       Id = q.QuizId,
-                      LessonId = q.CourseId, // or q.LessonId if needed
+                      CourseId = q.CourseId, // or q.LessonId if needed
+                      LessonId = q.LessonId,
                       Title = q.Title,
                       Duration = q.Duration,
                       PassingScore = q.PassingScore,

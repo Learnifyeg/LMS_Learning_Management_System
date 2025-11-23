@@ -40,4 +40,5 @@ public class Lesson
 
     // Navigation Property
     public ICollection<LessonProgress>? LessonProgresses { get; set; }
+
 }

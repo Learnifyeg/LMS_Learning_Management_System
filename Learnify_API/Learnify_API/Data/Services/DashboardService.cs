@@ -1,5 +1,4 @@
 ﻿using Learnify_API.Data;
-using Learnify_API.Data.Models;
 using Learnify_API.Data.Services;
 using Learnify_API.Data.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +30,7 @@ public class DashboardService
             Email = student.Email,
             Department = student.Student != null ? student.Student.Department : null, // تحقق من null
 
-            //   TotalCourses = await _context.Courses.Where(x => x.Enrollments ==  ).CountAsync(),
+            //TotalCourses = await _context.Courses.Where(x => x.Enrollments ).CountAsync(),
             //   CompletedCourses = await _context.Courses.Where(x => x.StudentId == studentId && x.IsCompleted).CountAsync(),
             //  CertificatesEarned = await _context.Certificates.Where(x => x.StudentId == studentId).CountAsync(),
 

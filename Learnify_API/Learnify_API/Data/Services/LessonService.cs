@@ -78,6 +78,20 @@ namespace Learnify_API.Data.Services
         {
             var lesson = await _context.Lessons.FindAsync(lessonId);
             if (lesson == null) return null;
+            var quizzes = await _context.Quizzes
+               .Where(q => q.LessonId == lessonId)
+               .Select(q => new QuizVM
+               {
+                   Id = q.QuizId,
+                   LessonId = q.LessonId,
+                   Title = q.Title,
+                   Duration = q.Duration,
+                   PassingScore = q.PassingScore,
+                   TotalQuestions = q.TotalQuestions,
+                   QuestionsEndpoint = $"/api/quizzes/{q.QuizId}/questions",
+
+               })
+       .ToListAsync();
 
             return new LessonVM
             {
@@ -91,7 +105,10 @@ namespace Learnify_API.Data.Services
                 AttachmentUrl = lesson.AttachmentUrl,
                 IsFreePreview = lesson.IsFreePreview,
                 Order = lesson.Order,
-                CreatedAt = lesson.CreatedAt
+                CreatedAt = lesson.CreatedAt,
+                Quizzes = quizzes
+
+
             };
         }
 
@@ -113,9 +130,12 @@ namespace Learnify_API.Data.Services
                     AttachmentUrl = l.AttachmentUrl,
                     IsFreePreview = l.IsFreePreview,
                     Order = l.Order,
-                    CreatedAt = l.CreatedAt
+                    CreatedAt = l.CreatedAt,
+
+
                 })
                 .ToListAsync();
+
         }
 
 

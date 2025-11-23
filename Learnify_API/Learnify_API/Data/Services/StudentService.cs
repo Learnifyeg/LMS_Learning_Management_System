@@ -177,14 +177,28 @@ namespace Learnify_API.Data.Services
         public async Task<IEnumerable<CourseVM>> GetEnrollmentsAsync(int studentId)
         {
             return await _context.Enrollments
-                .Include(e => e.Course)
-                .Where(e => e.StudentId == studentId)
-                .Select(e => new CourseVM
+                .Include(c => c.Course)
+                .Where(c => c.StudentId == studentId)
+                .Select(c => new CourseVM
                 {
-                    Id = e.Course.CourseId,
-                    Title = e.Course.Title,
-                    Image = e.Course.Image,
-                    Price = e.Course.Price
+
+                    Id = c.Course.CourseId,
+                    Title = c.Course.Title,
+                    Category = c.Course.Category ?? "",
+                    Description = c.Course.Description ?? "",  // ← ADD THIS
+                    Author = c.Course.Instructor.User.FullName ?? "Unknown",
+                    AuthorId = c.Course.InstructorId,
+                    Views = c.Course.Views,
+                    Posted = c.Course.Posted,
+                    Rating = c.Course.Rating,
+                    Hours = c.Course.Hours,
+                    Price = c.Course.Price,
+                    Tag = c.Course.Tag,
+                    Image = c.Course.Image,
+                    CertificateIncluded = c.Course.CertificateIncluded,
+                    Duration = c.Course.Duration,
+                    InstructorId = c.Course.InstructorId,
+                    IsApproved = c.Course.IsApproved
                 }).ToListAsync();
         }
 

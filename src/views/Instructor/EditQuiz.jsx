@@ -6,17 +6,22 @@ import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import ConfirmToast from "@/utils/ConfirmToast";
 
 export default function EditQuiz() {
-  const { quizid: quizId, courseid: courseId } = useParams();
+  const {
+    quizid: quizId,
+    courseid: courseId,
+    lessonId: lessonId,
+  } = useParams();
   const navigate = useNavigate();
-  const { getQuizById, updateQuizMutation, deleteQuizMutation } = useQuiz(quizId);
+  const { getQuizById, updateQuizMutation, deleteQuizMutation } =
+    useQuiz(quizId);
 
   const { data: quiz, isLoading } = getQuizById(quizId);
 
   const [form, setForm] = useState({
     title: "",
-    duration: 0,
-    passingScore: 50,
-    totalQuestions: 0,
+    // duration: 0,
+    // passingScore: 50,
+    // totalQuestions: 0,
   });
 
   useEffect(() => {
@@ -26,7 +31,9 @@ export default function EditQuiz() {
         duration: quiz.duration,
         passingScore: quiz.passingScore,
         totalQuestions: quiz.totalQuestions || 0,
-        lessonId: Number(courseId), 
+        totalMarks: quiz.totalMarks || 0,
+        lessonId: Number(lessonId),
+        courseId: Number(courseId),
       });
     }
   }, [quiz]);
@@ -36,43 +43,46 @@ export default function EditQuiz() {
     setForm((prev) => ({
       ...prev,
       [name]:
-        name === "duration" || name === "passingScore" || name === "totalQuestions"
+        name === "duration" ||
+        name === "passingScore" ||
+        name === "totalQuestions" ||
+        name === "totalMarks"
           ? Number(value)
           : value,
     }));
   };
 
-const handleUpdate = async (e) => {
-  e.preventDefault();
-  try {
-    const { ...payload } = form; // exclude totalQuestions
-    await updateQuizMutation.mutateAsync({ id: quizId, ...payload });
-    toast.success("Quiz updated successfully!");
-    navigate(`/InstructorLayout/InstQuizDetails/${quizId}`);
-  } catch (err) {
-    console.error(err);
-    toast.error("Failed to update quiz.");
-  }
-};
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const { ...payload } = form; // exclude totalQuestions
+      await updateQuizMutation.mutateAsync({ id: quizId, ...payload ,lessonId: Number(lessonId) , courseId :Number(courseId)  });
+      toast.success("Quiz updated successfully!");
+      navigate(`/InstructorLayout/InstQuizDetails/${quizId}/${courseId}/${lessonId}`);
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to update quiz.");
+    }
+  };
 
   const handleDelete = async () => {
-   toast.custom((t) => (
-    <ConfirmToast
-      message="Are you sure you want to delete this quiz?"
-      onConfirm={async () => {
-        toast.dismiss(t.id);
-        try {
-          await deleteQuizMutation.mutateAsync(quizId);
-          toast.success("Quiz deleted successfully!");
-          navigate(`/InstructorLayout/InstCourseDetails/${courseId}`);
-        } catch (err) {
-          console.error(err);
-          toast.error("Failed to delete quiz");
-        }
-      }}
-      onCancel={() => toast.dismiss(t.id)}
-    />
-  ));
+    toast.custom((t) => (
+      <ConfirmToast
+        message="Are you sure you want to delete this quiz?"
+        onConfirm={async () => {
+          toast.dismiss(t.id);
+          try {
+            await deleteQuizMutation.mutateAsync(quizId);
+            toast.success("Quiz deleted successfully!");
+            navigate(`/InstructorLayout/InstCourseDetails/${courseId}`);
+          } catch (err) {
+            console.error(err);
+            toast.error("Failed to delete quiz");
+          }
+        }}
+        onCancel={() => toast.dismiss(t.id)}
+      />
+    ));
   };
 
   if (isLoading) {
@@ -107,7 +117,17 @@ const handleUpdate = async (e) => {
           className="border p-3 rounded"
           required
         />
-
+        <label className="font-semibold">Total Marks</label>
+        <input
+          type="number"
+          name="totalMarks"
+          value={form.totalMarks}
+          onChange={handleChange}
+          className="border p-3 rounded"
+          min={0}
+          max={100}
+          required
+        />
         <label className="font-semibold">Passing Score</label>
         <input
           type="number"

@@ -4,6 +4,8 @@
     {
         public string Email { get; set; }
         public string Massage { get; set; }
-        public IFormFile? image { get; set; }
+        public string? feedbackimage { get; set; }
+
+        public IFormFile? imagefile { get; set; }
     }
 }

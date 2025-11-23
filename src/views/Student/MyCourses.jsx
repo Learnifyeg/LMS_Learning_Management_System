@@ -26,6 +26,7 @@ export default function MyCourses() {
     );
 
   const courses = myEnrollments.data || [];
+  console.log(courses)
 
   return (
     <div className="p-6 flex flex-col items-center gap-4">

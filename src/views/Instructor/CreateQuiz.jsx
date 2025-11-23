@@ -5,15 +5,15 @@ import toast, { Toaster } from "react-hot-toast";
 import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 
 export default function CreateQuiz() {
-  const { courseid: courseId } = useParams();
+  const { courseid: courseId , lessonId : lessonId } = useParams();
   const navigate = useNavigate();
   const { addQuizMutation } = useQuiz();
 
   const [form, setForm] = useState({
     title: "",
-    duration: 0,
-    passingScore: 50,
-    totalQuestions: 0,
+    // duration: 0,
+    // passingScore: 50,
+    // totalQuestions: 0,
   });
 
   const handleChange = (e) => {
@@ -21,7 +21,7 @@ export default function CreateQuiz() {
     setForm((prev) => ({
       ...prev,
       [name]:
-        name === "duration" || name === "passingScore" || name === "totalQuestions"
+        name === "duration" || name === "passingScore" || name === "totalQuestions" || name ==="totalMarks"
           ? Number(value)
           : value,
     }));
@@ -30,7 +30,7 @@ export default function CreateQuiz() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addQuizMutation.mutateAsync({ ...form, lessonId: Number(courseId) });
+      await addQuizMutation.mutateAsync({ ...form, lessonId: Number(lessonId) , courseId :Number(courseId)  });
       toast.success("Quiz created successfully!");
       navigate(`/InstructorLayout/InstCourseDetails/${courseId}`);
     } catch (err) {
@@ -66,6 +66,18 @@ export default function CreateQuiz() {
           required
         />
 
+        <label className="font-semibold">Total Marks</label>
+        <input
+          type="number"
+          name="totalMarks"
+          value={form.totalMarks}
+          onChange={handleChange}
+          placeholder="Enter Total Marks"
+          className="border p-3 rounded"
+          // min={0}
+          // max={100}
+          required
+        />
         <label className="font-semibold">Passing Score</label>
         <input
           type="number"

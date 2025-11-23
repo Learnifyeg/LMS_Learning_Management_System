@@ -56,8 +56,16 @@ namespace Learnify_API
             builder.Services.AddSwaggerGen();
 
             // --------------------------------- Identity --------------------------------------------
-            builder.Services.AddIdentity<AppUser, IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>();
+            builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequiredLength = 8;
+                options.SignIn.RequireConfirmedAccount = true;
+            }
+           )
+              .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
             // --------------------------------- Identity --------------------------------------------
 
 
@@ -167,7 +175,7 @@ namespace Learnify_API
             app.UseAuthorization();
 
             app.MapControllers();
-
+            AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
             app.Run();
         }
     }

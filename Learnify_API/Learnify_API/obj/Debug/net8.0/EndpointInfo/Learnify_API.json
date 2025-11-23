@@ -835,7 +835,10 @@
                   "Massage": {
                     "type": "string"
                   },
-                  "image": {
+                  "feedbackimage": {
+                    "type": "string"
+                  },
+                  "imagefile": {
                     "type": "string",
                     "format": "binary"
                   }
@@ -848,7 +851,10 @@
                 "Massage": {
                   "style": "form"
                 },
-                "image": {
+                "feedbackimage": {
+                  "style": "form"
+                },
+                "imagefile": {
                   "style": "form"
                 }
               }
@@ -2115,6 +2121,13 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "quizzes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuizVM"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2222,6 +2235,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "courseId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "lessonId": {
             "type": "integer",
             "format": "int32"
@@ -2235,6 +2252,10 @@
             "format": "int32"
           },
           "passingScore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalMarks": {
             "type": "integer",
             "format": "int32"
           },
