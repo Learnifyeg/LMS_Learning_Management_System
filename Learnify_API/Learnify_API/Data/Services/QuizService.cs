@@ -195,25 +195,25 @@ namespace Learnify_API.Data.Services
                 IsApproved = c.IsApproved,
 
                 Lessons = c.Lessons != null
-    ? c.Lessons.Select(l => new LessonVM
-    {
-        LessonId = l.LessonId,
-        Title = l.Title,
-        Duration = l.Duration,
-        ContentType = l.ContentType
-    }).ToList()
-    : new List<LessonVM>(),
+                    ? c.Lessons.Select(l => new LessonVM
+                    {
+                        LessonId = l.LessonId,
+                        Title = l.Title,
+                        Duration = l.Duration,
+                        ContentType = l.ContentType
+                    }).ToList()
+                    : new List<LessonVM>(),
 
                 Quizzes = c.Quizzes != null
-    ? c.Quizzes.Select(q => new QuizVM
-    {
-        Id = q.QuizId,
-        Title = q.Title,
-        Duration = q.Duration,
-        PassingScore = q.PassingScore,
-        TotalQuestions = q.Questions?.Count ?? 0
-    }).ToList()
-    : new List<QuizVM>()
+                    ? c.Quizzes.Select(q => new QuizVM
+                    {
+                        Id = q.QuizId,
+                        Title = q.Title,
+                        Duration = q.Duration,
+                        PassingScore = q.PassingScore,
+                        TotalQuestions = q.Questions?.Count ?? 0
+                    }).ToList()
+                    : new List<QuizVM>()
 
 
             };

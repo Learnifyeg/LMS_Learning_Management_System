@@ -2,7 +2,6 @@
 using Learnify_API.Data.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Learnify_API.Controllers
@@ -53,7 +52,7 @@ namespace Learnify_API.Controllers
         }
 
         //  Get Lesson by Id
-        [Authorize(Roles = "instructor")]
+        //[Authorize(Roles = "instructor")]
 
         [HttpGet("{lessonId}")]
         public async Task<IActionResult> GetLessonById(int lessonId)

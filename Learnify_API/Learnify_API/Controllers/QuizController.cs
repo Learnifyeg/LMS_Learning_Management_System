@@ -43,7 +43,7 @@ namespace Learnify_API.Controllers
         }
 
         // ================== get-by-id ==================
-        [Authorize(Roles = "instructor")]
+        //[Authorize(Roles = "instructor")]
         [HttpGet("get-by-id/{id}")]
         //[Authorize] // أي مستخدم مسجل يقدر يشوف كويز واحد
 

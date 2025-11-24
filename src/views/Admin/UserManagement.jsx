@@ -15,7 +15,7 @@ import Urls from "@/API/URL";
 const USERS_PER_PAGE = 10;
 const UsersEndPoint = Urls.Users; // "Admin/get-all-users"
 const DeleteUsersEndPoint = Urls.DeleteUser; // "Admin/delete-user-by"
-const UpdateUsersEndPoint =Urls.UpdateUser; // "Admin/update-user-by"
+const UpdateUsersEndPoint = Urls.UpdateUser; // "Admin/update-user-by"
 const ApproveUserEndPoint = Urls.ApproveUser; // "Admin/approve-user-by"
 function UserManagement() {
   const [users, setUsers] = useState([]);
@@ -318,65 +318,100 @@ function UserManagement() {
           ))
         )}
       </div>
-
-      {/* View Modal */}
+      {/* View User Modal */}
       {selectedUser && (
         <div
-          className="fixed inset-0  bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm animate-fade-in-up"
           onClick={closeModal}
         >
           <div
-            className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-[400px] p-6 relative"
+            className="bg-surface dark:bg-card rounded-lg shadow-lg w-[400px] max-w-[90vw] p-6 relative border border-border"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Close Button */}
             <button
-              className="absolute top-3 right-4 text-gray-600 hover:text-red-500"
+              className="absolute top-3 right-4 text-muted-foreground hover:text-destructive transition-colors duration-200 p-1 rounded-full hover:bg-muted/50"
               onClick={closeModal}
             >
-              ✕
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
             </button>
 
-            <div className="text-center">
+            {/* Header with Avatar */}
+            <div className="text-center mb-6">
               <img
                 src={Image}
-                className="w-24 h-24 rounded-full mx-auto mb-3"
+                className="w-24 h-24 rounded-full mx-auto mb-3 object-cover border-2 border-border"
                 alt={selectedUser.fullName}
               />
-              <h2 className="text-lg font-semibold">{selectedUser.fullName}</h2>
-              <p className="text-blue-600 capitalize">{selectedUser.role}</p>
-            </div>
-
-            <div className="mt-4 space-y-2 text-sm text-gray-700 dark:text-gray-300">
-              <p>
-                <strong>Email:</strong> {selectedUser.email || "-"}
-              </p>
-              <p>
-                <strong>Phone:</strong> {selectedUser.phone || "-"}
-              </p>
-              <p>
-                <strong>Joined:</strong>{" "}
-                {selectedUser.createdAt
-                  ? new Date(selectedUser.createdAt).toLocaleDateString()
-                  : "-"}
-              </p>
-              <p>
-                <strong>About:</strong>{" "}
-                {selectedUser.about || "No description."}
+              <h2 className="text-xl font-semibold text-text-primary mb-1">
+                {selectedUser.fullName}
+              </h2>
+              <p className="text-primary text-sm capitalize">
+                {selectedUser.role}
               </p>
             </div>
 
-            <div className="flex justify-end mt-6">
+            {/* User Details */}
+            <div className="mt-4 space-y-3 text-sm">
+              <div className="flex justify-between items-center py-2 border-b border-border">
+                <span className="font-medium text-text-secondary">Email:</span>
+                <span className="text-text-primary">
+                  {selectedUser.email || "-"}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center py-2 border-b border-border">
+                <span className="font-medium text-text-secondary">Phone:</span>
+                <span className="text-text-primary">
+                  {selectedUser.phone || "-"}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center py-2 border-b border-border">
+                <span className="font-medium text-text-secondary">Joined:</span>
+                <span className="text-text-primary">
+                  {selectedUser.createdAt
+                    ? new Date(selectedUser.createdAt).toLocaleDateString()
+                    : "-"}
+                </span>
+              </div>
+
+              <div className="py-2">
+                <span className="font-medium text-text-secondary block mb-2">
+                  About:
+                </span>
+                <p className="text-text-primary text-sm leading-relaxed">
+                  {selectedUser.about || "No description available."}
+                </p>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex justify-end gap-3 mt-6">
               <button
+                className="px-4 py-2 text-sm bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200 border border-border"
                 onClick={closeModal}
-                className="px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 mr-2"
               >
                 Close
               </button>
+
               <button
-                className={`px-2 py-1 text-xs rounded-md text-white ${
+                className={`px-4 py-2 text-sm rounded-md text-primary-foreground transition-all duration-300 ${
                   selectedUser.isApproved
-                    ? "bg-green-600 cursor-default"
-                    : "bg-yellow-500 hover:bg-yellow-600"
+                    ? "bg-green-600 cursor-default shadow-md"
+                    : "bg-secondary hover:bg-secondary/90 shadow-md hover:-translate-y-0.5 hover:shadow-lg cursor-pointer"
                 }`}
                 onClick={() => {
                   !selectedUser.isApproved && handleApprove(selectedUser);
@@ -384,7 +419,26 @@ function UserManagement() {
                 }}
                 disabled={selectedUser.isApproved}
               >
-                {selectedUser.isApproved ? "Approved" : "Approve"}
+                {selectedUser.isApproved ? (
+                  <span className="flex items-center gap-1">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    Approved
+                  </span>
+                ) : (
+                  "Approve User"
+                )}
               </button>
             </div>
           </div>

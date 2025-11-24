@@ -8,10 +8,10 @@ import Urls from "@/API/URL";
 import DefaultImage from "../../../public/images/default-avatar.png";
 
 // Endpoints
-const GetPendingCoursesEndPoint = Urls.getPendingCourses;   // "Admin/get-pending-courses"
+const GetPendingCoursesEndPoint = Urls.getPendingCourses; // "Admin/get-pending-courses"
 const GetApprovedCoursesEndPoint = Urls.getApprovedCourses; // "Admin/get-approved-courses"
-const ApproveCourseEndPoint = Urls.approveCourse;           // "Admin/approve-course-by"
-const DeleteCourseEndPoint = Urls.deleteCourse;             // "Admin/delete-course-by"
+const ApproveCourseEndPoint = Urls.approveCourse; // "Admin/approve-course-by"
+const DeleteCourseEndPoint = Urls.deleteCourse; // "Admin/delete-course-by"
 
 const COURSES_PER_PAGE = 10;
 
@@ -27,7 +27,9 @@ function CourseManagement() {
   useEffect(() => {
     setLoading(true);
     const endpoint =
-      filter === "pending" ? GetPendingCoursesEndPoint : GetApprovedCoursesEndPoint;
+      filter === "pending"
+        ? GetPendingCoursesEndPoint
+        : GetApprovedCoursesEndPoint;
 
     api
       .get(endpoint)
@@ -57,7 +59,10 @@ function CourseManagement() {
     );
   }, [courses, search]);
 
-  const totalPages = Math.max(1, Math.ceil(filteredCourses.length / COURSES_PER_PAGE));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredCourses.length / COURSES_PER_PAGE)
+  );
   const pageStartIndex = (currentPage - 1) * COURSES_PER_PAGE;
   const pageCourses = filteredCourses.slice(
     pageStartIndex,
@@ -108,7 +113,9 @@ function CourseManagement() {
 
   const truncateWords = (text = "", limit = 6) => {
     const words = text.split(" ");
-    return words.length > limit ? words.slice(0, limit).join(" ") + "..." : text;
+    return words.length > limit
+      ? words.slice(0, limit).join(" ") + "..."
+      : text;
   };
 
   if (loading) {
@@ -186,11 +193,15 @@ function CourseManagement() {
                       className="w-10 h-10 rounded-md object-cover"
                     />
                   </td>
-                  <td className="px-4 py-3">{truncateWords(course.title, 5)}</td>
+                  <td className="px-4 py-3">
+                    {truncateWords(course.title, 5)}
+                  </td>
                   <td className="px-4 py-3">{course.author || "Unknown"}</td>
                   <td className="px-4 py-3">{course.category || "-"}</td>
                   <td className="px-4 py-3">{course.price || "Free"}</td>
-                  <td className="px-4 py-3">{course.hours ? `${course.hours} hour` : "N/A"}</td>
+                  <td className="px-4 py-3">
+                    {course.hours ? `${course.hours} hour` : "N/A"}
+                  </td>
                   <td className="px-4 py-3 text-center space-x-2">
                     <button
                       className="px-2 py-1 text-xs bg-primary text-white rounded-md hover:bg-blue-600"
@@ -220,71 +231,106 @@ function CourseManagement() {
         </table>
       </div>
 
-      {/* View Modal */}
+      {/* View Course Modal */}
       {selectedCourse && (
         <div
-          className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm animate-fade-in-up"
           onClick={() => setSelectedCourse(null)}
         >
           <div
-            className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-[400px] p-6 relative"
+            className="bg-surface dark:bg-card rounded-lg shadow-lg w-[400px] max-w-[90vw] p-6 relative border border-border"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Close Button */}
             <button
-              className="absolute top-3 right-4 text-gray-600 hover:text-red-500"
+              className="absolute top-3 right-4 text-muted-foreground hover:text-destructive transition-colors duration-200 p-1 rounded-full hover:bg-muted/50"
               onClick={() => setSelectedCourse(null)}
             >
-              ✕
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
             </button>
 
-            <div className="text-center">
+            {/* Header with Image */}
+            <div className="text-center mb-6">
               <img
                 src={selectedCourse.image || DefaultImage}
-                className="w-24 h-24 rounded-md mx-auto mb-3 object-cover"
+                className="w-24 h-24 rounded-md mx-auto mb-3 object-cover border border-border"
+                alt={selectedCourse.title}
               />
-              <h2 className="text-lg font-semibold">{selectedCourse.title}</h2>
-              <p className="text-blue-600">{selectedCourse.author}</p>
+              <h2 className="text-xl font-semibold text-text-primary mb-1">
+                {selectedCourse.title}
+              </h2>
+              <p className="text-primary text-sm">{selectedCourse.author}</p>
             </div>
 
-            <div className="mt-4 space-y-2 text-sm text-gray-700 dark:text-gray-300">
-              <p>
-                <strong>Category:</strong> {selectedCourse.category || "-"}
-              </p>
-              <p>
-                <strong>Price:</strong> {selectedCourse.price || "Free"}
-              </p>
-              <p>
-                <strong>Hours:</strong> {selectedCourse.hours || "N/A"} hour
-              </p>
-              <p>
-                <strong>Description:</strong>{" "}
-                {selectedCourse.description || "No description available."}
-              </p>
+            {/* Course Details */}
+            <div className="mt-4 space-y-3 text-sm text-text-secondary">
+              <div className="flex justify-between items-center py-2 border-b border-border">
+                <span className="font-medium">Category:</span>
+                <span>{selectedCourse.category || "-"}</span>
+              </div>
+
+              <div className="flex justify-between items-center py-2 border-b border-border">
+                <span className="font-medium">Price:</span>
+                <span
+                  className={
+                    selectedCourse.price
+                      ? "text-text-primary font-medium"
+                      : "text-green-600 font-medium"
+                  }
+                >
+                  {selectedCourse.price || "Free"}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center py-2 border-b border-border">
+                <span className="font-medium">Duration:</span>
+                <span>{selectedCourse.hours || "N/A"} hours</span>
+              </div>
+
+              <div className="py-2">
+                <span className="font-medium block mb-2">Description:</span>
+                <p className="text-text-secondary text-sm leading-relaxed">
+                  {selectedCourse.description || "No description available."}
+                </p>
+              </div>
             </div>
 
-            <div className="flex justify-end mt-6">
+            {/* Action Buttons */}
+            <div className="flex justify-end gap-3 mt-6">
               <button
-                className="px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 mr-2"
+                className="px-4 py-2 text-sm bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200 border border-border"
                 onClick={() => setSelectedCourse(null)}
               >
                 Close
               </button>
+
               {!selectedCourse.isApproved && (
                 <button
-                  className="px-4 py-2 text-sm bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+                  className="px-4 py-2 text-sm bg-secondary text-primary-foreground rounded-md hover:bg-secondary/90 transition-all duration-300 shadow-md hover:-translate-y-0.5 hover:shadow-lg cursor-pointer"
                   onClick={() => {
                     handleApprove(selectedCourse);
                     setSelectedCourse(null);
                   }}
                 >
-                  Approve
+                  Approve Course
                 </button>
               )}
             </div>
           </div>
         </div>
       )}
-
       {/* Pagination */}
       <div className="mt-4 flex items-center justify-center">
         <Pagination

@@ -20,6 +20,7 @@ function FeedbackManagement() {
 
   useEffect(() => {
     setLoading(true);
+
     api
       .get(FeedbacksEndpoint)
       .then((res) => {
@@ -46,9 +47,15 @@ function FeedbackManagement() {
     });
   }, [feedbacks, search]);
 
-  const totalPages = Math.max(1, Math.ceil(filteredFeedbacks.length / FEEDBACKS_PER_PAGE));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredFeedbacks.length / FEEDBACKS_PER_PAGE)
+  );
   const startIndex = (currentPage - 1) * FEEDBACKS_PER_PAGE;
-  const pageFeedbacks = filteredFeedbacks.slice(startIndex, startIndex + FEEDBACKS_PER_PAGE);
+  const pageFeedbacks = filteredFeedbacks.slice(
+    startIndex,
+    startIndex + FEEDBACKS_PER_PAGE
+  );
 
   if (loading) {
     return (
@@ -98,12 +105,12 @@ function FeedbackManagement() {
                 <tr key={fb.id ?? idx} className="border-t">
                   <td className="px-4 py-3">
                     <img
-                      src={fb.image || DefaultImage}
+                      src={fb.feedbackimage || DefaultImage}
                       className="w-10 h-10 rounded-full object-cover"
                     />
                   </td>
                   <td className="px-4 py-3">{fb.email || "-"}</td>
-                  <td className="px-4 py-3">{fb.message || "-"}</td>
+                  <td className="px-4 py-3">{fb.massage || "-"}</td>
                 </tr>
               ))
             )}
@@ -114,17 +121,24 @@ function FeedbackManagement() {
       {/* Mobile Cards */}
       <div className="sm:hidden space-y-4">
         {pageFeedbacks.length === 0 ? (
-          <p className="text-center text-gray-500 dark:text-gray-400">No feedback found.</p>
+          <p className="text-center text-gray-500 dark:text-gray-400">
+            No feedback found.
+          </p>
         ) : (
           pageFeedbacks.map((fb, idx) => (
             <div
               key={fb.id ?? idx}
               className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex items-center gap-4"
             >
-              <img src={fb.image || DefaultImage} className="w-14 h-14 rounded-full" />
+              <img
+                src={fb.image || DefaultImage}
+                className="w-14 h-14 rounded-full"
+              />
               <div>
                 <p className="font-semibold">{fb.email}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{fb.message}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {fb.message}
+                </p>
               </div>
             </div>
           ))

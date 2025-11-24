@@ -26,7 +26,7 @@ namespace Learnify_API.Data.Services
                 {
                     Email = vM.Email,
                     Massage = vM.Massage,
-                    image = base64,
+                    feedbackimage = base64,
                 };
                 _context.feedBacks.Add(newfeed);
                 _context.SaveChanges();
