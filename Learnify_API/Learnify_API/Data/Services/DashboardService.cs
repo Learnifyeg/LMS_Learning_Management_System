@@ -7,7 +7,7 @@ public class DashboardService
 {
     private readonly AppDbContext _context;
 
-    public DashboardService(AppDbContext context)
+public DashboardService(AppDbContext context)
     {
         _context = context;
     }
@@ -28,15 +28,16 @@ public class DashboardService
         {
             FullName = student.FullName,
             Email = student.Email,
-            Department = student.Student != null ? student.Student.Department : null, // تحقق من null
+            Department = student.Student?.Department, // تحقق من null
+            Avatar = string.IsNullOrEmpty(student.ProfileImage) ? null : student.ProfileImage,
 
             //TotalCourses = await _context.Courses.Where(x => x.Enrollments ).CountAsync(),
-            //   CompletedCourses = await _context.Courses.Where(x => x.StudentId == studentId && x.IsCompleted).CountAsync(),
-            //  CertificatesEarned = await _context.Certificates.Where(x => x.StudentId == studentId).CountAsync(),
+            //CompletedCourses = await _context.Courses.Where(x => x.StudentId == studentId && x.IsCompleted).CountAsync(),
+            //CertificatesEarned = await _context.Certificates.Where(x => x.StudentId == studentId).CountAsync(),
 
             // مثال للـ quizzes
-            //    QuizzesPassed = await _context.Quizzes.Where(x => x.StudentId == studentId && x.).CountAsync(),
-            //  QuizzesTotal = await _context.Quizzes.Where(x => x. == studentId).CountAsync(),
+            //QuizzesPassed = await _context.Quizzes.Where(x => x.StudentId == studentId && x.).CountAsync(),
+            //QuizzesTotal = await _context.Quizzes.Where(x => x. == studentId).CountAsync(),
 
             //// روابط من جداول موجودة بالفعل
             //LiveSessions = await _context.LiveSessions.ToListAsync(),
@@ -97,9 +98,11 @@ public class DashboardService
         {
             FullName = instructor.FullName,
             Email = instructor.Email,
-            Department = instructor.Instructor != null ? instructor.Instructor.Specialization : null, // تحقق من null
-            TotalStudents = (await stu.GetStudentsByInstructorAsync(instructorId)).Count(),
+            Department = instructor.Instructor?.Specialization, // تحقق من null
+            Role = "instructor",
+            Avatar = string.IsNullOrEmpty(instructor.ProfileImage) ? null : instructor.ProfileImage,
 
+            TotalStudents = (await stu.GetStudentsByInstructorAsync(instructorId)).Count(),
             CoursesCreated = coursesCreated,
             // ProjectsSupervised = await _context..Where(x => x.InstructorId == instructorId).CountAsync(),
             CertificatesIssued = certificatesIssued,
@@ -124,13 +127,15 @@ public class DashboardService
         {
             FullName = admin.FullName,
             Email = admin.Email,
+            Avatar = string.IsNullOrEmpty(admin.ProfileImage) ? null : admin.ProfileImage,
 
             TotalStudents = await _context.Students.CountAsync(),
             TotalInstructors = await _context.Instructors.CountAsync(),
             TotalCourses = await _context.Courses.CountAsync(),
             CertificatesIssued = await _context.Certificates.CountAsync(),
 
-            //        Notifications = await _context.Notifications.Where(x => x.UserId == adminId).ToListAsync()
+            //Notifications = await _context.Notifications.Where(x => x.UserId == adminId).ToListAsync()
         };
     }
+
 }

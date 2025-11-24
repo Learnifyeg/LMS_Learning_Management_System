@@ -969,9 +969,6 @@
                   "Twitter": {
                     "type": "string"
                   },
-                  "Image": {
-                    "type": "string"
-                  },
                   "EducationLevel": {
                     "type": "string"
                   },
@@ -1025,9 +1022,6 @@
                   "style": "form"
                 },
                 "Twitter": {
-                  "style": "form"
-                },
-                "Image": {
                   "style": "form"
                 },
                 "EducationLevel": {

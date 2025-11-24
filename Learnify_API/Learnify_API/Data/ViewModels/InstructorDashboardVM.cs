@@ -9,9 +9,9 @@ namespace Learnify_API.Data.ViewModels
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Department { get; set; }
-
-        // Stats
-        public int TotalStudents { get; set; }
+        public string? Avatar { get; set; } 
+                // Stats
+    public int TotalStudents { get; set; }
         public int CoursesCreated { get; set; }
         public int ProjectsSupervised { get; set; }
         public int CertificatesIssued { get; set; }
@@ -20,4 +20,5 @@ namespace Learnify_API.Data.ViewModels
         //public List<LiveSession> LiveSessions { get; set; }
         //public List<Notification> Notifications { get; set; }
     }
+
 }

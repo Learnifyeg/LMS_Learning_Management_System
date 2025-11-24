@@ -35,11 +35,10 @@ namespace Learnify_API.Data.ViewModels
     public class EditStudentProfileVM
     {
         public string Name { get; set; } = string.Empty;
-        public IFormFile? Avatar { get; set; }
+        public IFormFile? Avatar { get; set; }   // ← الصورة الجديدة فقط
         public string RoleTitle { get; set; } = string.Empty;
         public string About { get; set; } = string.Empty;
 
-        // Student specific fields
         public string? Phone { get; set; }
         public string? Address { get; set; }
         public string? Gender { get; set; }
@@ -49,13 +48,12 @@ namespace Learnify_API.Data.ViewModels
         public string? GitHub { get; set; }
         public string? Facebook { get; set; }
         public string? Twitter { get; set; }
-        public string? Image { get; set; }
         public string? EducationLevel { get; set; }
         public string? Major { get; set; }
         public decimal? GPA { get; set; }
-
         public string? Department { get; set; }
     }
+
     public class EditInstructorProfileVM
     {
         public string Name { get; set; } = string.Empty;
