@@ -8,9 +8,10 @@ namespace Learnify_API.Data.ViewModels
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Department { get; set; }
+        public string? Avatar { get; set; } 
 
-        // Stats
-        public int TotalCourses { get; set; }
+    // Stats
+    public int TotalCourses { get; set; }
         public int CompletedCourses { get; set; }
         public int CertificatesEarned { get; set; }
 
@@ -24,4 +25,5 @@ namespace Learnify_API.Data.ViewModels
         //public List<FinalProject> FinalProjects { get; set; }
         //public List<Notification> Notifications { get; set; }
     }
+
 }

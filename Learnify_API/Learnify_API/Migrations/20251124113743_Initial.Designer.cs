@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Learnify_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251121052753_addColomAppUser")]
-    partial class addColomAppUser
+    [Migration("20251124113743_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -277,8 +277,8 @@ namespace Learnify_API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("image")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("feedbackimage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -539,6 +539,9 @@ namespace Learnify_API.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PassingScore")
                         .HasColumnType("int");
 
@@ -548,6 +551,9 @@ namespace Learnify_API.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("TotalMarks")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalQuestions")
                         .HasColumnType("int");
 
                     b.HasKey("QuizId");

@@ -791,11 +791,6 @@
         "IsRequired": false
       },
       {
-        "Name": "Image",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
         "Name": "EducationLevel",
         "Type": "System.String",
         "IsRequired": false
