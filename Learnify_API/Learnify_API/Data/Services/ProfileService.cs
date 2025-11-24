@@ -87,7 +87,7 @@ namespace Learnify_API.Data.Services
             var user = instructor.User;
             user.FullName = model.Name;
 
-            // --- Update Avatar (User Image) إذا رفع صورة جديدة ---
+            // --- Update Avatar ---
             if (model.Avatar != null && model.Avatar.Length > 0)
             {
                 using (var ms = new MemoryStream())
@@ -96,7 +96,8 @@ namespace Learnify_API.Data.Services
                     user.ProfileImage = Convert.ToBase64String(ms.ToArray());
                 }
             }
-         
+
+            // --- Update Instructor fields ---
             instructor.Phone = model.Phone;
             instructor.Address = model.Address;
             instructor.Gender = model.Gender;
@@ -104,7 +105,11 @@ namespace Learnify_API.Data.Services
             instructor.Specialization = model.Specialization;
 
             // --- Update Profile ---
-            var profile = await _context.profiles.FirstOrDefaultAsync(p => p.UserId == instructorId);
+            var profile = await _context.profiles
+                .Include(p => p.SocialLinks)
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.UserId == user.UserId);
+
             if (profile != null)
             {
                 profile.About = model.About;
@@ -120,6 +125,7 @@ namespace Learnify_API.Data.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
 
 
         public async Task<ProfileVM?> GetInstructorProfileAsync(int instructorId)
@@ -324,7 +330,7 @@ namespace Learnify_API.Data.Services
                 profile.SocialLinks.Facebook = model.Facebook ?? "";
                 profile.SocialLinks.Twitter = model.Twitter ?? "";
                 profile.SocialLinks.LinkedIn = model.LinkedIn ?? "";
-                profile.SocialLinks.Github = model.YouTube ?? ""; // لو عايزة YouTube يتحط بدل Github
+                profile.SocialLinks.Github = model.YouTube ?? ""; 
             }
         
             await _context.SaveChangesAsync();
