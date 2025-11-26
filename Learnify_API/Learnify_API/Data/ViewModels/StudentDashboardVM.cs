@@ -1,17 +1,15 @@
-﻿using Learnify_API.Data.Models;
-
-namespace Learnify_API.Data.ViewModels
+﻿namespace Learnify_API.Data.ViewModels
 {
     public class StudentDashboardVM
     {
         public string Role { get; set; } = "student";
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public string Department { get; set; }
-        public string? Avatar { get; set; } 
+        public string? FullName { get; set; }
+        public string? Email { get; set; }
+        public string? Department { get; set; }
+        public string? Avatar { get; set; }
 
-    // Stats
-    public int TotalCourses { get; set; }
+        // Stats
+        public int TotalCourses { get; set; }
         public int CompletedCourses { get; set; }
         public int CertificatesEarned { get; set; }
 

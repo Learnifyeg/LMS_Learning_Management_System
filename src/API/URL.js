@@ -8,6 +8,7 @@ const Urls = {
   forgotPassword: "Auth/forgot-password",
   resetPassword: "Auth/reset-password",
   refreshToken: "Auth/refresh-token",
+  resendVerification: "Auth/resend-verification",
   // COURSE
   addCourse: "Course/add",
   getPendingCourses: "Course/pending-courses",

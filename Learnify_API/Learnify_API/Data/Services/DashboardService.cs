@@ -7,7 +7,7 @@ public class DashboardService
 {
     private readonly AppDbContext _context;
 
-public DashboardService(AppDbContext context)
+    public DashboardService(AppDbContext context)
     {
         _context = context;
     }
@@ -15,7 +15,7 @@ public DashboardService(AppDbContext context)
     // -------------------------
     // STUDENT DASHBOARD
     // -------------------------
-    public async Task<StudentDashboardVM> GetStudentDashboard(int studentId)
+    public async Task<StudentDashboardVM?> GetStudentDashboard(int studentId)
     {
         // جلب User مع الـ Student المرتبط
         var student = await _context.Users
@@ -54,7 +54,7 @@ public DashboardService(AppDbContext context)
     // -------------------------
     // INSTRUCTOR DASHBOARD
     // -------------------------
-    public async Task<InstructorDashboardVM> GetInstructorDashboard(int instructorId, StudentService stu)
+    public async Task<InstructorDashboardVM?> GetInstructorDashboard(int instructorId, StudentService stu)
     {
         var instructor = await _context.Users
             .Include(u => u.Instructor) // Include لتجنب null
@@ -97,8 +97,8 @@ public DashboardService(AppDbContext context)
         return new InstructorDashboardVM
         {
             FullName = instructor.FullName,
-            Email = instructor.Email,
-            Department = instructor.Instructor?.Specialization, // تحقق من null
+            Email = instructor.Email ?? "User@example.com",
+            Department = instructor.Instructor?.Specialization ?? "", // تحقق من null
             Role = "instructor",
             Avatar = string.IsNullOrEmpty(instructor.ProfileImage) ? null : instructor.ProfileImage,
 
@@ -115,7 +115,7 @@ public DashboardService(AppDbContext context)
     // -------------------------
     // ADMIN DASHBOARD
     // -------------------------
-    public async Task<AdminDashboardVM> GetAdminDashboard(int adminId)
+    public async Task<AdminDashboardVM?> GetAdminDashboard(int adminId)
     {
         var admin = await _context.Users
             .Include(u => u.Admin) // Include لتجنب null لو عندك Admin entity

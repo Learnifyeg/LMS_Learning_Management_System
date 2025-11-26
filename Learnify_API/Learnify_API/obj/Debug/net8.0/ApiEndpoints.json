@@ -143,6 +143,22 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.AuthController",
+    "Method": "ResendVerificationCode",
+    "RelativePath": "Auth/resend-verification",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Learnify_API.Data.DTO.ResendVerificationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.AuthController",
     "Method": "ResetPassword",
     "RelativePath": "Auth/reset-password",
     "HttpMethod": "POST",
@@ -155,6 +171,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.AuthController",
+    "Method": "SendTestEmail",
+    "RelativePath": "Auth/send",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

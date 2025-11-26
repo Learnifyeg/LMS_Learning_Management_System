@@ -1,4 +1,4 @@
-﻿using Learnify_API.Data;
+using Learnify_API.Data;
 using Learnify_API.Data.Models;
 using Learnify_API.Data.Services;
 using Learnify_API.Services;
@@ -6,6 +6,7 @@ using Learnify_API.Services;
 //using Learnify_API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -23,6 +24,8 @@ namespace Learnify_API
             builder.Services.AddControllers();
             builder.Services.AddDbContext<AppDbContext>(option =>
                 option.UseSqlServer(builder.Configuration.GetConnectionString("conString")));
+
+            //builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AppDbContext>();
             builder.Services.AddTransient<FeedbackService>();
             //  Add CORS Policy
             builder.Services.AddCors(options =>
@@ -39,7 +42,7 @@ namespace Learnify_API
 
             // Add services for Swagger
             builder.Services.AddScoped<StudentService>();
-            builder.Services.AddScoped<InstructorService>();
+            //builder.Services.AddScoped<InstructorService>();
             builder.Services.AddScoped<AdminService>();
             builder.Services.AddScoped<AuthService>();
             builder.Services.AddScoped<ProfileService>();
@@ -50,7 +53,9 @@ namespace Learnify_API
             builder.Services.AddScoped<QuizService>();
             builder.Services.AddScoped<QuestionService>();
             builder.Services.AddScoped<UserSettingsService>();
-
+            // Register EmailService
+            builder.Services.AddScoped<EmailService>();
+            builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -78,23 +83,26 @@ namespace Learnify_API
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-             .AddJwtBearer(options =>
-             {
-                 options.RequireHttpsMetadata = false;
-                 options.SaveToken = true;
-                 options.TokenValidationParameters = new TokenValidationParameters
-                 {
-                     ValidateIssuer = true,
-                     ValidateAudience = true,
-                     ValidateLifetime = true,
-                     ValidateIssuerSigningKey = true,
-                     ClockSkew = TimeSpan.Zero, // ⬅️ add this
-                     ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                     ValidAudience = builder.Configuration["Jwt:Audience"],
-                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
-                 };
-             });
+              .AddJwtBearer(options =>
+              {
+                  options.RequireHttpsMetadata = false;
+                  options.SaveToken = true;
+
+                  options.TokenValidationParameters = new TokenValidationParameters
+                  {
+                      ValidateIssuer = true,
+                      ValidateAudience = true,
+                      ValidateLifetime = true,
+                      ValidateIssuerSigningKey = true,
+                      ClockSkew = TimeSpan.Zero, // prevent login delay issues
+
+                      ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                      ValidAudience = builder.Configuration["Jwt:Audience"],
+                      IssuerSigningKey = new SymmetricSecurityKey(
+                          Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("Jwt:SecretKey")!))
+                  };
+              });
+
             builder.Services.AddAuthorization();
             builder.Services.AddScoped<EmailService>();
 

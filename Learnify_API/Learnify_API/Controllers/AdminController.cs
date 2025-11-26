@@ -48,7 +48,7 @@ namespace Learnify_API.Controllers
             return Ok(new { Message = "User deleted successfully" });
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpPut("approve-user-by/{id}")]
         public async Task<IActionResult> ApproveUserById(int id)
         {

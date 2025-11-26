@@ -3,6 +3,8 @@ import { createBrowserRouter } from "react-router";
 import App from "../App.jsx";
 
 
+
+
 // Lazy-loaded dashboards
 const InstrDashboard = lazy(
   () => import("@/views/Instructor/InstrDashboard.jsx")
@@ -112,6 +114,8 @@ const ResetPassword = lazy(() => import("../views/Auth/ResetPassword.jsx"));
 const InstructorRegister = lazy(
   () => import("../views/Auth/InstructorRegister.jsx")
 );
+const VerifyEmail = lazy(() => import("../views/Auth/VerifyEmail.jsx"));
+const ResendVerification = lazy(() => import("../views/Auth/ResendVerification.jsx"));
 
 // Error Views
 const Error404 = lazy(() => import("../views/Error404.jsx"));
@@ -139,6 +143,8 @@ export const router = createBrowserRouter([
           { path: "Register", element: <Register /> },
           { path: "InstructorRegister", element: <InstructorRegister /> },
           { path: "ForgetPassword", element: <ForgetPassword /> },
+          { path: "verify-email", element: <VerifyEmail /> },
+          { path: "resend-verification", element: <ResendVerification /> },
           { path: "ResetPassword", element: <ResetPassword /> },
         ],
       },

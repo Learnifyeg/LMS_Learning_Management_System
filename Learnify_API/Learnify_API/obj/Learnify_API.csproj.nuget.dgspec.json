@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dell\\Desktop\\depi\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj": {}
+    "D:\\Desktop\\FFF\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dell\\Desktop\\depi\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj": {
+    "D:\\Desktop\\FFF\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dell\\Desktop\\depi\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
+        "projectUniqueName": "D:\\Desktop\\FFF\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
         "projectName": "Learnify_API",
-        "projectPath": "C:\\Users\\dell\\Desktop\\depi\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
-        "packagesPath": "C:\\Users\\dell\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dell\\Desktop\\depi\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\obj\\",
+        "projectPath": "D:\\Desktop\\FFF\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\Learnify_API.csproj",
+        "packagesPath": "C:\\Users\\W.I\\.nuget\\packages\\",
+        "outputPath": "D:\\Desktop\\FFF\\LMS_Learning_Management_System\\Learnify_API\\Learnify_API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\W.I\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -62,6 +62,10 @@
               "target": "Package",
               "version": "[8.0.21, )"
             },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[8.0.11, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.22, )"
@@ -70,11 +74,19 @@
               "target": "Package",
               "version": "[8.0.11, )"
             },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.11, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.11, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.7, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -108,7 +120,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
