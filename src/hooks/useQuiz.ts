@@ -12,6 +12,7 @@ interface AddQuizData {
 }
 
 interface UpdateQuizData {
+  id: number;
   title: string;
   duration: number;
   passingScore: number;
@@ -53,14 +54,10 @@ const useQuiz = (id?: string) => {
     },
   });
 
-  // 🔹 Update quiz
   const updateQuizMutation = useMutation({
     mutationFn: async (data: UpdateQuizData) => {
       const res = await api.put(`${Urls.UpdateQuiz}${id}`, data);
       return res.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["quiz", id] });
     },
   });
 
@@ -74,15 +71,15 @@ const useQuiz = (id?: string) => {
       queryClient.invalidateQueries({ queryKey: ["quizzes"] });
     },
   });
-// 🔹 Get quizzes for logged-in instructor automatically
-const getQuizzesByInstructor = () =>
-  useQuery({
-    queryKey: ["quizzes-instructor"],
-    queryFn: async () => {
-      const res = await api.get(Urls.GetQuizzesByInstructor);
-      return res.data;
-    },
-  });
+  // 🔹 Get quizzes for logged-in instructor automatically
+  const getQuizzesByInstructor = () =>
+    useQuery({
+      queryKey: ["quizzes-instructor"],
+      queryFn: async () => {
+        const res = await api.get(Urls.GetQuizzesByInstructor);
+        return res.data;
+      },
+    });
 
   return {
     // Queries

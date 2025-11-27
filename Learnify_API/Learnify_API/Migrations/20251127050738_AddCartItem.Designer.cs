@@ -4,6 +4,7 @@ using Learnify_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Learnify_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251127050738_AddCartItem")]
+    partial class AddCartItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,64 +184,6 @@ namespace Learnify_API.Migrations
                     b.HasIndex("StudentId1");
 
                     b.ToTable("Certificates");
-                });
-
-            modelBuilder.Entity("Learnify_API.Data.Models.Checkout", b =>
-                {
-                    b.Property<int>("CheckoutId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CheckoutId"));
-
-                    b.Property<DateTime>("CheckoutDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("CheckoutId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Checkouts");
-                });
-
-            modelBuilder.Entity("Learnify_API.Data.Models.CheckoutItem", b =>
-                {
-                    b.Property<int>("CheckoutItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CheckoutItemId"));
-
-                    b.Property<int>("CheckoutId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("CheckoutItemId");
-
-                    b.HasIndex("CheckoutId");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("CheckoutItem");
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.Course", b =>
@@ -1067,36 +1012,6 @@ namespace Learnify_API.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Learnify_API.Data.Models.Checkout", b =>
-                {
-                    b.HasOne("Learnify_API.Data.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("Learnify_API.Data.Models.CheckoutItem", b =>
-                {
-                    b.HasOne("Learnify_API.Data.Models.Checkout", "Checkout")
-                        .WithMany("CheckoutItems")
-                        .HasForeignKey("CheckoutId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Learnify_API.Data.Models.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Checkout");
-
-                    b.Navigation("Course");
-                });
-
             modelBuilder.Entity("Learnify_API.Data.Models.Course", b =>
                 {
                     b.HasOne("Learnify_API.Data.Models.Instructor", "Instructor")
@@ -1374,11 +1289,6 @@ namespace Learnify_API.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Learnify_API.Data.Models.Checkout", b =>
-                {
-                    b.Navigation("CheckoutItems");
                 });
 
             modelBuilder.Entity("Learnify_API.Data.Models.Course", b =>

@@ -19,7 +19,10 @@ export default function StuCourseDetails() {
     enrollCourse,
     myEnrollments,
     removeEnrollment,
+    addToCart,
+    cart,
   } = useStudent();
+  const isInCart = cart.data?.some((c) => c.id === course?.id);
 
   const isSaved = savedCourses.data?.some((c) => c.id === course?.id);
   const isEnrolled = myEnrollments.data?.some((c) => c.id === course?.id);
@@ -82,57 +85,91 @@ export default function StuCourseDetails() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                    {isSaved ? (
-                      <button
-                        onClick={() => {
-                          toast.custom((t) => (
-                            <ConfirmToast
-                              message="Are you sure you want to remove this course from saved?"
-                              onConfirm={() => {
-                                removeSavedCourse.mutate(course.id, {
-                                  onSuccess: () =>
-                                    toast.success("Course removed from saved!"),
-                                  onError: () =>
-                                    toast.error("Failed to remove course"),
-                                });
-                              }}
-                              onCancel={() => toast.dismiss(t.id)}
-                            />
-                          ));
-                        }}
-                        className="btn flex-1 py-3 font-semibold bg-red-500 cursor-pointer"
-                      >
-                        Remove from Saved
-                      </button>
-                    ) : (
-                      <p>Your Progress is </p>
-                    )}
+                    {isInCart ? (
+                      <p className="flex-1 py-3 text-center bg-yellow-100 text-yellow-800 font-semibold rounded">
+                        Already in Cart
+                      </p>
+                    ) : isEnrolled ? (
+                      <>
+                        {isSaved && (
+                          <button
+                            onClick={() => {
+                              toast.custom((t) => (
+                                <ConfirmToast
+                                  message="Are you sure you want to remove this course from saved?"
+                                  onConfirm={() => {
+                                    removeSavedCourse.mutate(course.id, {
+                                      onSuccess: () =>
+                                        toast.success(
+                                          "Course removed from saved!"
+                                        ),
+                                      onError: () =>
+                                        toast.error("Failed to remove course"),
+                                    });
+                                  }}
+                                  onCancel={() => toast.dismiss(t.id)}
+                                />
+                              ));
+                            }}
+                            className="btn flex-1 py-3 font-semibold bg-red-500 cursor-pointer"
+                          >
+                            Remove from Saved
+                          </button>
+                        )}
+                      </>
+                    ) : isSaved ? (
+                      <>
+                        <button
+                          onClick={() => {
+                            toast.custom((t) => (
+                              <ConfirmToast
+                                message="Are you sure you want to remove this course from saved?"
+                                onConfirm={() => {
+                                  removeSavedCourse.mutate(course.id, {
+                                    onSuccess: () =>
+                                      toast.success(
+                                        "Course removed from saved!"
+                                      ),
+                                    onError: () =>
+                                      toast.error("Failed to remove course"),
+                                  });
+                                }}
+                                onCancel={() => toast.dismiss(t.id)}
+                              />
+                            ));
+                          }}
+                          className="btn flex-1 py-3 font-semibold bg-red-500 cursor-pointer"
+                        >
+                          Remove from Saved
+                        </button>
 
-                    {isSaved ? (
+                        <button
+                          className="btn bg-primary text-white flex-1 py-3 font-semibold cursor-pointer"
+                          onClick={() => {
+                            addToCart.mutate(course.id, {
+                              onSuccess: () =>
+                                toast.success("Course added to cart!"),
+                              onError: () =>
+                                toast.error("Failed to add course"),
+                            });
+                          }}
+                        >
+                          Add to Cart
+                        </button>
+                      </>
+                    ) : (
                       <button
-                        className="btn bg-transparent border border-input text-text-primary btn-hover flex-1 py-3 font-semibold"
+                        className="btn bg-primary text-white flex-1 py-3 font-semibold cursor-pointer"
                         onClick={() => {
-                          // First, enroll in course
-                          enrollCourse.mutate(course.id, {
+                          addToCart.mutate(course.id, {
                             onSuccess: () =>
-                              toast.success("Enrolled in course successfully!"),
-                            onError: () =>
-                              toast.error("Failed to enroll in course"),
-                          });
-
-                          // Then, remove from saved (if you want to do both)
-                          removeSavedCourse.mutate(course.id, {
-                            // onSuccess: () =>
-                            //   toast.success("Course removed from saved!"),
-                            // onError: () =>
-                            //   toast.error("Failed to remove course"),
+                              toast.success("Course added to cart!"),
+                            onError: () => toast.error("Failed to add course"),
                           });
                         }}
                       >
-                        Checkout Now
+                        Add to Cart
                       </button>
-                    ) : (
-                      ""
                     )}
                   </div>
                 </div>
@@ -241,8 +278,10 @@ export default function StuCourseDetails() {
                               }`}
                               onClick={() => {
                                 // if (isEnrolled) {
-                                  // Navigate to lesson details with lesson id
-                                  navigate(`/StudentLayout/StudentLessonPage/${lesson.lessonId}`);
+                                // Navigate to lesson details with lesson id
+                                navigate(
+                                  `/StudentLayout/StudentLessonPage/${lesson.lessonId}`
+                                );
                                 // } else {
                                 //   toast.error(
                                 //     "You must enroll in the course to view lessons!"

@@ -52,20 +52,34 @@ const Urls = {
   CompleteLesson: "Lesson/complete/",
   LessonProgress: "Lesson/progress/",
   GetLessonsByInstructor: "/Lesson/all-by-instructor",
-  // Student 
+  // Student
   saveCourse: "/Student/save-course",
   savedCourses: "/Student/saved-courses",
   removeSavedCourse: "/Student/remove-saved-course",
   myEnrollments: "/Student/my-enrollments",
   enroll: "/Student/enroll",
   removeEnrollment: "/Student/remove-enrollment",
+  addToCart: "/Student/add-to-cart",
+  getCart: "/Student/cart",
+  removeCartItem: "/Student/remove-cart-item",
+  // Checkout for Student
+  getCheckoutDetails: "/Student/checkout/{checkoutId}",
+  myCheckouts :"/Student/my-checkouts",
+  createCheckout :"/Student/checkout",
   // Quiz
   GetQuizById: "Quiz/get-by-id/",
   GetAllQuizzes: "Quiz/get-all",
   AddQuiz: "Quiz/add",
   UpdateQuiz: "Quiz/update/",
   DeleteQuiz: "Quiz/delete/",
-  GetQuizzesByInstructor: "/Quiz/by-instructor"  
+  GetQuizzesByInstructor: "/Quiz/by-instructor",
+  // Question
+  GetQuestionsByQuiz: "/Question/quiz/{quizId}",
+  GetQuestionById: "/Question/",
+  AddQuestions: "/Question/add",
+  UpdateQuestion: "/Question/update/",
+  DeleteQuestion: "/Question/delete/",
+
 };
 
 export default Urls;

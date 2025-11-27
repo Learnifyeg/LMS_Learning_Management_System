@@ -107,7 +107,7 @@ namespace Learnify_API.Controllers
         // ================== UPDATE ==================
 
         [HttpPut("update/{id}")]
-        //[Authorize(Roles = "instructor")] // بس الإنستركتور يقدر يحدث الكويز
+        //[Authorize(Roles = "instructor")]
         public async Task<ActionResult<QuizVM>> Update(int id, [FromBody] QuizVM quizVM)
         {
             var userIdClaim =
@@ -122,15 +122,17 @@ namespace Learnify_API.Controllers
             var instructorId = await _quizService.GetInstructorIdByUserId(userId);
             if (instructorId == null) return Unauthorized("Instructor profile not found.");
 
-            // تحقق من ملكية الكورس قبل التحديث
+            // Verify course ownership
             var course = await _quizService.GetCourseByIdAsync(quizVM.CourseId);
             if (course == null || course.InstructorId != instructorId.Value)
                 return BadRequest("This course does not belong to the instructor.");
 
             var updatedQuiz = await _quizService.UpdateQuizAsync(id, quizVM);
             if (updatedQuiz == null) return NotFound();
+
             return Ok(updatedQuiz);
         }
+
 
         // ================== DELETE ==================
 

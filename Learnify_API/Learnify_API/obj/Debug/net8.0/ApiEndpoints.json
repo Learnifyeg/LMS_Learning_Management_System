@@ -877,43 +877,6 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.QuestionController",
-    "Method": "Update",
-    "RelativePath": "Question/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "vm",
-        "Type": "Learnify_API.Data.ViewModels.QuestionVM",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Learnify_API.Controllers.QuestionController",
-    "Method": "Delete",
-    "RelativePath": "Question/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Learnify_API.Controllers.QuestionController",
     "Method": "AddQuestions",
     "RelativePath": "Question/add",
     "HttpMethod": "POST",
@@ -930,6 +893,22 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.QuestionController",
+    "Method": "Delete",
+    "RelativePath": "Question/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.QuestionController",
     "Method": "GetByQuiz",
     "RelativePath": "Question/quiz/{quizId}",
     "HttpMethod": "GET",
@@ -939,6 +918,27 @@
       {
         "Name": "quizId",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.QuestionController",
+    "Method": "Update",
+    "RelativePath": "Question/update/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "vm",
+        "Type": "Learnify_API.Data.ViewModels.QuestionVM",
         "IsRequired": true
       }
     ],
@@ -1142,6 +1142,64 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "AddToCart",
+    "RelativePath": "Student/add-to-cart",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "GetCart",
+    "RelativePath": "Student/cart",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "Checkout",
+    "RelativePath": "Student/checkout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "paymentMethod",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "GetCheckoutById",
+    "RelativePath": "Student/checkout/{checkoutId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "checkoutId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
     "Method": "Enroll",
     "RelativePath": "Student/enroll",
     "HttpMethod": "POST",
@@ -1178,12 +1236,38 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "GetMyCheckouts",
+    "RelativePath": "Student/my-checkouts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
     "Method": "GetMyEnrollments",
     "RelativePath": "Student/my-enrollments",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.StudentController",
+    "Method": "RemoveCartItem",
+    "RelativePath": "Student/remove-cart-item",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {

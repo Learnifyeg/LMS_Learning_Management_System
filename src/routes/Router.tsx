@@ -5,6 +5,7 @@ import App from "../App.jsx";
 
 
 
+
 // Lazy-loaded dashboards
 const InstrDashboard = lazy(
   () => import("@/views/Instructor/InstrDashboard.jsx")
@@ -38,6 +39,7 @@ const InstrProfile = lazy(() => import("@/views/Instructor/InstrProfile.jsx"));
 const CreateCourse = lazy(() => import("@/views/Instructor/CreateCourse.jsx"));
 const CreateLesson = lazy(() => import("@/views/Instructor/CreateLesson"));
 const CreateQuiz = lazy(() => import("@/views/Instructor/CreateQuiz.jsx"));
+const CreateQuestions = lazy(() => import("@/views/Instructor/CreateQuestions.jsx"));
 const InstructorCourseDetails = lazy(
   () => import("@/views/Instructor/InstructorCourseDetails.jsx")
 );
@@ -76,6 +78,7 @@ const MyCourses = lazy(() => import("@/views/Student/MyCourses.jsx"));
 const StudentLessonPage = lazy(
   () => import("@/views/Student/StudentLessonPage.jsx")
 );
+
 
 // Others
 const UserLayout = lazy(() => import("@/components/UserLayout/UserLayout.jsx"));
@@ -133,6 +136,9 @@ export const router = createBrowserRouter([
           { path: "About", element: <About /> },
           { path: "SearchResults", element: <SearchResults /> },
           { path: "CourseDetails/:id", element: <CourseDetails /> },
+          { path: "ContactUs", element: <ContactUs /> },
+          { path: "SendFeedback", element: <SendFeedback /> },
+          { path: "TermsofUse", element: <TermsofUse /> },
         ],
       },
       {
@@ -152,13 +158,10 @@ export const router = createBrowserRouter([
         path: "UserLayout",
         element: <UserLayout />,
         children: [
-          { path: "ContactUs", element: <ContactUs /> },
           { path: "HelpPage", element: <HelpPage /> },
           { path: "AllFeedback", element: <FeedbackManagement /> },
           { path: "Notifications", element: <Notifications /> },
-          { path: "SendFeedback", element: <SendFeedback /> },
           { path: "SettingPage", element: <SettingPage /> },
-          { path: "TermsofUse", element: <TermsofUse /> },
           { path: "EditProfile", element: <EditProfile /> },
         ],
       },
@@ -190,6 +193,7 @@ export const router = createBrowserRouter([
           { path: "CreateLesson/:courseid", element: <CreateLesson /> },
           { path: "EditLesson/:lessonid", element: <EditLesson /> },
           { path: "CreateQuiz/:courseid/:lessonId", element: <CreateQuiz /> },
+          { path: "CreateQuestions/:courseid/:lessonId/:quizid", element: <CreateQuestions /> },
           { path: "EditQuiz/:quizid/:courseId/:lessonId", element: <EditQuiz /> },
           { path: "CreateCourse/:courseid", element: <CreateCourse /> },
           {

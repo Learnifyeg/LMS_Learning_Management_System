@@ -23,7 +23,7 @@ interface SendNotificationData {
 const useNotification = () => {
   const queryClient = useQueryClient();
 
-  // ✅ Fetch user notifications
+  //  Fetch user notifications
   const getNotifications = () =>
     useQuery({
       queryKey: ["notifications"],
@@ -33,7 +33,7 @@ const useNotification = () => {
       },
     });
 
-  // ✅ Send notification
+  //  Send notification
   const sendNotification = useMutation({
     mutationFn: async (data: SendNotificationData) => {
       const res = await api.post(Urls.SendNotification, data);

@@ -54,7 +54,21 @@ namespace Learnify_API.Data.Services
                 TotalMarks = quiz.TotalMarks,
                 TotalQuestions = quiz.TotalQuestions,
                 QuestionsEndpoint = "questions",
-                Posted = $"{(DateTime.Now - quiz.CreatedAt).Days} days ago"
+                Posted = $"{(DateTime.Now - quiz.CreatedAt).Days} days ago",
+                Questions = quiz.Questions?.Select(q => new QuestionVM
+                {
+                    Id = q.QuestionId.ToString(),
+                    Text = q.QuestionText,
+                    Answer = q.CorrectOption.ToString().ToLower(),   // 'A' → "a"
+
+                    Options = new List<QuestionOptionVM>
+                    {
+                        new QuestionOptionVM { Id = "a", Text = q.OptionA ?? "" },
+                        new QuestionOptionVM { Id = "b", Text = q.OptionB ?? "" },
+                        new QuestionOptionVM { Id = "c", Text = q.OptionC ?? "" },
+                        new QuestionOptionVM { Id = "d", Text = q.OptionD ?? "" }
+                    }
+                }).ToList()
             };
         }
 

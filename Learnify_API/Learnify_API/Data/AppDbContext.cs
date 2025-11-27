@@ -34,6 +34,9 @@ namespace Learnify_API.Data
 
         public DbSet<LessonProgress> LessonProgresses { get; set; }
         public DbSet<SavedCourse> SavedCourses { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Checkout> Checkouts { get; set; }
+
         //public object Notifications { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -97,7 +100,7 @@ namespace Learnify_API.Data
             base.OnModelCreating(modelBuilder);
 
 
-            base.OnModelCreating(modelBuilder);
+            //base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
@@ -127,6 +130,33 @@ namespace Learnify_API.Data
                 .WithMany(c => c.SavedCourses)
                 .HasForeignKey(sc => sc.CourseId)
                 .OnDelete(DeleteBehavior.Restrict); // <-- Optional
+
+
+            modelBuilder.Entity<CartItem>()
+              .HasOne(c => c.Student)
+              .WithMany()
+              .HasForeignKey(c => c.StudentId)
+              .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<CartItem>()
+                .HasOne(c => c.Course)
+                .WithMany()
+                .HasForeignKey(c => c.CourseId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Checkout → CheckoutItems cascade
+            modelBuilder.Entity<CheckoutItem>()
+                .HasOne(ci => ci.Checkout)
+                .WithMany(c => c.CheckoutItems)
+                .HasForeignKey(ci => ci.CheckoutId)
+                .OnDelete(DeleteBehavior.Cascade); // ✅ Cascade delete from Checkout
+
+            // Course → CheckoutItems restrict delete
+            modelBuilder.Entity<CheckoutItem>()
+                .HasOne(ci => ci.Course)
+                .WithMany()
+                .HasForeignKey(ci => ci.CourseId)
+                .OnDelete(DeleteBehavior.Restrict); // ❌ Prevent cascade from Course
 
         }
 

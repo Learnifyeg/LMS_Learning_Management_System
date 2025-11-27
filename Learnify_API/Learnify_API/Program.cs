@@ -21,7 +21,11 @@ namespace Learnify_API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(opts =>
+            {
+                opts.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+            });
             builder.Services.AddDbContext<AppDbContext>(option =>
                 option.UseSqlServer(builder.Configuration.GetConnectionString("conString")));
 
@@ -59,6 +63,7 @@ namespace Learnify_API
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<CheckoutService>();
 
             // --------------------------------- Identity --------------------------------------------
             builder.Services.AddIdentity<AppUser, IdentityRole>(options =>

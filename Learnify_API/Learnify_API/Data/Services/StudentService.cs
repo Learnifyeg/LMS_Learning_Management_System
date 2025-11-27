@@ -237,5 +237,57 @@ namespace Learnify_API.Data.Services
         }
 
 
+        // Add to cart
+        public async Task<bool> AddToCartAsync(int studentId, int courseId)
+        {
+            var exists = await _context.CartItems.AnyAsync(c => c.StudentId == studentId && c.CourseId == courseId);
+            if (exists) return false;
+
+            var cartItem = new CartItem
+            {
+                StudentId = studentId,
+                CourseId = courseId,
+            };
+
+            _context.CartItems.Add(cartItem);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        // Get cart
+        public async Task<IEnumerable<CourseVM>> GetCartAsync(int studentId)
+        {
+            return await _context.CartItems
+                .Include(c => c.Course)
+                .Where(c => c.StudentId == studentId)
+                .Select(c => new CourseVM
+                {
+                    Id = c.Course.CourseId,
+                    Title = c.Course.Title,
+                    Category = c.Course.Category ?? "",
+                    Description = c.Course.Description ?? "",
+                    Price = c.Course.Price,
+                    Author = c.Course.Instructor.User.FullName,
+                    Image = c.Course.Image,
+                    Tag = c.Course.Tag,
+                    Rating = c.Course.Rating,
+                    Hours = c.Course.Hours,
+                }).ToListAsync();
+        }
+
+        // Remove from cart
+        public async Task<bool> RemoveFromCartAsync(int studentId, int courseId)
+        {
+            var item = await _context.CartItems
+                .FirstOrDefaultAsync(c => c.StudentId == studentId && c.CourseId == courseId);
+
+            if (item == null) return false;
+
+            _context.CartItems.Remove(item);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+
     }
 }
