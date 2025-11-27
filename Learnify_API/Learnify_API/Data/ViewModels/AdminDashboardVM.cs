@@ -1,4 +1,6 @@
-﻿namespace Learnify_API.Data.ViewModels
+﻿using Learnify_API.Data.Models;
+
+namespace Learnify_API.Data.ViewModels
 {
     public class AdminDashboardVM
     {
@@ -12,7 +14,7 @@
         public int TotalCourses { get; set; }
         public int CertificatesIssued { get; set; }
 
-        //public List<Notification> Notifications { get; set; }
+        public List<Notification> Notifications { get; set; }
     }
 
 }

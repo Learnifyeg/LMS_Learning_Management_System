@@ -25,6 +25,8 @@ namespace Learnify_API
                 .AddJsonOptions(opts =>
             {
                 opts.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                //opts.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+                //opts.JsonSerializerOptions.MaxDepth = 64; // optional, default is 32
             });
             builder.Services.AddDbContext<AppDbContext>(option =>
                 option.UseSqlServer(builder.Configuration.GetConnectionString("conString")));

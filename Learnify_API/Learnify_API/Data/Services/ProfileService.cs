@@ -124,7 +124,7 @@ namespace Learnify_API.Data.Services
 
         public async Task<ProfileVM?> GetInstructorProfileAsync(int instructorId)
         {
-#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            // Argument cannot be used for parameter due to differences in the nullability of reference types.
             var instructor = await _context.Instructors
                 .Include(i => i.User)
                 .Include(i => i.Courses)
@@ -132,7 +132,7 @@ namespace Learnify_API.Data.Services
                  .ThenInclude(e => e.Student)
                             .ThenInclude(s => s.User)
                 .FirstOrDefaultAsync(i => i.InstructorId == instructorId);
-#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            // Argument cannot be used for parameter due to differences in the nullability of reference types.
 
             if (instructor == null) return null;
 
@@ -212,7 +212,7 @@ namespace Learnify_API.Data.Services
 
         public async Task<ProfileVM?> GetStudentProfileAsync(int studentId)
         {
-#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            // Argument cannot be used for parameter due to differences in the nullability of reference types.
             var student = await _context.Students
                 .Include(s => s.User)
                 .Include(s => s.Enrollments)
@@ -220,7 +220,7 @@ namespace Learnify_API.Data.Services
                 .Include(s => s.Certificates)
                 .ThenInclude(c => c.Course)
                 .FirstOrDefaultAsync(s => s.StudentId == studentId);
-#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            // Argument cannot be used for parameter due to differences in the nullability of reference types.
 
             if (student == null) return null;
 

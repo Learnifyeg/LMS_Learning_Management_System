@@ -1,4 +1,6 @@
-﻿namespace Learnify_API.Data.ViewModels
+﻿using Learnify_API.Data.Models;
+
+namespace Learnify_API.Data.ViewModels
 {
     public class InstructorDashboardVM
     {
@@ -15,7 +17,7 @@
 
         // Relations
         //public List<LiveSession> LiveSessions { get; set; }
-        //public List<Notification> Notifications { get; set; }
+        public List<Notification> Notifications { get; set; }
     }
 
 }

@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import {
   FaBook,
   FaCheckCircle,
@@ -16,34 +18,31 @@ import LandingHeading from "@/components/Landing/LandingHeading/LandingHeading";
 import useAuth from "@/store/useAuth";
 import useDashboard from "@/hooks/useDashboard";
 import FullSpinner from "@/components/ui/Full Spinner/FullSpinner";
-import { useNavigate } from "react-router";
 
 function Dashboard({ role }) {
   const { user } = useAuth();
   const { dashboard } = useDashboard();
   const { data, isLoading } = dashboard;
   const navigate = useNavigate();
-  // console.log("User Info from Token:", dashboard);
 
-  if (isLoading) {
-    return (
-      <div>
-        <FullSpinner />
-      </div>
-    );
-  }
+  const [modalData, setModalData] = useState(null); // State for modal
+  const [showModal, setShowModal] = useState(false);
 
-  const handleViewAll = (section) => {
-    if(section == "courses" ) navigate("/StudentLayout/MyCourses");
-    else if (section == "certificates")navigate("/StudentLayout/StuMyCertificates");
-    else if (section == "Students")navigate("/InstructorLayout/AllStudents");
-    else if (section == "Courses")navigate("/InstructorLayout/MyCourses");
-    else if (section == "Adminstudents" || section == "Admininstructors")navigate("/AdminLayout/UserManagement");
-    else if (section == "AdminCourses")navigate("/AdminLayout/CourseManagement");
-    // console.log("Navigate to:", section);
+  const handleOpenModal = (note) => {
+    setModalData(note);
+    setShowModal(true);
   };
 
-  // Normalize stats based on role
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setModalData(null);
+  };
+
+  if (isLoading) {
+    return <FullSpinner />;
+  }
+
+  // Normalize stats
   let stats = {};
   let liveSessions = [];
   let finalProjects = [];
@@ -64,7 +63,7 @@ function Dashboard({ role }) {
         };
         liveSessions = data.liveSessions || [];
         finalProjects = data.finalProjects || [];
-        notifications = data.notifications || [];
+        notifications = data.notifications?.$values || [];
         break;
 
       case "instructor":
@@ -74,7 +73,7 @@ function Dashboard({ role }) {
           projectsSupervised: data.projectsSupervised,
           certificatesIssued: data.certificatesIssued,
         };
-        notifications = data.notifications || [];
+        notifications = data.notifications?.$values || [];
         break;
 
       case "admin":
@@ -84,16 +83,41 @@ function Dashboard({ role }) {
           totalCourses: data.totalCourses,
           certificatesIssued: data.certificatesIssued,
         };
-        notifications = data.notifications || [];
+        notifications = data.notifications?.$values || [];
         break;
 
       default:
         break;
     }
   }
-  // console.log(notifications)
 
   const fullName = data?.fullName || "User";
+
+  const handleViewAll = (section) => {
+    switch (section) {
+      case "courses":
+        navigate("/StudentLayout/MyCourses");
+        break;
+      case "certificates":
+        navigate("/StudentLayout/StuMyCertificates");
+        break;
+      case "Students":
+        navigate("/InstructorLayout/AllStudents");
+        break;
+      case "Courses":
+        navigate("/InstructorLayout/MyCourses");
+        break;
+      case "Adminstudents":
+      case "Admininstructors":
+        navigate("/AdminLayout/UserManagement");
+        break;
+      case "Admincourses":
+        navigate("/AdminLayout/CourseManagement");
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">
@@ -102,11 +126,15 @@ function Dashboard({ role }) {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <LandingHeading
-              header={`${role.charAt(0).toUpperCase() + role.slice(1)} Dashboard`}
+              header={`${
+                role.charAt(0).toUpperCase() + role.slice(1)
+              } Dashboard`}
               className="text-2xl sm:text-3xl lg:text-4xl"
             />
             <p className="text-text-secondary mt-2 text-base sm:text-lg">
-              Welcome back, <span className="font-semibold text-primary">{fullName}</span>! Here's your overview.
+              Welcome back,{" "}
+              <span className="font-semibold text-primary">{fullName}</span>!
+              Here's your overview.
             </p>
           </div>
         </div>
@@ -136,10 +164,10 @@ function Dashboard({ role }) {
             />
             <StatCard
               title="Quizzes Passed"
-              value={`${stats.quizzesPassed.passed}/${stats.quizzesPassed.total}`}
+              // value={`${stats.quizzesPassed.passed}/${stats.quizzesPassed.total}`}
               color="yellow"
               icon={<FaClipboardList className="text-xl sm:text-2xl" />}
-              extra={`${stats.quizzesPassed.successRate}% success rate`}
+              // extra={`${stats.quizzesPassed.successRate}% success rate`}
             />
             <StatCard
               title="Certificates"
@@ -172,14 +200,12 @@ function Dashboard({ role }) {
               value={stats.projectsSupervised}
               color="yellow"
               icon={<FaProjectDiagram className="text-xl sm:text-2xl" />}
-              onClick={() => handleViewAll("projects")}
             />
             <StatCard
               title="Certificates Issued"
               value={stats.certificatesIssued}
               color="purple"
               icon={<FaCertificate className="text-xl sm:text-2xl" />}
-              onClick={() => handleViewAll("certificates")}
             />
           </>
         )}
@@ -212,7 +238,6 @@ function Dashboard({ role }) {
               value={stats.certificatesIssued}
               color="purple"
               icon={<FaCertificate className="text-xl sm:text-2xl" />}
-              onClick={() => handleViewAll("certificates")}
             />
           </>
         )}
@@ -222,9 +247,9 @@ function Dashboard({ role }) {
       <div className="space-y-6">
         {role === "student" && (
           <>
-            <Section 
-              title="Live Sessions" 
-              icon={<FaCalendarAlt />} 
+            <Section
+              title="Live Sessions"
+              icon={<FaCalendarAlt />}
               color="red"
               onViewAll={() => handleViewAll("sessions")}
             >
@@ -237,9 +262,9 @@ function Dashboard({ role }) {
               )}
             </Section>
 
-            <Section 
-              title="Final Projects" 
-              icon={<FaProjectDiagram />} 
+            <Section
+              title="Final Projects"
+              icon={<FaProjectDiagram />}
               color="indigo"
               onViewAll={() => handleViewAll("projects")}
             >
@@ -254,24 +279,55 @@ function Dashboard({ role }) {
           </>
         )}
 
-        <Section 
-          title="Notifications" 
-          icon={<FaBell />} 
+        <Section
+          title="Notifications"
+          icon={<FaBell />}
           color="blue"
           onViewAll={() => navigate("/UserLayout/Notifications")}
         >
           {notifications.length > 0 ? (
-            notifications.map((note) => (
-              <NotificationCard 
-                key={note.notificationId} 
-                note={note} 
-                onClick={() => navigate("/UserLayout/Notifications")}
-              />
-            ))
+            notifications.map((note) => {
+              const message =
+                note.message?.trim() || note.title || "No content";
+              const time = note.createdAt
+                ? new Date(note.createdAt).toLocaleString()
+                : "Unknown time";
+
+              return (
+                <NotificationCard
+                  key={note.notificationId}
+                  note={{ message, time }}
+                 onClick={() => handleOpenModal({ message, time, fullNote: note })}
+                />
+              );
+            })
           ) : (
             <EmptyState message="No new notifications" />
           )}
         </Section>
+         {/* Modal */}
+      {showModal && modalData && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-md w-full shadow-lg relative">
+            <button
+              onClick={handleCloseModal}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+            >
+              ✕
+            </button>
+            <h3 className="text-xl font-bold mb-4">Notification Details</h3>
+            <p className="mb-2">
+              <span className="font-semibold">Title:</span> {modalData.fullNote?.title || "N/A"}
+            </p>
+            <p className="mb-2">
+              <span className="font-semibold">Message:</span> {modalData.message}
+            </p>
+            <p className="text-sm text-gray-500">
+              <span className="font-semibold">Received at:</span> {modalData.time}
+            </p>
+          </div>
+        </div>
+      )}
       </div>
     </div>
   );
@@ -282,29 +338,29 @@ function Dashboard({ role }) {
 const StatCard = ({ title, value, color, icon, progress, extra, onClick }) => {
   const colorClasses = {
     blue: {
-      border: 'border-blue-500',
-      bg: 'bg-blue-100 dark:bg-blue-900',
-      text: 'text-blue-600 dark:text-blue-400',
-      progress: 'bg-blue-500'
+      border: "border-blue-500",
+      bg: "bg-blue-100 dark:bg-blue-900",
+      text: "text-blue-600 dark:text-blue-400",
+      progress: "bg-blue-500",
     },
     green: {
-      border: 'border-green-500',
-      bg: 'bg-green-100 dark:bg-green-900',
-      text: 'text-green-600 dark:text-green-400',
-      progress: 'bg-green-500'
+      border: "border-green-500",
+      bg: "bg-green-100 dark:bg-green-900",
+      text: "text-green-600 dark:text-green-400",
+      progress: "bg-green-500",
     },
     yellow: {
-      border: 'border-yellow-500',
-      bg: 'bg-yellow-100 dark:bg-yellow-900',
-      text: 'text-yellow-600 dark:text-yellow-400',
-      progress: 'bg-yellow-500'
+      border: "border-yellow-500",
+      bg: "bg-yellow-100 dark:bg-yellow-900",
+      text: "text-yellow-600 dark:text-yellow-400",
+      progress: "bg-yellow-500",
     },
     purple: {
-      border: 'border-purple-500',
-      bg: 'bg-purple-100 dark:bg-purple-900',
-      text: 'text-purple-600 dark:text-purple-400',
-      progress: 'bg-purple-500'
-    }
+      border: "border-purple-500",
+      bg: "bg-purple-100 dark:bg-purple-900",
+      text: "text-purple-600 dark:text-purple-400",
+      progress: "bg-purple-500",
+    },
   };
 
   const currentColor = colorClasses[color] || colorClasses.blue;
@@ -315,10 +371,16 @@ const StatCard = ({ title, value, color, icon, progress, extra, onClick }) => {
     >
       <div className="flex items-center justify-between">
         <div className="flex-1">
-          <p className="text-text-secondary text-sm font-medium mb-1">{title}</p>
-          <p className="text-2xl sm:text-3xl font-bold text-text-primary">{value}</p>
+          <p className="text-text-secondary text-sm font-medium mb-1">
+            {title}
+          </p>
+          <p className="text-2xl sm:text-3xl font-bold text-text-primary">
+            {value}
+          </p>
         </div>
-        <div className={`p-2 sm:p-3 rounded-xl ${currentColor.bg} ${currentColor.text}`}>
+        <div
+          className={`p-2 sm:p-3 rounded-xl ${currentColor.bg} ${currentColor.text}`}
+        >
           {icon}
         </div>
       </div>
@@ -331,7 +393,9 @@ const StatCard = ({ title, value, color, icon, progress, extra, onClick }) => {
               style={{ width: `${progress}%` }}
             ></div>
           </div>
-          <p className="text-xs text-text-secondary mt-2">{progress.toFixed(0)}% completion rate</p>
+          <p className="text-xs text-text-secondary mt-2">
+            {progress.toFixed(0)}% completion rate
+          </p>
         </div>
       )}
 
@@ -356,10 +420,10 @@ const StatCard = ({ title, value, color, icon, progress, extra, onClick }) => {
 
 const Section = ({ title, icon, color, children, onViewAll }) => {
   const colorClasses = {
-    red: 'text-red-500',
-    blue: 'text-blue-500',
-    indigo: 'text-indigo-500',
-    pink: 'text-pink-500'
+    red: "text-red-500",
+    blue: "text-blue-500",
+    indigo: "text-indigo-500",
+    pink: "text-pink-500",
   };
 
   const currentColor = colorClasses[color] || colorClasses.blue;
@@ -368,8 +432,7 @@ const Section = ({ title, icon, color, children, onViewAll }) => {
     <div className="card animate-fade-in-up">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-lg sm:text-xl font-bold text-text-primary flex items-center">
-          <span className={`${currentColor} mr-3`}>{icon}</span> 
-          {title}
+          <span className={`${currentColor} mr-3`}>{icon}</span> {title}
         </h2>
         {onViewAll && (
           <button
@@ -388,9 +451,13 @@ const Section = ({ title, icon, color, children, onViewAll }) => {
 
 const SessionCard = ({ session }) => (
   <div className="flex items-center p-3 sm:p-4 rounded-lg border border-border hover:bg-accent transition-colors duration-200 card-hover">
-    <div className={`w-2 h-2 rounded-full bg-${session.color}-500 mr-3 flex-shrink-0`}></div>
+    <div
+      className={`w-2 h-2 rounded-full bg-${session.color}-500 mr-3 flex-shrink-0`}
+    ></div>
     <div className="flex-1 min-w-0">
-      <p className="font-semibold text-text-primary truncate">{session.title}</p>
+      <p className="font-semibold text-text-primary truncate">
+        {session.title}
+      </p>
       <p className="text-sm text-text-secondary">
         {new Date(session.date).toLocaleString()}
       </p>
@@ -401,8 +468,12 @@ const SessionCard = ({ session }) => (
 const ProjectCard = ({ project }) => (
   <div className="flex items-center justify-between p-3 sm:p-4 rounded-lg bg-accent border border-border card-hover">
     <div className="flex-1 min-w-0">
-      <p className="font-semibold text-text-primary truncate">{project.title}</p>
-      <p className="text-sm text-text-secondary capitalize">Status: {project.status}</p>
+      <p className="font-semibold text-text-primary truncate">
+        {project.title}
+      </p>
+      <p className="text-sm text-text-secondary capitalize">
+        Status: {project.status}
+      </p>
     </div>
     <div className="text-right ml-4">
       <p className="font-bold text-lg text-text-primary">{project.grade}</p>
