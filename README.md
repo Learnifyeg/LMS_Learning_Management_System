@@ -77,6 +77,8 @@ Learnify is a modern and scalable Learning Management System enabling students t
 ## 🏗 Project Structure
 
 ### Backend (.NET API)
+
+``` 
 Learnify API/
 ├── Connected Services/
 ├── Dependencies/
@@ -163,9 +165,11 @@ Learnify API/
 ├── Learnify.API.http
 ├── Program.cs
 └── ScaffoldingReadMe.txt
-
+``` 
 
 ### Frontend (React Vite)
+
+``` 
 Learnify Frontend (Vite React TSX)/
 ├── public/
 │   ├── src/  (Note: This appears to be a non-standard nesting; likely assets or build artifacts)
@@ -325,3 +329,5 @@ Learnify Frontend (Vite React TSX)/
 │   ├── tsconfig.node.json
 │   └── vite.config.ts
 └── Unlitled-1.sql  (possible unrelated or temp file)
+
+``` 
