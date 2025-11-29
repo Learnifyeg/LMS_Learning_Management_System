@@ -73,6 +73,9 @@ const Urls = {
   UpdateQuiz: "Quiz/update/",
   DeleteQuiz: "Quiz/delete/",
   GetQuizzesByInstructor: "/Quiz/by-instructor",
+  GetQuizByIdForStudent: "/Quiz/by-quizid-for-student/",
+  SubmitQuiz: "/Quiz/submit/",
+  StudentQuizResult: "/Quiz/reult-by-quizId",
   // Question
   GetQuestionsByQuiz: "/Question/quiz/{quizId}",
   GetQuestionById: "/Question/",

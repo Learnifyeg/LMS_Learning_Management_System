@@ -38,7 +38,7 @@ function LessonManagement() {
     // exampleLesson,
     ...(lessonsData?.map((lesson) => ({ ...lesson })) ?? []),
   ];
-
+   console.log(lessons)
   const totalPages = Math.max(1, Math.ceil(lessons.length / LESSONS_PER_PAGE));
   const pageStartIndex = (currentPage - 1) * LESSONS_PER_PAGE;
   const pageLessons = lessons.slice(
@@ -127,7 +127,7 @@ function LessonManagement() {
                       <span className="text-red-500 font-bold">✖ NO</span>
                     )}
                   </td>
-                  <td className="px-4 py-3">{lesson.quizzes?.length ?? 0}</td>
+                  <td className="px-4 py-3">{lesson.TotalQuizzes?? 0}</td>
                   <td className="px-4 py-3">
                     {new Date(lesson.createdAt).toLocaleDateString()}
                   </td>

@@ -36,6 +36,7 @@ namespace Learnify_API.Data
         public DbSet<SavedCourse> SavedCourses { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Checkout> Checkouts { get; set; }
+        public DbSet<StudentAnswer> StudentAnswers { get; set; }
 
         //public object Notifications { get; internal set; }
 
@@ -157,6 +158,19 @@ namespace Learnify_API.Data
                 .WithMany()
                 .HasForeignKey(ci => ci.CourseId)
                 .OnDelete(DeleteBehavior.Restrict); // ❌ Prevent cascade from Course
+
+            modelBuilder.Entity<StudentAnswer>()
+                .HasOne(sa => sa.Student)
+                .WithMany()
+                .HasForeignKey(sa => sa.StudentId)
+                .OnDelete(DeleteBehavior.Restrict); // <-- NO CASCADE
+
+            modelBuilder.Entity<StudentAnswer>()
+                .HasOne(sa => sa.Quiz)
+                .WithMany()
+                .HasForeignKey(sa => sa.QuizId)
+                .OnDelete(DeleteBehavior.Cascade); // optional, only if Quiz deletion should remove answers
+
 
         }
 

@@ -362,7 +362,7 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.LessonController",
-    "Method": "GetLessonById",
+    "Method": "GetLessonforinstructorById",
     "RelativePath": "Lesson/{lessonId}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -414,7 +414,7 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.LessonController",
-    "Method": "GetLessonsByCourse",
+    "Method": "GetLessonsforinstructorByCourse",
     "RelativePath": "Lesson/by-course/{courseId}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -430,7 +430,39 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.LessonController",
-    "Method": "MarkLessonCompleted",
+    "Method": "GetLessonsforstudnetByCourse",
+    "RelativePath": "Lesson/by-courseid-for-student/{courseId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.LessonController",
+    "Method": "GetLessonforstudnet",
+    "RelativePath": "Lesson/by-lessonid-for-student/{lessonId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "lessonId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.LessonController",
+    "Method": "CompleteLesson",
     "RelativePath": "Lesson/complete/{lessonId}",
     "HttpMethod": "POST",
     "IsController": true,
@@ -438,6 +470,22 @@
     "Parameters": [
       {
         "Name": "lessonId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.LessonController",
+    "Method": "GetProgress",
+    "RelativePath": "Lesson/course-progress/{courseId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -454,22 +502,6 @@
     "Parameters": [
       {
         "Name": "lessonId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Learnify_API.Controllers.LessonController",
-    "Method": "GetProgressByCourse",
-    "RelativePath": "Lesson/progress/{courseId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "courseId",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -972,6 +1004,32 @@
   },
   {
     "ContainingType": "Learnify_API.Controllers.QuizController",
+    "Method": "GetQuizzesforstudentByCourse",
+    "RelativePath": "Quiz/by-courseid-for-student/{courseId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Learnify_API.Data.ViewModels.QuizVM, Learnify_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.QuizController",
     "Method": "GetByInstructor",
     "RelativePath": "Quiz/by-instructor",
     "HttpMethod": "GET",
@@ -989,6 +1047,48 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.QuizController",
+    "Method": "GetQuizforstudentById",
+    "RelativePath": "Quiz/by-quizid-for-student/{quizId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Learnify_API.Data.ViewModels.QuizVM",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.QuizController",
+    "Method": "CheckQuizStatus",
+    "RelativePath": "Quiz/check/{quizId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Learnify_API.Controllers.QuizController",
@@ -1051,6 +1151,43 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.QuizController",
+    "Method": "GetResultByQuizId",
+    "RelativePath": "Quiz/reult-by-quizId/{quizId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Learnify_API.Controllers.QuizController",
+    "Method": "SubmitQuiz",
+    "RelativePath": "Quiz/submit/{quizId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "answers",
+        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Learnify_API.Controllers.QuizController",
